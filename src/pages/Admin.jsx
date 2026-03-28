@@ -8,6 +8,12 @@ export default function Admin() {
   const [events, setEvents] = useState([]);
   const [subscribers, setSubscribers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [storedPassword, setStoredPassword] = useState(null);
+
+  // Password change state
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [changingPassword, setChangingPassword] = useState(false);
 
   // Event form state
   const [eventForm, setEventForm] = useState({
@@ -23,14 +29,89 @@ export default function Admin() {
   const [imageFile, setImageFile] = useState(null);
   const [uploading, setUploading] = useState(false);
 
-  const handleLogin = (e) => {
+  useEffect(() => {
+    fetchStoredPassword();
+  }, []);
+
+  const fetchStoredPassword = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('admin_settings')
+        .select('setting_value')
+        .eq('setting_key', 'admin_password')
+        .single();
+
+      if (!error && data) {
+        setStoredPassword(data.setting_value);
+      }
+    } catch (error) {
+      // Password not set in database yet, will use env variable
+      console.log('No custom password set, using default');
+    }
+  };
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (password === import.meta.env.VITE_ADMIN_PASSWORD) {
+    const correctPassword = storedPassword || import.meta.env.VITE_ADMIN_PASSWORD;
+
+    if (password === correctPassword) {
       setIsAuthenticated(true);
       fetchEvents();
       fetchSubscribers();
     } else {
       alert('Incorrect password');
+    }
+  };
+
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+
+    if (newPassword !== confirmPassword) {
+      alert('Passwords do not match!');
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      alert('Password must be at least 6 characters long');
+      return;
+    }
+
+    setChangingPassword(true);
+
+    try {
+      // Check if password record exists
+      const { data: existing } = await supabase
+        .from('admin_settings')
+        .select('id')
+        .eq('setting_key', 'admin_password')
+        .single();
+
+      if (existing) {
+        // Update existing password
+        const { error } = await supabase
+          .from('admin_settings')
+          .update({ setting_value: newPassword, updated_at: new Date().toISOString() })
+          .eq('setting_key', 'admin_password');
+
+        if (error) throw error;
+      } else {
+        // Insert new password
+        const { error } = await supabase
+          .from('admin_settings')
+          .insert([{ setting_key: 'admin_password', setting_value: newPassword }]);
+
+        if (error) throw error;
+      }
+
+      setStoredPassword(newPassword);
+      setNewPassword('');
+      setConfirmPassword('');
+      alert('Password changed successfully!');
+    } catch (error) {
+      console.error('Error changing password:', error);
+      alert('Error changing password: ' + error.message);
+    } finally {
+      setChangingPassword(false);
     }
   };
 
@@ -57,7 +138,7 @@ export default function Admin() {
       const { data, error } = await supabase
         .from('subscribers')
         .select('*')
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false});
 
       if (error) throw error;
       setSubscribers(data || []);
@@ -208,7 +289,15 @@ export default function Admin() {
   return (
     <div className="min-h-screen bg-[#1C1410] text-[#F4EFE6]">
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-light mb-8">Admin Dashboard</h1>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-light">Admin Dashboard</h1>
+          <a
+            href="/"
+            className="text-sm text-[#9C7F5C] hover:text-[#F4EFE6] transition-colors"
+          >
+            ← Back to Site
+          </a>
+        </div>
 
         {/* Tabs */}
         <div className="flex gap-4 mb-8 border-b border-[#3A2E26]">
@@ -223,6 +312,12 @@ export default function Admin() {
             className={`pb-4 px-4 ${activeTab === 'subscribers' ? 'border-b-2 border-[#9C7F5C] text-[#9C7F5C]' : 'text-[#6B5740]'}`}
           >
             Subscribers ({subscribers.length})
+          </button>
+          <button
+            onClick={() => setActiveTab('settings')}
+            className={`pb-4 px-4 ${activeTab === 'settings' ? 'border-b-2 border-[#9C7F5C] text-[#9C7F5C]' : 'text-[#6B5740]'}`}
+          >
+            Settings
           </button>
         </div>
 
@@ -405,6 +500,56 @@ export default function Admin() {
                 </table>
               </div>
             )}
+          </div>
+        )}
+
+        {/* Settings Tab */}
+        {activeTab === 'settings' && (
+          <div className="bg-[#2A1E16] p-6 rounded-lg max-w-2xl">
+            <h2 className="text-xl font-light mb-6">Admin Settings</h2>
+
+            <form onSubmit={handleChangePassword} className="space-y-4">
+              <div>
+                <label className="block text-sm text-[#9C7F5C] mb-2">New Password</label>
+                <input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="Enter new password"
+                  className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#9C7F5C]"
+                  required
+                  minLength={6}
+                />
+                <p className="text-xs text-[#6B5740] mt-1">Minimum 6 characters</p>
+              </div>
+
+              <div>
+                <label className="block text-sm text-[#9C7F5C] mb-2">Confirm New Password</label>
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="Confirm new password"
+                  className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#9C7F5C]"
+                  required
+                  minLength={6}
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={changingPassword}
+                className="bg-[#9C7F5C] text-[#F4EFE6] px-6 py-3 rounded-md hover:bg-[#8A6F4C] transition-colors disabled:opacity-50"
+              >
+                {changingPassword ? 'Changing Password...' : 'Change Password'}
+              </button>
+            </form>
+
+            <div className="mt-8 pt-6 border-t border-[#3A2E26]">
+              <p className="text-sm text-[#6B5740]">
+                Current password source: {storedPassword ? 'Custom (stored in database)' : 'Default (environment variable)'}
+              </p>
+            </div>
           </div>
         )}
       </div>
