@@ -14,6 +14,9 @@ export default function Hero() {
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/20" />
 
+      {/* Gradient overlay for text contrast (left side) */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent" />
+
       {/* Gradient overlay for nav legibility (right side) */}
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-black/50" />
 

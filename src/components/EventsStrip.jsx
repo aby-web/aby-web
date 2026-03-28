@@ -9,6 +9,15 @@ export default function EventsStrip() {
     fetchEvents();
   }, []);
 
+  const formatDate = (dateString) => {
+    if (!dateString) return '';
+    // Parse the date string (YYYY-MM-DD format)
+    const [year, month, day] = dateString.split('-');
+    const date = new Date(year, month - 1, day); // month is 0-indexed
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    return date.toLocaleDateString('en-GB', options);
+  };
+
   const fetchEvents = async () => {
     try {
       const { data, error } = await supabase
@@ -71,7 +80,7 @@ export default function EventsStrip() {
                   {/* Content */}
                   <div className="p-6">
                     <p className="text-xs uppercase tracking-wide text-[#9C7F5C] mb-2">
-                      {event.date}
+                      {formatDate(event.date)}
                     </p>
                     <h3 className="text-xl font-light text-[#1C1410] mb-2">
                       {event.title}

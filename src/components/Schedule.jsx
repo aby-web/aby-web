@@ -1,11 +1,10 @@
 export default function Schedule() {
   const scheduleData = [
     {
-      location: 'Flo Yoga — West Hampstead',
+      location: 'HOME',
       classes: [
-        { day: 'Monday', time: '07:15', name: 'Morning Flow', url: 'https://www.floyogastudio.co.uk/book-a-class' },
-        { day: 'Tuesday', time: '10:00', name: 'Handstands', url: 'https://www.floyogastudio.co.uk/book-a-class' },
-        { day: 'Saturday', time: '08:15 & 09:30', name: 'Experienced & Power', url: 'https://www.floyogastudio.co.uk/book-a-class' },
+        { day: 'Friday', time: '18:00', name: 'Vinyasa (75)', url: 'http://homewellness.uk/' },
+        { day: 'Sunday', time: '10:00', name: 'Vinyasa (75)', url: 'http://homewellness.uk/' },
       ],
     },
     {
@@ -16,9 +15,11 @@ export default function Schedule() {
       ],
     },
     {
-      location: 'MoreYoga — Soho',
+      location: 'Flo',
       classes: [
-        { day: 'Tuesday', time: '19:15', name: 'Power (75)', url: 'https://www.moreyoga.co.uk/timetables-full/' },
+        { day: 'Monday', time: '07:15', name: 'Morning Flow', url: 'https://www.floyogastudio.co.uk/book-a-class' },
+        { day: 'Tuesday', time: '10:00', name: 'Handstands', url: 'https://www.floyogastudio.co.uk/book-a-class' },
+        { day: 'Saturday', time: '08:15 & 09:30', name: 'Experienced & Power', url: 'https://www.floyogastudio.co.uk/book-a-class' },
       ],
     },
     {
@@ -29,10 +30,9 @@ export default function Schedule() {
       ],
     },
     {
-      location: 'HOME Wellness',
+      location: 'MoreYoga Soho',
       classes: [
-        { day: 'Friday', time: '18:00', name: 'Vinyasa (75)', url: 'http://homewellness.uk/' },
-        { day: 'Sunday', time: '10:00', name: 'Vinyasa (75)', url: 'http://homewellness.uk/' },
+        { day: 'Tuesday', time: '19:15', name: 'Power (75)', url: 'https://www.moreyoga.co.uk/timetables-full/' },
       ],
     },
   ];
