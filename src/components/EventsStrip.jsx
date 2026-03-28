@@ -20,10 +20,12 @@ export default function EventsStrip() {
 
   const fetchEvents = async () => {
     try {
+      const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+
       const { data, error } = await supabase
         .from('events')
         .select('*')
-        .eq('status', 'upcoming')
+        .gte('date', today) // Greater than or equal to today
         .order('date', { ascending: true });
 
       if (error) throw error;

@@ -492,14 +492,6 @@ export default function Admin() {
                     {imageFile ? '✓ Image cropped and ready' : 'Upload event image (optional) - you can crop it before saving'}
                   </p>
                 </div>
-                <select
-                  value={eventForm.status}
-                  onChange={(e) => setEventForm({ ...eventForm, status: e.target.value })}
-                  className="px-4 py-2 bg-[#1C1410] border border-[#3A2E26] rounded-md outline-none focus:border-[#9C7F5C]"
-                >
-                  <option value="upcoming">Upcoming</option>
-                  <option value="past">Past</option>
-                </select>
                 <div className="md:col-span-2 flex gap-4">
                   <button
                     type="submit"
@@ -542,20 +534,23 @@ export default function Admin() {
                 <p className="text-[#6B5740]">No events yet. Add your first event above!</p>
               ) : (
                 <div className="space-y-4">
-                  {events.map((event) => (
-                    <div key={event.id} className="bg-[#1C1410] p-4 rounded-md border border-[#3A2E26]">
-                      <div className="flex justify-between items-start">
-                        <div className="flex-1">
-                          <h3 className="text-lg font-medium mb-1">{event.title}</h3>
-                          <p className="text-sm text-[#9C7F5C] mb-2">{event.date} • {event.location}</p>
-                          {event.description && <p className="text-sm text-[#6B5740] mb-2">{event.description}</p>}
-                          <div className="flex gap-2 items-center">
-                            <span className={`text-xs px-2 py-1 rounded ${event.status === 'upcoming' ? 'bg-[#9C7F5C]' : 'bg-[#3A2E26]'}`}>
-                              {event.status}
-                            </span>
-                            {event.image_url && <span className="text-xs text-[#6B5740]">Has image</span>}
+                  {events.map((event) => {
+                    const today = new Date().toISOString().split('T')[0];
+                    const isUpcoming = event.date >= today;
+                    return (
+                      <div key={event.id} className="bg-[#1C1410] p-4 rounded-md border border-[#3A2E26]">
+                        <div className="flex justify-between items-start">
+                          <div className="flex-1">
+                            <h3 className="text-lg font-medium mb-1">{event.title}</h3>
+                            <p className="text-sm text-[#9C7F5C] mb-2">{event.date} • {event.location}</p>
+                            {event.description && <p className="text-sm text-[#6B5740] mb-2">{event.description}</p>}
+                            <div className="flex gap-2 items-center">
+                              <span className={`text-xs px-2 py-1 rounded ${isUpcoming ? 'bg-[#9C7F5C]' : 'bg-[#3A2E26]'}`}>
+                                {isUpcoming ? 'upcoming' : 'past'}
+                              </span>
+                              {event.image_url && <span className="text-xs text-[#6B5740]">Has image</span>}
+                            </div>
                           </div>
-                        </div>
                         <div className="flex gap-2">
                           <button
                             onClick={() => handleEditEvent(event)}
@@ -572,7 +567,8 @@ export default function Admin() {
                         </div>
                       </div>
                     </div>
-                  ))}
+                    )
+                  })}
                 </div>
               )}
             </div>

@@ -23,22 +23,23 @@ export default function Events() {
   const fetchEvents = async () => {
     try {
       setLoading(true);
+      const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
 
-      // Fetch upcoming events
+      // Fetch upcoming events (date >= today)
       const { data: upcoming, error: upcomingError } = await supabase
         .from('events')
         .select('*')
-        .eq('status', 'upcoming')
+        .gte('date', today)
         .order('date', { ascending: true });
 
       if (upcomingError) throw upcomingError;
       setUpcomingEvents(upcoming || []);
 
-      // Fetch past events
+      // Fetch past events (date < today)
       const { data: past, error: pastError } = await supabase
         .from('events')
         .select('*')
-        .eq('status', 'past')
+        .lt('date', today)
         .order('date', { ascending: false });
 
       if (pastError) throw pastError;
