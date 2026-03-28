@@ -1,26 +1,15 @@
-import Nav from './components/Nav';
-import Hero from './components/Hero';
-import Schedule from './components/Schedule';
-import EventsStrip from './components/EventsStrip';
-import About from './components/About';
-import EmailCapture from './components/EmailCapture';
-import Testimonials from './components/Testimonials';
-import Footer from './components/Footer';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Admin from './pages/Admin';
 
 function App() {
   return (
-    <div className="min-h-screen">
-      <Nav />
-      <main>
-        <Hero />
-        <Schedule />
-        <EventsStrip />
-        <About />
-        <EmailCapture />
-        <Testimonials />
-      </main>
-      <Footer />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/admin" element={<Admin />} />
+      </Routes>
+    </Router>
   );
 }
 

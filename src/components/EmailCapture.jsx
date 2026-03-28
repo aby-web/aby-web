@@ -1,15 +1,56 @@
 import { useState } from 'react';
+import { supabase } from '../lib/supabase';
 
 export default function EmailCapture() {
   const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState('idle'); // idle, loading, success, error, exists
+  const [message, setMessage] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email) {
-      setSubmitted(true);
+
+    if (!email) return;
+
+    setStatus('loading');
+
+    try {
+      // Check if email already exists
+      const { data: existing, error: checkError } = await supabase
+        .from('subscribers')
+        .select('email')
+        .eq('email', email.toLowerCase())
+        .single();
+
+      if (checkError && checkError.code !== 'PGRST116') {
+        // PGRST116 means no rows found, which is what we want
+        throw checkError;
+      }
+
+      if (existing) {
+        setStatus('exists');
+        setMessage('You are already subscribed!');
+        setEmail('');
+        setTimeout(() => setStatus('idle'), 4000);
+        return;
+      }
+
+      // Insert new subscriber
+      const { error: insertError } = await supabase
+        .from('subscribers')
+        .insert([{ email: email.toLowerCase(), source: 'website' }]);
+
+      if (insertError) throw insertError;
+
+      setStatus('success');
+      setMessage('You are on the list!');
       setEmail('');
-      setTimeout(() => setSubmitted(false), 3000);
+      setTimeout(() => setStatus('idle'), 4000);
+
+    } catch (error) {
+      console.error('Subscription error:', error);
+      setStatus('error');
+      setMessage('Something went wrong. Please try again.');
+      setTimeout(() => setStatus('idle'), 4000);
     }
   };
 
@@ -28,9 +69,9 @@ export default function EmailCapture() {
         </p>
 
         {/* Form */}
-        {submitted ? (
+        {status === 'success' || status === 'exists' ? (
           <div className="text-[#9C7F5C] text-lg mb-4">
-            Thanks, you're on the list! ✓
+            {message} ✓
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="mb-4">
@@ -41,15 +82,20 @@ export default function EmailCapture() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Your email address"
                 required
-                className="flex-1 px-6 py-3 bg-transparent outline-none text-[#1C1410] placeholder-[#6B5740]"
+                disabled={status === 'loading'}
+                className="flex-1 px-6 py-3 bg-transparent outline-none text-[#1C1410] placeholder-[#6B5740] disabled:opacity-50"
               />
               <button
                 type="submit"
-                className="px-6 py-3 bg-[#1C1410] text-[#F4EFE6] rounded-full hover:bg-[#2A2018] transition-colors"
+                disabled={status === 'loading'}
+                className="px-6 py-3 bg-[#1C1410] text-[#F4EFE6] rounded-full hover:bg-[#2A2018] transition-colors disabled:opacity-50"
               >
-                Subscribe
+                {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
               </button>
             </div>
+            {status === 'error' && (
+              <p className="text-red-600 text-sm mt-2">{message}</p>
+            )}
           </form>
         )}
 
