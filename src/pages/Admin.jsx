@@ -10,6 +10,7 @@ export default function Admin() {
   const [events, setEvents] = useState([]);
   const [subscribers, setSubscribers] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
+  const [privateEnquiries, setPrivateEnquiries] = useState([]);
   const [loading, setLoading] = useState(false);
   const [storedUsername, setStoredUsername] = useState(null);
   const [storedPassword, setStoredPassword] = useState(null);
@@ -84,6 +85,7 @@ export default function Admin() {
       fetchEvents();
       fetchSubscribers();
       fetchTestimonials();
+      fetchPrivateEnquiries();
     } else {
       alert('Incorrect username or password');
     }
@@ -286,6 +288,23 @@ export default function Admin() {
     }
   };
 
+  const fetchPrivateEnquiries = async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('private_enquiries')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setPrivateEnquiries(data || []);
+    } catch (error) {
+      console.error('Error fetching private enquiries:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleUpdateTestimonial = async (testimonial) => {
     try {
       const { error } = await supabase
@@ -422,6 +441,57 @@ export default function Admin() {
     a.click();
   };
 
+  const handleDeleteEnquiry = async (id) => {
+    if (!confirm('Are you sure you want to delete this enquiry?')) return;
+
+    try {
+      const { error } = await supabase
+        .from('private_enquiries')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+      fetchPrivateEnquiries();
+      alert('Enquiry deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting enquiry:', error);
+      alert('Error deleting enquiry: ' + error.message);
+    }
+  };
+
+  const handleToggleFollowedUp = async (enquiry) => {
+    try {
+      const { error } = await supabase
+        .from('private_enquiries')
+        .update({ followed_up: !enquiry.followed_up })
+        .eq('id', enquiry.id);
+
+      if (error) throw error;
+      fetchPrivateEnquiries();
+    } catch (error) {
+      console.error('Error updating enquiry:', error);
+      alert('Error updating enquiry: ' + error.message);
+    }
+  };
+
+  const handleDeleteSubscriber = async (id) => {
+    if (!confirm('Are you sure you want to delete this subscriber?')) return;
+
+    try {
+      const { error } = await supabase
+        .from('subscribers')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+      fetchSubscribers();
+      alert('Subscriber deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting subscriber:', error);
+      alert('Error deleting subscriber: ' + error.message);
+    }
+  };
+
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-[#1C1410] flex items-center justify-center px-4">
@@ -482,6 +552,12 @@ export default function Admin() {
             className={`pb-4 px-4 ${activeTab === 'subscribers' ? 'border-b-2 border-[#9C7F5C] text-[#9C7F5C]' : 'text-[#6B5740]'}`}
           >
             Subscribers ({subscribers.length})
+          </button>
+          <button
+            onClick={() => setActiveTab('privateEnquiries')}
+            className={`pb-4 px-4 ${activeTab === 'privateEnquiries' ? 'border-b-2 border-[#9C7F5C] text-[#9C7F5C]' : 'text-[#6B5740]'}`}
+          >
+            Private Enquiries ({privateEnquiries.length})
           </button>
           <button
             onClick={() => setActiveTab('testimonials')}
@@ -714,6 +790,7 @@ export default function Admin() {
                       <th className="text-left py-2 px-4 text-[#9C7F5C]">Email</th>
                       <th className="text-left py-2 px-4 text-[#9C7F5C]">Signup Date</th>
                       <th className="text-left py-2 px-4 text-[#9C7F5C]">Source</th>
+                      <th className="text-left py-2 px-4 text-[#9C7F5C]">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -724,10 +801,85 @@ export default function Admin() {
                           {new Date(subscriber.created_at).toLocaleDateString()}
                         </td>
                         <td className="py-3 px-4 text-[#6B5740]">{subscriber.source}</td>
+                        <td className="py-3 px-4">
+                          <button
+                            onClick={() => handleDeleteSubscriber(subscriber.id)}
+                            className="px-3 py-1 bg-red-900 rounded text-sm hover:bg-red-800 transition-colors"
+                          >
+                            Delete
+                          </button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Private Enquiries Tab */}
+        {activeTab === 'privateEnquiries' && (
+          <div className="bg-[#2A1E16] p-6 rounded-lg">
+            <h2 className="text-xl font-light mb-4">Private Session Enquiries ({privateEnquiries.length})</h2>
+            {loading ? (
+              <p>Loading...</p>
+            ) : privateEnquiries.length === 0 ? (
+              <p className="text-[#6B5740]">No private session enquiries yet.</p>
+            ) : (
+              <div className="space-y-4">
+                {privateEnquiries.map((enquiry) => (
+                  <div key={enquiry.id} className="bg-[#1C1410] p-6 rounded-md border border-[#3A2E26]">
+                    <div className="flex justify-between items-start mb-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-1">
+                          <h3 className="text-lg font-medium text-[#F4EFE6]">{enquiry.name}</h3>
+                          {enquiry.followed_up && (
+                            <span className="text-xs px-2 py-1 rounded bg-[#9C7F5C] text-[#F4EFE6]">
+                              Followed up
+                            </span>
+                          )}
+                        </div>
+                        <a
+                          href={`mailto:${enquiry.email}`}
+                          className="text-sm text-[#9C7F5C] hover:text-[#C9A878] transition-colors"
+                        >
+                          {enquiry.email}
+                        </a>
+                      </div>
+                      <span className="text-xs text-[#6B5740]">
+                        {new Date(enquiry.created_at).toLocaleDateString('en-GB', {
+                          day: 'numeric',
+                          month: 'short',
+                          year: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit'
+                        })}
+                      </span>
+                    </div>
+                    <div className="bg-[#2A1E16] p-4 rounded-md mb-4">
+                      <p className="text-sm text-[#F4EFE6] whitespace-pre-wrap">{enquiry.message}</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleToggleFollowedUp(enquiry)}
+                        className={`px-4 py-2 rounded-md text-sm transition-colors ${
+                          enquiry.followed_up
+                            ? 'bg-[#3A2E26] text-[#9C7F5C] hover:bg-[#4A3E36]'
+                            : 'bg-[#9C7F5C] text-[#F4EFE6] hover:bg-[#8A6F4C]'
+                        }`}
+                      >
+                        {enquiry.followed_up ? 'Mark as not followed up' : 'Mark as followed up'}
+                      </button>
+                      <button
+                        onClick={() => handleDeleteEnquiry(enquiry.id)}
+                        className="px-4 py-2 bg-red-900 rounded-md text-sm hover:bg-red-800 transition-colors"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
           </div>

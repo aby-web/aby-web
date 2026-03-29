@@ -23,16 +23,16 @@ export default function Footer() {
               Navigate
             </h4>
             <nav className="flex flex-col gap-3">
-              <a href="#schedule" className="text-sm text-[#9C7F5C] hover:text-[#C9A878] transition-colors">
+              <a href="/#schedule" className="text-sm text-[#9C7F5C] hover:text-[#C9A878] transition-colors">
                 Classes & schedule
               </a>
-              <a href="#contact" className="text-sm text-[#9C7F5C] hover:text-[#C9A878] transition-colors">
+              <a href="/private-sessions" className="text-sm text-[#9C7F5C] hover:text-[#C9A878] transition-colors">
                 Private sessions
               </a>
-              <a href="#events" className="text-sm text-[#9C7F5C] hover:text-[#C9A878] transition-colors">
+              <a href="/events" className="text-sm text-[#9C7F5C] hover:text-[#C9A878] transition-colors">
                 Workshops & retreats
               </a>
-              <a href="#about" className="text-sm text-[#9C7F5C] hover:text-[#C9A878] transition-colors">
+              <a href="/about" className="text-sm text-[#9C7F5C] hover:text-[#C9A878] transition-colors">
                 About
               </a>
             </nav>

@@ -26,7 +26,7 @@ export default function About() {
 
             {/* CTA Button */}
             <a
-              href="#"
+              href="/about"
               className="inline-block px-7 py-3 rounded-full bg-transparent border-2 border-[#1C1410] text-[#1C1410] hover:bg-[#1C1410] hover:text-[#F4EFE6] transition-colors"
             >
               More about me

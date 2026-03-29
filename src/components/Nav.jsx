@@ -13,11 +13,11 @@ export default function Nav({ theme = 'dark' }) {
   }, []);
 
   const isDark = theme === 'dark';
-  const textColor = isDark ? 'text-white' : 'text-[#1C1410]';
-  const textColorHover = isDark ? 'hover:text-white' : 'hover:text-[#9C7F5C]';
-  const textOpacity = isDark ? 'text-white/80' : 'text-[#1C1410]/80';
-  const logoFilter = isDark ? 'brightness(0) invert(1)' : 'none';
-  const bgColor = isDark ? 'rgba(28, 20, 16, 0.85)' : 'rgba(244, 239, 230, 0.85)';
+  const textColor = isDark ? 'text-white' : (scrolled ? 'text-white' : 'text-[#1C1410]');
+  const textColorHover = isDark ? 'hover:text-white' : (scrolled ? 'hover:text-white' : 'hover:text-[#9C7F5C]');
+  const textOpacity = isDark ? 'text-white/80' : (scrolled ? 'text-white/80' : 'text-[#1C1410]/80');
+  const logoFilter = isDark ? 'brightness(0) invert(1)' : (scrolled ? 'brightness(0) invert(1)' : 'none');
+  const bgColor = isDark ? 'rgba(28, 20, 16, 0.85)' : (scrolled ? 'rgba(28, 20, 16, 0.85)' : 'transparent');
   const borderColor = isDark
     ? (scrolled ? 'border-white/40' : 'border-white/60')
     : (scrolled ? 'border-[#1C1410]/40' : 'border-[#1C1410]/60');
@@ -43,7 +43,7 @@ export default function Nav({ theme = 'dark' }) {
           />
         </a>
 
-        {/* Right Side: Nav Links + Book Button */}
+        {/* Right Side: Nav Links */}
         <div className="hidden md:flex items-center gap-8">
           <a
             href="/#about"
@@ -63,13 +63,11 @@ export default function Nav({ theme = 'dark' }) {
           >
             Events
           </a>
-
-          {/* Book Button */}
           <a
-            href="/#schedule"
-            className={`bg-transparent ${textColor} text-xs uppercase tracking-[0.08em] px-5 py-2 rounded-full border transition-all ${hoverBg} ${borderColor}`}
+            href="/private-sessions"
+            className={`${textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
           >
-            Book
+            Privates
           </a>
         </div>
       </div>
