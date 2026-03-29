@@ -9,6 +9,7 @@ export default function Admin() {
   const [activeTab, setActiveTab] = useState('events');
   const [events, setEvents] = useState([]);
   const [subscribers, setSubscribers] = useState([]);
+  const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(false);
   const [storedUsername, setStoredUsername] = useState(null);
   const [storedPassword, setStoredPassword] = useState(null);
@@ -31,6 +32,7 @@ export default function Admin() {
     status: 'upcoming',
   });
   const [imageFile, setImageFile] = useState(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [uploading, setUploading] = useState(false);
 
   // Image cropping state
@@ -43,6 +45,14 @@ export default function Admin() {
   useEffect(() => {
     fetchStoredCredentials();
   }, []);
+
+  const formatDatePreview = (dateString) => {
+    if (!dateString) return '';
+    const [year, month, day] = dateString.split('-');
+    const date = new Date(year, month - 1, day);
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    return date.toLocaleDateString('en-GB', options);
+  };
 
   const fetchStoredCredentials = async () => {
     try {
@@ -73,6 +83,7 @@ export default function Admin() {
       setIsAuthenticated(true);
       fetchEvents();
       fetchSubscribers();
+      fetchTestimonials();
     } else {
       alert('Incorrect username or password');
     }
@@ -213,10 +224,11 @@ export default function Admin() {
     try {
       const croppedBlob = await getCroppedImg(imageToCrop, croppedAreaPixels);
       const croppedFile = new File([croppedBlob], 'cropped-image.jpg', { type: 'image/jpeg' });
+      const previewUrl = URL.createObjectURL(croppedBlob);
       setImageFile(croppedFile);
+      setImagePreviewUrl(previewUrl);
       setCropModalOpen(false);
       setImageToCrop(null);
-      alert('Image cropped successfully! Now save the event to upload.');
     } catch (error) {
       console.error('Error cropping image:', error);
       alert('Error cropping image');
@@ -229,7 +241,7 @@ export default function Admin() {
       const { data, error } = await supabase
         .from('events')
         .select('*')
-        .order('created_at', { ascending: false });
+        .order('date', { ascending: false });
 
       if (error) throw error;
       setEvents(data || []);
@@ -254,6 +266,45 @@ export default function Admin() {
       console.error('Error fetching subscribers:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchTestimonials = async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('testimonials')
+        .select('*')
+        .order('order_position', { ascending: true });
+
+      if (error) throw error;
+      setTestimonials(data || []);
+    } catch (error) {
+      console.error('Error fetching testimonials:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUpdateTestimonial = async (testimonial) => {
+    try {
+      const { error } = await supabase
+        .from('testimonials')
+        .update({
+          review: testimonial.review,
+          studio: testimonial.studio,
+          class_name: testimonial.class_name,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', testimonial.id);
+
+      if (error) throw error;
+
+      alert('Testimonial updated successfully!');
+      fetchTestimonials();
+    } catch (error) {
+      console.error('Error updating testimonial:', error);
+      alert('Error updating testimonial: ' + error.message);
     }
   };
 
@@ -319,6 +370,7 @@ export default function Admin() {
         status: 'upcoming',
       });
       setImageFile(null);
+      setImagePreviewUrl(null);
       fetchEvents();
       alert('Event saved successfully!');
     } catch (error) {
@@ -432,6 +484,12 @@ export default function Admin() {
             Subscribers ({subscribers.length})
           </button>
           <button
+            onClick={() => setActiveTab('testimonials')}
+            className={`pb-4 px-4 ${activeTab === 'testimonials' ? 'border-b-2 border-[#9C7F5C] text-[#9C7F5C]' : 'text-[#6B5740]'}`}
+          >
+            Testimonials
+          </button>
+          <button
             onClick={() => setActiveTab('settings')}
             className={`pb-4 px-4 ${activeTab === 'settings' ? 'border-b-2 border-[#9C7F5C] text-[#9C7F5C]' : 'text-[#6B5740]'}`}
           >
@@ -483,13 +541,20 @@ export default function Admin() {
                 />
                 <div>
                   <input
+                    id="image-upload"
                     type="file"
                     accept="image/*"
                     onChange={handleImageSelect}
-                    className="px-4 py-2 bg-[#1C1410] border border-[#3A2E26] rounded-md outline-none focus:border-[#9C7F5C] w-full"
+                    className="hidden"
                   />
-                  <p className="text-xs text-[#6B5740] mt-1">
-                    {imageFile ? '✓ Image cropped and ready' : 'Upload event image (optional) - you can crop it before saving'}
+                  <label
+                    htmlFor="image-upload"
+                    className="inline-block px-6 py-3 bg-[#3A2E26] text-[#F4EFE6] text-sm rounded-md hover:bg-[#4A3E36] transition-colors cursor-pointer"
+                  >
+                    Upload Image
+                  </label>
+                  <p className="text-xs text-[#6B5740] mt-2">
+                    {imageFile ? '✓ Image uploaded and cropped' : 'Upload an event image (optional)'}
                   </p>
                 </div>
                 <div className="md:col-span-2 flex gap-4">
@@ -515,6 +580,7 @@ export default function Admin() {
                           status: 'upcoming',
                         });
                         setImageFile(null);
+                        setImagePreviewUrl(null);
                       }}
                       className="bg-[#3A2E26] text-[#F4EFE6] px-6 py-2 rounded-md hover:bg-[#4A3E36] transition-colors"
                     >
@@ -524,6 +590,55 @@ export default function Admin() {
                 </div>
               </form>
             </div>
+
+            {/* Preview Section */}
+            {(eventForm.title || eventForm.date || eventForm.location || imagePreviewUrl) && (
+              <div className="bg-[#2A1E16] p-6 rounded-lg mb-8">
+                <h2 className="text-xl font-light mb-4">Preview</h2>
+                <p className="text-xs text-[#6B5740] mb-4">This is how your event will appear on the Events page</p>
+                <div className="max-w-sm">
+                  <div className="bg-[#F4EFE6] border border-[#C9B99A] rounded-md overflow-hidden">
+                    {/* Image or Placeholder */}
+                    {imagePreviewUrl ? (
+                      <img
+                        src={imagePreviewUrl}
+                        alt="Event preview"
+                        className="h-56 w-full object-cover"
+                      />
+                    ) : (
+                      <div className="h-56 bg-gradient-to-br from-[#9C7F5C] to-[#6B5740]" />
+                    )}
+
+                    {/* Content */}
+                    <div className="p-6">
+                      {eventForm.date && (
+                        <p className="text-xs uppercase tracking-wide text-[#9C7F5C] mb-2">
+                          {formatDatePreview(eventForm.date)}
+                        </p>
+                      )}
+                      <h3 className="text-2xl font-light text-[#1C1410] mb-3">
+                        {eventForm.title || 'Event Title'}
+                      </h3>
+                      {eventForm.location && (
+                        <p className="text-sm text-[#6B5740] mb-2">
+                          {eventForm.location}
+                        </p>
+                      )}
+                      {eventForm.description && (
+                        <p className="text-sm text-[#6B5740] mb-4">
+                          {eventForm.description}
+                        </p>
+                      )}
+                      {eventForm.booking_link && (
+                        <span className="inline-block text-xs uppercase tracking-wide text-[#9C7F5C] border-b border-[#9C7F5C]">
+                          Book now →
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Events List */}
             <div className="bg-[#2A1E16] p-6 rounded-lg">
@@ -613,6 +728,92 @@ export default function Admin() {
                     ))}
                   </tbody>
                 </table>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Testimonials Tab */}
+        {activeTab === 'testimonials' && (
+          <div className="bg-[#2A1E16] p-6 rounded-lg">
+            <h2 className="text-xl font-light mb-6">Manage Testimonials</h2>
+            <p className="text-sm text-[#6B5740] mb-6">Edit the 3 testimonials that appear on the homepage</p>
+
+            {loading ? (
+              <p>Loading...</p>
+            ) : testimonials.length === 0 ? (
+              <p className="text-[#6B5740]">No testimonials found. Please run the setup SQL first.</p>
+            ) : (
+              <div className="space-y-6">
+                {testimonials.map((testimonial, index) => (
+                  <div key={testimonial.id} className="bg-[#1C1410] p-6 rounded-md border border-[#3A2E26]">
+                    <h3 className="text-lg font-medium mb-4 text-[#9C7F5C]">Testimonial {index + 1}</h3>
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        handleUpdateTestimonial(testimonial);
+                      }}
+                      className="space-y-4"
+                    >
+                      <div>
+                        <label className="block text-sm text-[#9C7F5C] mb-2">Review</label>
+                        <textarea
+                          value={testimonial.review}
+                          onChange={(e) => {
+                            const updatedTestimonials = [...testimonials];
+                            updatedTestimonials[index].review = e.target.value;
+                            setTestimonials(updatedTestimonials);
+                          }}
+                          placeholder="The review text"
+                          className="w-full px-4 py-3 bg-[#2A1E16] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#9C7F5C]"
+                          rows="3"
+                          required
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm text-[#9C7F5C] mb-2">Studio</label>
+                          <input
+                            type="text"
+                            value={testimonial.studio}
+                            onChange={(e) => {
+                              const updatedTestimonials = [...testimonials];
+                              updatedTestimonials[index].studio = e.target.value;
+                              setTestimonials(updatedTestimonials);
+                            }}
+                            placeholder="e.g., Flo Yoga"
+                            className="w-full px-4 py-3 bg-[#2A1E16] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#9C7F5C]"
+                            required
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-sm text-[#9C7F5C] mb-2">Class</label>
+                          <input
+                            type="text"
+                            value={testimonial.class_name}
+                            onChange={(e) => {
+                              const updatedTestimonials = [...testimonials];
+                              updatedTestimonials[index].class_name = e.target.value;
+                              setTestimonials(updatedTestimonials);
+                            }}
+                            placeholder="e.g., Experienced Flow"
+                            className="w-full px-4 py-3 bg-[#2A1E16] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#9C7F5C]"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <button
+                        type="submit"
+                        className="bg-[#9C7F5C] text-[#F4EFE6] px-6 py-2 rounded-md hover:bg-[#8A6F4C] transition-colors"
+                      >
+                        Update Testimonial
+                      </button>
+                    </form>
+                  </div>
+                ))}
               </div>
             )}
           </div>

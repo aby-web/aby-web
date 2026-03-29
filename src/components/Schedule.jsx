@@ -26,7 +26,7 @@ export default function Schedule() {
       location: 'BXR',
       classes: [
         { day: 'Wednesday', time: '13:00', name: 'Handstands', url: 'https://www.bxrlondon.com/' },
-        { day: 'Thursday', time: '20:05', name: 'Power', url: 'https://www.bxrlondon.com/' },
+        { day: 'Thursday', time: '20:00', name: 'Power', url: 'https://www.bxrlondon.com/' },
       ],
     },
     {
