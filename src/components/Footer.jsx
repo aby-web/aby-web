@@ -13,34 +13,37 @@ export default function Footer() {
               style={{ height: '20px', filter: 'brightness(0) invert(1)' }}
             />
             <p className="text-sm font-light leading-relaxed text-[#8A6F4C]">
-              Yoga teacher based in London. Strong, structured practice for people who take their training seriously.
+              Yoga teacher based in London. Structured, progressive practice centred around building strength, control and longevity.
             </p>
           </div>
 
           {/* Column 2: Navigate */}
           <div>
-            <h4 className="text-xs uppercase tracking-wide text-[#9C7F5C] mb-4">
+            <h4 className="text-xs uppercase tracking-wide text-[#785E3D] mb-4">
               Navigate
             </h4>
             <nav className="flex flex-col gap-3">
-              <a href="/#schedule" className="text-sm text-[#9C7F5C] hover:text-[#C9A878] transition-colors">
-                Classes & schedule
+              <a href="/#schedule" className="text-sm text-[#785E3D] hover:text-[#C9A878] transition-colors">
+                Schedule
               </a>
-              <a href="/private-sessions" className="text-sm text-[#9C7F5C] hover:text-[#C9A878] transition-colors">
+              <a href="/private-sessions" className="text-sm text-[#785E3D] hover:text-[#C9A878] transition-colors">
                 Private sessions
               </a>
-              <a href="/events" className="text-sm text-[#9C7F5C] hover:text-[#C9A878] transition-colors">
-                Workshops & retreats
+              <a href="/events" className="text-sm text-[#785E3D] hover:text-[#C9A878] transition-colors">
+                Events
               </a>
-              <a href="/about" className="text-sm text-[#9C7F5C] hover:text-[#C9A878] transition-colors">
+              <a href="/about" className="text-sm text-[#785E3D] hover:text-[#C9A878] transition-colors">
                 About
+              </a>
+              <a href="/faq" className="text-sm text-[#785E3D] hover:text-[#C9A878] transition-colors">
+                FAQ
               </a>
             </nav>
           </div>
 
           {/* Column 3: Connect */}
           <div>
-            <h4 className="text-xs uppercase tracking-wide text-[#9C7F5C] mb-4">
+            <h4 className="text-xs uppercase tracking-wide text-[#785E3D] mb-4">
               Connect
             </h4>
             <div className="flex flex-col gap-3">
@@ -48,13 +51,13 @@ export default function Footer() {
                 href="https://instagram.com/ammarbass"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-[#9C7F5C] hover:text-[#C9A878] transition-colors"
+                className="text-sm text-[#785E3D] hover:text-[#C9A878] transition-colors"
               >
                 @ammarbass
               </a>
               <a
                 href="mailto:ammar@ammarbass.com"
-                className="text-sm text-[#9C7F5C] hover:text-[#C9A878] transition-colors"
+                className="text-sm text-[#785E3D] hover:text-[#C9A878] transition-colors"
               >
                 ammar@ammarbass.com
               </a>

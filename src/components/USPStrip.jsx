@@ -15,7 +15,7 @@ export default function USPStrip() {
               index < uspItems.length - 1 ? 'border-b md:border-b-0 md:border-r border-[#C9B99A]' : ''
             }`}
           >
-            <p className="text-[10px] uppercase tracking-[0.18em] text-[#9C7F5C] mb-2">
+            <p className="text-[10px] uppercase tracking-[0.18em] text-[#785E3D] mb-2">
               {item.label}
             </p>
             <p className="text-xl font-normal text-[#1C1410]">

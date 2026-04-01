@@ -6,18 +6,18 @@ export default function About() {
           {/* Left: Text Content */}
           <div>
             {/* Eyebrow */}
-            <p className="text-[11px] uppercase tracking-[0.2em] text-[#9C7F5C] mb-4">
+            <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-4">
               About
             </p>
 
             {/* Headline */}
             <h2 className="text-4xl md:text-5xl font-light text-[#1C1410] leading-tight mb-8">
-              Yoga should be challenging. That's the point.
+              Discipline. Effort. Sustainability.
             </h2>
 
             {/* Paragraphs */}
             <p className="text-[15px] font-light leading-loose text-[#6B5740] mb-6">
-              I teach because I believe most people are capable of far more than a typical yoga class asks of them. My classes are physically demanding, technically precise, and built around progressive movement — the kind that actually changes how your body works.
+              I teach because I enjoy it. Applied correctly, this practice benefits most people — and that gives me great pleasure. My classes are physically demanding, technically precise, and built around progressive movement — the kind that actually changes how your body works.
             </p>
 
             <p className="text-[15px] font-light leading-loose text-[#6B5740] mb-8">

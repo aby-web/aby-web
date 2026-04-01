@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Events from './pages/Events';
 import About from './pages/About';
 import PrivateSessions from './pages/PrivateSessions';
+import FAQ from './pages/FAQ';
 import Admin from './pages/Admin';
 
 function ScrollToHash() {
@@ -38,6 +39,7 @@ function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/about" element={<About />} />
         <Route path="/private-sessions" element={<PrivateSessions />} />
+        <Route path="/faq" element={<FAQ />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
     </Router>

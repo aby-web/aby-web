@@ -42,7 +42,7 @@ export default function Schedule() {
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-[#9C7F5C] mb-4">
+          <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-4">
             Weekly schedule
           </p>
           <h2 className="text-4xl md:text-5xl font-light text-[#1C1410]">
@@ -69,7 +69,7 @@ export default function Schedule() {
                     <div className="flex items-center gap-6 flex-1">
                       {/* Day & Time */}
                       <div className="min-w-[120px]">
-                        <p className="text-[11px] uppercase tracking-wide text-[#9C7F5C] mb-1">
+                        <p className="text-[11px] uppercase tracking-wide text-[#785E3D] mb-1">
                           {classItem.day}
                         </p>
                         <p className="text-xs text-[#6B5740]">
@@ -88,7 +88,7 @@ export default function Schedule() {
                       href={classItem.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-4 py-2 text-xs uppercase tracking-wide border border-[#9C7F5C] text-[#6B5740] rounded-full hover:bg-[#EAE0CF] transition-colors"
+                      className="px-4 py-2 text-xs uppercase tracking-wide border border-[#785E3D] text-[#6B5740] rounded-full hover:bg-[#EAE0CF] transition-colors"
                     >
                       Book
                     </a>
@@ -97,6 +97,16 @@ export default function Schedule() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Learn More Link */}
+        <div className="text-center mt-12">
+          <a
+            href="/about"
+            className="inline-block text-[13px] text-[#1C1410] border-b border-[#785E3D] hover:text-[#785E3D] transition-colors"
+          >
+            Learn more about my approach →
+          </a>
         </div>
       </div>
     </section>

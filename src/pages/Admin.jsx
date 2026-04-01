@@ -11,6 +11,7 @@ export default function Admin() {
   const [subscribers, setSubscribers] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
   const [privateEnquiries, setPrivateEnquiries] = useState([]);
+  const [vacations, setVacations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [storedUsername, setStoredUsername] = useState(null);
   const [storedPassword, setStoredPassword] = useState(null);
@@ -42,6 +43,14 @@ export default function Admin() {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+
+  // Vacation form state
+  const [vacationForm, setVacationForm] = useState({
+    id: null,
+    start_date: '',
+    end_date: '',
+    reason: ''
+  });
 
   useEffect(() => {
     fetchStoredCredentials();
@@ -86,6 +95,7 @@ export default function Admin() {
       fetchSubscribers();
       fetchTestimonials();
       fetchPrivateEnquiries();
+      fetchVacations();
     } else {
       alert('Incorrect username or password');
     }
@@ -305,6 +315,90 @@ export default function Admin() {
     }
   };
 
+  const fetchVacations = async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('vacations')
+        .select('*')
+        .order('start_date', { ascending: true });
+
+      if (error) throw error;
+      setVacations(data || []);
+    } catch (error) {
+      console.error('Error fetching vacations:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSaveVacation = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      if (vacationForm.id) {
+        // Update existing vacation
+        const { error } = await supabase
+          .from('vacations')
+          .update({
+            start_date: vacationForm.start_date,
+            end_date: vacationForm.end_date,
+            reason: vacationForm.reason,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', vacationForm.id);
+
+        if (error) throw error;
+      } else {
+        // Create new vacation
+        const { error} = await supabase
+          .from('vacations')
+          .insert([{
+            start_date: vacationForm.start_date,
+            end_date: vacationForm.end_date,
+            reason: vacationForm.reason
+          }]);
+
+        if (error) throw error;
+      }
+
+      setVacationForm({ id: null, start_date: '', end_date: '', reason: '' });
+      fetchVacations();
+    } catch (error) {
+      console.error('Error saving vacation:', error);
+      alert('Error saving vacation');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEditVacation = (vacation) => {
+    setVacationForm({
+      id: vacation.id,
+      start_date: vacation.start_date,
+      end_date: vacation.end_date,
+      reason: vacation.reason || ''
+    });
+  };
+
+  const handleDeleteVacation = async (id) => {
+    if (!confirm('Are you sure you want to delete this vacation period?')) return;
+
+    try {
+      const { error } = await supabase
+        .from('vacations')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+      fetchVacations();
+    } catch (error) {
+      console.error('Error deleting vacation:', error);
+      alert('Error deleting vacation');
+    }
+  };
+
   const handleUpdateTestimonial = async (testimonial) => {
     try {
       const { error } = await supabase
@@ -502,7 +596,7 @@ export default function Admin() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Username"
-            className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#9C7F5C] mb-4"
+            className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D] mb-4"
             required
             autoComplete="username"
           />
@@ -511,13 +605,13 @@ export default function Admin() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
-            className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#9C7F5C] mb-4"
+            className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D] mb-4"
             required
             autoComplete="current-password"
           />
           <button
             type="submit"
-            className="w-full bg-[#9C7F5C] text-[#F4EFE6] py-3 rounded-md hover:bg-[#8A6F4C] transition-colors"
+            className="w-full bg-[#785E3D] text-[#F4EFE6] py-3 rounded-md hover:bg-[#8A6F4C] transition-colors"
           >
             Login
           </button>
@@ -533,7 +627,7 @@ export default function Admin() {
           <h1 className="text-3xl font-light">Admin Dashboard</h1>
           <a
             href="/"
-            className="text-sm text-[#9C7F5C] hover:text-[#F4EFE6] transition-colors"
+            className="text-sm text-[#785E3D] hover:text-[#F4EFE6] transition-colors"
           >
             ← Back to Site
           </a>
@@ -543,31 +637,37 @@ export default function Admin() {
         <div className="flex gap-4 mb-8 border-b border-[#3A2E26]">
           <button
             onClick={() => setActiveTab('events')}
-            className={`pb-4 px-4 ${activeTab === 'events' ? 'border-b-2 border-[#9C7F5C] text-[#9C7F5C]' : 'text-[#6B5740]'}`}
+            className={`pb-4 px-4 ${activeTab === 'events' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740]'}`}
           >
             Events
           </button>
           <button
             onClick={() => setActiveTab('subscribers')}
-            className={`pb-4 px-4 ${activeTab === 'subscribers' ? 'border-b-2 border-[#9C7F5C] text-[#9C7F5C]' : 'text-[#6B5740]'}`}
+            className={`pb-4 px-4 ${activeTab === 'subscribers' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740]'}`}
           >
             Subscribers ({subscribers.length})
           </button>
           <button
             onClick={() => setActiveTab('privateEnquiries')}
-            className={`pb-4 px-4 ${activeTab === 'privateEnquiries' ? 'border-b-2 border-[#9C7F5C] text-[#9C7F5C]' : 'text-[#6B5740]'}`}
+            className={`pb-4 px-4 ${activeTab === 'privateEnquiries' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740]'}`}
           >
             Private Enquiries ({privateEnquiries.length})
           </button>
           <button
             onClick={() => setActiveTab('testimonials')}
-            className={`pb-4 px-4 ${activeTab === 'testimonials' ? 'border-b-2 border-[#9C7F5C] text-[#9C7F5C]' : 'text-[#6B5740]'}`}
+            className={`pb-4 px-4 ${activeTab === 'testimonials' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740]'}`}
           >
             Testimonials
           </button>
           <button
+            onClick={() => setActiveTab('vacations')}
+            className={`pb-4 px-4 ${activeTab === 'vacations' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740]'}`}
+          >
+            Vacations
+          </button>
+          <button
             onClick={() => setActiveTab('settings')}
-            className={`pb-4 px-4 ${activeTab === 'settings' ? 'border-b-2 border-[#9C7F5C] text-[#9C7F5C]' : 'text-[#6B5740]'}`}
+            className={`pb-4 px-4 ${activeTab === 'settings' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740]'}`}
           >
             Settings
           </button>
@@ -585,34 +685,34 @@ export default function Admin() {
                   placeholder="Title"
                   value={eventForm.title}
                   onChange={(e) => setEventForm({ ...eventForm, title: e.target.value })}
-                  className="px-4 py-2 bg-[#1C1410] border border-[#3A2E26] rounded-md outline-none focus:border-[#9C7F5C]"
+                  className="px-4 py-2 bg-[#1C1410] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
                   required
                 />
                 <input
                   type="date"
                   value={eventForm.date}
                   onChange={(e) => setEventForm({ ...eventForm, date: e.target.value })}
-                  className="px-4 py-2 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#9C7F5C]"
+                  className="px-4 py-2 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
                 />
                 <input
                   type="text"
                   placeholder="Location"
                   value={eventForm.location}
                   onChange={(e) => setEventForm({ ...eventForm, location: e.target.value })}
-                  className="px-4 py-2 bg-[#1C1410] border border-[#3A2E26] rounded-md outline-none focus:border-[#9C7F5C]"
+                  className="px-4 py-2 bg-[#1C1410] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
                 />
                 <input
                   type="url"
                   placeholder="Booking Link"
                   value={eventForm.booking_link}
                   onChange={(e) => setEventForm({ ...eventForm, booking_link: e.target.value })}
-                  className="px-4 py-2 bg-[#1C1410] border border-[#3A2E26] rounded-md outline-none focus:border-[#9C7F5C]"
+                  className="px-4 py-2 bg-[#1C1410] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
                 />
                 <textarea
                   placeholder="Description"
                   value={eventForm.description}
                   onChange={(e) => setEventForm({ ...eventForm, description: e.target.value })}
-                  className="px-4 py-2 bg-[#1C1410] border border-[#3A2E26] rounded-md outline-none focus:border-[#9C7F5C] md:col-span-2"
+                  className="px-4 py-2 bg-[#1C1410] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D] md:col-span-2"
                   rows="3"
                 />
                 <div>
@@ -637,7 +737,7 @@ export default function Admin() {
                   <button
                     type="submit"
                     disabled={uploading}
-                    className="bg-[#9C7F5C] text-[#F4EFE6] px-6 py-2 rounded-md hover:bg-[#8A6F4C] transition-colors disabled:opacity-50"
+                    className="bg-[#785E3D] text-[#F4EFE6] px-6 py-2 rounded-md hover:bg-[#8A6F4C] transition-colors disabled:opacity-50"
                   >
                     {uploading ? 'Saving...' : eventForm.id ? 'Update Event' : 'Add Event'}
                   </button>
@@ -682,13 +782,13 @@ export default function Admin() {
                         className="h-56 w-full object-cover"
                       />
                     ) : (
-                      <div className="h-56 bg-gradient-to-br from-[#9C7F5C] to-[#6B5740]" />
+                      <div className="h-56 bg-gradient-to-br from-[#785E3D] to-[#6B5740]" />
                     )}
 
                     {/* Content */}
                     <div className="p-6">
                       {eventForm.date && (
-                        <p className="text-xs uppercase tracking-wide text-[#9C7F5C] mb-2">
+                        <p className="text-xs uppercase tracking-wide text-[#785E3D] mb-2">
                           {formatDatePreview(eventForm.date)}
                         </p>
                       )}
@@ -706,7 +806,7 @@ export default function Admin() {
                         </p>
                       )}
                       {eventForm.booking_link && (
-                        <span className="inline-block text-xs uppercase tracking-wide text-[#9C7F5C] border-b border-[#9C7F5C]">
+                        <span className="inline-block text-xs uppercase tracking-wide text-[#785E3D] border-b border-[#785E3D]">
                           Book now →
                         </span>
                       )}
@@ -733,10 +833,10 @@ export default function Admin() {
                         <div className="flex justify-between items-start">
                           <div className="flex-1">
                             <h3 className="text-lg font-medium mb-1">{event.title}</h3>
-                            <p className="text-sm text-[#9C7F5C] mb-2">{event.date} • {event.location}</p>
+                            <p className="text-sm text-[#785E3D] mb-2">{event.date} • {event.location}</p>
                             {event.description && <p className="text-sm text-[#6B5740] mb-2">{event.description}</p>}
                             <div className="flex gap-2 items-center">
-                              <span className={`text-xs px-2 py-1 rounded ${isUpcoming ? 'bg-[#9C7F5C]' : 'bg-[#3A2E26]'}`}>
+                              <span className={`text-xs px-2 py-1 rounded ${isUpcoming ? 'bg-[#785E3D]' : 'bg-[#3A2E26]'}`}>
                                 {isUpcoming ? 'upcoming' : 'past'}
                               </span>
                               {event.image_url && <span className="text-xs text-[#6B5740]">Has image</span>}
@@ -745,7 +845,7 @@ export default function Admin() {
                         <div className="flex gap-2">
                           <button
                             onClick={() => handleEditEvent(event)}
-                            className="px-3 py-1 bg-[#9C7F5C] rounded text-sm hover:bg-[#8A6F4C] transition-colors"
+                            className="px-3 py-1 bg-[#785E3D] rounded text-sm hover:bg-[#8A6F4C] transition-colors"
                           >
                             Edit
                           </button>
@@ -773,7 +873,7 @@ export default function Admin() {
               <h2 className="text-xl font-light">Subscribers ({subscribers.length})</h2>
               <button
                 onClick={exportToCSV}
-                className="bg-[#9C7F5C] text-[#F4EFE6] px-4 py-2 rounded-md hover:bg-[#8A6F4C] transition-colors text-sm"
+                className="bg-[#785E3D] text-[#F4EFE6] px-4 py-2 rounded-md hover:bg-[#8A6F4C] transition-colors text-sm"
               >
                 Export to CSV
               </button>
@@ -787,10 +887,10 @@ export default function Admin() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-[#3A2E26]">
-                      <th className="text-left py-2 px-4 text-[#9C7F5C]">Email</th>
-                      <th className="text-left py-2 px-4 text-[#9C7F5C]">Signup Date</th>
-                      <th className="text-left py-2 px-4 text-[#9C7F5C]">Source</th>
-                      <th className="text-left py-2 px-4 text-[#9C7F5C]">Actions</th>
+                      <th className="text-left py-2 px-4 text-[#785E3D]">Email</th>
+                      <th className="text-left py-2 px-4 text-[#785E3D]">Signup Date</th>
+                      <th className="text-left py-2 px-4 text-[#785E3D]">Source</th>
+                      <th className="text-left py-2 px-4 text-[#785E3D]">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -835,14 +935,14 @@ export default function Admin() {
                         <div className="flex items-center gap-3 mb-1">
                           <h3 className="text-lg font-medium text-[#F4EFE6]">{enquiry.name}</h3>
                           {enquiry.followed_up && (
-                            <span className="text-xs px-2 py-1 rounded bg-[#9C7F5C] text-[#F4EFE6]">
+                            <span className="text-xs px-2 py-1 rounded bg-[#785E3D] text-[#F4EFE6]">
                               Followed up
                             </span>
                           )}
                         </div>
                         <a
                           href={`mailto:${enquiry.email}`}
-                          className="text-sm text-[#9C7F5C] hover:text-[#C9A878] transition-colors"
+                          className="text-sm text-[#785E3D] hover:text-[#C9A878] transition-colors"
                         >
                           {enquiry.email}
                         </a>
@@ -865,8 +965,8 @@ export default function Admin() {
                         onClick={() => handleToggleFollowedUp(enquiry)}
                         className={`px-4 py-2 rounded-md text-sm transition-colors ${
                           enquiry.followed_up
-                            ? 'bg-[#3A2E26] text-[#9C7F5C] hover:bg-[#4A3E36]'
-                            : 'bg-[#9C7F5C] text-[#F4EFE6] hover:bg-[#8A6F4C]'
+                            ? 'bg-[#3A2E26] text-[#785E3D] hover:bg-[#4A3E36]'
+                            : 'bg-[#785E3D] text-[#F4EFE6] hover:bg-[#8A6F4C]'
                         }`}
                       >
                         {enquiry.followed_up ? 'Mark as not followed up' : 'Mark as followed up'}
@@ -899,7 +999,7 @@ export default function Admin() {
               <div className="space-y-6">
                 {testimonials.map((testimonial, index) => (
                   <div key={testimonial.id} className="bg-[#1C1410] p-6 rounded-md border border-[#3A2E26]">
-                    <h3 className="text-lg font-medium mb-4 text-[#9C7F5C]">Testimonial {index + 1}</h3>
+                    <h3 className="text-lg font-medium mb-4 text-[#785E3D]">Testimonial {index + 1}</h3>
                     <form
                       onSubmit={(e) => {
                         e.preventDefault();
@@ -908,7 +1008,7 @@ export default function Admin() {
                       className="space-y-4"
                     >
                       <div>
-                        <label className="block text-sm text-[#9C7F5C] mb-2">Review</label>
+                        <label className="block text-sm text-[#785E3D] mb-2">Review</label>
                         <textarea
                           value={testimonial.review}
                           onChange={(e) => {
@@ -917,7 +1017,7 @@ export default function Admin() {
                             setTestimonials(updatedTestimonials);
                           }}
                           placeholder="The review text"
-                          className="w-full px-4 py-3 bg-[#2A1E16] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#9C7F5C]"
+                          className="w-full px-4 py-3 bg-[#2A1E16] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
                           rows="3"
                           required
                         />
@@ -925,7 +1025,7 @@ export default function Admin() {
 
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-sm text-[#9C7F5C] mb-2">Studio</label>
+                          <label className="block text-sm text-[#785E3D] mb-2">Studio</label>
                           <input
                             type="text"
                             value={testimonial.studio}
@@ -935,13 +1035,13 @@ export default function Admin() {
                               setTestimonials(updatedTestimonials);
                             }}
                             placeholder="e.g., Flo Yoga"
-                            className="w-full px-4 py-3 bg-[#2A1E16] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#9C7F5C]"
+                            className="w-full px-4 py-3 bg-[#2A1E16] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
                             required
                           />
                         </div>
 
                         <div>
-                          <label className="block text-sm text-[#9C7F5C] mb-2">Class</label>
+                          <label className="block text-sm text-[#785E3D] mb-2">Class</label>
                           <input
                             type="text"
                             value={testimonial.class_name}
@@ -951,7 +1051,7 @@ export default function Admin() {
                               setTestimonials(updatedTestimonials);
                             }}
                             placeholder="e.g., Experienced Flow"
-                            className="w-full px-4 py-3 bg-[#2A1E16] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#9C7F5C]"
+                            className="w-full px-4 py-3 bg-[#2A1E16] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
                             required
                           />
                         </div>
@@ -959,7 +1059,7 @@ export default function Admin() {
 
                       <button
                         type="submit"
-                        className="bg-[#9C7F5C] text-[#F4EFE6] px-6 py-2 rounded-md hover:bg-[#8A6F4C] transition-colors"
+                        className="bg-[#785E3D] text-[#F4EFE6] px-6 py-2 rounded-md hover:bg-[#8A6F4C] transition-colors"
                       >
                         Update Testimonial
                       </button>
@@ -971,6 +1071,140 @@ export default function Admin() {
           </div>
         )}
 
+        {/* Vacations Tab */}
+        {activeTab === 'vacations' && (
+          <div>
+            {/* Vacation Form */}
+            <div className="bg-[#2A1E16] p-6 rounded-lg mb-8">
+              <h2 className="text-xl font-light mb-4">
+                {vacationForm.id ? 'Edit Vacation Period' : 'Add Vacation Period'}
+              </h2>
+              <form onSubmit={handleSaveVacation} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm text-[#785E3D] mb-2">Start Date</label>
+                    <input
+                      type="date"
+                      value={vacationForm.start_date}
+                      onChange={(e) => setVacationForm({ ...vacationForm, start_date: e.target.value })}
+                      required
+                      className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-[#785E3D] mb-2">End Date</label>
+                    <input
+                      type="date"
+                      value={vacationForm.end_date}
+                      onChange={(e) => setVacationForm({ ...vacationForm, end_date: e.target.value })}
+                      required
+                      className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm text-[#785E3D] mb-2">Reason (private note for you only)</label>
+                  <input
+                    type="text"
+                    value={vacationForm.reason}
+                    onChange={(e) => setVacationForm({ ...vacationForm, reason: e.target.value })}
+                    placeholder="e.g., Retreat, Personal, etc."
+                    className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
+                  />
+                  <p className="text-xs text-[#6B5740] mt-1">This is just for your reference and won't be shown on the website</p>
+                </div>
+                <div className="flex gap-4">
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="bg-[#785E3D] text-[#F4EFE6] px-6 py-3 rounded-md hover:bg-[#8A6F4C] transition-colors disabled:opacity-50"
+                  >
+                    {vacationForm.id ? 'Update' : 'Add'} Vacation
+                  </button>
+                  {vacationForm.id && (
+                    <button
+                      type="button"
+                      onClick={() => setVacationForm({ id: null, start_date: '', end_date: '', reason: '' })}
+                      className="bg-[#3A2E26] text-[#F4EFE6] px-6 py-3 rounded-md hover:bg-[#4A3828] transition-colors"
+                    >
+                      Cancel
+                    </button>
+                  )}
+                </div>
+              </form>
+            </div>
+
+            {/* Info Box */}
+            <div className="bg-[#785E3D]/20 border border-[#785E3D] p-4 rounded-lg mb-6">
+              <p className="text-sm text-[#F4EFE6]">
+                <strong>Note:</strong> A banner will automatically appear on the website 2 weeks before your vacation starts, letting students know you'll be away. The banner will show the dates but not the reason.
+              </p>
+            </div>
+
+            {/* Vacation List */}
+            <div className="bg-[#2A1E16] rounded-lg overflow-hidden">
+              <h2 className="text-xl font-light p-6 pb-4">Scheduled Vacations</h2>
+              {loading ? (
+                <p className="p-6 text-[#6B5740]">Loading...</p>
+              ) : vacations.length === 0 ? (
+                <p className="p-6 text-[#6B5740]">No vacations scheduled</p>
+              ) : (
+                <div className="divide-y divide-[#3A2E26]">
+                  {vacations.map((vacation) => {
+                    const startDate = new Date(vacation.start_date);
+                    const endDate = new Date(vacation.end_date);
+                    const today = new Date();
+                    const twoWeeksBefore = new Date(startDate);
+                    twoWeeksBefore.setDate(startDate.getDate() - 14);
+
+                    const isActive = today >= startDate && today <= endDate;
+                    const bannerShowing = today >= twoWeeksBefore && today < startDate;
+
+                    return (
+                      <div key={vacation.id} className="p-6 hover:bg-[#1C1410] transition-colors">
+                        <div className="flex justify-between items-start">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-3 mb-2">
+                              <p className="text-lg text-[#F4EFE6]">
+                                {startDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                {' → '}
+                                {endDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+                              </p>
+                              {isActive && (
+                                <span className="px-2 py-1 bg-[#785E3D] text-[#F4EFE6] text-xs rounded">Active Now</span>
+                              )}
+                              {bannerShowing && !isActive && (
+                                <span className="px-2 py-1 bg-[#8A6F4C] text-[#F4EFE6] text-xs rounded">Banner Showing</span>
+                              )}
+                            </div>
+                            {vacation.reason && (
+                              <p className="text-sm text-[#6B5740]">Reason: {vacation.reason}</p>
+                            )}
+                          </div>
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => handleEditVacation(vacation)}
+                              className="text-[#785E3D] hover:text-[#8A6F4C] text-sm px-3 py-1 border border-[#3A2E26] rounded"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeleteVacation(vacation.id)}
+                              className="text-red-400 hover:text-red-300 text-sm px-3 py-1 border border-[#3A2E26] rounded"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* Settings Tab */}
         {activeTab === 'settings' && (
           <div className="bg-[#2A1E16] p-6 rounded-lg max-w-2xl">
@@ -978,26 +1212,26 @@ export default function Admin() {
 
             <form onSubmit={handleChangeCredentials} className="space-y-4">
               <div>
-                <label className="block text-sm text-[#9C7F5C] mb-2">New Username (optional)</label>
+                <label className="block text-sm text-[#785E3D] mb-2">New Username (optional)</label>
                 <input
                   type="text"
                   value={newUsername}
                   onChange={(e) => setNewUsername(e.target.value)}
                   placeholder="Enter new username"
-                  className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#9C7F5C]"
+                  className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
                   autoComplete="username"
                 />
                 <p className="text-xs text-[#6B5740] mt-1">Leave blank to keep current username</p>
               </div>
 
               <div>
-                <label className="block text-sm text-[#9C7F5C] mb-2">New Password (optional)</label>
+                <label className="block text-sm text-[#785E3D] mb-2">New Password (optional)</label>
                 <input
                   type="password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="Enter new password"
-                  className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#9C7F5C]"
+                  className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
                   minLength={6}
                   autoComplete="new-password"
                 />
@@ -1005,13 +1239,13 @@ export default function Admin() {
               </div>
 
               <div>
-                <label className="block text-sm text-[#9C7F5C] mb-2">Confirm New Password</label>
+                <label className="block text-sm text-[#785E3D] mb-2">Confirm New Password</label>
                 <input
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Confirm new password"
-                  className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#9C7F5C]"
+                  className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
                   minLength={6}
                   autoComplete="new-password"
                   disabled={!newPassword}
@@ -1021,7 +1255,7 @@ export default function Admin() {
               <button
                 type="submit"
                 disabled={changingSettings}
-                className="bg-[#9C7F5C] text-[#F4EFE6] px-6 py-3 rounded-md hover:bg-[#8A6F4C] transition-colors disabled:opacity-50"
+                className="bg-[#785E3D] text-[#F4EFE6] px-6 py-3 rounded-md hover:bg-[#8A6F4C] transition-colors disabled:opacity-50"
               >
                 {changingSettings ? 'Updating...' : 'Update Credentials'}
               </button>
@@ -1055,7 +1289,7 @@ export default function Admin() {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm text-[#9C7F5C] mb-2">Zoom</label>
+                <label className="block text-sm text-[#785E3D] mb-2">Zoom</label>
                 <input
                   type="range"
                   min={1}
@@ -1078,7 +1312,7 @@ export default function Admin() {
                 </button>
                 <button
                   onClick={handleCropConfirm}
-                  className="px-6 py-2 bg-[#9C7F5C] text-[#F4EFE6] rounded-md hover:bg-[#8A6F4C] transition-colors"
+                  className="px-6 py-2 bg-[#785E3D] text-[#F4EFE6] rounded-md hover:bg-[#8A6F4C] transition-colors"
                 >
                   Crop & Confirm
                 </button>

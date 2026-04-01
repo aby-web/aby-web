@@ -38,16 +38,24 @@ export default function Hero() {
 
           {/* Subheading */}
           <p className="text-base font-normal text-white/85 leading-relaxed max-w-[420px] mb-10">
-            Build real strength, control and focus through progressive vinyasa, handstands and arm balances. Classes across London.
+            Build real strength, control and focus through progressive vinyasa, handstands and arm balances. Classes across London or private sessions tailored to your goals.
           </p>
 
-          {/* CTA Link */}
-          <a
-            href="#schedule"
-            className="inline-block text-[13px] uppercase tracking-[0.1em] text-white border-b border-white/50 hover:border-white transition-colors pb-1"
-          >
-            View Schedule →
-          </a>
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <a
+              href="#schedule"
+              className="inline-block px-6 py-3 rounded-full bg-white text-[#1C1410] hover:bg-white/90 transition-colors text-sm uppercase tracking-wide"
+            >
+              Find Your Class
+            </a>
+            <a
+              href="/private-sessions"
+              className="inline-block px-6 py-3 rounded-full bg-transparent border-2 border-white text-white hover:bg-white/10 transition-colors text-sm uppercase tracking-wide"
+            >
+              Private Training
+            </a>
+          </div>
         </div>
       </div>
     </section>

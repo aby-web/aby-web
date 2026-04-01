@@ -55,22 +55,22 @@ export default function EmailCapture() {
   };
 
   return (
-    <section id="contact" className="bg-[#EAE0CF] px-8 md:px-12 py-18">
+    <section id="contact" className="bg-[#F4EFE6] px-8 md:px-12 py-18">
       <div className="max-w-2xl mx-auto text-center">
         {/* Section Header */}
-        <p className="text-[11px] uppercase tracking-[0.2em] text-[#9C7F5C] mb-4">
+        <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-4">
           Stay in the loop
         </p>
         <h2 className="text-4xl md:text-5xl font-light text-[#1C1410] mb-4">
-          Classes, workshops, retreats.
+          Don't miss out.
         </h2>
         <p className="text-base text-[#6B5740] mb-8">
-          Join the mailing list for updates on new classes, upcoming workshops and international retreats.
+          Get first access to new classes, workshops, and international retreats before they fill up.
         </p>
 
         {/* Form */}
         {status === 'success' || status === 'exists' ? (
-          <div className="text-[#9C7F5C] text-lg mb-4">
+          <div className="text-[#785E3D] text-lg mb-4">
             {message} ✓
           </div>
         ) : (
@@ -90,7 +90,7 @@ export default function EmailCapture() {
                 disabled={status === 'loading'}
                 className="px-6 py-3 bg-[#1C1410] text-[#F4EFE6] rounded-full hover:bg-[#2A2018] transition-colors disabled:opacity-50"
               >
-                {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
+                {status === 'loading' ? 'Joining...' : 'Join Now'}
               </button>
             </div>
             {status === 'error' && (
@@ -100,7 +100,7 @@ export default function EmailCapture() {
         )}
 
         {/* Disclaimer */}
-        <p className="text-[11px] text-[#9C7F5C]">
+        <p className="text-[11px] text-[#785E3D]">
           No spam. Unsubscribe any time.
         </p>
       </div>
