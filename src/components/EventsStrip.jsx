@@ -134,7 +134,7 @@ export default function EventsStrip() {
               {/* Close Button */}
               <button
                 onClick={() => setSelectedEvent(null)}
-                className="absolute top-4 right-4 z-10 text-white bg-black/50 hover:bg-black/70 rounded-full w-8 h-8 flex items-center justify-center text-2xl"
+                className="absolute top-4 right-4 z-10 text-white bg-black/50 hover:bg-black/70 rounded-full w-8 h-8 flex items-center justify-center text-2xl leading-none"
               >
                 ×
               </button>
