@@ -2,6 +2,7 @@ export default function Schedule() {
   const scheduleData = [
     {
       location: 'HOME',
+      area: 'Primrose Hill',
       classes: [
         { day: 'Friday', time: '18:00', name: 'Vinyasa (75)', url: 'http://homewellness.uk/' },
         { day: 'Sunday', time: '10:00', name: 'Vinyasa (75)', url: 'http://homewellness.uk/' },
@@ -9,13 +10,31 @@ export default function Schedule() {
     },
     {
       location: 'Indaba',
+      area: 'Marylebone',
       classes: [
         { day: 'Tuesday', time: '07:30', name: 'Morning Vinyasa', url: 'https://indabayoga.com/timetable' },
         { day: 'Saturday', time: '11:30', name: 'Power (75)', url: 'https://indabayoga.com/timetable' },
       ],
     },
     {
+      location: 'BLOK',
+      area: 'Shoreditch',
+      classes: [
+        { day: 'Monday', time: '16:00', name: 'Dynamic Vinyasa', url: 'https://www.bloklondon.com/' },
+        { day: 'Monday', time: '17:15', name: 'Yin', url: 'https://www.bloklondon.com/' },
+      ],
+    },
+    {
+      location: 'BXR',
+      area: 'Marylebone',
+      classes: [
+        { day: 'Wednesday', time: '13:00', name: 'Handstands', url: 'https://www.bxrlondon.com/' },
+        { day: 'Thursday', time: '20:00', name: 'Power', url: 'https://www.bxrlondon.com/' },
+      ],
+    },
+    {
       location: 'Flo',
+      area: 'Hampstead',
       classes: [
         { day: 'Monday', time: '07:15', name: 'Morning Flow', url: 'https://www.floyogastudio.co.uk/book-a-class' },
         { day: 'Tuesday', time: '10:00', name: 'Handstands', url: 'https://www.floyogastudio.co.uk/book-a-class' },
@@ -23,14 +42,8 @@ export default function Schedule() {
       ],
     },
     {
-      location: 'BXR',
-      classes: [
-        { day: 'Wednesday', time: '13:00', name: 'Handstands', url: 'https://www.bxrlondon.com/' },
-        { day: 'Thursday', time: '20:00', name: 'Power', url: 'https://www.bxrlondon.com/' },
-      ],
-    },
-    {
-      location: 'MoreYoga Soho',
+      location: 'MoreYoga',
+      area: 'Soho',
       classes: [
         { day: 'Tuesday', time: '19:15', name: 'Power (75)', url: 'https://www.moreyoga.co.uk/timetables-full/' },
       ],
@@ -54,10 +67,17 @@ export default function Schedule() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {scheduleData.map((studio, studioIndex) => (
             <div key={studioIndex}>
-              {/* Location Header */}
-              <h3 className="text-2xl md:text-[28px] font-light text-[#1C1410] pb-4 mb-6 border-b border-[#C9B99A]">
-                {studio.location}
-              </h3>
+              {/* Location Header with Subtitle */}
+              <div className="pb-4 mb-6 border-b border-[#C9B99A]">
+                <h3 className="text-2xl md:text-[28px] font-light text-[#1C1410]">
+                  {studio.location}
+                </h3>
+                {studio.area && (
+                  <p className="text-[11px] uppercase tracking-[0.15em] text-[#9B8366] mt-1">
+                    {studio.area}
+                  </p>
+                )}
+              </div>
 
               {/* Classes */}
               <div>
