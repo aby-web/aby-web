@@ -17,7 +17,7 @@ export default function InstagramFeed() {
   }, []);
 
   return (
-    <section className="bg-[#EAE0CF] px-8 md:px-12 py-20">
+    <section className="bg-[#F4EFE6] px-8 md:px-12 py-20">
       <div className="max-w-6xl mx-auto">
         {/* CTA Button */}
         <div className="text-center mb-8">

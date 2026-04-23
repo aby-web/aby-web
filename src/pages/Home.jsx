@@ -4,6 +4,7 @@ import VacationBanner from '../components/VacationBanner';
 import Hero from '../components/Hero';
 import Schedule from '../components/Schedule';
 import EventsStrip from '../components/EventsStrip';
+import PracticeVideos from '../components/PracticeVideos';
 import About from '../components/About';
 import InstagramFeed from '../components/InstagramFeed';
 import EmailCapture from '../components/EmailCapture';
@@ -142,6 +143,7 @@ export default function Home() {
         <Hero />
         <Schedule />
         <EventsStrip />
+        <PracticeVideos />
         <About />
         <InstagramFeed />
         <EmailCapture />

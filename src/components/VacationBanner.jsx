@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 
 export default function VacationBanner() {
@@ -55,7 +56,11 @@ export default function VacationBanner() {
       {/* Fixed banner at the very top */}
       <div ref={bannerRef} className="fixed top-0 left-0 right-0 bg-[#785E3D] text-[#F4EFE6] py-3 px-8 text-center text-sm z-[60]">
         <p>
-          <strong>Note:</strong> I'll be away {bannerInfo.startDate} – {bannerInfo.endDate}. Classes will be covered during this time.
+          <strong>Note:</strong> I'll be away {bannerInfo.startDate} – {bannerInfo.endDate}. Classes will be covered during this time.{' '}
+          <Link to="/practice" className="underline hover:text-white transition-colors">
+            Practice with me online
+          </Link>
+          {' '}while I'm away.
         </p>
       </div>
       {/* Add CSS to push fixed nav down using measured banner height */}

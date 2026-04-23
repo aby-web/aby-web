@@ -55,7 +55,7 @@ export default function EmailCapture() {
   };
 
   return (
-    <section id="contact" className="bg-[#F4EFE6] px-8 md:px-12 py-18">
+    <section id="contact" className="bg-[#EAE0CF] px-8 md:px-12 py-18">
       <div className="max-w-2xl mx-auto text-center">
         {/* Section Header */}
         <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-4">

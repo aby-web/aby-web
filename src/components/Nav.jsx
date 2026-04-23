@@ -88,6 +88,12 @@ export default function Nav({ theme = 'dark' }) {
             Events
           </a>
           <a
+            href="/practice"
+            className={`${isActive('/practice') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
+          >
+            Practice
+          </a>
+          <a
             href="/private-sessions"
             className={`${isActive('/private-sessions') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
           >
@@ -134,6 +140,13 @@ export default function Nav({ theme = 'dark' }) {
             className={`${isActive('/events') ? 'text-[#C9A878]' : 'text-white/80'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/10`}
           >
             Events
+          </a>
+          <a
+            href="/practice"
+            onClick={() => setMobileMenuOpen(false)}
+            className={`${isActive('/practice') ? 'text-[#C9A878]' : 'text-white/80'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/10`}
+          >
+            Practice
           </a>
           <a
             href="/private-sessions"
