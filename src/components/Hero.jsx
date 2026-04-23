@@ -44,10 +44,10 @@ export default function Hero() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 items-start">
             <a
-              href="#schedule"
+              href="#practice"
               className="px-6 py-3 rounded-full bg-white text-[#1C1410] hover:bg-white/90 transition-colors text-sm uppercase tracking-wide text-center"
             >
-              Find Your Class
+              Practice Now
             </a>
             <a
               href="/private-sessions"
