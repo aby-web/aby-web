@@ -20,6 +20,8 @@ function GuideHeader() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  const logoFilter = scrolled ? 'none' : 'brightness(0) invert(1)';
+
   return (
     <header
       className="no-print fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-10 py-4 transition-all duration-300"
@@ -28,17 +30,14 @@ function GuideHeader() {
         borderBottom: scrolled ? '1px solid oklch(88% 0.018 78)' : '1px solid transparent',
       }}
     >
-      <p
-        className="m-0 transition-colors duration-300"
-        style={{
-          fontFamily: 'Cormorant Garamond, serif',
-          fontSize: 16,
-          fontWeight: 400,
-          color: scrolled ? 'oklch(17% 0.015 55)' : 'oklch(90% 0.01 78)',
-        }}
-      >
-        Ammar Bass
-      </p>
+      <a href="/" className="flex items-center">
+        <img
+          src="/images/logo.png"
+          alt="Ammar Bass"
+          className="w-auto transition-all duration-300"
+          style={{ height: '22px', filter: logoFilter }}
+        />
+      </a>
       <button
         onClick={() => window.print()}
         className="transition-all duration-200"
