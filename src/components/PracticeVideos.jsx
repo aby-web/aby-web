@@ -79,7 +79,7 @@ export default function PracticeVideos() {
   };
 
   return (
-    <section id="practice" className="py-24 bg-[#EAE0CF]">
+    <section id="practice" className="py-24 bg-[#F4EFE6]">
       <div className="max-w-7xl mx-auto px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-light mb-4 text-[#3D3D3D]">
