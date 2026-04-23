@@ -28,11 +28,28 @@ export default function Nav({ theme = 'dark' }) {
   }, [mobileMenuOpen]);
 
   const isDark = theme === 'dark';
+
+  // On mobile, always use solid background when isDark (to keep hamburger visible)
+  // On desktop, can use transparent background at top
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const textColor = isDark ? 'text-white' : (scrolled ? 'text-white' : 'text-[#1C1410]');
   const textColorHover = isDark ? 'hover:text-white' : (scrolled ? 'hover:text-white' : 'hover:text-[#785E3D]');
   const textOpacity = isDark ? 'text-white/80' : (scrolled ? 'text-white/80' : 'text-[#1C1410]/80');
   const logoFilter = isDark ? 'brightness(0) invert(1)' : (scrolled ? 'brightness(0) invert(1)' : 'none');
-  const bgColor = isDark ? 'rgba(28, 20, 16, 0.85)' : (scrolled ? 'rgba(28, 20, 16, 0.85)' : 'transparent');
+
+  // Mobile always gets solid bg when dark theme, desktop can be transparent at top
+  const bgColor = (isDark && isMobile) ? 'rgba(28, 20, 16, 0.95)' : (isDark ? 'rgba(28, 20, 16, 0.85)' : (scrolled ? 'rgba(28, 20, 16, 0.85)' : 'transparent'));
+
   const borderColor = isDark
     ? (scrolled ? 'border-white/40' : 'border-white/60')
     : (scrolled ? 'border-[#1C1410]/40' : 'border-[#1C1410]/60');
@@ -50,10 +67,10 @@ export default function Nav({ theme = 'dark' }) {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
-        scrolled ? 'backdrop-blur-md' : 'bg-transparent'
+        scrolled || (isDark && isMobile) ? 'backdrop-blur-md' : 'bg-transparent'
       }`}
       style={{
-        backgroundColor: scrolled ? bgColor : 'transparent',
+        backgroundColor: bgColor,
       }}
     >
       <div className="max-w-7xl mx-auto px-8 lg:px-12 py-5 flex items-center justify-between">
