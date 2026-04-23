@@ -70,10 +70,10 @@ export default function Nav({ theme = 'dark' }) {
         {/* Desktop Nav Links */}
         <div className="hidden md:flex items-center gap-8">
           <a
-            href="/about"
-            className={`${isActive('/about') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
+            href="/practice"
+            className={`${isActive('/practice') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
           >
-            About
+            Practice
           </a>
           <a
             href="/#schedule"
@@ -88,10 +88,10 @@ export default function Nav({ theme = 'dark' }) {
             Events
           </a>
           <a
-            href="/practice"
-            className={`${isActive('/practice') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
+            href="/about"
+            className={`${isActive('/about') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
           >
-            Practice
+            About
           </a>
           <a
             href="/private-sessions"
@@ -121,11 +121,11 @@ export default function Nav({ theme = 'dark' }) {
       >
         <div className="flex flex-col gap-6 px-8 py-8">
           <a
-            href="/about"
+            href="/practice"
             onClick={() => setMobileMenuOpen(false)}
-            className={`${isActive('/about') ? 'text-[#C9A878]' : 'text-white/80'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/10`}
+            className={`${isActive('/practice') ? 'text-[#C9A878]' : 'text-white/80'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/10`}
           >
-            About
+            Practice
           </a>
           <a
             href="/#schedule"
@@ -142,11 +142,11 @@ export default function Nav({ theme = 'dark' }) {
             Events
           </a>
           <a
-            href="/practice"
+            href="/about"
             onClick={() => setMobileMenuOpen(false)}
-            className={`${isActive('/practice') ? 'text-[#C9A878]' : 'text-white/80'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/10`}
+            className={`${isActive('/about') ? 'text-[#C9A878]' : 'text-white/80'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/10`}
           >
-            Practice
+            About
           </a>
           <a
             href="/private-sessions"

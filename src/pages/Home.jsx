@@ -8,7 +8,6 @@ import PracticeVideos from '../components/PracticeVideos';
 import About from '../components/About';
 import InstagramFeed from '../components/InstagramFeed';
 import EmailCapture from '../components/EmailCapture';
-import Testimonials from '../components/Testimonials';
 import Footer from '../components/Footer';
 
 export default function Home() {
@@ -141,13 +140,12 @@ export default function Home() {
       <VacationBanner />
       <main>
         <Hero />
-        <Schedule />
-        <EventsStrip />
         <PracticeVideos />
         <About />
+        <Schedule />
+        <EventsStrip />
         <InstagramFeed />
         <EmailCapture />
-        <Testimonials />
       </main>
       <Footer />
     </div>

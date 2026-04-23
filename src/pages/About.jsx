@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
+import Testimonials from '../components/Testimonials';
 import Footer from '../components/Footer';
 
 export default function About() {
@@ -122,8 +123,11 @@ export default function About() {
         </div>
       </section>
 
+      {/* Testimonials */}
+      <Testimonials />
+
       {/* CTA Section */}
-      <section className="bg-[#F4EFE6] px-8 md:px-12 py-20">
+      <section className="bg-[#EAE0CF] px-8 md:px-12 py-20">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-light text-[#1C1410] mb-8">
             Practice with me.
