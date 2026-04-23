@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Handstand Fundamentals Guide — Ammar Bass</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: oklch(97% 0.012 78);
+      color: oklch(17% 0.015 55);
+      font-family: 'DM Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    input { font-family: inherit; }
+    a { color: inherit; }
+
+    @media print {
+      @page { size: A4; margin: 1.5cm 1.8cm; }
+      #guide-header, #tweaks-panel, #tweaks-btn, .no-print { display: none !important; }
+      body { background: white; }
+      section { break-inside: avoid; }
+      .guide-wrap { padding: 0 !important; max-width: 100% !important; }
+    }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="guide-content.jsx"></script>
+
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "password": "handstand2026",
+  "collectEmail": true,
+  "accentHue": 38
+}/*EDITMODE-END*/;
+
+// ── Gate screens ──────────────────────────────────────────────────────────
+
+function GateWrap({ children }) {
+  return (
+    <div style={{
+      minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
+      background: 'oklch(97% 0.012 78)', padding: 24,
+    }}>
+      <div style={{ width: '100%', maxWidth: 400, textAlign: 'center' }}>
+        <p style={{ fontFamily: 'Cormorant Garamond', fontSize: 13, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'oklch(55% 0.015 65)', marginBottom: 32 }}>
+          Ammar Bass
+        </p>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function PasswordGate({ onUnlock, accent }) {
+  const [val, setVal] = useState('');
+  const [error, setError] = useState(false);
+  const [shake, setShake] = useState(false);
+
+  function attempt() {
+    if (val.trim() === TWEAK_DEFAULTS.password) {
+      onUnlock();
+    } else {
+      setError(true);
+      setShake(true);
+      setTimeout(() => setShake(false), 500);
+    }
+  }
+
+  return (
+    <GateWrap>
+      <h1 style={{ fontFamily: 'Cormorant Garamond', fontWeight: 300, fontSize: 42, lineHeight: 1.1, marginBottom: 12, color: 'oklch(17% 0.015 55)' }}>
+        Handstand<br /><em style={{ fontStyle: 'italic' }}>Fundamentals</em>
+      </h1>
+      <p style={{ fontFamily: 'DM Sans', fontWeight: 300, fontSize: 14, color: 'oklch(50% 0.012 65)', marginBottom: 40, lineHeight: 1.6 }}>
+        Enter the password you received<br />to access this guide.
+      </p>
+      <div style={{ animation: shake ? 'shake 0.4s ease' : 'none' }}>
+        <input
+          type="password"
+          placeholder="Password"
+          value={val}
+          onChange={e => { setVal(e.target.value); setError(false); }}
+          onKeyDown={e => e.key === 'Enter' && attempt()}
+          style={{
+            width: '100%', padding: '14px 18px', fontSize: 15,
+            border: `1px solid ${error ? 'oklch(55% 0.12 25)' : 'oklch(82% 0.02 78)'}`,
+            borderRadius: 6, background: 'oklch(99% 0.006 78)',
+            color: 'oklch(17% 0.015 55)', outline: 'none', marginBottom: 12,
+            textAlign: 'center', letterSpacing: '0.1em',
+          }}
+          autoFocus
+        />
+        {error && <p style={{ fontFamily: 'DM Sans', fontSize: 12.5, color: 'oklch(48% 0.12 25)', marginBottom: 12 }}>Incorrect password. Please try again.</p>}
+        <button
+          onClick={attempt}
+          style={{
+            width: '100%', padding: '14px', background: `oklch(56% 0.1 ${TWEAK_DEFAULTS.accentHue})`,
+            color: 'white', border: 'none', borderRadius: 6, fontSize: 13.5,
+            fontFamily: 'DM Sans', fontWeight: 500, cursor: 'pointer',
+            letterSpacing: '0.05em',
+          }}
+        >
+          Access Guide
+        </button>
+      </div>
+      <style>{`@keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 40%{transform:translateX(8px)} 60%{transform:translateX(-5px)} 80%{transform:translateX(5px)} }`}</style>
+    </GateWrap>
+  );
+}
+
+function EmailCapture({ onContinue, accent }) {
+  const [email, setEmail] = useState('');
+  const [valid, setValid] = useState(true);
+
+  function submit() {
+    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+    if (!ok) { setValid(false); return; }
+    // Store email
+    const emails = JSON.parse(localStorage.getItem('guide_emails') || '[]');
+    if (!emails.includes(email.trim())) emails.push(email.trim());
+    localStorage.setItem('guide_emails', JSON.stringify(emails));
+    onContinue();
+  }
+
+  return (
+    <GateWrap>
+      <h2 style={{ fontFamily: 'Cormorant Garamond', fontWeight: 300, fontSize: 36, lineHeight: 1.15, marginBottom: 12, color: 'oklch(17% 0.015 55)' }}>
+        Before you begin
+      </h2>
+      <p style={{ fontFamily: 'DM Sans', fontWeight: 300, fontSize: 14, color: 'oklch(50% 0.012 65)', marginBottom: 40, lineHeight: 1.65 }}>
+        Leave your email so I can send you<br />updates and additional resources.
+      </p>
+      <input
+        type="email"
+        placeholder="your@email.com"
+        value={email}
+        onChange={e => { setEmail(e.target.value); setValid(true); }}
+        onKeyDown={e => e.key === 'Enter' && submit()}
+        style={{
+          width: '100%', padding: '14px 18px', fontSize: 15,
+          border: `1px solid ${!valid ? 'oklch(55% 0.12 25)' : 'oklch(82% 0.02 78)'}`,
+          borderRadius: 6, background: 'oklch(99% 0.006 78)',
+          color: 'oklch(17% 0.015 55)', outline: 'none', marginBottom: 12,
+          textAlign: 'center',
+        }}
+        autoFocus
+      />
+      {!valid && <p style={{ fontFamily: 'DM Sans', fontSize: 12.5, color: 'oklch(48% 0.12 25)', marginBottom: 8 }}>Please enter a valid email address.</p>}
+      <button onClick={submit} style={{
+        width: '100%', padding: 14, background: `oklch(56% 0.1 ${TWEAK_DEFAULTS.accentHue})`,
+        color: 'white', border: 'none', borderRadius: 6, fontSize: 13.5,
+        fontFamily: 'DM Sans', fontWeight: 500, cursor: 'pointer',
+        letterSpacing: '0.05em', marginBottom: 12,
+      }}>
+        Continue to Guide
+      </button>
+      <button onClick={onContinue} style={{
+        background: 'none', border: 'none', fontFamily: 'DM Sans', fontSize: 12.5,
+        color: 'oklch(60% 0.01 65)', cursor: 'pointer', fontWeight: 300,
+      }}>
+        Skip
+      </button>
+    </GateWrap>
+  );
+}
+
+// ── Guide shell ───────────────────────────────────────────────────────────
+
+function GuideHeader({ accent }) {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  return (
+    <header id="guide-header" className="no-print" style={{
+      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
+      background: scrolled ? 'oklch(97% 0.012 78)' : 'transparent',
+      borderBottom: scrolled ? '1px solid oklch(88% 0.018 78)' : '1px solid transparent',
+      transition: 'all 0.3s ease',
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      padding: '16px 40px',
+    }}>
+      <p style={{ fontFamily: 'Cormorant Garamond', fontSize: 16, fontWeight: 400, color: scrolled ? 'oklch(17% 0.015 55)' : 'oklch(90% 0.01 78)', margin: 0, transition: 'color 0.3s' }}>
+        Ammar Bass
+      </p>
+      <button
+        onClick={() => window.print()}
+        style={{
+          fontFamily: 'DM Sans', fontSize: 12, fontWeight: 500,
+          color: accent, background: 'none', border: `1px solid ${accent}`,
+          borderRadius: 4, padding: '7px 16px', cursor: 'pointer',
+          letterSpacing: '0.06em', textTransform: 'uppercase',
+        }}
+      >
+        Download PDF
+      </button>
+    </header>
+  );
+}
+
+function Guide({ tweaks }) {
+  const accent = `oklch(56% 0.1 ${tweaks.accentHue})`;
+  return (
+    <>
+      <GuideHeader accent={accent} />
+      <main>
+        <Cover accent={accent} />
+        <div className="guide-wrap" style={{ maxWidth: 860, margin: '0 auto', padding: '0 40px' }}>
+          <SectionFoundation accent={accent} />
+          <SectionFundamentals accent={accent} />
+          <SectionMuscles accent={accent} />
+          <SectionBlueprint accent={accent} />
+        </div>
+        <div style={{ maxWidth: 860, margin: '0 auto', padding: '0 40px' }}>
+          <SectionCoaching accent={accent} />
+        </div>
+        <footer className="no-print" style={{ textAlign: 'center', padding: '40px 24px', borderTop: '1px solid oklch(88% 0.018 78)' }}>
+          <p style={{ fontFamily: 'DM Sans', fontSize: 12, color: 'oklch(60% 0.01 65)', fontWeight: 300 }}>
+            © 2026 Ammar Bass · <a href="https://www.ammarbass.com" style={{ color: accent, textDecoration: 'none' }}>ammarbass.com</a>
+          </p>
+        </footer>
+      </main>
+    </>
+  );
+}
+
+// ── Tweaks panel ──────────────────────────────────────────────────────────
+
+function TweaksPanel({ tweaks, setTweaks, visible }) {
+  if (!visible) return null;
+  function set(key, val) {
+    const next = { ...tweaks, [key]: val };
+    setTweaks(next);
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits: next }, '*');
+  }
+  const accent = `oklch(56% 0.1 ${tweaks.accentHue})`;
+  return (
+    <div id="tweaks-panel" style={{
+      position: 'fixed', bottom: 24, right: 24, zIndex: 1000,
+      background: 'oklch(99% 0.006 78)', border: '1px solid oklch(85% 0.02 78)',
+      borderRadius: 10, padding: '20px 22px', width: 260, boxShadow: '0 8px 32px oklch(0% 0 0 / 0.1)',
+    }}>
+      <p style={{ fontFamily: 'DM Sans', fontSize: 11, fontWeight: 500, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'oklch(55% 0.015 65)', margin: '0 0 16px' }}>Tweaks</p>
+
+      <label style={{ display: 'block', marginBottom: 14 }}>
+        <p style={{ fontFamily: 'DM Sans', fontSize: 12, color: 'oklch(40% 0.012 65)', margin: '0 0 6px' }}>Password</p>
+        <input
+          type="text"
+          value={tweaks.password}
+          onChange={e => set('password', e.target.value)}
+          style={{ width: '100%', padding: '8px 10px', border: '1px solid oklch(85% 0.02 78)', borderRadius: 5, fontSize: 13, fontFamily: 'DM Sans', background: 'oklch(97% 0.012 78)' }}
+        />
+      </label>
+
+      <label style={{ display: 'block', marginBottom: 14 }}>
+        <p style={{ fontFamily: 'DM Sans', fontSize: 12, color: 'oklch(40% 0.012 65)', margin: '0 0 6px' }}>Accent colour — hue ({tweaks.accentHue}°)</p>
+        <input type="range" min={10} max={80} step={1} value={tweaks.accentHue}
+          onChange={e => set('accentHue', Number(e.target.value))}
+          style={{ width: '100%', accentColor: accent }}
+        />
+        <div style={{ display: 'flex', gap: 6, marginTop: 8 }}>
+          {[{h:38,l:'Terracotta'},{h:20,l:'Rose'},{h:55,l:'Amber'},{h:12,l:'Coral'}].map(({h,l}) => (
+            <button key={h} onClick={() => set('accentHue', h)} style={{
+              flex: 1, height: 24, borderRadius: 4, border: tweaks.accentHue === h ? '2px solid oklch(30% 0.01 55)' : '1px solid transparent',
+              background: `oklch(56% 0.1 ${h})`, cursor: 'pointer',
+            }} title={l} />
+          ))}
+        </div>
+      </label>
+
+      <label style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }}>
+        <input type="checkbox" checked={tweaks.collectEmail} onChange={e => set('collectEmail', e.target.checked)} />
+        <p style={{ fontFamily: 'DM Sans', fontSize: 12, color: 'oklch(40% 0.012 65)', margin: 0 }}>Require email capture</p>
+      </label>
+    </div>
+  );
+}
+
+// ── App ───────────────────────────────────────────────────────────────────
+
+function App() {
+  const [tweaks, setTweaks] = useState(TWEAK_DEFAULTS);
+  const [tweaksVisible, setTweaksVisible] = useState(false);
+
+  // Persist stage across reloads
+  const [stage, setStage] = useState(() => {
+    const saved = sessionStorage.getItem('guide_stage');
+    return saved || 'password';
+  });
+  useEffect(() => sessionStorage.setItem('guide_stage', stage), [stage]);
+
+  // Tweaks protocol
+  useEffect(() => {
+    function onMsg(e) {
+      if (e.data?.type === '__activate_edit_mode') setTweaksVisible(true);
+      if (e.data?.type === '__deactivate_edit_mode') setTweaksVisible(false);
+    }
+    window.addEventListener('message', onMsg);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', onMsg);
+  }, []);
+
+  const accent = `oklch(56% 0.1 ${tweaks.accentHue})`;
+
+  if (stage === 'password') {
+    return <>
+      <PasswordGate accent={accent} onUnlock={() => setStage(tweaks.collectEmail ? 'email' : 'guide')} />
+      <TweaksPanel tweaks={tweaks} setTweaks={setTweaks} visible={tweaksVisible} />
+    </>;
+  }
+  if (stage === 'email') {
+    return <>
+      <EmailCapture accent={accent} onContinue={() => setStage('guide')} />
+      <TweaksPanel tweaks={tweaks} setTweaks={setTweaks} visible={tweaksVisible} />
+    </>;
+  }
+  return <>
+    <Guide tweaks={tweaks} />
+    <TweaksPanel tweaks={tweaks} setTweaks={setTweaks} visible={tweaksVisible} />
+  </>;
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
