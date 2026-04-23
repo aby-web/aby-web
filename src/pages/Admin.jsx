@@ -22,6 +22,11 @@ export default function Admin() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [changingSettings, setChangingSettings] = useState(false);
 
+  // Guides state
+  const [guides, setGuides] = useState([]);
+  const [editingGuideId, setEditingGuideId] = useState(null);
+  const [newGuidePassword, setNewGuidePassword] = useState('');
+
   // Event form state
   const [eventForm, setEventForm] = useState({
     id: null,
@@ -54,6 +59,7 @@ export default function Admin() {
 
   useEffect(() => {
     fetchStoredCredentials();
+    fetchGuides();
   }, []);
 
   const formatDatePreview = (dateString) => {
@@ -96,6 +102,7 @@ export default function Admin() {
       fetchTestimonials();
       fetchPrivateEnquiries();
       fetchVacations();
+      fetchGuides();
     } else {
       alert('Incorrect username or password');
     }
@@ -327,6 +334,55 @@ export default function Admin() {
       setVacations(data || []);
     } catch (error) {
       console.error('Error fetching vacations:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchGuides = async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from('guides')
+        .select('*')
+        .order('created_at', { ascending: true });
+
+      if (error) throw error;
+      setGuides(data || []);
+    } catch (error) {
+      console.error('Error fetching guides:', error);
+      // If table doesn't exist yet, just set empty array
+      setGuides([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUpdateGuidePassword = async (guideId, password) => {
+    if (!password || password.length < 6) {
+      alert('Password must be at least 6 characters long');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { error } = await supabase
+        .from('guides')
+        .update({
+          password: password,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', guideId);
+
+      if (error) throw error;
+
+      alert('Guide password updated successfully!');
+      setEditingGuideId(null);
+      setNewGuidePassword('');
+      fetchGuides();
+    } catch (error) {
+      console.error('Error updating guide password:', error);
+      alert('Error updating guide password: ' + error.message);
     } finally {
       setLoading(false);
     }
@@ -664,6 +720,12 @@ export default function Admin() {
             className={`pb-4 px-4 ${activeTab === 'vacations' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740]'}`}
           >
             Vacations
+          </button>
+          <button
+            onClick={() => setActiveTab('guides')}
+            className={`pb-4 px-4 ${activeTab === 'guides' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740]'}`}
+          >
+            Guides
           </button>
           <button
             onClick={() => setActiveTab('settings')}
@@ -1202,6 +1264,133 @@ export default function Admin() {
                 </div>
               )}
             </div>
+          </div>
+        )}
+
+        {/* Guides Tab */}
+        {activeTab === 'guides' && (
+          <div className="bg-[#2A1E16] p-6 rounded-lg">
+            <h2 className="text-xl font-light mb-4">Guides</h2>
+            <p className="text-sm text-[#6B5740] mb-6">
+              Manage your password-protected guides. Click on a guide to view or change its access password.
+            </p>
+
+            {loading ? (
+              <p>Loading...</p>
+            ) : guides.length === 0 ? (
+              <div className="text-[#6B5740]">
+                <p className="mb-4">No guides found in database. You need to create the guides table first.</p>
+                <div className="bg-[#1C1410] p-4 rounded-md border border-[#3A2E26]">
+                  <p className="text-xs text-[#785E3D] mb-2">Run this SQL in your Supabase SQL editor:</p>
+                  <pre className="text-xs text-[#F4EFE6] overflow-x-auto whitespace-pre-wrap">
+{`-- Create the guides table
+CREATE TABLE IF NOT EXISTS guides (
+  id SERIAL PRIMARY KEY,
+  title TEXT NOT NULL,
+  slug TEXT NOT NULL UNIQUE,
+  password TEXT NOT NULL,
+  description TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Enable Row Level Security
+ALTER TABLE guides ENABLE ROW LEVEL SECURITY;
+
+-- Create policy to allow public read access (so password gate can fetch the password)
+CREATE POLICY "Allow public read access" ON guides FOR SELECT USING (true);
+
+-- Create policy to allow authenticated updates (you can customize this based on your auth setup)
+CREATE POLICY "Allow authenticated updates" ON guides FOR UPDATE USING (true);
+
+-- Insert the handstand guide (if it doesn't exist)
+INSERT INTO guides (title, slug, password, description)
+VALUES ('Handstand Fundamentals Guide', 'handstandguide', 'handstand2026', 'A structured approach to building your handstand practice')
+ON CONFLICT (slug) DO NOTHING;`}
+                  </pre>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {guides.map((guide) => (
+                  <div key={guide.id} className="bg-[#1C1410] p-6 rounded-md border border-[#3A2E26]">
+                    <div className="flex justify-between items-start mb-4">
+                      <div className="flex-1">
+                        <h3 className="text-lg font-medium text-[#F4EFE6] mb-1">{guide.title}</h3>
+                        {guide.description && (
+                          <p className="text-sm text-[#6B5740] mb-2">{guide.description}</p>
+                        )}
+                        <a
+                          href={`/${guide.slug}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm text-[#785E3D] hover:text-[#8A6F4C] transition-colors"
+                        >
+                          /{guide.slug} →
+                        </a>
+                      </div>
+                      <span className="text-xs text-[#6B5740]">
+                        Updated {new Date(guide.updated_at).toLocaleDateString('en-GB', {
+                          day: 'numeric',
+                          month: 'short',
+                          year: 'numeric'
+                        })}
+                      </span>
+                    </div>
+
+                    {editingGuideId === guide.id ? (
+                      <div className="space-y-3">
+                        <div>
+                          <label className="block text-sm text-[#785E3D] mb-2">New Password</label>
+                          <input
+                            type="text"
+                            value={newGuidePassword}
+                            onChange={(e) => setNewGuidePassword(e.target.value)}
+                            placeholder="Enter new password (min 6 characters)"
+                            className="w-full px-4 py-2 bg-[#2A1E16] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
+                            minLength={6}
+                          />
+                        </div>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => handleUpdateGuidePassword(guide.id, newGuidePassword)}
+                            disabled={loading}
+                            className="px-4 py-2 bg-[#785E3D] text-[#F4EFE6] rounded-md hover:bg-[#8A6F4C] transition-colors disabled:opacity-50 text-sm"
+                          >
+                            {loading ? 'Updating...' : 'Update Password'}
+                          </button>
+                          <button
+                            onClick={() => {
+                              setEditingGuideId(null);
+                              setNewGuidePassword('');
+                            }}
+                            className="px-4 py-2 bg-[#3A2E26] text-[#F4EFE6] rounded-md hover:bg-[#4A3E36] transition-colors text-sm"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-4">
+                        <div className="flex-1 bg-[#2A1E16] px-4 py-3 rounded-md border border-[#3A2E26]">
+                          <p className="text-xs text-[#785E3D] mb-1">Current Password</p>
+                          <p className="text-sm text-[#F4EFE6] font-mono">{guide.password}</p>
+                        </div>
+                        <button
+                          onClick={() => {
+                            setEditingGuideId(guide.id);
+                            setNewGuidePassword(guide.password);
+                          }}
+                          className="px-4 py-2 bg-[#785E3D] text-[#F4EFE6] rounded-md hover:bg-[#8A6F4C] transition-colors text-sm"
+                        >
+                          Change Password
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
 

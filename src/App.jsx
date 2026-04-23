@@ -41,7 +41,7 @@ function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/about" element={<About />} />
         <Route path="/practice" element={<Practice />} />
-        <Route path="/guide" element={<Guide />} />
+        <Route path="/handstandguide" element={<Guide />} />
         <Route path="/private-sessions" element={<PrivateSessions />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/admin" element={<Admin />} />

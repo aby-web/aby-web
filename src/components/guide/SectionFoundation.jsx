@@ -144,7 +144,7 @@ export default function SectionFoundation() {
           background: 'oklch(93% 0.018 78)',
           borderLeft: '3px solid oklch(72% 0.03 68)',
           padding: '20px 24px',
-          borderRadius: '0 6px 6px 0',
+          borderRadius: '6px',
           marginTop: 24,
         }}
       >

@@ -7,6 +7,8 @@ import {
   SectionBlueprint,
   SectionCoaching,
 } from '../components/guide';
+import PasswordGate from '../components/guide/PasswordGate';
+import EmailGate from '../components/guide/EmailGate';
 
 const accent = 'oklch(56% 0.1 38)';
 
@@ -19,8 +21,6 @@ function GuideHeader() {
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
-
-  const logoFilter = scrolled ? 'none' : 'brightness(0) invert(1)';
 
   return (
     <header
@@ -35,35 +35,9 @@ function GuideHeader() {
           src="/images/logo.png"
           alt="Ammar Bass"
           className="w-auto transition-all duration-300"
-          style={{ height: '22px', filter: logoFilter }}
+          style={{ height: '22px' }}
         />
       </a>
-      <button
-        onClick={() => window.print()}
-        className="transition-all duration-200"
-        style={{
-          padding: '10px 20px',
-          background: 'transparent',
-          border: `1px solid ${accent}`,
-          borderRadius: 6,
-          color: accent,
-          fontFamily: 'DM Sans, sans-serif',
-          fontSize: 13,
-          fontWeight: 500,
-          cursor: 'pointer',
-          letterSpacing: '0.03em',
-        }}
-        onMouseEnter={(e) => {
-          e.target.style.background = accent;
-          e.target.style.color = 'white';
-        }}
-        onMouseLeave={(e) => {
-          e.target.style.background = 'transparent';
-          e.target.style.color = accent;
-        }}
-      >
-        Download PDF
-      </button>
     </header>
   );
 }
@@ -89,18 +63,6 @@ function Cover() {
           width: '100%',
         }}
       >
-        <p
-          style={{
-            fontFamily: 'DM Sans, sans-serif',
-            fontSize: 11,
-            letterSpacing: '0.25em',
-            textTransform: 'uppercase',
-            color: accent,
-            margin: '0 0 32px',
-          }}
-        >
-          Ammar Bass · 2026
-        </p>
         <h1
           style={{
             fontFamily: 'Cormorant Garamond, serif',
@@ -125,24 +87,12 @@ function Cover() {
             fontSize: 15,
             lineHeight: 1.7,
             color: 'oklch(45% 0.012 65)',
-            margin: '0 0 48px',
+            margin: 0,
           }}
         >
           A structured approach to building
           <br />
           your inversion practice
-        </p>
-        <p
-          style={{
-            fontFamily: 'DM Sans, sans-serif',
-            fontSize: 11,
-            letterSpacing: '0.2em',
-            textTransform: 'uppercase',
-            color: 'oklch(55% 0.012 65)',
-            margin: 0,
-          }}
-        >
-          ammar@ammarbass.com &nbsp;·&nbsp; @ammarbass
         </p>
       </div>
     </section>
@@ -150,6 +100,33 @@ function Cover() {
 }
 
 export default function Guide() {
+  const [hasAccess, setHasAccess] = useState(false);
+  const [emailCaptured, setEmailCaptured] = useState(false);
+
+  useEffect(() => {
+    // Check if user has already been granted access in this session
+    const access = sessionStorage.getItem('guide_access');
+    const emailStatus = sessionStorage.getItem('guide_email_captured');
+
+    if (access === 'granted') {
+      setHasAccess(true);
+    }
+
+    if (emailStatus === 'true' || emailStatus === 'skipped') {
+      setEmailCaptured(true);
+    }
+  }, []);
+
+  // Show password gate first
+  if (!hasAccess) {
+    return <PasswordGate onSuccess={() => setHasAccess(true)} />;
+  }
+
+  // Then show email gate (if not already captured)
+  if (!emailCaptured) {
+    return <EmailGate onContinue={() => setEmailCaptured(true)} />;
+  }
+
   return (
     <div style={{ background: 'oklch(97% 0.012 78)' }}>
       <Helmet>

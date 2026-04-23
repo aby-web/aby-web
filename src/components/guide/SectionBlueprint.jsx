@@ -61,7 +61,7 @@ export default function SectionBlueprint() {
             fontWeight: 500,
           }}
         >
-          Daily Structure — 30 to 45 Minutes
+          Structure
         </p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
           {daily.map((d, i) => (

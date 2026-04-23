@@ -103,68 +103,48 @@ export default function SectionCoaching() {
 
       <div
         style={{
-          background: 'oklch(95% 0.03 38)',
-          borderRadius: 10,
+          background: 'oklch(93% 0.018 78)',
+          border: '1px solid oklch(88% 0.018 78)',
+          borderRadius: 8,
           padding: '32px 36px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: 24,
+          textAlign: 'center',
         }}
       >
-        <div>
-          <p
-            style={{
-              fontFamily: 'Cormorant Garamond, serif',
-              fontSize: 22,
-              fontWeight: 400,
-              margin: '0 0 4px',
-              color: 'oklch(17% 0.015 55)',
-            }}
-          >
-            Ready to go deeper?
-          </p>
-          <p
-            style={{
-              fontFamily: 'DM Sans, sans-serif',
-              fontSize: 13.5,
-              color: 'oklch(42% 0.012 65)',
-              margin: 0,
-              fontWeight: 300,
-            }}
-          >
-            Get in touch to discuss how private coaching can accelerate your progress.
-          </p>
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'flex-end' }}>
-          <a
-            href="mailto:ammar@ammarbass.com"
-            style={{
-              fontFamily: 'DM Sans, sans-serif',
-              fontSize: 14,
-              color: accent,
-              textDecoration: 'none',
-              fontWeight: 500,
-            }}
-          >
-            ammar@ammarbass.com
-          </a>
-          <a
-            href="https://www.ammarbass.com"
-            target="_blank"
-            rel="noreferrer"
-            style={{
-              fontFamily: 'DM Sans, sans-serif',
-              fontSize: 13,
-              color: 'oklch(50% 0.012 65)',
-              textDecoration: 'none',
-              fontWeight: 300,
-            }}
-          >
-            ammarbass.com · @ammarbass
-          </a>
-        </div>
+        <p
+          style={{
+            fontFamily: 'Cormorant Garamond, serif',
+            fontSize: 24,
+            fontWeight: 400,
+            margin: '0 0 12px',
+            color: 'oklch(17% 0.015 55)',
+          }}
+        >
+          Ready to go deeper?
+        </p>
+        <p
+          style={{
+            fontFamily: 'DM Sans, sans-serif',
+            fontSize: 14,
+            color: 'oklch(42% 0.012 65)',
+            margin: '0 0 20px',
+            fontWeight: 300,
+            lineHeight: 1.7,
+          }}
+        >
+          Get in touch to discuss how private coaching can accelerate your progress.
+        </p>
+        <a
+          href="mailto:ammar@ammarbass.com"
+          style={{
+            fontFamily: 'DM Sans, sans-serif',
+            fontSize: 14,
+            color: accent,
+            textDecoration: 'none',
+            fontWeight: 500,
+          }}
+        >
+          ammar@ammarbass.com
+        </a>
       </div>
     </section>
   );
