@@ -24,6 +24,7 @@ export default function Admin() {
 
   // Guides state
   const [guides, setGuides] = useState([]);
+  const [guideViews, setGuideViews] = useState({});
   const [editingGuideId, setEditingGuideId] = useState(null);
   const [newGuidePassword, setNewGuidePassword] = useState('');
 
@@ -349,12 +350,39 @@ export default function Admin() {
 
       if (error) throw error;
       setGuides(data || []);
+
+      // Fetch view counts for each guide
+      if (data && data.length > 0) {
+        await fetchGuideViews(data);
+      }
     } catch (error) {
       console.error('Error fetching guides:', error);
       // If table doesn't exist yet, just set empty array
       setGuides([]);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchGuideViews = async (guidesData) => {
+    try {
+      const viewCounts = {};
+
+      for (const guide of guidesData) {
+        const { count, error } = await supabase
+          .from('guide_views')
+          .select('*', { count: 'exact', head: true })
+          .eq('guide_slug', guide.slug);
+
+        if (!error) {
+          viewCounts[guide.slug] = count || 0;
+        }
+      }
+
+      setGuideViews(viewCounts);
+    } catch (error) {
+      console.error('Error fetching guide views:', error);
+      // Fail silently
     }
   };
 
@@ -1306,7 +1334,26 @@ CREATE POLICY "Allow authenticated updates" ON guides FOR UPDATE USING (true);
 -- Insert the handstand guide (if it doesn't exist)
 INSERT INTO guides (title, slug, password, description)
 VALUES ('Handstand Fundamentals Guide', 'handstandguide', 'handstand2026', 'A structured approach to building your handstand practice')
-ON CONFLICT (slug) DO NOTHING;`}
+ON CONFLICT (slug) DO NOTHING;
+
+-- Create the guide_views table to track views
+CREATE TABLE IF NOT EXISTS guide_views (
+  id SERIAL PRIMARY KEY,
+  guide_slug TEXT NOT NULL,
+  viewed_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Enable Row Level Security
+ALTER TABLE guide_views ENABLE ROW LEVEL SECURITY;
+
+-- Create policy to allow public inserts (so view tracking works)
+CREATE POLICY "Allow public inserts" ON guide_views FOR INSERT WITH CHECK (true);
+
+-- Create policy to allow public reads (so admin can see view counts)
+CREATE POLICY "Allow public reads" ON guide_views FOR SELECT USING (true);
+
+-- Create index for better performance
+CREATE INDEX IF NOT EXISTS idx_guide_views_slug ON guide_views(guide_slug);`}
                   </pre>
                 </div>
               </div>
@@ -1316,7 +1363,12 @@ ON CONFLICT (slug) DO NOTHING;`}
                   <div key={guide.id} className="bg-[#1C1410] p-6 rounded-md border border-[#3A2E26]">
                     <div className="flex justify-between items-start mb-4">
                       <div className="flex-1">
-                        <h3 className="text-lg font-medium text-[#F4EFE6] mb-1">{guide.title}</h3>
+                        <div className="flex items-center gap-3 mb-1">
+                          <h3 className="text-lg font-medium text-[#F4EFE6]">{guide.title}</h3>
+                          <span className="px-2 py-1 bg-[#785E3D] text-[#F4EFE6] text-xs rounded">
+                            {guideViews[guide.slug] || 0} {guideViews[guide.slug] === 1 ? 'view' : 'views'}
+                          </span>
+                        </div>
                         {guide.description && (
                           <p className="text-sm text-[#6B5740] mb-2">{guide.description}</p>
                         )}

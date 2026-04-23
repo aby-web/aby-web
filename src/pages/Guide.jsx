@@ -9,6 +9,7 @@ import {
 } from '../components/guide';
 import PasswordGate from '../components/guide/PasswordGate';
 import EmailGate from '../components/guide/EmailGate';
+import { supabase } from '../lib/supabase';
 
 const accent = 'oklch(56% 0.1 38)';
 
@@ -102,6 +103,7 @@ function Cover() {
 export default function Guide() {
   const [hasAccess, setHasAccess] = useState(false);
   const [emailCaptured, setEmailCaptured] = useState(false);
+  const [viewRecorded, setViewRecorded] = useState(false);
 
   useEffect(() => {
     // Check if user has already been granted access in this session
@@ -116,6 +118,34 @@ export default function Guide() {
       setEmailCaptured(true);
     }
   }, []);
+
+  useEffect(() => {
+    // Record a view when user has access and email gate is complete
+    if (hasAccess && emailCaptured && !viewRecorded) {
+      recordGuideView();
+      setViewRecorded(true);
+    }
+  }, [hasAccess, emailCaptured, viewRecorded]);
+
+  const recordGuideView = async () => {
+    try {
+      // Check if view already recorded in this session
+      const viewRecorded = sessionStorage.getItem('guide_view_recorded');
+      if (viewRecorded) return;
+
+      await supabase.from('guide_views').insert([
+        {
+          guide_slug: 'handstandguide',
+          viewed_at: new Date().toISOString(),
+        },
+      ]);
+
+      sessionStorage.setItem('guide_view_recorded', 'true');
+    } catch (error) {
+      console.error('Error recording guide view:', error);
+      // Fail silently - don't block user from viewing guide
+    }
+  };
 
   // Show password gate first
   if (!hasAccess) {
