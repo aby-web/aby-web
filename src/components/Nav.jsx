@@ -115,11 +115,11 @@ export default function Nav({ theme = 'dark' }) {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden fixed inset-0 top-[72px] bg-[#1C1410] transform transition-transform duration-300 ease-in-out ${
+        className={`md:hidden fixed inset-0 top-[72px] backdrop-blur-md transform transition-transform duration-300 ease-in-out ${
           mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         style={{
-          backgroundColor: '#1C1410',
+          backgroundColor: 'rgba(28, 20, 16, 0.95)',
         }}
       >
         <div className="flex flex-col gap-6 px-8 py-8">
