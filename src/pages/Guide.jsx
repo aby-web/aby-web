@@ -25,7 +25,7 @@ function GuideHeader() {
 
   return (
     <header
-      className="no-print fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-10 py-4 transition-all duration-300"
+      className="no-print fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 py-4 transition-all duration-300"
       style={{
         background: scrolled ? 'oklch(97% 0.012 78)' : 'transparent',
         borderBottom: scrolled ? '1px solid oklch(88% 0.018 78)' : '1px solid transparent',
@@ -50,7 +50,7 @@ function Cover() {
       className="flex flex-col justify-center items-center text-center min-h-screen"
       style={{
         background: 'oklch(93% 0.025 78)',
-        padding: '80px 48px',
+        padding: '80px 24px',
         pageBreakAfter: 'always',
         breakAfter: 'page',
       }}
@@ -175,6 +175,12 @@ export default function Guide() {
           body { background: white !important; }
           section { break-inside: avoid; }
         }
+        @media (max-width: 768px) {
+          section {
+            padding-top: 48px !important;
+            padding-bottom: 48px !important;
+          }
+        }
       `}</style>
 
       <GuideHeader />
@@ -182,7 +188,7 @@ export default function Guide() {
       <main>
         <Cover />
 
-        <div className="max-w-[860px] mx-auto px-10">
+        <div className="max-w-[860px] mx-auto px-6 md:px-10">
           <SectionFoundation />
           <SectionFundamentals />
           <SectionMuscles />

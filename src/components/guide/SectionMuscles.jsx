@@ -58,7 +58,7 @@ function MuscleRow({ m, dotColor }) {
 function MovementPairCards({ pairs, note }) {
   return (
     <div style={{ marginBottom: 12 }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+      <div className="movement-pairs" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
         {pairs.map((pair, pi) => (
           <div
             key={pi}
@@ -227,13 +227,26 @@ export default function SectionMuscles() {
   ];
 
   return (
-    <section
-      style={{
-        padding: '80px 0',
-        borderBottom: '1px solid oklch(88% 0.018 78)',
-        breakAfter: 'page',
-      }}
-    >
+    <>
+      <style>{`
+        @media (max-width: 768px) {
+          .muscles-stretch-develop {
+            grid-template-columns: 1fr !important;
+            gap: 24px !important;
+          }
+          .movement-pairs {
+            grid-template-columns: 1fr !important;
+            gap: 12px !important;
+          }
+        }
+      `}</style>
+      <section
+        style={{
+          padding: '80px 0',
+          borderBottom: '1px solid oklch(88% 0.018 78)',
+          breakAfter: 'page',
+        }}
+      >
       <SectionHeader
         number="03"
         title="Key Muscles & Movements"
@@ -241,7 +254,7 @@ export default function SectionMuscles() {
       />
 
       {/* Stretch vs Develop */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, marginBottom: 40 }}>
+      <div className="muscles-stretch-develop" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, marginBottom: 40 }}>
         <div>
           <p
             style={{
@@ -570,6 +583,7 @@ export default function SectionMuscles() {
           ))}
         </div>
       </div>
-    </section>
+      </section>
+    </>
   );
 }

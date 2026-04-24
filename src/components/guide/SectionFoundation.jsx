@@ -19,20 +19,33 @@ export default function SectionFoundation() {
   ];
 
   return (
-    <section
-      style={{
-        padding: '80px 0',
-        borderBottom: '1px solid oklch(88% 0.018 78)',
-        breakAfter: 'page',
-      }}
-    >
+    <>
+      <style>{`
+        @media (max-width: 768px) {
+          .foundation-pillars {
+            grid-template-columns: 1fr !important;
+            gap: 16px !important;
+          }
+          .foundation-text {
+            grid-template-columns: 1fr !important;
+            gap: 20px !important;
+          }
+        }
+      `}</style>
+      <section
+        style={{
+          padding: '80px 0',
+          borderBottom: '1px solid oklch(88% 0.018 78)',
+          breakAfter: 'page',
+        }}
+      >
       <SectionHeader
         number="01"
         title="The Foundation"
         subtitle="Your handstand practice is built on three interconnected pillars that feed each other cyclically."
       />
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20, marginBottom: 40 }}>
+      <div className="foundation-pillars" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20, marginBottom: 40 }}>
         {pillars.map((p, i) => (
           <div
             key={i}
@@ -83,7 +96,7 @@ export default function SectionFoundation() {
         ))}
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
+      <div className="foundation-text" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
         <div>
           <h4
             style={{
@@ -154,6 +167,7 @@ export default function SectionFoundation() {
           without compensation.
         </p>
       </div>
-    </section>
+      </section>
+    </>
   );
 }

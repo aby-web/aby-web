@@ -2,7 +2,16 @@ const accent = 'oklch(56% 0.1 38)';
 
 export default function SectionCoaching() {
   return (
-    <section style={{ padding: '80px 0', breakBefore: 'page' }}>
+    <>
+      <style>{`
+        @media (max-width: 768px) {
+          .coaching-grid {
+            grid-template-columns: 1fr !important;
+            gap: 24px !important;
+          }
+        }
+      `}</style>
+      <section style={{ padding: '80px 0', breakBefore: 'page' }}>
       <div style={{ borderTop: `2px solid ${accent}`, paddingTop: 48, marginBottom: 48 }}>
         <p
           style={{
@@ -17,7 +26,7 @@ export default function SectionCoaching() {
         >
           05 · Private Coaching
         </p>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, alignItems: 'start' }}>
+        <div className="coaching-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, alignItems: 'start' }}>
           <div>
             <h2
               style={{
@@ -146,6 +155,7 @@ export default function SectionCoaching() {
           ammar@ammarbass.com
         </a>
       </div>
-    </section>
+      </section>
+    </>
   );
 }
