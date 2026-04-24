@@ -464,7 +464,7 @@ export default function SectionMuscles() {
       </div>
 
       {/* Humeral movements */}
-      <div style={{ marginBottom: 40 }}>
+      <div style={{ marginBottom: 32 }}>
         <p
           style={{
             fontFamily: 'DM Sans, sans-serif',
@@ -518,6 +518,66 @@ export default function SectionMuscles() {
           note={
             <>
               In handstand you need <strong style={{ fontWeight: 500, color: 'oklch(30% 0.015 55)' }}>full flexion (180°) with external rotation</strong>. Tight internal rotators (lats, pecs) limit flexion and force compensations like the arched back.
+            </>
+          }
+        />
+      </div>
+
+      {/* Pelvic movements */}
+      <div style={{ marginBottom: 40 }}>
+        <p
+          style={{
+            fontFamily: 'DM Sans, sans-serif',
+            fontSize: 11,
+            letterSpacing: '0.18em',
+            textTransform: 'uppercase',
+            color: 'oklch(60% 0.015 65)',
+            margin: '0 0 16px',
+            fontWeight: 500,
+          }}
+        >
+          Pelvic & Ankle Movements — Quick Reference
+        </p>
+        <MovementPairCards
+          pairs={[
+            {
+              label: 'Pelvic Tilt',
+              moves: [
+                {
+                  name: 'Posterior Tilt',
+                  action: 'Tailbone tucked, pelvis tilts back',
+                  muscle: 'Glutes, Lower Abdominals',
+                  goal: true,
+                },
+                {
+                  name: 'Anterior Tilt',
+                  action: 'Tailbone out, arch in lower back',
+                  muscle: 'Hip Flexors, Erector Spinae',
+                  goal: false,
+                },
+              ],
+            },
+            {
+              label: 'Ankle & Toe',
+              moves: [
+                {
+                  name: 'Plantar Flexion',
+                  action: 'Point from base of big toe',
+                  muscle: 'Gastrocnemius, Soleus',
+                  goal: true,
+                },
+                {
+                  name: 'Dorsiflexion',
+                  action: 'Flexed foot, toes toward shin',
+                  muscle: 'Tibialis Anterior',
+                  goal: false,
+                },
+              ],
+            },
+          ]}
+          note={
+            <>
+              In handstand you <strong style={{ fontWeight: 500, color: 'oklch(30% 0.015 55)' }}>always use posterior tilt and plantar flexion</strong> — tailbone tucked, pulling up into the groin, toe pointed from the base of the big toe. Calf engages, toe relaxes.
             </>
           }
         />
