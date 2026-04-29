@@ -48,78 +48,80 @@ export default function Nav({ theme = 'dark' }) {
   };
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
-        scrolled ? 'backdrop-blur-md' : 'bg-transparent'
-      }`}
-      style={{
-        backgroundColor: scrolled ? bgColor : 'transparent',
-      }}
-    >
-      <div className="max-w-7xl mx-auto px-8 lg:px-12 py-5 flex items-center justify-between">
-        {/* Logo */}
-        <a href="/" className="flex items-center">
-          <img
-            src="/images/logo.png"
-            alt="Ammar Bass"
-            className="w-auto"
-            style={{ height: '22px', filter: logoFilter }}
-          />
-        </a>
+    <>
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
+          scrolled ? 'backdrop-blur-md' : 'bg-transparent'
+        }`}
+        style={{
+          backgroundColor: scrolled ? bgColor : 'transparent',
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-8 lg:px-12 py-5 flex items-center justify-between">
+          {/* Logo */}
+          <a href="/" className="flex items-center">
+            <img
+              src="/images/logo.png"
+              alt="Ammar Bass"
+              className="w-auto"
+              style={{ height: '22px', filter: logoFilter }}
+            />
+          </a>
 
-        {/* Desktop Nav Links */}
-        <div className="hidden md:flex items-center gap-8">
-          <a
-            href="/practice"
-            className={`${isActive('/practice') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
+          {/* Desktop Nav Links */}
+          <div className="hidden md:flex items-center gap-8">
+            <a
+              href="/practice"
+              className={`${isActive('/practice') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
+            >
+              Practice
+            </a>
+            <a
+              href="/#schedule"
+              className={`${textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
+            >
+              Schedule
+            </a>
+            <a
+              href="/events"
+              className={`${isActive('/events') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
+            >
+              Events
+            </a>
+            <a
+              href="/about"
+              className={`${isActive('/about') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
+            >
+              About
+            </a>
+            <a
+              href="/private-sessions"
+              className={`${isActive('/private-sessions') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
+            >
+              Privates
+            </a>
+          </div>
+
+          {/* Mobile Hamburger Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className={`md:hidden flex flex-col gap-1.5 ${mobileMenuOpen ? 'text-[#C9A878]' : textColor} transition-colors relative z-[60]`}
+            aria-label="Toggle menu"
           >
-            Practice
-          </a>
-          <a
-            href="/#schedule"
-            className={`${textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
-          >
-            Schedule
-          </a>
-          <a
-            href="/events"
-            className={`${isActive('/events') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
-          >
-            Events
-          </a>
-          <a
-            href="/about"
-            className={`${isActive('/about') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
-          >
-            About
-          </a>
-          <a
-            href="/private-sessions"
-            className={`${isActive('/private-sessions') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
-          >
-            Privates
-          </a>
+            <span className={`w-6 h-0.5 bg-current transition-all ${mobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
+            <span className={`w-6 h-0.5 bg-current transition-all ${mobileMenuOpen ? 'opacity-0' : ''}`}></span>
+            <span className={`w-6 h-0.5 bg-current transition-all ${mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+          </button>
         </div>
+      </nav>
 
-        {/* Mobile Hamburger Button */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className={`md:hidden flex flex-col gap-1.5 ${textColor} transition-colors`}
-          aria-label="Toggle menu"
-        >
-          <span className={`w-6 h-0.5 transition-all ${mobileMenuOpen ? 'rotate-45 translate-y-2 bg-white' : 'bg-current'}`}></span>
-          <span className={`w-6 h-0.5 transition-all ${mobileMenuOpen ? 'opacity-0' : 'bg-current'}`}></span>
-          <span className={`w-6 h-0.5 transition-all ${mobileMenuOpen ? '-rotate-45 -translate-y-2 bg-white' : 'bg-current'}`}></span>
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Outside nav to avoid backdrop-blur inheritance */}
       <div
-        className={`md:hidden fixed inset-0 top-[72px] backdrop-blur-xl transform transition-transform duration-300 ease-in-out ${
+        className={`md:hidden fixed inset-0 top-[72px] transform transition-transform duration-300 ease-in-out z-[55] ${
           mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         style={{
-          backgroundColor: 'rgba(28, 20, 16, 0.98)',
+          backgroundColor: 'rgba(28, 20, 16, 0.90)',
         }}
       >
         <div className="flex flex-col gap-6 px-8 py-8">
@@ -160,6 +162,6 @@ export default function Nav({ theme = 'dark' }) {
           </a>
         </div>
       </div>
-    </nav>
+    </>
   );
 }

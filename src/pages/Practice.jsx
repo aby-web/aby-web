@@ -104,7 +104,7 @@ export default function Practice() {
         <link rel="canonical" href="https://ammarbass.com/practice" />
       </Helmet>
 
-      <Nav />
+      <Nav theme="light" />
       <VacationBanner />
 
       <main className="pt-32 pb-24 bg-[#F4EFE6]">
