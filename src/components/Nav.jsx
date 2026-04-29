@@ -115,46 +115,46 @@ export default function Nav({ theme = 'dark' }) {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden fixed inset-0 top-[72px] backdrop-blur-md transform transition-transform duration-300 ease-in-out ${
+        className={`md:hidden fixed inset-0 top-[72px] backdrop-blur-xl transform transition-transform duration-300 ease-in-out ${
           mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         style={{
-          backgroundColor: 'rgba(28, 20, 16, 0.95)',
+          backgroundColor: 'rgba(28, 20, 16, 0.98)',
         }}
       >
         <div className="flex flex-col gap-6 px-8 py-8">
           <a
             href="/practice"
             onClick={() => setMobileMenuOpen(false)}
-            className={`${isActive('/practice') ? 'text-[#C9A878]' : 'text-white/80'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/10`}
+            className={`${isActive('/practice') ? 'text-[#C9A878]' : 'text-white/90'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/20`}
           >
             Practice
           </a>
           <a
             href="/#schedule"
             onClick={() => setMobileMenuOpen(false)}
-            className="text-white/80 text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/10"
+            className="text-white/90 text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/20"
           >
             Schedule
           </a>
           <a
             href="/events"
             onClick={() => setMobileMenuOpen(false)}
-            className={`${isActive('/events') ? 'text-[#C9A878]' : 'text-white/80'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/10`}
+            className={`${isActive('/events') ? 'text-[#C9A878]' : 'text-white/90'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/20`}
           >
             Events
           </a>
           <a
             href="/about"
             onClick={() => setMobileMenuOpen(false)}
-            className={`${isActive('/about') ? 'text-[#C9A878]' : 'text-white/80'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/10`}
+            className={`${isActive('/about') ? 'text-[#C9A878]' : 'text-white/90'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/20`}
           >
             About
           </a>
           <a
             href="/private-sessions"
             onClick={() => setMobileMenuOpen(false)}
-            className={`${isActive('/private-sessions') ? 'text-[#C9A878]' : 'text-white/80'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/10`}
+            className={`${isActive('/private-sessions') ? 'text-[#C9A878]' : 'text-white/90'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/20`}
           >
             Privates
           </a>

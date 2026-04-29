@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
@@ -34,6 +34,10 @@ export default function Practice() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle'); // idle, loading, success, error, exists
   const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleNotifyMe = async (e) => {
     e.preventDefault();
@@ -214,12 +218,6 @@ export default function Practice() {
                       </div>
                     </div>
 
-                    {video.comingSoon && (
-                      <div className="text-sm text-[#666666] italic">
-                        Sign up below to get notified when this video is released.
-                      </div>
-                    )}
-
                     {!video.comingSoon && selectedVideo !== video.id && (
                       <button
                         onClick={() => setSelectedVideo(video.id)}
@@ -234,58 +232,14 @@ export default function Practice() {
             ))}
           </div>
 
-          {/* Email Notification Form */}
-          <div className="mt-16 text-center bg-white rounded-lg shadow-lg p-12">
-            <h2 className="text-3xl font-light mb-4 text-[#3D3D3D]">
-              Get Notified When Videos Go Live
-            </h2>
-            <p className="text-[#666666] mb-8 max-w-2xl mx-auto">
-              I'm currently filming these practice videos. Leave your email and I'll notify you as soon as they're ready.
-            </p>
-
-            {status === 'success' || status === 'exists' ? (
-              <div className="text-[#785E3D] text-lg mb-4 py-3">
-                {message} ✓
-              </div>
-            ) : (
-              <form onSubmit={handleNotifyMe} className="mb-4">
-                <div className="flex items-center border border-[#C9B99A] rounded-full overflow-hidden max-w-md mx-auto bg-white">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Your email address"
-                    required
-                    disabled={status === 'loading'}
-                    className="flex-1 px-6 py-3 bg-transparent outline-none text-[#1C1410] placeholder-[#6B5740] disabled:opacity-50"
-                  />
-                  <button
-                    type="submit"
-                    disabled={status === 'loading'}
-                    className="px-6 py-3 bg-[#785E3D] text-[#F4EFE6] rounded-full hover:bg-[#665033] transition-colors disabled:opacity-50 whitespace-nowrap"
-                  >
-                    {status === 'loading' ? 'Joining...' : 'Notify Me'}
-                  </button>
-                </div>
-                {status === 'error' && (
-                  <p className="text-red-600 text-sm mt-2">{message}</p>
-                )}
-              </form>
-            )}
-
-            <p className="text-xs text-[#785E3D] mb-8">
-              No spam. Unsubscribe any time.
-            </p>
-          </div>
-
           {/* Private Sessions CTA */}
           <div className="mt-12 text-center bg-[#F4EFE6] rounded-lg shadow-lg p-12">
             <h2 className="text-3xl font-light mb-4 text-[#3D3D3D]">
-              Want More Personalized Guidance?
+              Want More Personalised Guidance?
             </h2>
             <p className="text-[#666666] mb-6 max-w-2xl mx-auto">
               These free classes are a great way to practice with me at home.
-              For personalized instruction tailored to your goals, consider booking a private session.
+              For personalised instruction tailored to your goals, consider booking a private session.
             </p>
             <a
               href="/private-sessions"
