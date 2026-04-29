@@ -9,12 +9,13 @@ const PRACTICE_VIDEOS = [
   {
     id: 1,
     title: 'Dynamic Vinyasa Flow',
-    description: 'A powerful 90-minute practice focusing on strength, alignment and breath. This class will challenge you while maintaining mindful awareness throughout. Build heat through dynamic sequences and explore the relationship between movement and breath.',
-    duration: '90 min',
+    description: 'A powerful 75-minute practice focusing on strength, alignment and breath. This class will challenge you while maintaining mindful awareness throughout. Build heat through dynamic sequences and explore the relationship between movement and breath.',
+    duration: '75 min',
     level: 'All Levels',
-    thumbnail: '/images/hero.webp',
+    thumbnail: '/images/video1_thumb.png',
     focus: ['Strength', 'Alignment', 'Breath Work'],
-    comingSoon: true,
+    youtubeId: 'jdQFOMM0Hsw',
+    comingSoon: false,
   },
   {
     id: 2,
@@ -224,7 +225,7 @@ export default function Practice() {
                         onClick={() => setSelectedVideo(video.id)}
                         className="w-full px-6 py-3 bg-[#785E3D] text-[#F4EFE6] rounded hover:bg-[#665033] transition-colors duration-200 font-medium"
                       >
-                        Watch Now
+                        Practice Now
                       </button>
                     )}
                   </div>

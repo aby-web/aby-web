@@ -5,19 +5,11 @@ const PRACTICE_VIDEOS = [
     id: 1,
     title: 'Dynamic Vinyasa Flow',
     description: 'A powerful practice focusing on strength, alignment and breath. Build heat and challenge yourself through dynamic sequences.',
-    duration: '90 min',
-    level: 'All Levels',
-    thumbnail: '/images/hero.webp',
-    comingSoon: true,
-  },
-  {
-    id: 2,
-    title: 'Open Level Vinyasa',
-    description: 'An accessible yet engaging practice suitable for all levels. Explore mindful movement and breath awareness.',
     duration: '75 min',
-    level: 'Open Level',
-    thumbnail: '/images/about.webp',
-    comingSoon: true,
+    level: 'All Levels',
+    thumbnail: '/images/video1_thumb.png',
+    youtubeId: 'jdQFOMM0Hsw',
+    comingSoon: false,
   },
 ];
 
@@ -36,7 +28,7 @@ export default function PracticeVideos() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 mb-12 max-w-4xl mx-auto">
+        <div className="mb-12 max-w-2xl mx-auto">
           {PRACTICE_VIDEOS.map((video) => (
             <div
               key={video.id}
