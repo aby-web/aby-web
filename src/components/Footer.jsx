@@ -12,30 +12,33 @@ export default function Footer() {
               className="w-auto mb-4"
               style={{ height: '20px', filter: 'brightness(0) invert(1)' }}
             />
-            <p className="text-sm font-light leading-relaxed text-[#8A6F4C]">
+            <p className="text-sm font-light leading-relaxed text-[#C9B99A]">
               Yoga teacher based in London. Structured, progressive practice centred around building strength, control and longevity.
             </p>
           </div>
 
-          {/* Column 2: Navigate */}
+          {/* Column 2: Navigate - Two Column Layout */}
           <div>
-            <h4 className="text-xs uppercase tracking-wide text-[#785E3D] mb-4">
+            <h4 className="text-xs uppercase tracking-wide text-[#C9A878] mb-4">
               Navigate
             </h4>
-            <nav className="flex flex-col gap-3">
-              <a href="/#schedule" className="text-sm text-[#785E3D] hover:text-[#C9A878] transition-colors">
-                Schedule
-              </a>
-              <a href="/private-sessions" className="text-sm text-[#785E3D] hover:text-[#C9A878] transition-colors">
-                Private sessions
-              </a>
-              <a href="/events" className="text-sm text-[#785E3D] hover:text-[#C9A878] transition-colors">
-                Events
-              </a>
-              <a href="/about" className="text-sm text-[#785E3D] hover:text-[#C9A878] transition-colors">
+            <nav className="grid grid-cols-2 gap-x-6 gap-y-3">
+              <a href="/about" className="text-sm text-[#C9B99A] hover:text-[#E5D5B7] transition-colors">
                 About
               </a>
-              <a href="/faq" className="text-sm text-[#785E3D] hover:text-[#C9A878] transition-colors">
+              <a href="/private-sessions" className="text-sm text-[#C9B99A] hover:text-[#E5D5B7] transition-colors">
+                Private
+              </a>
+              <a href="/events" className="text-sm text-[#C9B99A] hover:text-[#E5D5B7] transition-colors">
+                Events
+              </a>
+              <a href="/practice" className="text-sm text-[#C9B99A] hover:text-[#E5D5B7] transition-colors">
+                Online
+              </a>
+              <a href="/#schedule" className="text-sm text-[#C9B99A] hover:text-[#E5D5B7] transition-colors">
+                Schedule
+              </a>
+              <a href="/faq" className="text-sm text-[#C9B99A] hover:text-[#E5D5B7] transition-colors">
                 FAQ
               </a>
             </nav>
@@ -43,7 +46,7 @@ export default function Footer() {
 
           {/* Column 3: Connect */}
           <div>
-            <h4 className="text-xs uppercase tracking-wide text-[#785E3D] mb-4">
+            <h4 className="text-xs uppercase tracking-wide text-[#C9A878] mb-4">
               Connect
             </h4>
             <div className="flex flex-col gap-3">
@@ -51,13 +54,13 @@ export default function Footer() {
                 href="https://instagram.com/ammarbass"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-[#785E3D] hover:text-[#C9A878] transition-colors"
+                className="text-sm text-[#C9B99A] hover:text-[#E5D5B7] transition-colors"
               >
                 @ammarbass
               </a>
               <a
                 href="mailto:ammar@ammarbass.com"
-                className="text-sm text-[#785E3D] hover:text-[#C9A878] transition-colors"
+                className="text-sm text-[#C9B99A] hover:text-[#E5D5B7] transition-colors"
               >
                 ammar@ammarbass.com
               </a>
@@ -67,10 +70,10 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-[#4A3828] pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-[#6B5740]">
+          <p className="text-xs text-[#9B8366]">
             © 2026 Ammar Bass
           </p>
-          <p className="text-xs text-[#6B5740]">
+          <p className="text-xs text-[#9B8366]">
             London, UK
           </p>
         </div>

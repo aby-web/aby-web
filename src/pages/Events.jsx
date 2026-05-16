@@ -176,7 +176,7 @@ export default function Events() {
       <VacationBanner />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-8 md:px-12 bg-[#F4EFE6]">
+      <section className="pt-32 pb-12 px-8 md:px-12 bg-[#F4EFE6]">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-4">
             Workshops & Retreats
@@ -198,7 +198,7 @@ export default function Events() {
         <>
           {/* Upcoming Events */}
           {upcomingEvents.length > 0 && (
-            <section className="py-16 px-8 md:px-12 bg-[#EAE0CF]">
+            <section className="py-18 px-8 md:px-12 bg-[#EAE0CF]">
               <div className="max-w-6xl mx-auto">
                 <h2 className="text-3xl font-light text-[#1C1410] mb-8">
                   Upcoming Events
@@ -214,7 +214,7 @@ export default function Events() {
 
           {/* Past Events */}
           {pastEvents.length > 0 && (
-            <section className="py-16 px-8 md:px-12 bg-[#F4EFE6]">
+            <section className="py-18 px-8 md:px-12 bg-[#F4EFE6]">
               <div className="max-w-6xl mx-auto">
                 <h2 className="text-3xl font-light text-[#1C1410] mb-8">
                   Past Workshops

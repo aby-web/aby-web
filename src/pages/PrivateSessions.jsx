@@ -198,13 +198,13 @@ export default function PrivateSessions() {
       <VacationBanner />
 
       {/* Hero Section */}
-      <section className="bg-[#F4EFE6] text-[#1C1410] pt-32 pb-24 px-8 md:px-12">
+      <section className="bg-[#F4EFE6] text-[#1C1410] pt-32 pb-12 px-8 md:px-12">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-6">
             One to one
           </p>
           <h1 className="text-5xl md:text-6xl font-light leading-tight mb-6">
-            Private sessions tailored to you.
+            Private sessions tailored to you
           </h1>
           <p className="text-lg text-[#6B5740] max-w-2xl mx-auto">
             Whether you are working towards a specific goal, recovering from injury, or simply want more focused attention on your practice — private sessions give you exactly that.
@@ -212,8 +212,63 @@ export default function PrivateSessions() {
         </div>
       </section>
 
-      {/* What to Expect Section */}
-      <section className="bg-[#EAE0CF] px-8 md:px-12 py-20">
+      {/* What to Expect Section - Desktop */}
+      <section className="hidden md:block relative overflow-hidden h-[650px]">
+        {/* Full-width, full-bleed background image */}
+        <img
+          src="/images/BBB09020.jpg"
+          alt="Private yoga session"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+
+        {/* Light overlay on left, darker on right for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/0 via-black/10 to-black/65"></div>
+
+        {/* Content positioned absolutely and overlaying the image */}
+        <div className="absolute inset-y-0 right-0 w-[40%] flex items-center justify-center">
+          <div className="px-10 py-16 max-w-lg">
+            <div className="mb-12">
+              <h2 className="text-4xl md:text-5xl font-light text-white">
+                What to Expect
+              </h2>
+            </div>
+            <div className="space-y-10">
+              {/* Step 1 */}
+              <div>
+                <p className="text-base uppercase tracking-[0.2em] text-[#F4EFE6] mb-4 font-medium">
+                  01 / Assessment
+                </p>
+                <p className="text-base font-light leading-relaxed text-white">
+                  We start by understanding where you are, what you want, and what is holding you back.
+                </p>
+              </div>
+
+              {/* Step 2 */}
+              <div>
+                <p className="text-base uppercase tracking-[0.2em] text-[#F4EFE6] mb-4 font-medium">
+                  02 / Progression
+                </p>
+                <p className="text-base font-light leading-relaxed text-white">
+                  Every session is built around your specific goals — handstands, arm balances, strength, flexibility or all of the above.
+                </p>
+              </div>
+
+              {/* Step 3 */}
+              <div>
+                <p className="text-base uppercase tracking-[0.2em] text-[#F4EFE6] mb-4 font-medium">
+                  03 / Results
+                </p>
+                <p className="text-base font-light leading-relaxed text-white">
+                  Structured, progressive training that actually moves you forward. Not just a good class — a plan.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* What to Expect Section - Mobile */}
+      <section className="md:hidden bg-[#EAE0CF] px-8 md:px-12 py-20">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-light text-[#1C1410]">
@@ -255,13 +310,13 @@ export default function PrivateSessions() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-[#F4EFE6] px-8 md:px-12 py-20">
+      <section className="bg-[#F4EFE6] px-8 md:px-12 py-18">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-light text-[#1C1410] mb-4">
-            Let's discuss your goals.
+            Let's discuss your goals
           </h2>
           <p className="text-lg text-[#6B5740] mb-12">
-            Book a free 15-minute discovery call or send me a message about your goals.
+            Book a complimentary 15-minute discovery call or send me a message about your goals.
           </p>
 
           {/* Side-by-Side CTAs */}

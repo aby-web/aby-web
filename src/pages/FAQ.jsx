@@ -139,7 +139,7 @@ export default function FAQ() {
       <VacationBanner />
 
       {/* Hero Section */}
-      <section className="bg-[#F4EFE6] text-[#1C1410] pt-32 pb-24 px-8 md:px-12">
+      <section className="bg-[#F4EFE6] text-[#1C1410] pt-32 pb-12 px-8 md:px-12">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-6">
             Questions
@@ -154,7 +154,7 @@ export default function FAQ() {
       </section>
 
       {/* FAQ Content */}
-      <section className="bg-[#EAE0CF] px-8 md:px-12 py-20">
+      <section className="bg-[#EAE0CF] px-8 md:px-12 py-18">
         <div className="max-w-4xl mx-auto space-y-12">
           {faqs.map((category, categoryIndex) => (
             <div key={categoryIndex}>
@@ -207,7 +207,7 @@ export default function FAQ() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-[#F4EFE6] px-8 md:px-12 py-20">
+      <section className="bg-[#F4EFE6] px-8 md:px-12 py-18">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-light text-[#1C1410] mb-4">
             Still have questions?

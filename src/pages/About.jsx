@@ -83,7 +83,7 @@ export default function About() {
       <VacationBanner />
 
       {/* Hero Section */}
-      <section className="bg-[#F4EFE6] text-[#1C1410] pt-32 pb-24 px-8 md:px-12">
+      <section className="bg-[#F4EFE6] text-[#1C1410] pt-32 pb-12 px-8 md:px-12">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-light leading-tight">
             The practice requires effort. Physical & mental.
@@ -92,7 +92,7 @@ export default function About() {
       </section>
 
       {/* Bio Section */}
-      <section className="bg-[#EAE0CF] px-8 md:px-12 py-20">
+      <section className="bg-[#EAE0CF] px-8 md:px-12 py-18">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Text */}
@@ -127,7 +127,7 @@ export default function About() {
       <Testimonials />
 
       {/* CTA Section */}
-      <section className="bg-[#EAE0CF] px-8 md:px-12 py-20">
+      <section className="bg-[#EAE0CF] px-8 md:px-12 py-18">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-light text-[#1C1410] mb-8">
             Practice with me.

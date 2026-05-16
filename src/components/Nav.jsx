@@ -71,24 +71,6 @@ export default function Nav({ theme = 'dark' }) {
           {/* Desktop Nav Links */}
           <div className="hidden md:flex items-center gap-8">
             <a
-              href="/practice"
-              className={`${isActive('/practice') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
-            >
-              Practice
-            </a>
-            <a
-              href="/#schedule"
-              className={`${textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
-            >
-              Schedule
-            </a>
-            <a
-              href="/events"
-              className={`${isActive('/events') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
-            >
-              Events
-            </a>
-            <a
               href="/about"
               className={`${isActive('/about') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
             >
@@ -98,7 +80,25 @@ export default function Nav({ theme = 'dark' }) {
               href="/private-sessions"
               className={`${isActive('/private-sessions') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
             >
-              Privates
+              Private
+            </a>
+            <a
+              href="/events"
+              className={`${isActive('/events') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
+            >
+              Events
+            </a>
+            <a
+              href="/practice"
+              className={`${isActive('/practice') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
+            >
+              Online
+            </a>
+            <a
+              href="/#schedule"
+              className={`${textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
+            >
+              Schedule
             </a>
           </div>
 
@@ -126,27 +126,6 @@ export default function Nav({ theme = 'dark' }) {
       >
         <div className="flex flex-col gap-6 px-8 py-8">
           <a
-            href="/practice"
-            onClick={() => setMobileMenuOpen(false)}
-            className={`${isActive('/practice') ? 'text-[#C9A878]' : 'text-white/90'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/20`}
-          >
-            Practice
-          </a>
-          <a
-            href="/#schedule"
-            onClick={() => setMobileMenuOpen(false)}
-            className="text-white/90 text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/20"
-          >
-            Schedule
-          </a>
-          <a
-            href="/events"
-            onClick={() => setMobileMenuOpen(false)}
-            className={`${isActive('/events') ? 'text-[#C9A878]' : 'text-white/90'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/20`}
-          >
-            Events
-          </a>
-          <a
             href="/about"
             onClick={() => setMobileMenuOpen(false)}
             className={`${isActive('/about') ? 'text-[#C9A878]' : 'text-white/90'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/20`}
@@ -158,7 +137,28 @@ export default function Nav({ theme = 'dark' }) {
             onClick={() => setMobileMenuOpen(false)}
             className={`${isActive('/private-sessions') ? 'text-[#C9A878]' : 'text-white/90'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/20`}
           >
-            Privates
+            Private
+          </a>
+          <a
+            href="/events"
+            onClick={() => setMobileMenuOpen(false)}
+            className={`${isActive('/events') ? 'text-[#C9A878]' : 'text-white/90'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/20`}
+          >
+            Events
+          </a>
+          <a
+            href="/practice"
+            onClick={() => setMobileMenuOpen(false)}
+            className={`${isActive('/practice') ? 'text-[#C9A878]' : 'text-white/90'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/20`}
+          >
+            Online
+          </a>
+          <a
+            href="/#schedule"
+            onClick={() => setMobileMenuOpen(false)}
+            className="text-white/90 text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/20"
+          >
+            Schedule
           </a>
         </div>
       </div>
