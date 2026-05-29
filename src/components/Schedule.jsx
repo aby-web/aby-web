@@ -17,15 +17,6 @@ export default function Schedule() {
       ],
     },
     {
-      location: 'Flo',
-      area: 'Hampstead',
-      classes: [
-        { day: 'Monday', time: '07:15', name: 'Morning Flow', url: 'https://www.floyogastudio.co.uk/book-a-class' },
-        { day: 'Tuesday', time: '10:00', name: 'Handstands', url: 'https://www.floyogastudio.co.uk/book-a-class' },
-        { day: 'Saturday', time: '08:15 & 09:30', name: 'Experienced & Power', url: 'https://www.floyogastudio.co.uk/book-a-class' },
-      ],
-    },
-    {
       location: 'BXR',
       area: 'Marylebone',
       classes: [
@@ -34,10 +25,12 @@ export default function Schedule() {
       ],
     },
     {
-      location: 'MoreYoga',
-      area: 'Soho',
+      location: 'Flo',
+      area: 'Hampstead',
       classes: [
-        { day: 'Tuesday', time: '19:15', name: 'Power (75)', url: 'https://www.moreyoga.co.uk/timetables-full/' },
+        { day: 'Monday', time: '07:15', name: 'Morning Flow', url: 'https://www.floyogastudio.co.uk/book-a-class' },
+        { day: 'Tuesday', time: '10:00', name: 'Handstands', url: 'https://www.floyogastudio.co.uk/book-a-class' },
+        { day: 'Saturday', time: '08:15 & 09:30', name: 'Experienced & Power', url: 'https://www.floyogastudio.co.uk/book-a-class' },
       ],
     },
   ];
@@ -161,130 +154,23 @@ export default function Schedule() {
             </div>
           </div>
 
-          {/* BXR and MoreYoga - left column combined */}
-          <div className="space-y-8">
-            {/* BXR */}
-            <div>
-              {/* Location Header with Subtitle */}
-              <div className="pb-4 mb-6 border-b border-[#C9B99A]">
-                <h3 className="text-2xl md:text-[28px] font-light text-[#1C1410]">
-                  {scheduleData[3].location}
-                </h3>
-                {scheduleData[3].area && (
-                  <p className="text-[11px] uppercase tracking-[0.15em] text-[#9B8366] mt-1">
-                    {scheduleData[3].area}
-                  </p>
-                )}
-              </div>
-
-              {/* Classes */}
-              <div>
-                {scheduleData[3].classes.map((classItem, classIndex) => (
-                  <div
-                    key={classIndex}
-                    className="flex items-center justify-between py-4 border-b border-[#C9B99A]"
-                  >
-                    <div className="flex items-center gap-6 flex-1">
-                      {/* Day & Time */}
-                      <div className="min-w-[120px]">
-                        <p className="text-[11px] uppercase tracking-wide text-[#785E3D] mb-1">
-                          {classItem.day}
-                        </p>
-                        <p className="text-xs text-[#6B5740]">
-                          {classItem.time}
-                        </p>
-                      </div>
-
-                      {/* Class Name */}
-                      <p className="text-base text-[#1C1410]">
-                        {classItem.name}
-                      </p>
-                    </div>
-
-                    {/* Book Button */}
-                    <a
-                      href={classItem.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-4 py-2 text-xs uppercase tracking-wide border border-[#785E3D] text-[#6B5740] rounded-full hover:bg-[#EAE0CF] transition-colors"
-                    >
-                      Book
-                    </a>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* MoreYoga */}
-            <div>
-              {/* Location Header with Subtitle */}
-              <div className="pb-4 mb-6 border-b border-[#C9B99A]">
-                <h3 className="text-2xl md:text-[28px] font-light text-[#1C1410]">
-                  {scheduleData[4].location}
-                </h3>
-                {scheduleData[4].area && (
-                  <p className="text-[11px] uppercase tracking-[0.15em] text-[#9B8366] mt-1">
-                    {scheduleData[4].area}
-                  </p>
-                )}
-              </div>
-
-              {/* Classes */}
-              <div>
-                {scheduleData[4].classes.map((classItem, classIndex) => (
-                  <div
-                    key={classIndex}
-                    className="flex items-center justify-between py-4 border-b border-[#C9B99A]"
-                  >
-                    <div className="flex items-center gap-6 flex-1">
-                      {/* Day & Time */}
-                      <div className="min-w-[120px]">
-                        <p className="text-[11px] uppercase tracking-wide text-[#785E3D] mb-1">
-                          {classItem.day}
-                        </p>
-                        <p className="text-xs text-[#6B5740]">
-                          {classItem.time}
-                        </p>
-                      </div>
-
-                      {/* Class Name */}
-                      <p className="text-base text-[#1C1410]">
-                        {classItem.name}
-                      </p>
-                    </div>
-
-                    {/* Book Button */}
-                    <a
-                      href={classItem.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-4 py-2 text-xs uppercase tracking-wide border border-[#785E3D] text-[#6B5740] rounded-full hover:bg-[#EAE0CF] transition-colors"
-                    >
-                      Book
-                    </a>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Flo - right column */}
+          {/* Flo - left column */}
           <div>
             {/* Location Header with Subtitle */}
             <div className="pb-4 mb-6 border-b border-[#C9B99A]">
               <h3 className="text-2xl md:text-[28px] font-light text-[#1C1410]">
-                {scheduleData[2].location}
+                {scheduleData[3].location}
               </h3>
-              {scheduleData[2].area && (
+              {scheduleData[3].area && (
                 <p className="text-[11px] uppercase tracking-[0.15em] text-[#9B8366] mt-1">
-                  {scheduleData[2].area}
+                  {scheduleData[3].area}
                 </p>
               )}
             </div>
 
             {/* Classes */}
             <div>
-              {scheduleData[2].classes.map((classItem, classIndex) => (
+              {scheduleData[3].classes.map((classItem, classIndex) => (
                 <div
                   key={classIndex}
                   className="flex items-center justify-between py-4 border-b border-[#C9B99A]"
@@ -317,6 +203,61 @@ export default function Schedule() {
                   </a>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* BXR - right column */}
+          <div>
+            {/* BXR */}
+            <div>
+              {/* Location Header with Subtitle */}
+              <div className="pb-4 mb-6 border-b border-[#C9B99A]">
+                <h3 className="text-2xl md:text-[28px] font-light text-[#1C1410]">
+                  {scheduleData[2].location}
+                </h3>
+                {scheduleData[2].area && (
+                  <p className="text-[11px] uppercase tracking-[0.15em] text-[#9B8366] mt-1">
+                    {scheduleData[2].area}
+                  </p>
+                )}
+              </div>
+
+              {/* Classes */}
+              <div>
+                {scheduleData[2].classes.map((classItem, classIndex) => (
+                  <div
+                    key={classIndex}
+                    className="flex items-center justify-between py-4 border-b border-[#C9B99A]"
+                  >
+                    <div className="flex items-center gap-6 flex-1">
+                      {/* Day & Time */}
+                      <div className="min-w-[120px]">
+                        <p className="text-[11px] uppercase tracking-wide text-[#785E3D] mb-1">
+                          {classItem.day}
+                        </p>
+                        <p className="text-xs text-[#6B5740]">
+                          {classItem.time}
+                        </p>
+                      </div>
+
+                      {/* Class Name */}
+                      <p className="text-base text-[#1C1410]">
+                        {classItem.name}
+                      </p>
+                    </div>
+
+                    {/* Book Button */}
+                    <a
+                      href={classItem.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-2 text-xs uppercase tracking-wide border border-[#785E3D] text-[#6B5740] rounded-full hover:bg-[#EAE0CF] transition-colors"
+                    >
+                      Book
+                    </a>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
