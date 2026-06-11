@@ -14,7 +14,7 @@ export default function Schedule() {
       area: 'Hampstead',
       classes: [
         { day: 'Monday', time: '07:15', name: 'Morning Flow', url: 'https://www.floyogastudio.co.uk/book-a-class' },
-        { day: 'Tuesday', time: '10:00', name: 'Handstands', url: 'https://www.floyogastudio.co.uk/book-a-class' },
+        { day: 'Tuesday', time: '09:30', name: 'Handstands', url: 'https://www.floyogastudio.co.uk/book-a-class' },
         { day: 'Saturday', time: '08:15 & 09:30', name: 'Experienced & Power', url: 'https://www.floyogastudio.co.uk/book-a-class' },
       ],
     },
