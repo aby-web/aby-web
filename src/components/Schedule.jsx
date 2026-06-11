@@ -1,27 +1,12 @@
 export default function Schedule() {
   const scheduleData = [
     {
-      location: 'HOME',
-      area: 'Primrose Hill',
-      classes: [
-        { day: 'Friday', time: '18:00', name: 'Vinyasa (75)', url: 'http://homewellness.uk/' },
-        { day: 'Sunday', time: '10:00', name: 'Vinyasa (75)', url: 'http://homewellness.uk/' },
-      ],
-    },
-    {
       location: 'Indaba',
       area: 'Marylebone',
       classes: [
         { day: 'Tuesday', time: '07:30', name: 'Morning Vinyasa', url: 'https://indabayoga.com/timetable' },
+        { day: 'Thursday', time: '18:00', name: 'Coming Soon (75)', url: 'https://indabayoga.com/timetable' },
         { day: 'Saturday', time: '11:30', name: 'Power (75)', url: 'https://indabayoga.com/timetable' },
-      ],
-    },
-    {
-      location: 'BXR',
-      area: 'Marylebone',
-      classes: [
-        { day: 'Wednesday', time: '13:00', name: 'Handstands', url: 'https://www.bxrlondon.com/' },
-        { day: 'Thursday', time: '20:00', name: 'Power', url: 'https://www.bxrlondon.com/' },
       ],
     },
     {
@@ -31,6 +16,21 @@ export default function Schedule() {
         { day: 'Monday', time: '07:15', name: 'Morning Flow', url: 'https://www.floyogastudio.co.uk/book-a-class' },
         { day: 'Tuesday', time: '10:00', name: 'Handstands', url: 'https://www.floyogastudio.co.uk/book-a-class' },
         { day: 'Saturday', time: '08:15 & 09:30', name: 'Experienced & Power', url: 'https://www.floyogastudio.co.uk/book-a-class' },
+      ],
+    },
+    {
+      location: 'HOME',
+      area: 'Primrose Hill',
+      classes: [
+        { day: 'Friday', time: '18:00', name: 'Vinyasa (75)', url: 'http://homewellness.uk/' },
+        { day: 'Sunday', time: '10:00', name: 'Vinyasa (75)', url: 'http://homewellness.uk/' },
+      ],
+    },
+    {
+      location: 'BXR',
+      area: 'Marylebone',
+      classes: [
+        { day: 'Thursday', time: '20:00', name: 'Power', url: 'https://www.bxrlondon.com/' },
       ],
     },
   ];
@@ -50,7 +50,7 @@ export default function Schedule() {
 
         {/* Schedule Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* HOME - left column */}
+          {/* Indaba - left column */}
           <div>
             {/* Location Header with Subtitle */}
             <div className="pb-4 mb-6 border-b border-[#C9B99A]">
@@ -102,7 +102,7 @@ export default function Schedule() {
             </div>
           </div>
 
-          {/* Indaba - right column */}
+          {/* Flo - right column */}
           <div>
             {/* Location Header with Subtitle */}
             <div className="pb-4 mb-6 border-b border-[#C9B99A]">
@@ -154,23 +154,23 @@ export default function Schedule() {
             </div>
           </div>
 
-          {/* Flo - left column */}
+          {/* HOME - left column */}
           <div>
             {/* Location Header with Subtitle */}
             <div className="pb-4 mb-6 border-b border-[#C9B99A]">
               <h3 className="text-2xl md:text-[28px] font-light text-[#1C1410]">
-                {scheduleData[3].location}
+                {scheduleData[2].location}
               </h3>
-              {scheduleData[3].area && (
+              {scheduleData[2].area && (
                 <p className="text-[11px] uppercase tracking-[0.15em] text-[#9B8366] mt-1">
-                  {scheduleData[3].area}
+                  {scheduleData[2].area}
                 </p>
               )}
             </div>
 
             {/* Classes */}
             <div>
-              {scheduleData[3].classes.map((classItem, classIndex) => (
+              {scheduleData[2].classes.map((classItem, classIndex) => (
                 <div
                   key={classIndex}
                   className="flex items-center justify-between py-4 border-b border-[#C9B99A]"
@@ -213,18 +213,18 @@ export default function Schedule() {
               {/* Location Header with Subtitle */}
               <div className="pb-4 mb-6 border-b border-[#C9B99A]">
                 <h3 className="text-2xl md:text-[28px] font-light text-[#1C1410]">
-                  {scheduleData[2].location}
+                  {scheduleData[3].location}
                 </h3>
-                {scheduleData[2].area && (
+                {scheduleData[3].area && (
                   <p className="text-[11px] uppercase tracking-[0.15em] text-[#9B8366] mt-1">
-                    {scheduleData[2].area}
+                    {scheduleData[3].area}
                   </p>
                 )}
               </div>
 
               {/* Classes */}
               <div>
-                {scheduleData[2].classes.map((classItem, classIndex) => (
+                {scheduleData[3].classes.map((classItem, classIndex) => (
                   <div
                     key={classIndex}
                     className="flex items-center justify-between py-4 border-b border-[#C9B99A]"
