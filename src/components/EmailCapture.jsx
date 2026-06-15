@@ -62,7 +62,7 @@ export default function EmailCapture() {
           Stay in the loop
         </p>
         <h2 className="text-4xl md:text-5xl font-light text-[#1C1410] mb-4">
-          Don't miss out.
+          Stay connected
         </h2>
         <p className="text-base text-[#6B5740] mb-8">
           Get first access to new classes, workshops, and international retreats before they fill up.

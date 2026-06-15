@@ -1,10 +1,10 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
-const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
+const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
 
-serve(async (req) => {
+Deno.serve(async (req) => {
   try {
-    const { record } = await req.json()
+    const { record } = await req.json();
 
     const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -13,7 +13,7 @@ serve(async (req) => {
         'Authorization': `Bearer ${RESEND_API_KEY}`
       },
       body: JSON.stringify({
-        from: 'onboarding@resend.dev',
+        from: 'noreply@ammarbass.com',
         to: ['ammar@ammarbass.com'],
         subject: `New private session enquiry from ${record.name}`,
         html: `
@@ -24,9 +24,6 @@ serve(async (req) => {
               <p><strong>Email:</strong> <a href="mailto:${record.email}">${record.email}</a></p>
               <p><strong>Message:</strong></p>
               <p style="white-space: pre-wrap;">${record.message}</p>
-              <p style="color: #6B5740; font-size: 12px; margin-top: 20px;">
-                <strong>Submitted:</strong> ${record.created_at}
-              </p>
             </div>
             <p style="color: #6B5740; font-size: 14px;">
               Reply directly to <a href="mailto:${record.email}">${record.email}</a>
@@ -34,18 +31,18 @@ serve(async (req) => {
           </div>
         `
       })
-    })
+    });
 
-    const data = await res.json()
+    const data = await res.json();
 
     return new Response(JSON.stringify({ success: true, data }), {
       headers: { 'Content-Type': 'application/json' },
       status: 200
-    })
+    });
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { 'Content-Type': 'application/json' },
       status: 400
-    })
+    });
   }
-})
+});

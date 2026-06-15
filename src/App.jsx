@@ -8,6 +8,7 @@ import Guide from './pages/Guide';
 import PrivateSessions from './pages/PrivateSessions';
 import FAQ from './pages/FAQ';
 import Admin from './pages/Admin';
+import Join from './pages/Join';
 
 function ScrollToHash() {
   const location = useLocation();
@@ -45,6 +46,7 @@ function App() {
         <Route path="/private-sessions" element={<PrivateSessions />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/join" element={<Join />} />
       </Routes>
     </Router>
   );

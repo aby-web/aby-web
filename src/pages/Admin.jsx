@@ -672,15 +672,15 @@ export default function Admin() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#1C1410] flex items-center justify-center px-4">
-        <form onSubmit={handleLogin} className="bg-[#2A1E16] p-8 rounded-lg max-w-md w-full">
-          <h1 className="text-2xl font-light text-[#F4EFE6] mb-6">Admin Login</h1>
+      <div className="min-h-screen bg-[#F4EFE6] flex items-center justify-center px-4">
+        <form onSubmit={handleLogin} className="bg-white p-8 rounded-lg max-w-md w-full border border-[#C9B99A] shadow-sm">
+          <h1 className="text-2xl font-light text-[#1C1410] mb-6">Admin Login</h1>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Username"
-            className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D] mb-4"
+            className="w-full px-4 py-3 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A] mb-4"
             required
             autoComplete="username"
           />
@@ -689,13 +689,13 @@ export default function Admin() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
-            className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D] mb-4"
+            className="w-full px-4 py-3 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A] mb-4"
             required
             autoComplete="current-password"
           />
           <button
             type="submit"
-            className="w-full bg-[#785E3D] text-[#F4EFE6] py-3 rounded-md hover:bg-[#8A6F4C] transition-colors"
+            className="w-full bg-[#785E3D] text-white py-3 rounded-md hover:bg-[#6B5030] transition-colors"
           >
             Login
           </button>
@@ -705,59 +705,59 @@ export default function Admin() {
   }
 
   return (
-    <div className="min-h-screen bg-[#1C1410] text-[#F4EFE6]">
+    <div className="min-h-screen bg-[#F4EFE6] text-[#1C1410]">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-light">Admin Dashboard</h1>
+          <h1 className="text-3xl font-light text-[#1C1410]">Admin Dashboard</h1>
           <a
             href="/"
-            className="text-sm text-[#785E3D] hover:text-[#F4EFE6] transition-colors"
+            className="text-sm text-[#785E3D] hover:text-[#1C1410] transition-colors"
           >
             ← Back to Site
           </a>
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-4 mb-8 border-b border-[#3A2E26]">
+        <div className="flex gap-1 mb-8 border-b border-[#C9B99A]">
           <button
             onClick={() => setActiveTab('events')}
-            className={`pb-4 px-4 ${activeTab === 'events' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740]'}`}
+            className={`pb-4 px-4 text-sm font-medium transition-colors ${activeTab === 'events' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740] hover:text-[#1C1410]'}`}
           >
             Events
           </button>
           <button
             onClick={() => setActiveTab('subscribers')}
-            className={`pb-4 px-4 ${activeTab === 'subscribers' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740]'}`}
+            className={`pb-4 px-4 text-sm font-medium transition-colors ${activeTab === 'subscribers' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740] hover:text-[#1C1410]'}`}
           >
             Subscribers ({subscribers.length})
           </button>
           <button
             onClick={() => setActiveTab('privateEnquiries')}
-            className={`pb-4 px-4 ${activeTab === 'privateEnquiries' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740]'}`}
+            className={`pb-4 px-4 text-sm font-medium transition-colors ${activeTab === 'privateEnquiries' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740] hover:text-[#1C1410]'}`}
           >
             Private Enquiries ({privateEnquiries.length})
           </button>
           <button
             onClick={() => setActiveTab('testimonials')}
-            className={`pb-4 px-4 ${activeTab === 'testimonials' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740]'}`}
+            className={`pb-4 px-4 text-sm font-medium transition-colors ${activeTab === 'testimonials' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740] hover:text-[#1C1410]'}`}
           >
             Testimonials
           </button>
           <button
             onClick={() => setActiveTab('vacations')}
-            className={`pb-4 px-4 ${activeTab === 'vacations' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740]'}`}
+            className={`pb-4 px-4 text-sm font-medium transition-colors ${activeTab === 'vacations' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740] hover:text-[#1C1410]'}`}
           >
             Vacations
           </button>
           <button
             onClick={() => setActiveTab('guides')}
-            className={`pb-4 px-4 ${activeTab === 'guides' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740]'}`}
+            className={`pb-4 px-4 text-sm font-medium transition-colors ${activeTab === 'guides' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740] hover:text-[#1C1410]'}`}
           >
             Guides
           </button>
           <button
             onClick={() => setActiveTab('settings')}
-            className={`pb-4 px-4 ${activeTab === 'settings' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740]'}`}
+            className={`pb-4 px-4 text-sm font-medium transition-colors ${activeTab === 'settings' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740] hover:text-[#1C1410]'}`}
           >
             Settings
           </button>
@@ -767,42 +767,42 @@ export default function Admin() {
         {activeTab === 'events' && (
           <div>
             {/* Event Form */}
-            <div className="bg-[#2A1E16] p-6 rounded-lg mb-8">
-              <h2 className="text-xl font-light mb-4">{eventForm.id ? 'Edit Event' : 'Add New Event'}</h2>
+            <div className="bg-white p-6 rounded-lg mb-8 border border-[#C9B99A] shadow-sm">
+              <h2 className="text-xl font-light mb-4 text-[#1C1410]">{eventForm.id ? 'Edit Event' : 'Add New Event'}</h2>
               <form onSubmit={handleSubmitEvent} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <input
                   type="text"
                   placeholder="Title"
                   value={eventForm.title}
                   onChange={(e) => setEventForm({ ...eventForm, title: e.target.value })}
-                  className="px-4 py-2 bg-[#1C1410] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
+                  className="px-4 py-2 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A]"
                   required
                 />
                 <input
                   type="date"
                   value={eventForm.date}
                   onChange={(e) => setEventForm({ ...eventForm, date: e.target.value })}
-                  className="px-4 py-2 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
+                  className="px-4 py-2 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D]"
                 />
                 <input
                   type="text"
                   placeholder="Location"
                   value={eventForm.location}
                   onChange={(e) => setEventForm({ ...eventForm, location: e.target.value })}
-                  className="px-4 py-2 bg-[#1C1410] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
+                  className="px-4 py-2 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A]"
                 />
                 <input
                   type="url"
                   placeholder="Booking Link"
                   value={eventForm.booking_link}
                   onChange={(e) => setEventForm({ ...eventForm, booking_link: e.target.value })}
-                  className="px-4 py-2 bg-[#1C1410] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
+                  className="px-4 py-2 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A]"
                 />
                 <textarea
                   placeholder="Description"
                   value={eventForm.description}
                   onChange={(e) => setEventForm({ ...eventForm, description: e.target.value })}
-                  className="px-4 py-2 bg-[#1C1410] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D] md:col-span-2"
+                  className="px-4 py-2 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A] md:col-span-2"
                   rows="3"
                 />
                 <div>
@@ -815,7 +815,7 @@ export default function Admin() {
                   />
                   <label
                     htmlFor="image-upload"
-                    className="inline-block px-6 py-3 bg-[#3A2E26] text-[#F4EFE6] text-sm rounded-md hover:bg-[#4A3E36] transition-colors cursor-pointer"
+                    className="inline-block px-6 py-3 bg-[#EAE0CF] text-[#1C1410] text-sm rounded-md hover:bg-[#C9B99A] transition-colors cursor-pointer"
                   >
                     Upload Image
                   </label>
@@ -827,7 +827,7 @@ export default function Admin() {
                   <button
                     type="submit"
                     disabled={uploading}
-                    className="bg-[#785E3D] text-[#F4EFE6] px-6 py-2 rounded-md hover:bg-[#8A6F4C] transition-colors disabled:opacity-50"
+                    className="bg-[#785E3D] text-white px-6 py-2 rounded-md hover:bg-[#6B5030] transition-colors disabled:opacity-50"
                   >
                     {uploading ? 'Saving...' : eventForm.id ? 'Update Event' : 'Add Event'}
                   </button>
@@ -848,7 +848,7 @@ export default function Admin() {
                         setImageFile(null);
                         setImagePreviewUrl(null);
                       }}
-                      className="bg-[#3A2E26] text-[#F4EFE6] px-6 py-2 rounded-md hover:bg-[#4A3E36] transition-colors"
+                      className="bg-[#EAE0CF] text-[#1C1410] px-6 py-2 rounded-md hover:bg-[#C9B99A] transition-colors"
                     >
                       Cancel Edit
                     </button>
@@ -859,8 +859,8 @@ export default function Admin() {
 
             {/* Preview Section */}
             {(eventForm.title || eventForm.date || eventForm.location || imagePreviewUrl) && (
-              <div className="bg-[#2A1E16] p-6 rounded-lg mb-8">
-                <h2 className="text-xl font-light mb-4">Preview</h2>
+              <div className="bg-white p-6 rounded-lg mb-8 border border-[#C9B99A] shadow-sm">
+                <h2 className="text-xl font-light mb-4 text-[#1C1410]">Preview</h2>
                 <p className="text-xs text-[#6B5740] mb-4">This is how your event will appear on the Events page</p>
                 <div className="max-w-sm">
                   <div className="bg-[#F4EFE6] border border-[#C9B99A] rounded-md overflow-hidden">
@@ -907,10 +907,10 @@ export default function Admin() {
             )}
 
             {/* Events List */}
-            <div className="bg-[#2A1E16] p-6 rounded-lg">
-              <h2 className="text-xl font-light mb-4">All Events</h2>
+            <div className="bg-white p-6 rounded-lg border border-[#C9B99A] shadow-sm">
+              <h2 className="text-xl font-light mb-4 text-[#1C1410]">All Events</h2>
               {loading ? (
-                <p>Loading...</p>
+                <p className="text-[#6B5740]">Loading...</p>
               ) : events.length === 0 ? (
                 <p className="text-[#6B5740]">No events yet. Add your first event above!</p>
               ) : (
@@ -919,35 +919,35 @@ export default function Admin() {
                     const today = new Date().toISOString().split('T')[0];
                     const isUpcoming = event.date >= today;
                     return (
-                      <div key={event.id} className="bg-[#1C1410] p-4 rounded-md border border-[#3A2E26]">
+                      <div key={event.id} className="bg-[#F4EFE6] p-4 rounded-md border border-[#C9B99A]">
                         <div className="flex justify-between items-start">
                           <div className="flex-1">
-                            <h3 className="text-lg font-medium mb-1">{event.title}</h3>
+                            <h3 className="text-lg font-medium mb-1 text-[#1C1410]">{event.title}</h3>
                             <p className="text-sm text-[#785E3D] mb-2">{event.date} • {event.location}</p>
                             {event.description && <p className="text-sm text-[#6B5740] mb-2">{event.description}</p>}
                             <div className="flex gap-2 items-center">
-                              <span className={`text-xs px-2 py-1 rounded ${isUpcoming ? 'bg-[#785E3D]' : 'bg-[#3A2E26]'}`}>
+                              <span className={`text-xs px-2 py-1 rounded text-white ${isUpcoming ? 'bg-[#785E3D]' : 'bg-[#C9B99A]'}`}>
                                 {isUpcoming ? 'upcoming' : 'past'}
                               </span>
                               {event.image_url && <span className="text-xs text-[#6B5740]">Has image</span>}
                             </div>
                           </div>
-                        <div className="flex gap-2">
-                          <button
-                            onClick={() => handleEditEvent(event)}
-                            className="px-3 py-1 bg-[#785E3D] rounded text-sm hover:bg-[#8A6F4C] transition-colors"
-                          >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => handleDeleteEvent(event.id)}
-                            className="px-3 py-1 bg-red-900 rounded text-sm hover:bg-red-800 transition-colors"
-                          >
-                            Delete
-                          </button>
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => handleEditEvent(event)}
+                              className="px-3 py-1 bg-[#785E3D] text-white rounded text-sm hover:bg-[#6B5030] transition-colors"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeleteEvent(event.id)}
+                              className="px-3 py-1 bg-red-100 text-red-700 border border-red-200 rounded text-sm hover:bg-red-200 transition-colors"
+                            >
+                              Delete
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
                     )
                   })}
                 </div>
@@ -958,35 +958,35 @@ export default function Admin() {
 
         {/* Subscribers Tab */}
         {activeTab === 'subscribers' && (
-          <div className="bg-[#2A1E16] p-6 rounded-lg">
+          <div className="bg-white p-6 rounded-lg border border-[#C9B99A] shadow-sm">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-light">Subscribers ({subscribers.length})</h2>
+              <h2 className="text-xl font-light text-[#1C1410]">Subscribers ({subscribers.length})</h2>
               <button
                 onClick={exportToCSV}
-                className="bg-[#785E3D] text-[#F4EFE6] px-4 py-2 rounded-md hover:bg-[#8A6F4C] transition-colors text-sm"
+                className="bg-[#785E3D] text-white px-4 py-2 rounded-md hover:bg-[#6B5030] transition-colors text-sm"
               >
                 Export to CSV
               </button>
             </div>
             {loading ? (
-              <p>Loading...</p>
+              <p className="text-[#6B5740]">Loading...</p>
             ) : subscribers.length === 0 ? (
               <p className="text-[#6B5740]">No subscribers yet.</p>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="border-b border-[#3A2E26]">
-                      <th className="text-left py-2 px-4 text-[#785E3D]">Email</th>
-                      <th className="text-left py-2 px-4 text-[#785E3D]">Signup Date</th>
-                      <th className="text-left py-2 px-4 text-[#785E3D]">Source</th>
-                      <th className="text-left py-2 px-4 text-[#785E3D]">Actions</th>
+                    <tr className="border-b border-[#C9B99A]">
+                      <th className="text-left py-2 px-4 text-[#1C1410] font-medium">Email</th>
+                      <th className="text-left py-2 px-4 text-[#1C1410] font-medium">Signup Date</th>
+                      <th className="text-left py-2 px-4 text-[#1C1410] font-medium">Source</th>
+                      <th className="text-left py-2 px-4 text-[#1C1410] font-medium">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     {subscribers.map((subscriber) => (
-                      <tr key={subscriber.id} className="border-b border-[#3A2E26]">
-                        <td className="py-3 px-4">{subscriber.email}</td>
+                      <tr key={subscriber.id} className="border-b border-[#EAE0CF] hover:bg-[#F4EFE6]">
+                        <td className="py-3 px-4 text-[#1C1410]">{subscriber.email}</td>
                         <td className="py-3 px-4 text-[#6B5740]">
                           {new Date(subscriber.created_at).toLocaleDateString()}
                         </td>
@@ -994,7 +994,7 @@ export default function Admin() {
                         <td className="py-3 px-4">
                           <button
                             onClick={() => handleDeleteSubscriber(subscriber.id)}
-                            className="px-3 py-1 bg-red-900 rounded text-sm hover:bg-red-800 transition-colors"
+                            className="px-3 py-1 bg-red-100 text-red-700 border border-red-200 rounded text-sm hover:bg-red-200 transition-colors"
                           >
                             Delete
                           </button>
@@ -1010,29 +1010,29 @@ export default function Admin() {
 
         {/* Private Enquiries Tab */}
         {activeTab === 'privateEnquiries' && (
-          <div className="bg-[#2A1E16] p-6 rounded-lg">
-            <h2 className="text-xl font-light mb-4">Private Session Enquiries ({privateEnquiries.length})</h2>
+          <div className="bg-white p-6 rounded-lg border border-[#C9B99A] shadow-sm">
+            <h2 className="text-xl font-light mb-4 text-[#1C1410]">Private Session Enquiries ({privateEnquiries.length})</h2>
             {loading ? (
-              <p>Loading...</p>
+              <p className="text-[#6B5740]">Loading...</p>
             ) : privateEnquiries.length === 0 ? (
               <p className="text-[#6B5740]">No private session enquiries yet.</p>
             ) : (
               <div className="space-y-4">
                 {privateEnquiries.map((enquiry) => (
-                  <div key={enquiry.id} className="bg-[#1C1410] p-6 rounded-md border border-[#3A2E26]">
+                  <div key={enquiry.id} className="bg-[#F4EFE6] p-6 rounded-md border border-[#C9B99A]">
                     <div className="flex justify-between items-start mb-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-1">
-                          <h3 className="text-lg font-medium text-[#F4EFE6]">{enquiry.name}</h3>
+                          <h3 className="text-lg font-medium text-[#1C1410]">{enquiry.name}</h3>
                           {enquiry.followed_up && (
-                            <span className="text-xs px-2 py-1 rounded bg-[#785E3D] text-[#F4EFE6]">
+                            <span className="text-xs px-2 py-1 rounded bg-[#785E3D] text-white">
                               Followed up
                             </span>
                           )}
                         </div>
                         <a
                           href={`mailto:${enquiry.email}`}
-                          className="text-sm text-[#785E3D] hover:text-[#C9A878] transition-colors"
+                          className="text-sm text-[#785E3D] hover:text-[#6B5030] transition-colors"
                         >
                           {enquiry.email}
                         </a>
@@ -1047,23 +1047,23 @@ export default function Admin() {
                         })}
                       </span>
                     </div>
-                    <div className="bg-[#2A1E16] p-4 rounded-md mb-4">
-                      <p className="text-sm text-[#F4EFE6] whitespace-pre-wrap">{enquiry.message}</p>
+                    <div className="bg-white p-4 rounded-md mb-4 border border-[#C9B99A]">
+                      <p className="text-sm text-[#1C1410] whitespace-pre-wrap">{enquiry.message}</p>
                     </div>
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleToggleFollowedUp(enquiry)}
                         className={`px-4 py-2 rounded-md text-sm transition-colors ${
                           enquiry.followed_up
-                            ? 'bg-[#3A2E26] text-[#785E3D] hover:bg-[#4A3E36]'
-                            : 'bg-[#785E3D] text-[#F4EFE6] hover:bg-[#8A6F4C]'
+                            ? 'bg-[#EAE0CF] text-[#6B5740] hover:bg-[#C9B99A]'
+                            : 'bg-[#785E3D] text-white hover:bg-[#6B5030]'
                         }`}
                       >
                         {enquiry.followed_up ? 'Mark as not followed up' : 'Mark as followed up'}
                       </button>
                       <button
                         onClick={() => handleDeleteEnquiry(enquiry.id)}
-                        className="px-4 py-2 bg-red-900 rounded-md text-sm hover:bg-red-800 transition-colors"
+                        className="px-4 py-2 bg-red-100 text-red-700 border border-red-200 rounded-md text-sm hover:bg-red-200 transition-colors"
                       >
                         Delete
                       </button>
@@ -1077,19 +1077,19 @@ export default function Admin() {
 
         {/* Testimonials Tab */}
         {activeTab === 'testimonials' && (
-          <div className="bg-[#2A1E16] p-6 rounded-lg">
-            <h2 className="text-xl font-light mb-6">Manage Testimonials</h2>
+          <div className="bg-white p-6 rounded-lg border border-[#C9B99A] shadow-sm">
+            <h2 className="text-xl font-light mb-6 text-[#1C1410]">Manage Testimonials</h2>
             <p className="text-sm text-[#6B5740] mb-6">Edit the 3 testimonials that appear on the homepage</p>
 
             {loading ? (
-              <p>Loading...</p>
+              <p className="text-[#6B5740]">Loading...</p>
             ) : testimonials.length === 0 ? (
               <p className="text-[#6B5740]">No testimonials found. Please run the setup SQL first.</p>
             ) : (
               <div className="space-y-6">
                 {testimonials.map((testimonial, index) => (
-                  <div key={testimonial.id} className="bg-[#1C1410] p-6 rounded-md border border-[#3A2E26]">
-                    <h3 className="text-lg font-medium mb-4 text-[#785E3D]">Testimonial {index + 1}</h3>
+                  <div key={testimonial.id} className="bg-[#F4EFE6] p-6 rounded-md border border-[#C9B99A]">
+                    <h3 className="text-lg font-medium mb-4 text-[#1C1410]">Testimonial {index + 1}</h3>
                     <form
                       onSubmit={(e) => {
                         e.preventDefault();
@@ -1098,7 +1098,7 @@ export default function Admin() {
                       className="space-y-4"
                     >
                       <div>
-                        <label className="block text-sm text-[#785E3D] mb-2">Review</label>
+                        <label className="block text-sm font-medium text-[#6B5740] mb-2">Review</label>
                         <textarea
                           value={testimonial.review}
                           onChange={(e) => {
@@ -1107,7 +1107,7 @@ export default function Admin() {
                             setTestimonials(updatedTestimonials);
                           }}
                           placeholder="The review text"
-                          className="w-full px-4 py-3 bg-[#2A1E16] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
+                          className="w-full px-4 py-3 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A]"
                           rows="3"
                           required
                         />
@@ -1115,7 +1115,7 @@ export default function Admin() {
 
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-sm text-[#785E3D] mb-2">Studio</label>
+                          <label className="block text-sm font-medium text-[#6B5740] mb-2">Studio</label>
                           <input
                             type="text"
                             value={testimonial.studio}
@@ -1125,13 +1125,13 @@ export default function Admin() {
                               setTestimonials(updatedTestimonials);
                             }}
                             placeholder="e.g., Flo Yoga"
-                            className="w-full px-4 py-3 bg-[#2A1E16] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
+                            className="w-full px-4 py-3 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A]"
                             required
                           />
                         </div>
 
                         <div>
-                          <label className="block text-sm text-[#785E3D] mb-2">Class</label>
+                          <label className="block text-sm font-medium text-[#6B5740] mb-2">Class</label>
                           <input
                             type="text"
                             value={testimonial.class_name}
@@ -1141,7 +1141,7 @@ export default function Admin() {
                               setTestimonials(updatedTestimonials);
                             }}
                             placeholder="e.g., Experienced Flow"
-                            className="w-full px-4 py-3 bg-[#2A1E16] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
+                            className="w-full px-4 py-3 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A]"
                             required
                           />
                         </div>
@@ -1149,7 +1149,7 @@ export default function Admin() {
 
                       <button
                         type="submit"
-                        className="bg-[#785E3D] text-[#F4EFE6] px-6 py-2 rounded-md hover:bg-[#8A6F4C] transition-colors"
+                        className="bg-[#785E3D] text-white px-6 py-2 rounded-md hover:bg-[#6B5030] transition-colors"
                       >
                         Update Testimonial
                       </button>
@@ -1165,41 +1165,41 @@ export default function Admin() {
         {activeTab === 'vacations' && (
           <div>
             {/* Vacation Form */}
-            <div className="bg-[#2A1E16] p-6 rounded-lg mb-8">
-              <h2 className="text-xl font-light mb-4">
+            <div className="bg-white p-6 rounded-lg mb-8 border border-[#C9B99A] shadow-sm">
+              <h2 className="text-xl font-light mb-4 text-[#1C1410]">
                 {vacationForm.id ? 'Edit Vacation Period' : 'Add Vacation Period'}
               </h2>
               <form onSubmit={handleSaveVacation} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm text-[#785E3D] mb-2">Start Date</label>
+                    <label className="block text-sm font-medium text-[#6B5740] mb-2">Start Date</label>
                     <input
                       type="date"
                       value={vacationForm.start_date}
                       onChange={(e) => setVacationForm({ ...vacationForm, start_date: e.target.value })}
                       required
-                      className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
+                      className="w-full px-4 py-3 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D]"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm text-[#785E3D] mb-2">End Date</label>
+                    <label className="block text-sm font-medium text-[#6B5740] mb-2">End Date</label>
                     <input
                       type="date"
                       value={vacationForm.end_date}
                       onChange={(e) => setVacationForm({ ...vacationForm, end_date: e.target.value })}
                       required
-                      className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
+                      className="w-full px-4 py-3 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D]"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm text-[#785E3D] mb-2">Reason (private note for you only)</label>
+                  <label className="block text-sm font-medium text-[#6B5740] mb-2">Reason (private note for you only)</label>
                   <input
                     type="text"
                     value={vacationForm.reason}
                     onChange={(e) => setVacationForm({ ...vacationForm, reason: e.target.value })}
                     placeholder="e.g., Retreat, Personal, etc."
-                    className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
+                    className="w-full px-4 py-3 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A]"
                   />
                   <p className="text-xs text-[#6B5740] mt-1">This is just for your reference and won't be shown on the website</p>
                 </div>
@@ -1207,7 +1207,7 @@ export default function Admin() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="bg-[#785E3D] text-[#F4EFE6] px-6 py-3 rounded-md hover:bg-[#8A6F4C] transition-colors disabled:opacity-50"
+                    className="bg-[#785E3D] text-white px-6 py-3 rounded-md hover:bg-[#6B5030] transition-colors disabled:opacity-50"
                   >
                     {vacationForm.id ? 'Update' : 'Add'} Vacation
                   </button>
@@ -1215,7 +1215,7 @@ export default function Admin() {
                     <button
                       type="button"
                       onClick={() => setVacationForm({ id: null, start_date: '', end_date: '', reason: '' })}
-                      className="bg-[#3A2E26] text-[#F4EFE6] px-6 py-3 rounded-md hover:bg-[#4A3828] transition-colors"
+                      className="bg-[#EAE0CF] text-[#1C1410] px-6 py-3 rounded-md hover:bg-[#C9B99A] transition-colors"
                     >
                       Cancel
                     </button>
@@ -1225,21 +1225,21 @@ export default function Admin() {
             </div>
 
             {/* Info Box */}
-            <div className="bg-[#785E3D]/20 border border-[#785E3D] p-4 rounded-lg mb-6">
-              <p className="text-sm text-[#F4EFE6]">
+            <div className="bg-amber-50 border border-amber-300 p-4 rounded-lg mb-6">
+              <p className="text-sm text-amber-800">
                 <strong>Note:</strong> A banner will automatically appear on the website 2 weeks before your vacation starts, letting students know you'll be away. The banner will show the dates but not the reason.
               </p>
             </div>
 
             {/* Vacation List */}
-            <div className="bg-[#2A1E16] rounded-lg overflow-hidden">
-              <h2 className="text-xl font-light p-6 pb-4">Scheduled Vacations</h2>
+            <div className="bg-white rounded-lg overflow-hidden border border-[#C9B99A] shadow-sm">
+              <h2 className="text-xl font-light p-6 pb-4 text-[#1C1410]">Scheduled Vacations</h2>
               {loading ? (
                 <p className="p-6 text-[#6B5740]">Loading...</p>
               ) : vacations.length === 0 ? (
                 <p className="p-6 text-[#6B5740]">No vacations scheduled</p>
               ) : (
-                <div className="divide-y divide-[#3A2E26]">
+                <div className="divide-y divide-[#EAE0CF]">
                   {vacations.map((vacation) => {
                     const startDate = new Date(vacation.start_date);
                     const endDate = new Date(vacation.end_date);
@@ -1251,20 +1251,20 @@ export default function Admin() {
                     const bannerShowing = today >= twoWeeksBefore && today < startDate;
 
                     return (
-                      <div key={vacation.id} className="p-6 hover:bg-[#1C1410] transition-colors">
+                      <div key={vacation.id} className="p-6 hover:bg-[#F4EFE6] transition-colors">
                         <div className="flex justify-between items-start">
                           <div className="flex-1">
                             <div className="flex items-center gap-3 mb-2">
-                              <p className="text-lg text-[#F4EFE6]">
+                              <p className="text-lg text-[#1C1410]">
                                 {startDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
                                 {' → '}
                                 {endDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
                               </p>
                               {isActive && (
-                                <span className="px-2 py-1 bg-[#785E3D] text-[#F4EFE6] text-xs rounded">Active Now</span>
+                                <span className="px-2 py-1 bg-[#785E3D] text-white text-xs rounded">Active Now</span>
                               )}
                               {bannerShowing && !isActive && (
-                                <span className="px-2 py-1 bg-[#8A6F4C] text-[#F4EFE6] text-xs rounded">Banner Showing</span>
+                                <span className="px-2 py-1 bg-amber-100 text-amber-800 border border-amber-300 text-xs rounded">Banner Showing</span>
                               )}
                             </div>
                             {vacation.reason && (
@@ -1274,13 +1274,13 @@ export default function Admin() {
                           <div className="flex gap-2">
                             <button
                               onClick={() => handleEditVacation(vacation)}
-                              className="text-[#785E3D] hover:text-[#8A6F4C] text-sm px-3 py-1 border border-[#3A2E26] rounded"
+                              className="text-[#785E3D] hover:text-[#6B5030] text-sm px-3 py-1 border border-[#C9B99A] rounded hover:border-[#785E3D] transition-colors"
                             >
                               Edit
                             </button>
                             <button
                               onClick={() => handleDeleteVacation(vacation.id)}
-                              className="text-red-400 hover:text-red-300 text-sm px-3 py-1 border border-[#3A2E26] rounded"
+                              className="text-red-600 hover:text-red-800 text-sm px-3 py-1 border border-red-200 rounded hover:border-red-400 transition-colors"
                             >
                               Delete
                             </button>
@@ -1297,20 +1297,20 @@ export default function Admin() {
 
         {/* Guides Tab */}
         {activeTab === 'guides' && (
-          <div className="bg-[#2A1E16] p-6 rounded-lg">
-            <h2 className="text-xl font-light mb-4">Guides</h2>
+          <div className="bg-white p-6 rounded-lg border border-[#C9B99A] shadow-sm">
+            <h2 className="text-xl font-light mb-4 text-[#1C1410]">Guides</h2>
             <p className="text-sm text-[#6B5740] mb-6">
               Manage your password-protected guides. Click on a guide to view or change its access password.
             </p>
 
             {loading ? (
-              <p>Loading...</p>
+              <p className="text-[#6B5740]">Loading...</p>
             ) : guides.length === 0 ? (
               <div className="text-[#6B5740]">
                 <p className="mb-4">No guides found in database. You need to create the guides table first.</p>
-                <div className="bg-[#1C1410] p-4 rounded-md border border-[#3A2E26]">
+                <div className="bg-[#F4EFE6] p-4 rounded-md border border-[#C9B99A]">
                   <p className="text-xs text-[#785E3D] mb-2">Run this SQL in your Supabase SQL editor:</p>
-                  <pre className="text-xs text-[#F4EFE6] overflow-x-auto whitespace-pre-wrap">
+                  <pre className="text-xs text-[#1C1410] overflow-x-auto whitespace-pre-wrap">
 {`-- Create the guides table
 CREATE TABLE IF NOT EXISTS guides (
   id SERIAL PRIMARY KEY,
@@ -1360,12 +1360,12 @@ CREATE INDEX IF NOT EXISTS idx_guide_views_slug ON guide_views(guide_slug);`}
             ) : (
               <div className="space-y-4">
                 {guides.map((guide) => (
-                  <div key={guide.id} className="bg-[#1C1410] p-6 rounded-md border border-[#3A2E26]">
+                  <div key={guide.id} className="bg-[#F4EFE6] p-6 rounded-md border border-[#C9B99A]">
                     <div className="flex justify-between items-start mb-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-1">
-                          <h3 className="text-lg font-medium text-[#F4EFE6]">{guide.title}</h3>
-                          <span className="px-2 py-1 bg-[#785E3D] text-[#F4EFE6] text-xs rounded">
+                          <h3 className="text-lg font-medium text-[#1C1410]">{guide.title}</h3>
+                          <span className="px-2 py-1 bg-[#785E3D] text-white text-xs rounded">
                             {guideViews[guide.slug] || 0} {guideViews[guide.slug] === 1 ? 'view' : 'views'}
                           </span>
                         </div>
@@ -1376,7 +1376,7 @@ CREATE INDEX IF NOT EXISTS idx_guide_views_slug ON guide_views(guide_slug);`}
                           href={`/${guide.slug}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-sm text-[#785E3D] hover:text-[#8A6F4C] transition-colors"
+                          className="text-sm text-[#785E3D] hover:text-[#6B5030] transition-colors"
                         >
                           /{guide.slug} →
                         </a>
@@ -1393,13 +1393,13 @@ CREATE INDEX IF NOT EXISTS idx_guide_views_slug ON guide_views(guide_slug);`}
                     {editingGuideId === guide.id ? (
                       <div className="space-y-3">
                         <div>
-                          <label className="block text-sm text-[#785E3D] mb-2">New Password</label>
+                          <label className="block text-sm font-medium text-[#6B5740] mb-2">New Password</label>
                           <input
                             type="text"
                             value={newGuidePassword}
                             onChange={(e) => setNewGuidePassword(e.target.value)}
                             placeholder="Enter new password (min 6 characters)"
-                            className="w-full px-4 py-2 bg-[#2A1E16] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
+                            className="w-full px-4 py-2 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A]"
                             minLength={6}
                           />
                         </div>
@@ -1407,7 +1407,7 @@ CREATE INDEX IF NOT EXISTS idx_guide_views_slug ON guide_views(guide_slug);`}
                           <button
                             onClick={() => handleUpdateGuidePassword(guide.id, newGuidePassword)}
                             disabled={loading}
-                            className="px-4 py-2 bg-[#785E3D] text-[#F4EFE6] rounded-md hover:bg-[#8A6F4C] transition-colors disabled:opacity-50 text-sm"
+                            className="px-4 py-2 bg-[#785E3D] text-white rounded-md hover:bg-[#6B5030] transition-colors disabled:opacity-50 text-sm"
                           >
                             {loading ? 'Updating...' : 'Update Password'}
                           </button>
@@ -1416,7 +1416,7 @@ CREATE INDEX IF NOT EXISTS idx_guide_views_slug ON guide_views(guide_slug);`}
                               setEditingGuideId(null);
                               setNewGuidePassword('');
                             }}
-                            className="px-4 py-2 bg-[#3A2E26] text-[#F4EFE6] rounded-md hover:bg-[#4A3E36] transition-colors text-sm"
+                            className="px-4 py-2 bg-[#EAE0CF] text-[#1C1410] rounded-md hover:bg-[#C9B99A] transition-colors text-sm"
                           >
                             Cancel
                           </button>
@@ -1424,16 +1424,16 @@ CREATE INDEX IF NOT EXISTS idx_guide_views_slug ON guide_views(guide_slug);`}
                       </div>
                     ) : (
                       <div className="flex items-center gap-4">
-                        <div className="flex-1 bg-[#2A1E16] px-4 py-3 rounded-md border border-[#3A2E26]">
-                          <p className="text-xs text-[#785E3D] mb-1">Current Password</p>
-                          <p className="text-sm text-[#F4EFE6] font-mono">{guide.password}</p>
+                        <div className="flex-1 bg-white px-4 py-3 rounded-md border border-[#C9B99A]">
+                          <p className="text-xs text-[#6B5740] mb-1">Current Password</p>
+                          <p className="text-sm text-[#1C1410] font-mono">{guide.password}</p>
                         </div>
                         <button
                           onClick={() => {
                             setEditingGuideId(guide.id);
                             setNewGuidePassword(guide.password);
                           }}
-                          className="px-4 py-2 bg-[#785E3D] text-[#F4EFE6] rounded-md hover:bg-[#8A6F4C] transition-colors text-sm"
+                          className="px-4 py-2 bg-[#785E3D] text-white rounded-md hover:bg-[#6B5030] transition-colors text-sm"
                         >
                           Change Password
                         </button>
@@ -1448,31 +1448,31 @@ CREATE INDEX IF NOT EXISTS idx_guide_views_slug ON guide_views(guide_slug);`}
 
         {/* Settings Tab */}
         {activeTab === 'settings' && (
-          <div className="bg-[#2A1E16] p-6 rounded-lg max-w-2xl">
-            <h2 className="text-xl font-light mb-6">Admin Settings</h2>
+          <div className="bg-white p-6 rounded-lg max-w-2xl border border-[#C9B99A] shadow-sm">
+            <h2 className="text-xl font-light mb-6 text-[#1C1410]">Admin Settings</h2>
 
             <form onSubmit={handleChangeCredentials} className="space-y-4">
               <div>
-                <label className="block text-sm text-[#785E3D] mb-2">New Username (optional)</label>
+                <label className="block text-sm font-medium text-[#6B5740] mb-2">New Username (optional)</label>
                 <input
                   type="text"
                   value={newUsername}
                   onChange={(e) => setNewUsername(e.target.value)}
                   placeholder="Enter new username"
-                  className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
+                  className="w-full px-4 py-3 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A]"
                   autoComplete="username"
                 />
                 <p className="text-xs text-[#6B5740] mt-1">Leave blank to keep current username</p>
               </div>
 
               <div>
-                <label className="block text-sm text-[#785E3D] mb-2">New Password (optional)</label>
+                <label className="block text-sm font-medium text-[#6B5740] mb-2">New Password (optional)</label>
                 <input
                   type="password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="Enter new password"
-                  className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
+                  className="w-full px-4 py-3 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A]"
                   minLength={6}
                   autoComplete="new-password"
                 />
@@ -1480,13 +1480,13 @@ CREATE INDEX IF NOT EXISTS idx_guide_views_slug ON guide_views(guide_slug);`}
               </div>
 
               <div>
-                <label className="block text-sm text-[#785E3D] mb-2">Confirm New Password</label>
+                <label className="block text-sm font-medium text-[#6B5740] mb-2">Confirm New Password</label>
                 <input
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Confirm new password"
-                  className="w-full px-4 py-3 bg-[#1C1410] text-[#F4EFE6] border border-[#3A2E26] rounded-md outline-none focus:border-[#785E3D]"
+                  className="w-full px-4 py-3 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A]"
                   minLength={6}
                   autoComplete="new-password"
                   disabled={!newPassword}
@@ -1496,18 +1496,18 @@ CREATE INDEX IF NOT EXISTS idx_guide_views_slug ON guide_views(guide_slug);`}
               <button
                 type="submit"
                 disabled={changingSettings}
-                className="bg-[#785E3D] text-[#F4EFE6] px-6 py-3 rounded-md hover:bg-[#8A6F4C] transition-colors disabled:opacity-50"
+                className="bg-[#785E3D] text-white px-6 py-3 rounded-md hover:bg-[#6B5030] transition-colors disabled:opacity-50"
               >
                 {changingSettings ? 'Updating...' : 'Update Credentials'}
               </button>
             </form>
 
-            <div className="mt-8 pt-6 border-t border-[#3A2E26]">
+            <div className="mt-8 pt-6 border-t border-[#EAE0CF]">
               <p className="text-sm text-[#6B5740] mb-2">
-                <strong>Current Username:</strong> {storedUsername || 'admin (default)'}
+                <strong className="text-[#1C1410]">Current Username:</strong> {storedUsername || 'admin (default)'}
               </p>
               <p className="text-sm text-[#6B5740]">
-                <strong>Password Source:</strong> {storedPassword ? 'Custom (stored in database)' : 'Default (environment variable)'}
+                <strong className="text-[#1C1410]">Password Source:</strong> {storedPassword ? 'Custom (stored in database)' : 'Default (environment variable)'}
               </p>
             </div>
           </div>
@@ -1515,9 +1515,9 @@ CREATE INDEX IF NOT EXISTS idx_guide_views_slug ON guide_views(guide_slug);`}
 
         {/* Image Crop Modal */}
         {cropModalOpen && (
-          <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-            <div className="bg-[#2A1E16] rounded-lg max-w-4xl w-full p-6">
-              <h2 className="text-xl font-light mb-4 text-[#F4EFE6]">Crop Image</h2>
+          <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg max-w-4xl w-full p-6 border border-[#C9B99A] shadow-lg">
+              <h2 className="text-xl font-light mb-4 text-[#1C1410]">Crop Image</h2>
               <div className="relative h-96 bg-[#1C1410] rounded-md mb-4">
                 <Cropper
                   image={imageToCrop}
@@ -1530,7 +1530,7 @@ CREATE INDEX IF NOT EXISTS idx_guide_views_slug ON guide_views(guide_slug);`}
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm text-[#785E3D] mb-2">Zoom</label>
+                <label className="block text-sm font-medium text-[#6B5740] mb-2">Zoom</label>
                 <input
                   type="range"
                   min={1}
@@ -1547,13 +1547,13 @@ CREATE INDEX IF NOT EXISTS idx_guide_views_slug ON guide_views(guide_slug);`}
                     setCropModalOpen(false);
                     setImageToCrop(null);
                   }}
-                  className="px-6 py-2 bg-[#3A2E26] text-[#F4EFE6] rounded-md hover:bg-[#4A3E36] transition-colors"
+                  className="px-6 py-2 bg-[#EAE0CF] text-[#1C1410] rounded-md hover:bg-[#C9B99A] transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleCropConfirm}
-                  className="px-6 py-2 bg-[#785E3D] text-[#F4EFE6] rounded-md hover:bg-[#8A6F4C] transition-colors"
+                  className="px-6 py-2 bg-[#785E3D] text-white rounded-md hover:bg-[#6B5030] transition-colors"
                 >
                   Crop & Confirm
                 </button>
