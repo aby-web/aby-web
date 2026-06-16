@@ -3,7 +3,9 @@ import Cropper from 'react-easy-crop';
 import { supabase } from '../lib/supabase';
 
 export default function Admin() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem('admin_authenticated') === 'true';
+  });
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [activeTab, setActiveTab] = useState('events');
@@ -76,6 +78,13 @@ export default function Admin() {
   useEffect(() => {
     fetchStoredCredentials();
     fetchGuides();
+    if (localStorage.getItem('admin_authenticated') === 'true') {
+      fetchEvents();
+      fetchSubscribers();
+      fetchTestimonials();
+      fetchPrivateEnquiries();
+      fetchVacations();
+    }
   }, []);
 
   const formatDatePreview = (dateString) => {
@@ -113,6 +122,7 @@ export default function Admin() {
 
     if (username === correctUsername && password === correctPassword) {
       setIsAuthenticated(true);
+      localStorage.setItem('admin_authenticated', 'true');
       fetchEvents();
       fetchSubscribers();
       fetchTestimonials();
@@ -725,12 +735,23 @@ export default function Admin() {
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-light text-[#1C1410]">Admin Dashboard</h1>
-          <a
-            href="/"
-            className="text-sm text-[#785E3D] hover:text-[#1C1410] transition-colors"
-          >
-            ← Back to Site
-          </a>
+          <div className="flex items-center gap-4">
+            <a
+              href="/"
+              className="text-sm text-[#785E3D] hover:text-[#1C1410] transition-colors"
+            >
+              ← Back to Site
+            </a>
+            <button
+              onClick={() => {
+                localStorage.removeItem('admin_authenticated');
+                setIsAuthenticated(false);
+              }}
+              className="text-sm text-[#6B5740] hover:text-[#1C1410] transition-colors"
+            >
+              Log out
+            </button>
+          </div>
         </div>
 
         {/* Tabs */}
