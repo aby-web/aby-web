@@ -41,6 +41,15 @@ export default function EmailCapture() {
 
       if (insertError) throw insertError;
 
+      // Send welcome email
+      try {
+        await fetch('https://kfwqxmhxmclsdbvncrre.functions.supabase.co/welcome-subscriber', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ record: { email: email.toLowerCase() } })
+        });
+      } catch (_) {}
+
       setStatus('success');
       setMessage('You are on the list!');
       setEmail('');

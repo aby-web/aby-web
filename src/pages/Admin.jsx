@@ -16,6 +16,21 @@ export default function Admin() {
   const [storedUsername, setStoredUsername] = useState(null);
   const [storedPassword, setStoredPassword] = useState(null);
 
+  // Toast notification
+  const [toast, setToast] = useState(null);
+
+  // Confirm dialog state
+  const [confirmDialog, setConfirmDialog] = useState(null);
+
+  const showToast = (message, type = 'success') => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 3000);
+  };
+
+  const showConfirm = (message, onConfirm) => {
+    setConfirmDialog({ message, onConfirm });
+  };
+
   // Settings change state
   const [newUsername, setNewUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -105,7 +120,7 @@ export default function Admin() {
       fetchVacations();
       fetchGuides();
     } else {
-      alert('Incorrect username or password');
+      showToast('Incorrect username or password', 'error');
     }
   };
 
@@ -179,10 +194,10 @@ export default function Admin() {
       setNewUsername('');
       setNewPassword('');
       setConfirmPassword('');
-      alert('Credentials updated successfully!');
+      showToast('Credentials updated successfully!');
     } catch (error) {
       console.error('Error updating credentials:', error);
-      alert('Error updating credentials: ' + error.message);
+      showToast('Error updating credentials: ' + error.message, 'error');
     } finally {
       setChangingSettings(false);
     }
@@ -251,7 +266,7 @@ export default function Admin() {
       setImageToCrop(null);
     } catch (error) {
       console.error('Error cropping image:', error);
-      alert('Error cropping image');
+      showToast('Error cropping image', 'error');
     }
   };
 
@@ -404,13 +419,13 @@ export default function Admin() {
 
       if (error) throw error;
 
-      alert('Guide password updated successfully!');
+      showToast('Guide password updated successfully!');
       setEditingGuideId(null);
       setNewGuidePassword('');
       fetchGuides();
     } catch (error) {
       console.error('Error updating guide password:', error);
-      alert('Error updating guide password: ' + error.message);
+      showToast('Error updating guide password: ' + error.message, 'error');
     } finally {
       setLoading(false);
     }
@@ -451,7 +466,7 @@ export default function Admin() {
       fetchVacations();
     } catch (error) {
       console.error('Error saving vacation:', error);
-      alert('Error saving vacation');
+      showToast('Error saving vacation', 'error');
     } finally {
       setLoading(false);
     }
@@ -467,20 +482,21 @@ export default function Admin() {
   };
 
   const handleDeleteVacation = async (id) => {
-    if (!confirm('Are you sure you want to delete this vacation period?')) return;
+    showConfirm('Are you sure you want to delete this vacation period?', async () => {
+      try {
+        const { error } = await supabase
+          .from('vacations')
+          .delete()
+          .eq('id', id);
 
-    try {
-      const { error } = await supabase
-        .from('vacations')
-        .delete()
-        .eq('id', id);
-
-      if (error) throw error;
-      fetchVacations();
-    } catch (error) {
-      console.error('Error deleting vacation:', error);
-      alert('Error deleting vacation');
-    }
+        if (error) throw error;
+        fetchVacations();
+        showToast('Vacation deleted successfully!');
+      } catch (error) {
+        console.error('Error deleting vacation:', error);
+        showToast('Error deleting vacation', 'error');
+      }
+    });
   };
 
   const handleUpdateTestimonial = async (testimonial) => {
@@ -497,11 +513,11 @@ export default function Admin() {
 
       if (error) throw error;
 
-      alert('Testimonial updated successfully!');
+      showToast('Testimonial updated successfully!');
       fetchTestimonials();
     } catch (error) {
       console.error('Error updating testimonial:', error);
-      alert('Error updating testimonial: ' + error.message);
+      showToast('Error updating testimonial: ' + error.message, 'error');
     }
   };
 
@@ -569,10 +585,10 @@ export default function Admin() {
       setImageFile(null);
       setImagePreviewUrl(null);
       fetchEvents();
-      alert('Event saved successfully!');
+      showToast('Event saved successfully!');
     } catch (error) {
       console.error('Error saving event:', error);
-      alert('Error saving event: ' + error.message);
+      showToast('Error saving event: ' + error.message, 'error');
     } finally {
       setUploading(false);
     }
@@ -584,21 +600,21 @@ export default function Admin() {
   };
 
   const handleDeleteEvent = async (id) => {
-    if (!confirm('Are you sure you want to delete this event?')) return;
+    showConfirm('Are you sure you want to delete this event?', async () => {
+      try {
+        const { error } = await supabase
+          .from('events')
+          .delete()
+          .eq('id', id);
 
-    try {
-      const { error } = await supabase
-        .from('events')
-        .delete()
-        .eq('id', id);
-
-      if (error) throw error;
-      fetchEvents();
-      alert('Event deleted successfully!');
-    } catch (error) {
-      console.error('Error deleting event:', error);
-      alert('Error deleting event: ' + error.message);
-    }
+        if (error) throw error;
+        fetchEvents();
+        showToast('Event deleted successfully!');
+      } catch (error) {
+        console.error('Error deleting event:', error);
+        showToast('Error deleting event: ' + error.message, 'error');
+      }
+    });
   };
 
   const exportToCSV = () => {
@@ -620,21 +636,21 @@ export default function Admin() {
   };
 
   const handleDeleteEnquiry = async (id) => {
-    if (!confirm('Are you sure you want to delete this enquiry?')) return;
+    showConfirm('Are you sure you want to delete this enquiry?', async () => {
+      try {
+        const { error } = await supabase
+          .from('private_enquiries')
+          .delete()
+          .eq('id', id);
 
-    try {
-      const { error } = await supabase
-        .from('private_enquiries')
-        .delete()
-        .eq('id', id);
-
-      if (error) throw error;
-      fetchPrivateEnquiries();
-      alert('Enquiry deleted successfully!');
-    } catch (error) {
-      console.error('Error deleting enquiry:', error);
-      alert('Error deleting enquiry: ' + error.message);
-    }
+        if (error) throw error;
+        fetchPrivateEnquiries();
+        showToast('Enquiry deleted successfully!');
+      } catch (error) {
+        console.error('Error deleting enquiry:', error);
+        showToast('Error deleting enquiry: ' + error.message, 'error');
+      }
+    });
   };
 
   const handleToggleFollowedUp = async (enquiry) => {
@@ -653,21 +669,21 @@ export default function Admin() {
   };
 
   const handleDeleteSubscriber = async (id) => {
-    if (!confirm('Are you sure you want to delete this subscriber?')) return;
+    showConfirm('Are you sure you want to delete this subscriber?', async () => {
+      try {
+        const { error } = await supabase
+          .from('subscribers')
+          .delete()
+          .eq('id', id);
 
-    try {
-      const { error } = await supabase
-        .from('subscribers')
-        .delete()
-        .eq('id', id);
-
-      if (error) throw error;
-      fetchSubscribers();
-      alert('Subscriber deleted successfully!');
-    } catch (error) {
-      console.error('Error deleting subscriber:', error);
-      alert('Error deleting subscriber: ' + error.message);
-    }
+        if (error) throw error;
+        fetchSubscribers();
+        showToast('Subscriber deleted successfully!');
+      } catch (error) {
+        console.error('Error deleting subscriber:', error);
+        showToast('Error deleting subscriber: ' + error.message, 'error');
+      }
+    });
   };
 
   if (!isAuthenticated) {
@@ -1509,6 +1525,39 @@ CREATE INDEX IF NOT EXISTS idx_guide_views_slug ON guide_views(guide_slug);`}
               <p className="text-sm text-[#6B5740]">
                 <strong className="text-[#1C1410]">Password Source:</strong> {storedPassword ? 'Custom (stored in database)' : 'Default (environment variable)'}
               </p>
+            </div>
+          </div>
+        )}
+
+        {/* Toast Notification */}
+        {toast && (
+          <div className={`fixed bottom-6 right-6 px-6 py-3 rounded-lg shadow-lg text-white text-sm z-50 transition-all ${toast.type === 'error' ? 'bg-red-600' : 'bg-[#785E3D]'}`}>
+            {toast.message}
+          </div>
+        )}
+
+        {/* Confirm Dialog */}
+        {confirmDialog && (
+          <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg max-w-sm w-full p-6 shadow-lg border border-[#C9B99A]">
+              <p className="text-[#1C1410] mb-6">{confirmDialog.message}</p>
+              <div className="flex gap-3 justify-end">
+                <button
+                  onClick={() => setConfirmDialog(null)}
+                  className="px-4 py-2 bg-[#EAE0CF] text-[#1C1410] rounded-md hover:bg-[#C9B99A] transition-colors text-sm"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => {
+                    confirmDialog.onConfirm();
+                    setConfirmDialog(null);
+                  }}
+                  className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors text-sm"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
         )}

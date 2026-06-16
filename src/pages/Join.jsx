@@ -30,6 +30,15 @@ export default function Join() {
 
       if (insertError) throw insertError;
 
+      // Send welcome email
+      try {
+        await fetch('https://kfwqxmhxmclsdbvncrre.functions.supabase.co/welcome-subscriber', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ record: { email: email.toLowerCase() } })
+        });
+      } catch (_) {}
+
       setStatus('success');
     } catch (error) {
       console.error('Subscription error:', error);
