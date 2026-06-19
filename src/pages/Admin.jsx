@@ -1026,7 +1026,8 @@ export default function Admin() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-[#C9B99A]">
-                      <th className="text-left py-2 px-4 text-[#1C1410] font-medium">Name</th>
+                      <th className="text-left py-2 px-4 text-[#1C1410] font-medium">First Name</th>
+                      <th className="text-left py-2 px-4 text-[#1C1410] font-medium">Last Name</th>
                       <th className="text-left py-2 px-4 text-[#1C1410] font-medium">Email</th>
                       <th className="text-left py-2 px-4 text-[#1C1410] font-medium">Subscribed</th>
                       <th className="text-left py-2 px-4 text-[#1C1410] font-medium">State</th>
@@ -1035,9 +1036,8 @@ export default function Admin() {
                   <tbody>
                     {subscribers.map((subscriber) => (
                       <tr key={subscriber.id} className="border-b border-[#EAE0CF] hover:bg-[#F4EFE6]">
-                        <td className="py-3 px-4 text-[#1C1410]">
-                          {[subscriber.first_name, subscriber.last_name].filter(Boolean).join(' ') || '—'}
-                        </td>
+                        <td className="py-3 px-4 text-[#1C1410]">{subscriber.first_name || '—'}</td>
+                        <td className="py-3 px-4 text-[#1C1410]">{subscriber.fields?.last_name || '—'}</td>
                         <td className="py-3 px-4 text-[#1C1410]">{subscriber.email_address}</td>
                         <td className="py-3 px-4 text-[#6B5740]">
                           {new Date(subscriber.created_at).toLocaleDateString('en-GB')}
