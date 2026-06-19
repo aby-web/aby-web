@@ -300,15 +300,16 @@ export default function Admin() {
   const fetchSubscribers = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase
-        .from('subscribers')
-        .select('*')
-        .order('created_at', { ascending: false});
-
-      if (error) throw error;
-      setSubscribers(data || []);
+      const res = await fetch('https://api.kit.com/v4/subscribers?per_page=1000', {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Kit-Api-Key': import.meta.env.VITE_KIT_API_KEY,
+        },
+      });
+      const data = await res.json();
+      setSubscribers(data.subscribers || []);
     } catch (error) {
-      console.error('Error fetching subscribers:', error);
+      console.error('Error fetching subscribers from Kit:', error);
     } finally {
       setLoading(false);
     }
@@ -629,11 +630,12 @@ export default function Admin() {
 
   const exportToCSV = () => {
     const csv = [
-      ['Email', 'Signup Date', 'Source'],
+      ['First Name', 'Last Name', 'Email', 'Subscribed At'],
       ...subscribers.map(s => [
-        s.email,
+        s.first_name || '',
+        s.last_name || '',
+        s.email_address,
         new Date(s.created_at).toLocaleDateString(),
-        s.source
       ])
     ].map(row => row.join(',')).join('\n');
 
@@ -998,12 +1000,22 @@ export default function Admin() {
           <div className="bg-white p-6 rounded-lg border border-[#C9B99A] shadow-sm">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-light text-[#1C1410]">Subscribers ({subscribers.length})</h2>
-              <button
-                onClick={exportToCSV}
-                className="bg-[#785E3D] text-white px-4 py-2 rounded-md hover:bg-[#6B5030] transition-colors text-sm"
-              >
-                Export to CSV
-              </button>
+              <div className="flex gap-2">
+                <a
+                  href="https://app.kit.com/subscribers"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#EAE0CF] text-[#1C1410] px-4 py-2 rounded-md hover:bg-[#C9B99A] transition-colors text-sm"
+                >
+                  Manage in Kit →
+                </a>
+                <button
+                  onClick={exportToCSV}
+                  className="bg-[#785E3D] text-white px-4 py-2 rounded-md hover:bg-[#6B5030] transition-colors text-sm"
+                >
+                  Export CSV
+                </button>
+              </div>
             </div>
             {loading ? (
               <p className="text-[#6B5740]">Loading...</p>
@@ -1014,27 +1026,26 @@ export default function Admin() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-[#C9B99A]">
+                      <th className="text-left py-2 px-4 text-[#1C1410] font-medium">Name</th>
                       <th className="text-left py-2 px-4 text-[#1C1410] font-medium">Email</th>
-                      <th className="text-left py-2 px-4 text-[#1C1410] font-medium">Signup Date</th>
-                      <th className="text-left py-2 px-4 text-[#1C1410] font-medium">Source</th>
-                      <th className="text-left py-2 px-4 text-[#1C1410] font-medium">Actions</th>
+                      <th className="text-left py-2 px-4 text-[#1C1410] font-medium">Subscribed</th>
+                      <th className="text-left py-2 px-4 text-[#1C1410] font-medium">State</th>
                     </tr>
                   </thead>
                   <tbody>
                     {subscribers.map((subscriber) => (
                       <tr key={subscriber.id} className="border-b border-[#EAE0CF] hover:bg-[#F4EFE6]">
-                        <td className="py-3 px-4 text-[#1C1410]">{subscriber.email}</td>
-                        <td className="py-3 px-4 text-[#6B5740]">
-                          {new Date(subscriber.created_at).toLocaleDateString()}
+                        <td className="py-3 px-4 text-[#1C1410]">
+                          {[subscriber.first_name, subscriber.last_name].filter(Boolean).join(' ') || '—'}
                         </td>
-                        <td className="py-3 px-4 text-[#6B5740]">{subscriber.source}</td>
+                        <td className="py-3 px-4 text-[#1C1410]">{subscriber.email_address}</td>
+                        <td className="py-3 px-4 text-[#6B5740]">
+                          {new Date(subscriber.created_at).toLocaleDateString('en-GB')}
+                        </td>
                         <td className="py-3 px-4">
-                          <button
-                            onClick={() => handleDeleteSubscriber(subscriber.id)}
-                            className="px-3 py-1 bg-red-100 text-red-700 border border-red-200 rounded text-sm hover:bg-red-200 transition-colors"
-                          >
-                            Delete
-                          </button>
+                          <span className={`text-xs px-2 py-1 rounded ${subscriber.state === 'active' ? 'bg-green-100 text-green-700' : 'bg-[#EAE0CF] text-[#6B5740]'}`}>
+                            {subscriber.state}
+                          </span>
                         </td>
                       </tr>
                     ))}
