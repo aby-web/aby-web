@@ -39,6 +39,9 @@ export default function Admin() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [changingSettings, setChangingSettings] = useState(false);
 
+  // Subscriber search
+  const [subscriberSearch, setSubscriberSearch] = useState('');
+
   // Guides state
   const [guides, setGuides] = useState([]);
   const [guideViews, setGuideViews] = useState({});
@@ -1017,6 +1020,15 @@ export default function Admin() {
                 </button>
               </div>
             </div>
+            <div className="mb-4">
+              <input
+                type="text"
+                value={subscriberSearch}
+                onChange={(e) => setSubscriberSearch(e.target.value)}
+                placeholder="Search by name or email..."
+                className="w-full max-w-sm px-4 py-2 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A] text-sm"
+              />
+            </div>
             {loading ? (
               <p className="text-[#6B5740]">Loading...</p>
             ) : subscribers.length === 0 ? (
@@ -1034,7 +1046,13 @@ export default function Admin() {
                     </tr>
                   </thead>
                   <tbody>
-                    {subscribers.map((subscriber) => (
+                    {subscribers.filter(s => {
+                      const q = subscriberSearch.toLowerCase();
+                      return !q ||
+                        s.email_address?.toLowerCase().includes(q) ||
+                        s.first_name?.toLowerCase().includes(q) ||
+                        s.fields?.last_name?.toLowerCase().includes(q);
+                    }).map((subscriber) => (
                       <tr key={subscriber.id} className="border-b border-[#EAE0CF] hover:bg-[#F4EFE6]">
                         <td className="py-3 px-4 text-[#1C1410]">{subscriber.first_name || '—'}</td>
                         <td className="py-3 px-4 text-[#1C1410]">{subscriber.fields?.last_name || '—'}</td>
