@@ -23,7 +23,7 @@ export default function Bootcamp() {
         {/* Fallback: swap to /images/retreat-beach.jpg if sunset colours don't work */}
         {/* Dark overlay for text legibility */}
         <div className="absolute inset-0 bg-black/45"></div>
-        <div className="relative z-10 max-w-3xl mx-auto text-center px-8 md:px-12">
+        <div className="relative z-10 max-w-3xl mx-auto text-center px-8 md:px-12 pt-16 md:pt-0">
           <p className="text-[11px] uppercase tracking-[0.2em] text-white/70 mb-6">
             September 4–9, 2026 &nbsp;·&nbsp; Varna, Bulgaria
           </p>
