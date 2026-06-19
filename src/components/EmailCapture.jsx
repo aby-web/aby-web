@@ -4,7 +4,7 @@ import { supabase } from '../lib/supabase';
 const KIT_API_KEY = import.meta.env.VITE_KIT_API_KEY;
 
 export default function EmailCapture() {
-  const [firstName, setFirstName] = useState('');
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle'); // idle, loading, success, error, exists
   const [message, setMessage] = useState('');
@@ -32,7 +32,7 @@ export default function EmailCapture() {
         setStatus('exists');
         setMessage('You are already subscribed!');
         setEmail('');
-        setFirstName('');
+        setFullName('');
         setTimeout(() => setStatus('idle'), 4000);
         return;
       }
@@ -54,7 +54,8 @@ export default function EmailCapture() {
           },
           body: JSON.stringify({
             email_address: email.toLowerCase(),
-            first_name: firstName || undefined,
+            first_name: fullName ? fullName.split(' ')[0] : undefined,
+            last_name: fullName && fullName.split(' ').length > 1 ? fullName.split(' ').slice(1).join(' ') : undefined,
           }),
         });
       } catch (_) {}
@@ -71,7 +72,7 @@ export default function EmailCapture() {
       setStatus('success');
       setMessage('You are on the list!');
       setEmail('');
-      setFirstName('');
+      setFullName('');
       setTimeout(() => setStatus('idle'), 4000);
 
     } catch (error) {
@@ -104,9 +105,9 @@ export default function EmailCapture() {
             <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-3">
               <input
                 type="text"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                placeholder="First name"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                placeholder="Full name"
                 disabled={status === 'loading'}
                 className="flex-1 px-6 py-3 bg-white border border-[#C9B99A] rounded-full outline-none text-[#1C1410] placeholder-[#6B5740] disabled:opacity-50"
               />
