@@ -633,7 +633,7 @@ export default function Admin() {
       ['First Name', 'Last Name', 'Email', 'Subscribed At'],
       ...subscribers.map(s => [
         s.first_name || '',
-        s.last_name || '',
+        s.fields?.last_name || '',
         s.email_address,
         new Date(s.created_at).toLocaleDateString(),
       ])
