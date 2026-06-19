@@ -4,7 +4,7 @@ import { supabase } from '../lib/supabase';
 const KIT_API_KEY = import.meta.env.VITE_KIT_API_KEY;
 
 export default function Join() {
-  const [firstName, setFirstName] = useState('');
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle');
 
@@ -43,7 +43,8 @@ export default function Join() {
           },
           body: JSON.stringify({
             email_address: email.toLowerCase(),
-            first_name: firstName || undefined,
+            first_name: fullName ? fullName.split(' ')[0] : undefined,
+            last_name: fullName && fullName.split(' ').length > 1 ? fullName.split(' ').slice(1).join(' ') : undefined,
           }),
         });
       } catch (_) {}
@@ -101,9 +102,9 @@ export default function Join() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
               type="text"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              placeholder="First name"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              placeholder="Full name"
               disabled={status === 'loading'}
               className="w-full px-6 py-4 bg-white border border-[#C9B99A] rounded-full text-[#1C1410] placeholder-[#C9B99A] outline-none focus:border-[#785E3D] text-center disabled:opacity-50"
             />
