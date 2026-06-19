@@ -42,14 +42,6 @@ export default function Bootcamp() {
         </div>
       </section>
 
-      {/* Pricing banner */}
-      <section className="bg-[#785E3D] px-8 md:px-12 py-5">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="text-[#F4EFE6] text-sm tracking-wide">
-            Early pricing available until <strong>15 July 2026</strong> — spaces limited to 12
-          </p>
-        </div>
-      </section>
 
       {/* Pricing */}
       <section className="bg-[#F4EFE6] px-8 md:px-12 py-16">
