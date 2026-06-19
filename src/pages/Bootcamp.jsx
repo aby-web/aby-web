@@ -14,7 +14,7 @@ export default function Bootcamp() {
       <Nav theme="dark" />
 
       {/* Hero */}
-      <section className="relative h-[45vh] min-h-[480px] md:min-h-[420px] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[45vh] min-h-[580px] md:min-h-[420px] flex items-center justify-center overflow-hidden">
         <img
           src="/images/d.jpeg"
           alt="Bulgaria sunset beach"
