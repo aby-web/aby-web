@@ -55,7 +55,9 @@ export default function EmailCapture() {
           body: JSON.stringify({
             email_address: email.toLowerCase(),
             first_name: fullName ? fullName.split(' ')[0] : undefined,
-            last_name: fullName && fullName.split(' ').length > 1 ? fullName.split(' ').slice(1).join(' ') : undefined,
+            fields: fullName && fullName.split(' ').length > 1
+              ? { last_name: fullName.split(' ').slice(1).join(' ') }
+              : undefined,
           }),
         });
       } catch (_) {}
