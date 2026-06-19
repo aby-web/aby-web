@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { supabase } from '../lib/supabase';
 
+const KIT_API_KEY = import.meta.env.VITE_KIT_API_KEY;
+
 export default function Join() {
+  const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle');
 
@@ -30,6 +33,21 @@ export default function Join() {
 
       if (insertError) throw insertError;
 
+      // Add to Kit
+      try {
+        await fetch('https://api.kit.com/v4/subscribers', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Kit-Api-Key': KIT_API_KEY,
+          },
+          body: JSON.stringify({
+            email_address: email.toLowerCase(),
+            first_name: firstName || undefined,
+          }),
+        });
+      } catch (_) {}
+
       // Send welcome email
       try {
         await fetch('https://kfwqxmhxmclsdbvncrre.functions.supabase.co/welcome-subscriber', {
@@ -49,7 +67,6 @@ export default function Join() {
   return (
     <div className="min-h-screen bg-[#F4EFE6] flex flex-col items-center justify-center px-6">
 
-      {/* Logo */}
       <p className="text-[11px] uppercase tracking-[0.3em] text-[#785E3D] mb-12">
         Ammar Bass
       </p>
@@ -83,10 +100,18 @@ export default function Join() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              placeholder="First name"
+              disabled={status === 'loading'}
+              className="w-full px-6 py-4 bg-white border border-[#C9B99A] rounded-full text-[#1C1410] placeholder-[#C9B99A] outline-none focus:border-[#785E3D] text-center disabled:opacity-50"
+            />
+            <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Your email address"
+              placeholder="Email address"
               required
               disabled={status === 'loading'}
               className="w-full px-6 py-4 bg-white border border-[#C9B99A] rounded-full text-[#1C1410] placeholder-[#C9B99A] outline-none focus:border-[#785E3D] text-center disabled:opacity-50"
@@ -109,7 +134,6 @@ export default function Join() {
         </div>
       )}
 
-      {/* Link back to site */}
       <a
         href="/"
         className="absolute bottom-8 text-xs text-[#C9B99A] hover:text-[#785E3D] transition-colors tracking-wide"

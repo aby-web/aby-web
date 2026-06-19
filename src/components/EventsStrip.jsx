@@ -64,6 +64,28 @@ export default function EventsStrip() {
           </h2>
         </div>
 
+        {/* Featured: Bootcamp */}
+        <div className="mb-8">
+          <a
+            href="/bootcamp"
+            className="flex flex-col md:flex-row overflow-hidden rounded-md border border-[#C9B99A] hover:border-[#785E3D] transition-colors bg-[#F4EFE6]"
+          >
+            <div className="md:w-72 h-48 md:h-auto shrink-0 overflow-hidden">
+              <img
+                src="/images/d.jpeg"
+                alt="Yoga Intensive Bootcamp Bulgaria"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="p-6 flex flex-col justify-center">
+              <p className="text-xs uppercase tracking-wide text-[#785E3D] mb-2">4–9 September 2026 · Varna, Bulgaria</p>
+              <h3 className="text-2xl font-light text-[#1C1410] mb-2">Yoga Intensive Bootcamp</h3>
+              <p className="text-sm text-[#6B5740] mb-4">Five days of immersive practice in a forest, minutes from the beach. Limited to 12 spaces.</p>
+              <span className="text-xs text-[#785E3D]">Find out more →</span>
+            </div>
+          </a>
+        </div>
+
         {loading ? (
           <div className="text-center py-12 text-[#6B5740]">
             Loading events...

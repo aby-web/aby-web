@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { supabase } from '../../lib/supabase';
 
 const accent = 'oklch(56% 0.1 38)';
+const KIT_API_KEY = import.meta.env.VITE_KIT_API_KEY;
 
 export default function EmailGate({ onContinue }) {
   const [email, setEmail] = useState('');
@@ -41,6 +42,20 @@ export default function EmailGate({ onContinue }) {
         .insert([{ email: email.toLowerCase(), source: 'handstand_guide' }]);
 
       if (insertError) throw insertError;
+
+      // Add to Kit
+      try {
+        await fetch('https://api.kit.com/v4/subscribers', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Kit-Api-Key': KIT_API_KEY,
+          },
+          body: JSON.stringify({
+            email_address: email.toLowerCase(),
+          }),
+        });
+      } catch (_) {}
 
       setStatus('success');
       setTimeout(() => {
