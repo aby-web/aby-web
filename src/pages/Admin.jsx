@@ -13,6 +13,7 @@ export default function Admin() {
   const [subscribers, setSubscribers] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
   const [privateEnquiries, setPrivateEnquiries] = useState([]);
+  const [yogamiInterest, setYogamiInterest] = useState([]);
   const [vacations, setVacations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [storedUsername, setStoredUsername] = useState(null);
@@ -88,6 +89,7 @@ export default function Admin() {
       fetchTestimonials();
       fetchPrivateEnquiries();
       fetchVacations();
+      fetchYogamiInterest();
     }
   }, []);
 
@@ -132,6 +134,7 @@ export default function Admin() {
       fetchTestimonials();
       fetchPrivateEnquiries();
       fetchVacations();
+      fetchYogamiInterest();
       fetchGuides();
     } else {
       showToast('Incorrect username or password', 'error');
@@ -351,6 +354,16 @@ export default function Admin() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const fetchYogamiInterest = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('yogami_interest')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (!error) setYogamiInterest(data || []);
+    } catch { /* table may not exist yet */ }
   };
 
   const fetchVacations = async () => {
@@ -798,6 +811,12 @@ export default function Admin() {
             className={`pb-4 px-4 text-sm font-medium transition-colors ${activeTab === 'guides' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740] hover:text-[#1C1410]'}`}
           >
             Guides
+          </button>
+          <button
+            onClick={() => setActiveTab('yogamiInterest')}
+            className={`pb-4 px-4 text-sm font-medium transition-colors ${activeTab === 'yogamiInterest' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740] hover:text-[#1C1410]'}`}
+          >
+            Yogami Interest ({yogamiInterest.length})
           </button>
           <button
             onClick={() => setActiveTab('settings')}
@@ -1517,6 +1536,44 @@ CREATE INDEX IF NOT EXISTS idx_guide_views_slug ON guide_views(guide_slug);`}
                     )}
                   </div>
                 ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Yogami Interest Tab */}
+        {activeTab === 'yogamiInterest' && (
+          <div className="bg-white p-6 rounded-lg border border-[#C9B99A] shadow-sm">
+            <h2 className="text-xl font-light mb-4 text-[#1C1410]">Yogami Interest ({yogamiInterest.length})</h2>
+            <p className="text-sm text-[#6B5740] mb-6">Teachers who registered interest from ammarbass.com/yogami</p>
+            {yogamiInterest.length === 0 ? (
+              <p className="text-[#6B5740]">No registrations yet.</p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-[#C9B99A]">
+                      <th className="text-left py-2 px-4 text-[#1C1410] font-medium">Name</th>
+                      <th className="text-left py-2 px-4 text-[#1C1410] font-medium">Email</th>
+                      <th className="text-left py-2 px-4 text-[#1C1410] font-medium">Message</th>
+                      <th className="text-left py-2 px-4 text-[#1C1410] font-medium">Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {yogamiInterest.map((entry) => (
+                      <tr key={entry.id} className="border-b border-[#EAE0CF] hover:bg-[#F4EFE6]">
+                        <td className="py-3 px-4 text-[#1C1410]">{entry.name}</td>
+                        <td className="py-3 px-4">
+                          <a href={`mailto:${entry.email}`} className="text-[#785E3D] hover:text-[#6B5030]">{entry.email}</a>
+                        </td>
+                        <td className="py-3 px-4 text-[#6B5740] text-sm max-w-xs">{entry.message || '—'}</td>
+                        <td className="py-3 px-4 text-[#6B5740] text-sm whitespace-nowrap">
+                          {new Date(entry.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             )}
           </div>
