@@ -229,9 +229,8 @@ export default function Bootcamp() {
                 className="w-full h-72 object-cover object-top rounded-lg mb-5"
               />
               <p className="text-lg font-light text-[#1C1410] mb-1">Ammar Bass</p>
-              <p className="text-sm text-[#785E3D] mb-3">@ammarbass</p>
-              <p className="text-sm text-[#6B5740] leading-relaxed mb-3">
-                London-based yoga teacher specialising in strength, inversions, and arm balances.
+              <p className="text-sm text-[#785E3D] mb-3">
+                <a href="https://www.instagram.com/ammarbass" target="_blank" rel="noopener noreferrer" className="hover:underline">@ammarbass</a>
               </p>
               <a href="https://www.ammarbass.com" className="text-sm text-[#785E3D] underline">ammarbass.com</a>
             </div>
@@ -242,9 +241,8 @@ export default function Bootcamp() {
                 className="w-full h-72 object-cover object-top rounded-lg mb-5"
               />
               <p className="text-lg font-light text-[#1C1410] mb-1">Ina Yordanova</p>
-              <p className="text-sm text-[#785E3D] mb-3">@inayo.ga</p>
-              <p className="text-sm text-[#6B5740] leading-relaxed mb-3">
-                Yoga teacher and movement specialist based in London.
+              <p className="text-sm text-[#785E3D] mb-3">
+                <a href="https://www.instagram.com/inayo.ga" target="_blank" rel="noopener noreferrer" className="hover:underline">@inayo.ga</a>
               </p>
               <a href="https://www.inayoga.co.uk" className="text-sm text-[#785E3D] underline">inayoga.co.uk</a>
             </div>
