@@ -6,10 +6,12 @@ import About from './pages/About';
 import Practice from './pages/Practice';
 import Guide from './pages/Guide';
 import PrivateSessions from './pages/PrivateSessions';
+import PrivateSessions2 from './pages/PrivateSessions2';
 import FAQ from './pages/FAQ';
 import Admin from './pages/Admin';
 import Join from './pages/Join';
 import Bootcamp from './pages/Bootcamp';
+import NewClientIntake from './pages/NewClientIntake';
 
 function ScrollToHash() {
   const location = useLocation();
@@ -45,10 +47,12 @@ function App() {
         <Route path="/practice" element={<Practice />} />
         <Route path="/handstandguide" element={<Guide />} />
         <Route path="/private-sessions" element={<PrivateSessions />} />
+        <Route path="/private-sessions2" element={<PrivateSessions2 />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/join" element={<Join />} />
         <Route path="/bootcamp" element={<Bootcamp />} />
+        <Route path="/onboard" element={<NewClientIntake />} />
       </Routes>
     </Router>
   );
