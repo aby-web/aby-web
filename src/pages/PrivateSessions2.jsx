@@ -36,11 +36,16 @@ export default function PrivateSessions2() {
     try {
       const { error: insertError } = await supabase
         .from('private_enquiries')
-        .insert([{ name: formData.name, email: formData.email.toLowerCase(), message: formData.message }]);
+        .insert([{
+          name: formData.name,
+          email: formData.email.toLowerCase(),
+          message: formData.message
+        }]);
       if (insertError) throw insertError;
       setSubmitted(true);
       setFormData({ name: '', email: '', message: '' });
     } catch (err) {
+      console.error('Error submitting enquiry:', err);
       setError('Something went wrong. Please try emailing me directly.');
     } finally {
       setSubmitting(false);
@@ -65,7 +70,7 @@ export default function PrivateSessions2() {
         <meta property="og:description" content="One-to-one yoga in West Hampstead, London. Build strong foundations or work toward handstands and arm balances." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://ammarbass.com/private-sessions2" />
-        <meta property="og:image" content="https://ammarbass.com/images/homestudio1.webp" />
+        <meta property="og:image" content="https://ammarbass.com/images/about.webp" />
         <link rel="canonical" href="https://ammarbass.com/private-sessions2" />
         <script type="application/ld+json">
           {JSON.stringify({
@@ -85,54 +90,51 @@ export default function PrivateSessions2() {
       <Nav theme="light" />
       <VacationBanner />
 
-      {/* Hero */}
+      {/* Hero — identical to original */}
       <section className="bg-[#F4EFE6] text-[#1C1410] pt-32 pb-12 px-8 md:px-12">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-6">
-            One to one · West Hampstead
+            One to one
           </p>
           <h1 className="text-5xl md:text-6xl font-light leading-tight mb-6">
-            One-to-one yoga, built entirely around you.
+            Private sessions tailored to you
           </h1>
           <p className="text-lg text-[#6B5740] max-w-2xl mx-auto">
-            Private sessions in West Hampstead for students who want focused, progressive coaching — whether that's building a strong foundation or working toward a specific skill like a handstand or arm balance.
+            One-to-one sessions for students who want focused, progressive guidance. I can help you build a strong foundation, or work towards a specific skill like a handstand or arm balance.
           </p>
         </div>
       </section>
 
-      {/* Studio image — full bleed, same treatment as existing page */}
+      {/* What to Expect — Desktop, identical to original */}
       <section className="hidden md:block relative overflow-hidden h-[650px]">
         <img
-          src="/images/homestudio1.webp"
-          alt="Home studio — West Hampstead"
+          src="/images/BBB09020.jpg"
+          alt="Private yoga session"
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/0 via-black/10 to-black/65" />
-
         <div className="absolute inset-y-0 right-0 w-[40%] flex items-center justify-center">
           <div className="px-10 py-16 max-w-lg">
             <div className="mb-12">
-              <h2 className="text-4xl md:text-5xl font-light text-white">
-                What to Expect
-              </h2>
+              <h2 className="text-4xl md:text-5xl font-light text-white">What to Expect</h2>
             </div>
-            <div className="space-y-8">
+            <div className="space-y-10">
               <div>
-                <p className="text-base uppercase tracking-[0.2em] text-[#F4EFE6] mb-3 font-medium">01 / Assessment</p>
+                <p className="text-base uppercase tracking-[0.2em] text-[#F4EFE6] mb-4 font-medium">01 / Assessment</p>
                 <p className="text-base font-light leading-relaxed text-white">
-                  An honest look at where you are, what your body needs, and what's actually holding you back.
+                  We start by understanding where you are, what you want, and what is holding you back.
                 </p>
               </div>
               <div>
-                <p className="text-base uppercase tracking-[0.2em] text-[#F4EFE6] mb-3 font-medium">02 / Structure</p>
+                <p className="text-base uppercase tracking-[0.2em] text-[#F4EFE6] mb-4 font-medium">02 / Progression</p>
                 <p className="text-base font-light leading-relaxed text-white">
-                  Drills and progressions targeting your individual limiting factors — with homework if you want to work between sessions.
+                  Every session is built around your specific goals — handstands, arm balances, strength, flexibility or all of the above.
                 </p>
               </div>
               <div>
-                <p className="text-base uppercase tracking-[0.2em] text-[#F4EFE6] mb-3 font-medium">03 / A real plan</p>
+                <p className="text-base uppercase tracking-[0.2em] text-[#F4EFE6] mb-4 font-medium">03 / Results</p>
                 <p className="text-base font-light leading-relaxed text-white">
-                  Not just a good class. Every session is designed around you — your goals, your pace, your progress.
+                  Structured, progressive training that actually moves you forward. Not just a good class — a plan.
                 </p>
               </div>
             </div>
@@ -140,62 +142,56 @@ export default function PrivateSessions2() {
         </div>
       </section>
 
-      {/* Mobile: What to Expect */}
-      <section className="md:hidden bg-[#EAE0CF] px-8 py-20">
+      {/* What to Expect — Mobile, identical to original */}
+      <section className="md:hidden bg-[#EAE0CF] px-8 md:px-12 py-20">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-light text-[#1C1410]">What to Expect</h2>
+            <h2 className="text-4xl md:text-5xl font-light text-[#1C1410]">What to Expect</h2>
           </div>
-          <div className="grid grid-cols-1 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <p className="text-xs uppercase tracking-[0.12em] text-[#785E3D] mb-4">01 / Assessment</p>
               <p className="text-[15px] font-light leading-relaxed text-[#6B5740]">
-                An honest look at where you are, what your body needs, and what's actually holding you back.
+                We start by understanding where you are, what you want, and what is holding you back.
               </p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-[0.12em] text-[#785E3D] mb-4">02 / Structure</p>
+              <p className="text-xs uppercase tracking-[0.12em] text-[#785E3D] mb-4">02 / Progression</p>
               <p className="text-[15px] font-light leading-relaxed text-[#6B5740]">
-                Drills and progressions targeting your individual limiting factors — with homework if you want to work between sessions.
+                Every session is built around your specific goals — handstands, arm balances, strength, flexibility or all of the above.
               </p>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-[0.12em] text-[#785E3D] mb-4">03 / A real plan</p>
+              <p className="text-xs uppercase tracking-[0.12em] text-[#785E3D] mb-4">03 / Results</p>
               <p className="text-[15px] font-light leading-relaxed text-[#6B5740]">
-                Not just a good class. Every session is designed around you — your goals, your pace, your progress.
+                Structured, progressive training that actually moves you forward. Not just a good class — a plan.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* About section — photo left, copy right */}
+      {/* Home Studio */}
       <section className="bg-[#F4EFE6] px-8 md:px-12 py-24">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           <div>
             <img
-              src="/images/BBB08980.webp"
-              alt="Ammar Bass"
-              className="w-full h-[560px] object-cover object-top rounded-lg"
+              src="/images/homestudio1.webp"
+              alt="Home studio — West Hampstead"
+              className="w-full h-[480px] object-cover rounded-lg"
             />
           </div>
           <div>
-            <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-6">The approach</p>
-            <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-8 leading-snug">
-              Focused, progressive work with a teacher who's paying full attention.
+            <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-6">The studio</p>
+            <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-6 leading-snug">
+              A dedicated space for focused work.
             </h2>
-            <div className="space-y-5 text-[15px] text-[#6B5740] leading-relaxed">
+            <div className="space-y-4 text-[15px] text-[#6B5740] leading-relaxed">
               <p>
-                I offer one-to-one sessions for two kinds of students: those who want to build a strong, intelligent yoga practice from the ground up, and those working toward a specific goal, like a handstand, arm balance, or more advanced postures.
+                In-person sessions take place at my private home studio in West Hampstead (NW6) — a clean, quiet space set up specifically for one-to-one practice. No distractions, no drop-ins.
               </p>
               <p>
-                Both start in the same place: understanding where you are, what your body needs, and what's actually holding you back. From there, every session is designed around you — your alignment, your restrictions, your pace.
-              </p>
-              <p>
-                Whether you're relatively new to yoga and want a solid foundation, or you've been practising for years and want to push into more complex territory, this is focused, progressive work with a teacher who's paying full attention.
-              </p>
-              <p className="text-sm text-[#C9B99A] pt-2">
-                Sessions are 60 or 75 minutes, in person at my home studio in West Hampstead (NW6).
+                If you'd prefer to work remotely, online sessions are available too. The same structure, the same attention — just through a screen.
               </p>
             </div>
           </div>
@@ -220,14 +216,14 @@ export default function PrivateSessions2() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* CTA — identical to original */}
       <section className="bg-[#F4EFE6] px-8 md:px-12 py-18">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-light text-[#1C1410] mb-4">
             Let's discuss your goals
           </h2>
           <p className="text-lg text-[#6B5740] mb-12">
-            A free 15-minute discovery call to talk through your goals and make sure it's the right fit — no commitment.
+            Book a complimentary 15-minute discovery call or send me a message about your goals.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
@@ -253,11 +249,16 @@ export default function PrivateSessions2() {
         </div>
       </section>
 
-      {/* Contact Modal */}
+      {/* Contact Modal — identical to original */}
       {showContactModal && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setShowContactModal(false)}>
           <div className="bg-[#F4EFE6] rounded-lg max-w-lg w-full p-8 relative" onClick={(e) => e.stopPropagation()}>
-            <button onClick={() => setShowContactModal(false)} className="absolute top-4 right-4 text-[#6B5740] hover:text-[#1C1410] text-2xl">×</button>
+            <button
+              onClick={() => setShowContactModal(false)}
+              className="absolute top-4 right-4 text-[#6B5740] hover:text-[#1C1410] text-2xl"
+            >
+              ×
+            </button>
             <h3 className="text-3xl font-light text-[#1C1410] mb-2">Get in touch</h3>
             <p className="text-sm text-[#6B5740] mb-6">Tell me about your goals and I'll respond within 24 hours.</p>
             {submitted ? (
