@@ -105,37 +105,50 @@ export default function PrivateSessions2() {
       <VacationBanner />
 
       {/* Hero */}
-      <section className="pt-32 pb-20 px-8 md:px-12">
-        <div className="max-w-4xl mx-auto">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-6">
-            One to one · West Hampstead
-          </p>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-light leading-tight text-[#1C1410] mb-8 max-w-3xl">
-            One-to-one yoga, built entirely around you.
-          </h1>
-          <p className="text-lg text-[#6B5740] max-w-2xl leading-relaxed mb-10">
-            Private sessions in West Hampstead for students who want focused, progressive coaching — whether that's building a strong foundation or working toward a specific skill like a handstand or arm balance.
-          </p>
-          <a
-            href=""
-            onClick={openCalendly}
-            className="inline-block px-8 py-4 rounded-full bg-[#1C1410] text-[#F4EFE6] hover:bg-[#2A1E16] transition-colors text-sm uppercase tracking-wide"
-          >
-            Book a free discovery call
-          </a>
-          <p className="text-sm text-[#C9B99A] mt-4">
-            A free 15-minute call — no commitment.
-          </p>
-        </div>
-      </section>
-
-      {/* Studio image — full bleed */}
-      <section className="relative h-[55vh] md:h-[70vh] overflow-hidden">
-        <img
-          src="/images/homestudio1.webp"
-          alt="Ammar Bass home studio in West Hampstead"
-          className="w-full h-full object-cover object-center"
+      <section className="relative w-full h-screen overflow-hidden">
+        {/* Background image */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: 'url(/images/homestudio1-crop.webp)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
         />
+        {/* Overlays */}
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-black/50" />
+
+        {/* Content */}
+        <div className="relative h-full flex items-center">
+          <div className="pl-12 md:pl-16 lg:pl-[72px] max-w-xl">
+            <p className="text-xs font-medium uppercase tracking-[0.25em] text-[#C9A878] mb-6" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.8)' }}>
+              One to one · West Hampstead
+            </p>
+            <h1 className="text-5xl md:text-6xl lg:text-[72px] font-light leading-none text-white mb-6">
+              One-to-one yoga, built entirely around you.
+            </h1>
+            <p className="text-base text-white/85 leading-relaxed max-w-[420px] mb-10">
+              Private sessions in West Hampstead for students who want focused, progressive coaching — whether that's building a strong foundation or working toward a specific skill like a handstand or arm balance.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 items-start">
+              <a
+                href=""
+                onClick={openCalendly}
+                className="px-6 py-3 rounded-full bg-white text-[#1C1410] hover:bg-white/90 transition-colors text-sm uppercase tracking-wide"
+              >
+                Book a free discovery call
+              </a>
+              <button
+                onClick={() => setShowContactModal(true)}
+                className="px-6 py-3 rounded-full border-2 border-white text-white hover:bg-white/10 transition-colors text-sm uppercase tracking-wide"
+              >
+                Send a message
+              </button>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* About the sessions */}
