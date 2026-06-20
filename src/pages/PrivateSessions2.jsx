@@ -184,14 +184,14 @@ export default function PrivateSessions2() {
           <div>
             <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-6">The studio</p>
             <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-6 leading-snug">
-              A dedicated space for focused work.
+              A dedicated space.
             </h2>
             <div className="space-y-4 text-[15px] text-[#6B5740] leading-relaxed">
               <p>
                 In-person sessions take place at my private home studio in West Hampstead (NW6) — a clean, quiet space set up specifically for one-to-one practice. No distractions, no drop-ins.
               </p>
               <p>
-                If you'd prefer to work remotely, online sessions are available too. The same structure, the same attention — just through a screen.
+                If you'd prefer to work remotely, online sessions are available too. The same structure, the same attention.
               </p>
             </div>
           </div>
