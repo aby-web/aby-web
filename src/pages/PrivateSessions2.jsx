@@ -110,7 +110,7 @@ export default function PrivateSessions2() {
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: 'url(/images/homestudio1-crop.webp)',
+            backgroundImage: 'url(/images/homestudio1.webp)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
