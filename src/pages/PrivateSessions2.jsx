@@ -65,9 +65,8 @@ export default function PrivateSessions2() {
   const pricing = [
     { label: '60-minute session', price: '£70' },
     { label: '75-minute session', price: '£80' },
-    { label: 'Couples / duo — 60 min', price: '£84' },
-    { label: 'Couples / duo — 75 min', price: '£96' },
     { label: '5-class pack', price: '15% off, pre-paid' },
+    { label: 'Couples / duo', price: '+20%' },
     { label: 'Discovery call', price: 'Free — 15 min' },
   ];
 
