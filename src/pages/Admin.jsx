@@ -57,6 +57,7 @@ export default function Admin() {
     description: '',
     image_url: '',
     booking_link: '',
+    button_label: '',
     status: 'upcoming',
   });
   const [imageFile, setImageFile] = useState(null);
@@ -594,6 +595,7 @@ export default function Admin() {
         description: '',
         image_url: '',
         booking_link: '',
+        button_label: '',
         status: 'upcoming',
       });
       setImageFile(null);
@@ -840,6 +842,13 @@ export default function Admin() {
                   onChange={(e) => setEventForm({ ...eventForm, booking_link: e.target.value })}
                   className="px-4 py-2 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A]"
                 />
+                <input
+                  type="text"
+                  placeholder='Button Label (default: "Secure Your Spot")'
+                  value={eventForm.button_label}
+                  onChange={(e) => setEventForm({ ...eventForm, button_label: e.target.value })}
+                  className="px-4 py-2 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A]"
+                />
                 <textarea
                   placeholder="Description"
                   value={eventForm.description}
@@ -885,6 +894,7 @@ export default function Admin() {
                           description: '',
                           image_url: '',
                           booking_link: '',
+                          button_label: '',
                           status: 'upcoming',
                         });
                         setImageFile(null);

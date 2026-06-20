@@ -285,7 +285,7 @@ export default function Events() {
                   rel="noopener noreferrer"
                   className="inline-block px-8 py-4 rounded-full bg-[#1C1410] text-[#F4EFE6] hover:bg-[#2A1E16] transition-colors text-sm uppercase tracking-wide"
                 >
-                  Secure Your Spot
+                  {selectedEvent.button_label || 'Secure Your Spot'}
                 </a>
               )}
             </div>
