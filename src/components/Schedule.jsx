@@ -19,18 +19,25 @@ export default function Schedule() {
       ],
     },
     {
+      location: 'BXR',
+      area: 'Marylebone',
+      classes: [
+        { day: 'Thursday', time: '20:00', name: 'Power', url: 'https://www.bxrlondon.com/' },
+      ],
+    },
+    {
+      location: 'Yogarise',
+      area: 'Queens Park',
+      classes: [
+        { day: 'Monday', time: '18:30', name: 'Dynamic Flow', url: 'https://yogarise.london/book/' },
+      ],
+    },
+    {
       location: 'HOME',
       area: 'Primrose Hill',
       classes: [
         { day: 'Friday', time: '18:00', name: 'Vinyasa (75)', url: 'http://homewellness.uk/' },
         { day: 'Sunday', time: '10:00', name: 'Vinyasa (75)', url: 'http://homewellness.uk/' },
-      ],
-    },
-    {
-      location: 'BXR',
-      area: 'Marylebone',
-      classes: [
-        { day: 'Thursday', time: '20:00', name: 'Power', url: 'https://www.bxrlondon.com/' },
       ],
     },
   ];
@@ -154,7 +161,7 @@ export default function Schedule() {
             </div>
           </div>
 
-          {/* HOME - left column */}
+          {/* BXR - left column */}
           <div>
             {/* Location Header with Subtitle */}
             <div className="pb-4 mb-6 border-b border-[#C9B99A]">
@@ -206,9 +213,8 @@ export default function Schedule() {
             </div>
           </div>
 
-          {/* BXR - right column */}
+          {/* Yogarise - right column */}
           <div>
-            {/* BXR */}
             <div>
               {/* Location Header with Subtitle */}
               <div className="pb-4 mb-6 border-b border-[#C9B99A]">
@@ -258,6 +264,58 @@ export default function Schedule() {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+
+          {/* HOME - left column */}
+          <div>
+            {/* Location Header with Subtitle */}
+            <div className="pb-4 mb-6 border-b border-[#C9B99A]">
+              <h3 className="text-2xl md:text-[28px] font-light text-[#1C1410]">
+                {scheduleData[4].location}
+              </h3>
+              {scheduleData[4].area && (
+                <p className="text-[11px] uppercase tracking-[0.15em] text-[#9B8366] mt-1">
+                  {scheduleData[4].area}
+                </p>
+              )}
+            </div>
+
+            {/* Classes */}
+            <div>
+              {scheduleData[4].classes.map((classItem, classIndex) => (
+                <div
+                  key={classIndex}
+                  className="flex items-center justify-between py-4 border-b border-[#C9B99A]"
+                >
+                  <div className="flex items-center gap-6 flex-1">
+                    {/* Day & Time */}
+                    <div className="min-w-[120px]">
+                      <p className="text-[11px] uppercase tracking-wide text-[#785E3D] mb-1">
+                        {classItem.day}
+                      </p>
+                      <p className="text-xs text-[#6B5740]">
+                        {classItem.time}
+                      </p>
+                    </div>
+
+                    {/* Class Name */}
+                    <p className="text-base text-[#1C1410]">
+                      {classItem.name}
+                    </p>
+                  </div>
+
+                  {/* Book Button */}
+                  <a
+                    href={classItem.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 text-xs uppercase tracking-wide border border-[#785E3D] text-[#6B5740] rounded-full hover:bg-[#EAE0CF] transition-colors"
+                  >
+                    Book
+                  </a>
+                </div>
+              ))}
             </div>
           </div>
         </div>

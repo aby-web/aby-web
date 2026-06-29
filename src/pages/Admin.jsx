@@ -716,6 +716,23 @@ export default function Admin() {
     });
   };
 
+  // Public pages on the domain — keep in sync with the routes in App.jsx
+  const sitePages = [
+    { label: 'Home', path: '/', description: 'Landing page' },
+    { label: 'About', path: '/about', description: 'About / my approach' },
+    { label: 'Practice', path: '/practice', description: 'Practice videos' },
+    { label: 'Events', path: '/events', description: 'Upcoming events' },
+    { label: 'Private Sessions', path: '/private-sessions', description: 'One-to-one & small group' },
+    { label: 'Bootcamp', path: '/bootcamp', description: 'Bootcamp landing page' },
+    { label: 'FAQ', path: '/faq', description: 'Frequently asked questions' },
+    { label: 'Join', path: '/join', description: 'Email signup / community' },
+    { label: 'Handstand Guide', path: '/handstandguide', description: 'Password-protected guide' },
+    { label: 'New Client Intake', path: '/onboard', description: 'Onboarding form for new clients' },
+    { label: 'CV', path: '/cv', description: 'Teaching CV' },
+    { label: 'Yogami', path: '/yogami', description: 'Yogami product page' },
+    { label: 'Admin', path: '/admin', description: 'This dashboard', internal: true },
+  ];
+
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-[#F4EFE6] flex items-center justify-center px-4">
@@ -817,6 +834,12 @@ export default function Admin() {
             className={`pb-4 px-4 text-sm font-medium transition-colors ${activeTab === 'yogamiInterest' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740] hover:text-[#1C1410]'}`}
           >
             Yogami Interest ({yogamiInterest.length})
+          </button>
+          <button
+            onClick={() => setActiveTab('pages')}
+            className={`pb-4 px-4 text-sm font-medium transition-colors ${activeTab === 'pages' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740] hover:text-[#1C1410]'}`}
+          >
+            Pages
           </button>
           <button
             onClick={() => setActiveTab('settings')}
@@ -1576,6 +1599,48 @@ CREATE INDEX IF NOT EXISTS idx_guide_views_slug ON guide_views(guide_slug);`}
                 </table>
               </div>
             )}
+          </div>
+        )}
+
+        {/* Pages Tab */}
+        {activeTab === 'pages' && (
+          <div className="bg-white p-6 rounded-lg border border-[#C9B99A] shadow-sm">
+            <h2 className="text-xl font-light mb-2 text-[#1C1410]">Site Pages</h2>
+            <p className="text-sm text-[#6B5740] mb-6">All pages on ammarbass.com. Click a link to open it in a new tab.</p>
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-[#C9B99A]">
+                    <th className="text-left py-2 px-4 text-[#1C1410] font-medium">Page</th>
+                    <th className="text-left py-2 px-4 text-[#1C1410] font-medium">URL</th>
+                    <th className="text-left py-2 px-4 text-[#1C1410] font-medium">Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {sitePages.map((page) => (
+                    <tr key={page.path} className="border-b border-[#EAE0CF] hover:bg-[#F4EFE6]">
+                      <td className="py-3 px-4 text-[#1C1410] whitespace-nowrap">
+                        {page.label}
+                        {page.internal && (
+                          <span className="ml-2 text-xs px-2 py-0.5 rounded bg-[#EAE0CF] text-[#6B5740]">internal</span>
+                        )}
+                      </td>
+                      <td className="py-3 px-4">
+                        <a
+                          href={page.path}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#785E3D] hover:text-[#6B5030] font-mono text-sm"
+                        >
+                          ammarbass.com{page.path === '/' ? '' : page.path} →
+                        </a>
+                      </td>
+                      <td className="py-3 px-4 text-[#6B5740] text-sm">{page.description}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
 

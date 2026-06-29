@@ -12,6 +12,7 @@ import Join from './pages/Join';
 import Bootcamp from './pages/Bootcamp';
 import NewClientIntake from './pages/NewClientIntake';
 import Yogami from './pages/Yogami';
+import CV from './pages/CV';
 
 function ScrollToHash() {
   const location = useLocation();
@@ -53,6 +54,7 @@ function App() {
         <Route path="/bootcamp" element={<Bootcamp />} />
         <Route path="/onboard" element={<NewClientIntake />} />
         <Route path="/yogami" element={<Yogami />} />
+        <Route path="/cv" element={<CV />} />
       </Routes>
     </Router>
   );
