@@ -116,7 +116,7 @@ export default function Admin() {
         if (usernameData) setStoredUsername(usernameData.setting_value);
         if (passwordData) setStoredPassword(passwordData.setting_value);
       }
-    } catch (error) {
+    } catch {
       console.log('No custom credentials set, using defaults');
     }
   };
@@ -554,7 +554,7 @@ export default function Admin() {
     const fileName = `${Date.now()}.${fileExt}`;
     const filePath = `${fileName}`;
 
-    const { data, error } = await supabase.storage
+    const { error } = await supabase.storage
       .from('event-images')
       .upload(filePath, file);
 
@@ -696,24 +696,6 @@ export default function Admin() {
       console.error('Error updating enquiry:', error);
       alert('Error updating enquiry: ' + error.message);
     }
-  };
-
-  const handleDeleteSubscriber = async (id) => {
-    showConfirm('Are you sure you want to delete this subscriber?', async () => {
-      try {
-        const { error } = await supabase
-          .from('subscribers')
-          .delete()
-          .eq('id', id);
-
-        if (error) throw error;
-        fetchSubscribers();
-        showToast('Subscriber deleted successfully!');
-      } catch (error) {
-        console.error('Error deleting subscriber:', error);
-        showToast('Error deleting subscriber: ' + error.message, 'error');
-      }
-    });
   };
 
   // Public pages on the domain — keep in sync with the routes in App.jsx
