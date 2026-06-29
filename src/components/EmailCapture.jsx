@@ -60,7 +60,7 @@ export default function EmailCapture() {
               : undefined,
           }),
         });
-      } catch (_) {}
+      } catch { /* non-blocking — ignore tagging failure */ }
 
       // Send welcome email
       try {
@@ -69,7 +69,7 @@ export default function EmailCapture() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ record: { email: email.toLowerCase() } })
         });
-      } catch (_) {}
+      } catch { /* non-blocking — ignore welcome-email failure */ }
 
       setStatus('success');
       setMessage('You are on the list!');

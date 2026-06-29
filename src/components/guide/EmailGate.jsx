@@ -55,7 +55,7 @@ export default function EmailGate({ onContinue }) {
             email_address: email.toLowerCase(),
           }),
         });
-      } catch (_) {}
+      } catch { /* non-blocking — ignore Kit signup failure */ }
 
       setStatus('success');
       setTimeout(() => {

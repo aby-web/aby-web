@@ -106,11 +106,13 @@ export default function Guide() {
   const [viewRecorded, setViewRecorded] = useState(false);
 
   useEffect(() => {
-    // Check if user has already been granted access in this session
+    // Check if user has already been granted access in this session.
+    // Syncing sessionStorage -> state once on mount is intentional.
     const access = sessionStorage.getItem('guide_access');
     const emailStatus = sessionStorage.getItem('guide_email_captured');
 
     if (access === 'granted') {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setHasAccess(true);
     }
 
@@ -118,14 +120,6 @@ export default function Guide() {
       setEmailCaptured(true);
     }
   }, []);
-
-  useEffect(() => {
-    // Record a view when user has access and email gate is complete
-    if (hasAccess && emailCaptured && !viewRecorded) {
-      recordGuideView();
-      setViewRecorded(true);
-    }
-  }, [hasAccess, emailCaptured, viewRecorded]);
 
   const recordGuideView = async () => {
     try {
@@ -146,6 +140,15 @@ export default function Guide() {
       // Fail silently - don't block user from viewing guide
     }
   };
+
+  useEffect(() => {
+    // Record a view when user has access and email gate is complete
+    if (hasAccess && emailCaptured && !viewRecorded) {
+      recordGuideView();
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setViewRecorded(true);
+    }
+  }, [hasAccess, emailCaptured, viewRecorded]);
 
   // Show password gate first
   if (!hasAccess) {

@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet-async';
 import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
 import Footer from '../components/Footer';
-import { supabase } from '../lib/supabase';
 
 const PRACTICE_VIDEOS = [
   {
@@ -31,63 +30,10 @@ const PRACTICE_VIDEOS = [
 
 export default function Practice() {
   const [selectedVideo, setSelectedVideo] = useState(null);
-  const [email, setEmail] = useState('');
-  const [status, setStatus] = useState('idle'); // idle, loading, success, error, exists
-  const [message, setMessage] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-  const handleNotifyMe = async (e) => {
-    e.preventDefault();
-
-    if (!email) return;
-
-    setStatus('loading');
-
-    try {
-      // Check if email already exists
-      const { data: existing, error: checkError } = await supabase
-        .from('subscribers')
-        .select('email')
-        .eq('email', email.toLowerCase())
-        .single();
-
-      if (checkError && checkError.code !== 'PGRST116') {
-        throw checkError;
-      }
-
-      if (existing) {
-        setStatus('exists');
-        setMessage('You are already subscribed!');
-        setEmail('');
-        setTimeout(() => setStatus('idle'), 4000);
-        return;
-      }
-
-      // Insert new subscriber with video notification flag
-      const { error: insertError } = await supabase
-        .from('subscribers')
-        .insert([{
-          email: email.toLowerCase(),
-          source: 'practice_videos'
-        }]);
-
-      if (insertError) throw insertError;
-
-      setStatus('success');
-      setMessage('Perfect! We will notify you when videos are live.');
-      setEmail('');
-      setTimeout(() => setStatus('idle'), 5000);
-
-    } catch (error) {
-      console.error('Subscription error:', error);
-      setStatus('error');
-      setMessage('Something went wrong. Please try again.');
-      setTimeout(() => setStatus('idle'), 4000);
-    }
-  };
 
   return (
     <div className="min-h-screen">

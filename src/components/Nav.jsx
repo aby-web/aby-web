@@ -33,10 +33,6 @@ export default function Nav({ theme = 'dark' }) {
   const textOpacity = isDark ? 'text-white/80' : (scrolled ? 'text-white/80' : 'text-[#1C1410]/80');
   const logoFilter = isDark ? 'brightness(0) invert(1)' : (scrolled ? 'brightness(0) invert(1)' : 'none');
   const bgColor = isDark ? 'rgba(28, 20, 16, 0.85)' : (scrolled ? 'rgba(28, 20, 16, 0.85)' : 'transparent');
-  const borderColor = isDark
-    ? (scrolled ? 'border-white/40' : 'border-white/60')
-    : (scrolled ? 'border-[#1C1410]/40' : 'border-[#1C1410]/60');
-  const hoverBg = isDark ? 'hover:bg-white/10' : 'hover:bg-[#1C1410]/10';
 
   // Helper function to check if link is active
   const isActive = (path) => location.pathname === path;

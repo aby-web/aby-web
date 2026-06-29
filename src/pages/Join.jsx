@@ -49,7 +49,7 @@ export default function Join() {
               : undefined,
           }),
         });
-      } catch (_) {}
+      } catch { /* non-blocking — ignore tagging failure */ }
 
       // Send welcome email
       try {
@@ -58,7 +58,7 @@ export default function Join() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ record: { email: email.toLowerCase() } })
         });
-      } catch (_) {}
+      } catch { /* non-blocking — ignore welcome-email failure */ }
 
       setStatus('success');
     } catch (error) {
