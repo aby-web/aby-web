@@ -4,7 +4,11 @@ import { supabase } from '../../lib/supabase';
 const accent = 'oklch(56% 0.1 38)';
 const KIT_API_KEY = import.meta.env.VITE_KIT_API_KEY;
 
-export default function EmailGate({ onContinue }) {
+export default function EmailGate({
+  onContinue,
+  source = 'handstand_guide',
+  blurb = 'Get notified when new guides are released, plus exclusive handstand tips and early access to workshops.',
+}) {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle'); // idle, loading, success, error, exists
 
@@ -39,7 +43,7 @@ export default function EmailGate({ onContinue }) {
       // Insert new subscriber
       const { error: insertError } = await supabase
         .from('subscribers')
-        .insert([{ email: email.toLowerCase(), source: 'handstand_guide' }]);
+        .insert([{ email: email.toLowerCase(), source }]);
 
       if (insertError) throw insertError;
 
@@ -129,7 +133,7 @@ export default function EmailGate({ onContinue }) {
             margin: '0 0 28px',
           }}
         >
-          Get notified when new guides are released, plus exclusive handstand tips and early access to workshops.
+          {blurb}
         </p>
 
         {status === 'success' ? (

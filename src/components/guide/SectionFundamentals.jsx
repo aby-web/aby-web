@@ -138,8 +138,8 @@ export default function SectionFundamentals() {
       </div>
 
       <Callout>
-        A detailed breakdown of each fundamental — including specific drills, progressions, and corrections
-        tailored to your body — is available through private coaching.
+        Learn these at the wall, one at a time, until each becomes automatic. The handstand is the sum of small,
+        well-drilled habits — not a single heroic kick-up.
       </Callout>
     </section>
   );

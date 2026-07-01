@@ -709,6 +709,7 @@ export default function Admin() {
     { label: 'FAQ', path: '/faq', description: 'Frequently asked questions' },
     { label: 'Join', path: '/join', description: 'Email signup / community' },
     { label: 'Handstand Guide', path: '/handstandguide', description: 'Password-protected guide' },
+    { label: 'Pincha Guide', path: '/pinchaguide', description: 'Password-protected guide' },
     { label: 'New Client Intake', path: '/onboard', description: 'Onboarding form for new clients' },
     { label: 'CV', path: '/cv', description: 'Teaching CV' },
     { label: 'Yogami', path: '/yogami', description: 'Yogami product page' },
@@ -1434,6 +1435,11 @@ CREATE POLICY "Allow authenticated updates" ON guides FOR UPDATE USING (true);
 -- Insert the handstand guide (if it doesn't exist)
 INSERT INTO guides (title, slug, password, description)
 VALUES ('Handstand Fundamentals Guide', 'handstandguide', 'handstand2026', 'A structured approach to building your handstand practice')
+ON CONFLICT (slug) DO NOTHING;
+
+-- Insert the pincha mayurasana guide (if it doesn't exist)
+INSERT INTO guides (title, slug, password, description)
+VALUES ('Forearm Stand Fundamentals Guide', 'pinchaguide', 'pincha2026', 'A structured approach to building your Pincha Mayurasana (forearm stand) practice')
 ON CONFLICT (slug) DO NOTHING;
 
 -- Create the guide_views table to track views

@@ -20,8 +20,8 @@ export default function SectionCoaching() {
             fontWeight: 300,
           }}
         >
-          This guide is the framework. Every body is different, and the fastest way to find what yours needs — your
-          specific restrictions, strengths, and history — is a trained eye on your practice.
+          This guide is the framework. Everyone's limiter is different — usually just one or two things — and the
+          fastest way to find yours is a trained eye on your practice.
         </p>
         <p
           style={{

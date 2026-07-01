@@ -3,7 +3,13 @@ import { supabase } from '../../lib/supabase';
 
 const accent = 'oklch(56% 0.1 38)';
 
-export default function PasswordGate({ onSuccess, guideSlug = 'handstandguide' }) {
+export default function PasswordGate({
+  onSuccess,
+  guideSlug = 'handstandguide',
+  titleTop = 'Handstand Fundamentals',
+  titleEm = 'Guide',
+  fallbackPassword = import.meta.env.VITE_GUIDE_PASSWORD || 'handstand2026',
+}) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
   const [correctPassword, setCorrectPassword] = useState(null);
@@ -27,7 +33,7 @@ export default function PasswordGate({ onSuccess, guideSlug = 'handstandguide' }
     } catch (error) {
       console.error('Error fetching guide password:', error);
       // Fallback to default password if database fetch fails
-      setCorrectPassword(import.meta.env.VITE_GUIDE_PASSWORD || 'handstand2026');
+      setCorrectPassword(fallbackPassword);
     } finally {
       setLoading(false);
     }
@@ -105,9 +111,9 @@ export default function PasswordGate({ onSuccess, guideSlug = 'handstandguide' }
             color: 'oklch(17% 0.015 55)',
           }}
         >
-          Handstand Fundamentals
+          {titleTop}
           <br />
-          <em style={{ fontStyle: 'italic' }}>Guide</em>
+          <em style={{ fontStyle: 'italic' }}>{titleEm}</em>
         </h1>
 
         <p

@@ -5,6 +5,7 @@ import Events from './pages/Events';
 import About from './pages/About';
 import Practice from './pages/Practice';
 import Guide from './pages/Guide';
+import PinchaGuide from './pages/PinchaGuide';
 import PrivateSessions from './pages/PrivateSessions';
 import FAQ from './pages/FAQ';
 import Admin from './pages/Admin';
@@ -47,6 +48,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/practice" element={<Practice />} />
         <Route path="/handstandguide" element={<Guide />} />
+        <Route path="/pinchaguide" element={<PinchaGuide />} />
         <Route path="/private-sessions" element={<PrivateSessions />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/admin" element={<Admin />} />
