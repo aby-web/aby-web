@@ -1,21 +1,21 @@
 export default function Schedule() {
   const scheduleData = [
     {
+      location: 'HOME',
+      area: 'Primrose Hill',
+      classes: [
+        { day: 'Wednesday', time: '18:00', name: 'Vinyasa', url: 'http://homewellness.uk/' },
+        { day: 'Friday', time: '18:00', name: 'Vinyasa (75)', url: 'http://homewellness.uk/' },
+        { day: 'Sunday', time: '10:00', name: 'Vinyasa (75)', url: 'http://homewellness.uk/' },
+      ],
+    },
+    {
       location: 'Indaba',
       area: 'Marylebone',
       classes: [
         { day: 'Tuesday', time: '07:30', name: 'Morning Vinyasa', url: 'https://indabayoga.com/timetable' },
-        { day: 'Thursday', time: '18:00', name: 'Coming Soon (75)', url: 'https://indabayoga.com/timetable' },
+        { day: 'Thursday', time: '18:00', name: 'Vinyasa & Meditation (75)', url: 'https://indabayoga.com/timetable' },
         { day: 'Saturday', time: '11:30', name: 'Power (75)', url: 'https://indabayoga.com/timetable' },
-      ],
-    },
-    {
-      location: 'Flo',
-      area: 'Hampstead',
-      classes: [
-        { day: 'Monday', time: '07:15', name: 'Morning Flow', url: 'https://www.floyogastudio.co.uk/book-a-class' },
-        { day: 'Tuesday', time: '09:30', name: 'Handstands', url: 'https://www.floyogastudio.co.uk/book-a-class' },
-        { day: 'Saturday', time: '08:15 & 09:30', name: 'Experienced & Power', url: 'https://www.floyogastudio.co.uk/book-a-class' },
       ],
     },
     {
@@ -33,11 +33,12 @@ export default function Schedule() {
       ],
     },
     {
-      location: 'HOME',
-      area: 'Primrose Hill',
+      location: 'Flo',
+      area: 'Hampstead',
       classes: [
-        { day: 'Friday', time: '18:00', name: 'Vinyasa (75)', url: 'http://homewellness.uk/' },
-        { day: 'Sunday', time: '10:00', name: 'Vinyasa (75)', url: 'http://homewellness.uk/' },
+        { day: 'Monday', time: '07:15', name: 'Morning Flow', url: 'https://www.floyogastudio.co.uk/book-a-class' },
+        { day: 'Tuesday', time: '09:30', name: 'Handstands', url: 'https://www.floyogastudio.co.uk/book-a-class' },
+        { day: 'Saturday', time: '09:00', name: 'Power (75)', url: 'https://www.floyogastudio.co.uk/book-a-class' },
       ],
     },
   ];
@@ -57,7 +58,7 @@ export default function Schedule() {
 
         {/* Schedule Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Indaba - left column */}
+          {/* HOME - left column */}
           <div>
             {/* Location Header with Subtitle */}
             <div className="pb-4 mb-6 border-b border-[#C9B99A]">
@@ -109,7 +110,7 @@ export default function Schedule() {
             </div>
           </div>
 
-          {/* Flo - right column */}
+          {/* Indaba - right column */}
           <div>
             {/* Location Header with Subtitle */}
             <div className="pb-4 mb-6 border-b border-[#C9B99A]">
@@ -267,7 +268,7 @@ export default function Schedule() {
             </div>
           </div>
 
-          {/* HOME - left column */}
+          {/* Flo - left column */}
           <div>
             {/* Location Header with Subtitle */}
             <div className="pb-4 mb-6 border-b border-[#C9B99A]">
