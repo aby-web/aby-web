@@ -140,10 +140,10 @@ export default function Home() {
       <VacationBanner />
       <main>
         <Hero />
-        <PracticeVideos />
-        <About />
-        <Schedule />
         <EventsStrip />
+        <Schedule />
+        <About />
+        <PracticeVideos />
         <InstagramFeed />
         <EmailCapture />
       </main>
