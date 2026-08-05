@@ -129,6 +129,9 @@ export default function Admin() {
     if (username === correctUsername && password === correctPassword) {
       setIsAuthenticated(true);
       localStorage.setItem('admin_authenticated', 'true');
+      // Needed to authenticate against the list-subscribers Edge Function,
+      // which holds the Kit API key server-side.
+      sessionStorage.setItem('admin_password', correctPassword);
       fetchEvents();
       fetchSubscribers();
       fetchTestimonials();
@@ -307,12 +310,18 @@ export default function Admin() {
   const fetchSubscribers = async () => {
     setLoading(true);
     try {
-      const res = await fetch('https://api.kit.com/v4/subscribers?per_page=1000', {
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Kit-Api-Key': import.meta.env.VITE_KIT_API_KEY,
-        },
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/list-subscribers`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+            'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
+            'x-admin-password': sessionStorage.getItem('admin_password') || '',
+          },
+        }
+      );
       const data = await res.json();
       setSubscribers(data.subscribers || []);
     } catch (error) {

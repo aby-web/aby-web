@@ -1,70 +1,35 @@
 import { useState } from 'react';
-import { supabase } from '../lib/supabase';
-
-const KIT_API_KEY = import.meta.env.VITE_KIT_API_KEY;
+import { honeypotProps, isLikelyBot, useFormTimer } from '../lib/botCheck';
+import { subscribeEmail } from '../lib/subscribe';
 
 export default function Join() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle');
+  const [honeypot, setHoneypot] = useState('');
+  const formTimer = useFormTimer();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email) return;
+
+    // Fake success for bots — nothing is written, and they get no signal.
+    if (isLikelyBot(honeypot, null)) {
+      setStatus('success');
+      return;
+    }
+
     setStatus('loading');
 
-    try {
-      const { data: existing, error: checkError } = await supabase
-        .from('subscribers')
-        .select('email')
-        .eq('email', email.toLowerCase())
-        .single();
+    const result = await subscribeEmail({
+      email,
+      fullName,
+      source: 'instagram',
+      honeypot,
+      elapsedMs: formTimer.elapsedMs(),
+    });
 
-      if (checkError && checkError.code !== 'PGRST116') throw checkError;
-
-      if (existing) {
-        setStatus('exists');
-        return;
-      }
-
-      const { error: insertError } = await supabase
-        .from('subscribers')
-        .insert([{ email: email.toLowerCase(), source: 'instagram' }]);
-
-      if (insertError) throw insertError;
-
-      // Add to Kit
-      try {
-        await fetch('https://api.kit.com/v4/subscribers', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Kit-Api-Key': KIT_API_KEY,
-          },
-          body: JSON.stringify({
-            email_address: email.toLowerCase(),
-            first_name: fullName ? fullName.split(' ')[0] : undefined,
-            fields: fullName && fullName.split(' ').length > 1
-              ? { last_name: fullName.split(' ').slice(1).join(' ') }
-              : undefined,
-          }),
-        });
-      } catch { /* non-blocking — ignore tagging failure */ }
-
-      // Send welcome email
-      try {
-        await fetch('https://kfwqxmhxmclsdbvncrre.functions.supabase.co/welcome-subscriber', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ record: { email: email.toLowerCase() } })
-        });
-      } catch { /* non-blocking — ignore welcome-email failure */ }
-
-      setStatus('success');
-    } catch (error) {
-      console.error('Subscription error:', error);
-      setStatus('error');
-    }
+    setStatus(result);
   };
 
   return (
@@ -102,6 +67,11 @@ export default function Join() {
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
+            <input
+              {...honeypotProps}
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+            />
             <input
               type="text"
               value={fullName}

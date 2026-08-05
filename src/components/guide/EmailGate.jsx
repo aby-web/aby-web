@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { supabase } from '../../lib/supabase';
+import { honeypotProps, isLikelyBot, useFormTimer } from '../../lib/botCheck';
+import { subscribeEmail } from '../../lib/subscribe';
 
 const accent = 'oklch(56% 0.1 38)';
-const KIT_API_KEY = import.meta.env.VITE_KIT_API_KEY;
 
 export default function EmailGate({
   onContinue,
@@ -11,67 +11,45 @@ export default function EmailGate({
 }) {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle'); // idle, loading, success, error, exists
+  const [honeypot, setHoneypot] = useState('');
+  const formTimer = useFormTimer();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email) return;
 
-    setStatus('loading');
-
-    try {
-      // Check if email already exists
-      const { data: existing, error: checkError } = await supabase
-        .from('subscribers')
-        .select('email')
-        .eq('email', email.toLowerCase())
-        .single();
-
-      if (checkError && checkError.code !== 'PGRST116') {
-        throw checkError;
-      }
-
-      if (existing) {
-        setStatus('exists');
-        setTimeout(() => {
-          sessionStorage.setItem('guide_email_captured', 'true');
-          onContinue();
-        }, 1500);
-        return;
-      }
-
-      // Insert new subscriber
-      const { error: insertError } = await supabase
-        .from('subscribers')
-        .insert([{ email: email.toLowerCase(), source }]);
-
-      if (insertError) throw insertError;
-
-      // Add to Kit
-      try {
-        await fetch('https://api.kit.com/v4/subscribers', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Kit-Api-Key': KIT_API_KEY,
-          },
-          body: JSON.stringify({
-            email_address: email.toLowerCase(),
-          }),
-        });
-      } catch { /* non-blocking — ignore Kit signup failure */ }
-
+    // Fake success for bots — nothing is written. The guide itself is public
+    // (there is a Skip link), so continuing through costs nothing.
+    if (isLikelyBot(honeypot, null)) {
       setStatus('success');
       setTimeout(() => {
         sessionStorage.setItem('guide_email_captured', 'true');
         onContinue();
       }, 1500);
+      return;
+    }
 
-    } catch (error) {
-      console.error('Subscription error:', error);
+    setStatus('loading');
+
+    const result = await subscribeEmail({
+      email,
+      source,
+      honeypot,
+      elapsedMs: formTimer.elapsedMs(),
+    });
+
+    if (result === 'error') {
       setStatus('error');
       setTimeout(() => setStatus('idle'), 3000);
+      return;
     }
+
+    setStatus(result);
+    setTimeout(() => {
+      sessionStorage.setItem('guide_email_captured', 'true');
+      onContinue();
+    }, 1500);
   };
 
   const handleSkip = () => {
@@ -179,6 +157,11 @@ export default function EmailGate({
         ) : (
           <>
             <form onSubmit={handleSubmit} style={{ marginBottom: 16 }}>
+              <input
+                {...honeypotProps}
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+              />
               <input
                 type="email"
                 value={email}

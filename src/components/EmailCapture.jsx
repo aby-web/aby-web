@@ -1,88 +1,52 @@
 import { useState } from 'react';
-import { supabase } from '../lib/supabase';
-
-const KIT_API_KEY = import.meta.env.VITE_KIT_API_KEY;
+import { honeypotProps, isLikelyBot, useFormTimer } from '../lib/botCheck';
+import { subscribeEmail } from '../lib/subscribe';
 
 export default function EmailCapture() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle'); // idle, loading, success, error, exists
   const [message, setMessage] = useState('');
+  const [honeypot, setHoneypot] = useState('');
+  const formTimer = useFormTimer();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email) return;
 
-    setStatus('loading');
-
-    try {
-      // Check if email already exists in Supabase
-      const { data: existing, error: checkError } = await supabase
-        .from('subscribers')
-        .select('email')
-        .eq('email', email.toLowerCase())
-        .single();
-
-      if (checkError && checkError.code !== 'PGRST116') {
-        throw checkError;
-      }
-
-      if (existing) {
-        setStatus('exists');
-        setMessage('You are already subscribed!');
-        setEmail('');
-        setFullName('');
-        setTimeout(() => setStatus('idle'), 4000);
-        return;
-      }
-
-      // Insert into Supabase
-      const { error: insertError } = await supabase
-        .from('subscribers')
-        .insert([{ email: email.toLowerCase(), source: 'website' }]);
-
-      if (insertError) throw insertError;
-
-      // Add to Kit
-      try {
-        await fetch('https://api.kit.com/v4/subscribers', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Kit-Api-Key': KIT_API_KEY,
-          },
-          body: JSON.stringify({
-            email_address: email.toLowerCase(),
-            first_name: fullName ? fullName.split(' ')[0] : undefined,
-            fields: fullName && fullName.split(' ').length > 1
-              ? { last_name: fullName.split(' ').slice(1).join(' ') }
-              : undefined,
-          }),
-        });
-      } catch { /* non-blocking — ignore tagging failure */ }
-
-      // Send welcome email
-      try {
-        await fetch('https://kfwqxmhxmclsdbvncrre.functions.supabase.co/welcome-subscriber', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ record: { email: email.toLowerCase() } })
-        });
-      } catch { /* non-blocking — ignore welcome-email failure */ }
-
+    // Fake success for bots — nothing is written, and they get no signal.
+    if (isLikelyBot(honeypot, null)) {
       setStatus('success');
       setMessage('You are on the list!');
       setEmail('');
       setFullName('');
       setTimeout(() => setStatus('idle'), 4000);
+      return;
+    }
 
-    } catch (error) {
-      console.error('Subscription error:', error);
+    setStatus('loading');
+
+    const result = await subscribeEmail({
+      email,
+      fullName,
+      source: 'website',
+      honeypot,
+      elapsedMs: formTimer.elapsedMs(),
+    });
+
+    if (result === 'error') {
       setStatus('error');
       setMessage('Something went wrong. Please try again.');
       setTimeout(() => setStatus('idle'), 4000);
+      return;
     }
+
+    setStatus(result);
+    setMessage(result === 'exists' ? 'You are already subscribed!' : 'You are on the list!');
+    setEmail('');
+    setFullName('');
+    setTimeout(() => setStatus('idle'), 4000);
   };
 
   return (
@@ -104,6 +68,11 @@ export default function EmailCapture() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="mb-4">
+            <input
+              {...honeypotProps}
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+            />
             <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-3">
               <input
                 type="text"
