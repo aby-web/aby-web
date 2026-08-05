@@ -1,27 +1,10 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import { corsHeaders, verifyToken } from "../_shared/auth.ts";
 
 // Server-side only. Proxies the admin portal's subscriber list so the Kit API
-// key never reaches the browser.
+// key never reaches the browser. Authorised by the signed session token that
+// admin-login issues, rather than by the admin password itself.
 const KIT_API_KEY = Deno.env.get('KIT_API_KEY');
-// Shared secret the admin page sends. Set to the same value as the site's
-// VITE_ADMIN_PASSWORD so only the password holder can list subscribers.
-const ADMIN_PASSWORD = Deno.env.get('ADMIN_PASSWORD');
-
-const ALLOWED_ORIGINS = [
-  'https://ammarbass.com',
-  'https://www.ammarbass.com',
-  'http://localhost:5173',
-];
-
-function corsHeaders(origin: string | null) {
-  const allowed = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
-  return {
-    'Access-Control-Allow-Origin': allowed,
-    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-admin-password',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Vary': 'Origin',
-  };
-}
 
 Deno.serve(async (req) => {
   const cors = corsHeaders(req.headers.get('Origin'));
@@ -30,8 +13,7 @@ Deno.serve(async (req) => {
     return new Response('ok', { headers: cors });
   }
 
-  const supplied = req.headers.get('x-admin-password');
-  if (!ADMIN_PASSWORD || supplied !== ADMIN_PASSWORD) {
+  if (!(await verifyToken(req.headers.get('x-admin-token')))) {
     return new Response(JSON.stringify({ error: 'unauthorized' }), {
       headers: { ...cors, 'Content-Type': 'application/json' },
       status: 401,

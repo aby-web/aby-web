@@ -1,11 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import Cropper from 'react-easy-crop';
 import { supabase } from '../lib/supabase';
+import { adminFetch, clearSession, isLoggedIn, login } from '../lib/adminAuth';
 
 export default function Admin() {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return localStorage.getItem('admin_authenticated') === 'true';
-  });
+  const [isAuthenticated, setIsAuthenticated] = useState(() => isLoggedIn());
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [activeTab, setActiveTab] = useState('events');
@@ -16,8 +15,6 @@ export default function Admin() {
   const [yogamiInterest, setYogamiInterest] = useState([]);
   const [vacations, setVacations] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [storedUsername, setStoredUsername] = useState(null);
-  const [storedPassword, setStoredPassword] = useState(null);
 
   // Toast notification
   const [toast, setToast] = useState(null);
@@ -81,9 +78,8 @@ export default function Admin() {
   });
 
   useEffect(() => {
-    fetchStoredCredentials();
     fetchGuides();
-    if (localStorage.getItem('admin_authenticated') === 'true') {
+    if (isLoggedIn()) {
       fetchEvents();
       fetchSubscribers();
       fetchTestimonials();
@@ -101,37 +97,16 @@ export default function Admin() {
     return date.toLocaleDateString('en-GB', options);
   };
 
-  const fetchStoredCredentials = async () => {
-    try {
-      // Fetch username and password from admin_settings
-      const { data, error } = await supabase
-        .from('admin_settings')
-        .select('setting_key, setting_value')
-        .in('setting_key', ['admin_username', 'admin_password']);
-
-      if (!error && data) {
-        const usernameData = data.find(item => item.setting_key === 'admin_username');
-        const passwordData = data.find(item => item.setting_key === 'admin_password');
-
-        if (usernameData) setStoredUsername(usernameData.setting_value);
-        if (passwordData) setStoredPassword(passwordData.setting_value);
-      }
-    } catch {
-      console.log('No custom credentials set, using defaults');
-    }
-  };
-
   const handleLogin = async (e) => {
     e.preventDefault();
-    const correctUsername = storedUsername || 'admin';
-    const correctPassword = storedPassword || import.meta.env.VITE_ADMIN_PASSWORD;
 
-    if (username === correctUsername && password === correctPassword) {
+    // Verified server-side against a bcrypt hash; on success we hold only a
+    // signed, expiring session token.
+    const ok = await login(username, password);
+
+    if (ok) {
       setIsAuthenticated(true);
-      localStorage.setItem('admin_authenticated', 'true');
-      // Needed to authenticate against the list-subscribers Edge Function,
-      // which holds the Kit API key server-side.
-      sessionStorage.setItem('admin_password', correctPassword);
+      setPassword('');
       fetchEvents();
       fetchSubscribers();
       fetchTestimonials();
@@ -165,50 +140,20 @@ export default function Admin() {
     setChangingSettings(true);
 
     try {
-      // Update username if provided
-      if (newUsername) {
-        const { data: existingUsername } = await supabase
-          .from('admin_settings')
-          .select('id')
-          .eq('setting_key', 'admin_username')
-          .single();
+      // Hashing happens server-side; the plaintext is never stored.
+      const { ok, status } = await adminFetch('admin-update-credentials', {
+        newUsername: newUsername || undefined,
+        newPassword: newPassword || undefined,
+      });
 
-        if (existingUsername) {
-          const { error } = await supabase
-            .from('admin_settings')
-            .update({ setting_value: newUsername, updated_at: new Date().toISOString() })
-            .eq('setting_key', 'admin_username');
-          if (error) throw error;
-        } else {
-          const { error } = await supabase
-            .from('admin_settings')
-            .insert([{ setting_key: 'admin_username', setting_value: newUsername }]);
-          if (error) throw error;
+      if (!ok) {
+        if (status === 401) {
+          showToast('Session expired. Please log in again.', 'error');
+          clearSession();
+          setIsAuthenticated(false);
+          return;
         }
-        setStoredUsername(newUsername);
-      }
-
-      // Update password if provided
-      if (newPassword) {
-        const { data: existingPassword } = await supabase
-          .from('admin_settings')
-          .select('id')
-          .eq('setting_key', 'admin_password')
-          .single();
-
-        if (existingPassword) {
-          const { error } = await supabase
-            .from('admin_settings')
-            .update({ setting_value: newPassword, updated_at: new Date().toISOString() })
-            .eq('setting_key', 'admin_password');
-          if (error) throw error;
-        } else {
-          const { error } = await supabase
-            .from('admin_settings')
-            .insert([{ setting_key: 'admin_password', setting_value: newPassword }]);
-          if (error) throw error;
-        }
-        setStoredPassword(newPassword);
+        throw new Error('Failed to update credentials');
       }
 
       setNewUsername('');
@@ -310,19 +255,16 @@ export default function Admin() {
   const fetchSubscribers = async () => {
     setLoading(true);
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/list-subscribers`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-            'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY,
-            'x-admin-password': sessionStorage.getItem('admin_password') || '',
-          },
+      const { ok, status, data } = await adminFetch('list-subscribers');
+
+      if (!ok) {
+        if (status === 401) {
+          clearSession();
+          setIsAuthenticated(false);
         }
-      );
-      const data = await res.json();
+        return;
+      }
+
       setSubscribers(data.subscribers || []);
     } catch (error) {
       console.error('Error fetching subscribers from Kit:', error);
@@ -446,15 +388,21 @@ export default function Admin() {
 
     setLoading(true);
     try {
-      const { error } = await supabase
-        .from('guides')
-        .update({
-          password: password,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', guideId);
+      // Hashed server-side; the plaintext never reaches the database.
+      const { ok, status } = await adminFetch('admin-update-guide-password', {
+        guideId,
+        password,
+      });
 
-      if (error) throw error;
+      if (!ok) {
+        if (status === 401) {
+          showToast('Session expired. Please log in again.', 'error');
+          clearSession();
+          setIsAuthenticated(false);
+          return;
+        }
+        throw new Error('Failed to update guide password');
+      }
 
       showToast('Guide password updated successfully!');
       setEditingGuideId(null);
@@ -773,7 +721,7 @@ export default function Admin() {
             </a>
             <button
               onClick={() => {
-                localStorage.removeItem('admin_authenticated');
+                clearSession();
                 setIsAuthenticated(false);
               }}
               className="text-sm text-[#6B5740] hover:text-[#1C1410] transition-colors"
@@ -1698,11 +1646,10 @@ CREATE INDEX IF NOT EXISTS idx_guide_views_slug ON guide_views(guide_slug);`}
             </form>
 
             <div className="mt-8 pt-6 border-t border-[#EAE0CF]">
-              <p className="text-sm text-[#6B5740] mb-2">
-                <strong className="text-[#1C1410]">Current Username:</strong> {storedUsername || 'admin (default)'}
-              </p>
               <p className="text-sm text-[#6B5740]">
-                <strong className="text-[#1C1410]">Password Source:</strong> {storedPassword ? 'Custom (stored in database)' : 'Default (environment variable)'}
+                Credentials are verified on the server and stored as a bcrypt
+                hash, so the password is never sent to the browser. Your session
+                expires after 12 hours.
               </p>
             </div>
           </div>
