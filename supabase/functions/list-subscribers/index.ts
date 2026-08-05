@@ -21,7 +21,9 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const res = await fetch('https://api.kit.com/v4/subscribers?per_page=1000', {
+    // status=active: the unfiltered endpoint also returns cancelled and
+    // bounced subscribers, which made the portal's count look inflated.
+    const res = await fetch('https://api.kit.com/v4/subscribers?per_page=1000&status=active', {
       headers: {
         'Content-Type': 'application/json',
         'X-Kit-Api-Key': KIT_API_KEY!,

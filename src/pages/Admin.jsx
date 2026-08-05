@@ -293,13 +293,15 @@ export default function Admin() {
   const fetchPrivateEnquiries = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase
-        .from('private_enquiries')
-        .select('*')
-        .order('created_at', { ascending: false });
+      const { ok, status, data } = await adminFetch('admin-data', {
+        action: 'select', table: 'private_enquiries', orderBy: 'created_at', ascending: false,
+      });
 
-      if (error) throw error;
-      setPrivateEnquiries(data || []);
+      if (!ok) {
+        if (status === 401) { clearSession(); setIsAuthenticated(false); }
+        return;
+      }
+      setPrivateEnquiries(data.data || []);
     } catch (error) {
       console.error('Error fetching private enquiries:', error);
     } finally {
@@ -309,11 +311,10 @@ export default function Admin() {
 
   const fetchYogamiInterest = async () => {
     try {
-      const { data, error } = await supabase
-        .from('yogami_interest')
-        .select('*')
-        .order('created_at', { ascending: false });
-      if (!error) setYogamiInterest(data || []);
+      const { ok, data } = await adminFetch('admin-data', {
+        action: 'select', table: 'yogami_interest', orderBy: 'created_at', ascending: false,
+      });
+      if (ok) setYogamiInterest(data.data || []);
     } catch { /* table may not exist yet */ }
   };
 
@@ -337,13 +338,12 @@ export default function Admin() {
   const fetchGuides = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase
-        .from('guides')
-        .select('*')
-        .order('created_at', { ascending: true });
+      const { ok, data } = await adminFetch('admin-data', {
+        action: 'select', table: 'guides', orderBy: 'created_at', ascending: true,
+      });
 
-      if (error) throw error;
-      setGuides(data || []);
+      if (!ok) return;
+      setGuides(data.data || []);
 
       // Fetch view counts for each guide
       if (data && data.length > 0) {
@@ -362,14 +362,16 @@ export default function Admin() {
     try {
       const viewCounts = {};
 
-      for (const guide of guidesData) {
-        const { count, error } = await supabase
-          .from('guide_views')
-          .select('*', { count: 'exact', head: true })
-          .eq('guide_slug', guide.slug);
+      // One fetch for all rows, then count per slug locally: the anon client
+      // can no longer read this table, and per-guide requests would be N calls.
+      const { ok, data } = await adminFetch('admin-data', {
+        action: 'select', table: 'guide_views', columns: 'guide_slug',
+      });
 
-        if (!error) {
-          viewCounts[guide.slug] = count || 0;
+      if (ok) {
+        for (const guide of guidesData) {
+          viewCounts[guide.slug] =
+            (data.data || []).filter((v) => v.guide_slug === guide.slug).length;
         }
       }
 
@@ -625,12 +627,11 @@ export default function Admin() {
   const handleDeleteEnquiry = async (id) => {
     showConfirm('Are you sure you want to delete this enquiry?', async () => {
       try {
-        const { error } = await supabase
-          .from('private_enquiries')
-          .delete()
-          .eq('id', id);
+        const { ok } = await adminFetch('admin-data', {
+          action: 'delete', table: 'private_enquiries', id,
+        });
 
-        if (error) throw error;
+        if (!ok) throw new Error('Failed to delete enquiry');
         fetchPrivateEnquiries();
         showToast('Enquiry deleted successfully!');
       } catch (error) {
@@ -642,12 +643,12 @@ export default function Admin() {
 
   const handleToggleFollowedUp = async (enquiry) => {
     try {
-      const { error } = await supabase
-        .from('private_enquiries')
-        .update({ followed_up: !enquiry.followed_up })
-        .eq('id', enquiry.id);
+      const { ok } = await adminFetch('admin-data', {
+        action: 'update', table: 'private_enquiries',
+        id: enquiry.id, values: { followed_up: !enquiry.followed_up },
+      });
 
-      if (error) throw error;
+      if (!ok) throw new Error('Failed to update enquiry');
       fetchPrivateEnquiries();
     } catch (error) {
       console.error('Error updating enquiry:', error);
