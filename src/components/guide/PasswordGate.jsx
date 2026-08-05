@@ -1,48 +1,47 @@
-import { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase';
+import { useState } from 'react';
 
 const accent = 'oklch(56% 0.1 38)';
+
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 export default function PasswordGate({
   onSuccess,
   guideSlug = 'handstandguide',
   titleTop = 'Handstand Fundamentals',
   titleEm = 'Guide',
-  fallbackPassword = import.meta.env.VITE_GUIDE_PASSWORD || 'handstand2026',
 }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
-  const [correctPassword, setCorrectPassword] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [checking, setChecking] = useState(false);
 
-  useEffect(() => {
-    fetchGuidePassword();
-  }, []);
-
-  const fetchGuidePassword = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('guides')
-        .select('password')
-        .eq('slug', guideSlug)
-        .single();
-
-      if (error) throw error;
-
-      setCorrectPassword(data.password);
-    } catch (error) {
-      console.error('Error fetching guide password:', error);
-      // Fallback to default password if database fetch fails
-      setCorrectPassword(fallbackPassword);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSubmit = (e) => {
+  // The password is verified by an Edge Function rather than fetched and
+  // compared here, so it is never exposed to the browser.
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (checking) return;
 
-    if (password === correctPassword) {
+    setChecking(true);
+    let valid = false;
+
+    try {
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/check-guide-password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'apikey': SUPABASE_ANON_KEY,
+        },
+        body: JSON.stringify({ slug: guideSlug, password }),
+      });
+      valid = res.ok && (await res.json()).valid === true;
+    } catch (err) {
+      console.error('Error verifying guide password:', err);
+    }
+
+    setChecking(false);
+
+    if (valid) {
       sessionStorage.setItem('guide_access', 'granted');
       onSuccess();
     } else {
@@ -51,24 +50,6 @@ export default function PasswordGate({
       setTimeout(() => setError(false), 3000);
     }
   };
-
-  if (loading) {
-    return (
-      <div
-        style={{
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          background: 'oklch(93% 0.025 78)',
-        }}
-      >
-        <p style={{ color: 'oklch(45% 0.012 65)', fontFamily: 'DM Sans, sans-serif' }}>
-          Loading...
-        </p>
-      </div>
-    );
-  }
 
   return (
     <div
@@ -173,6 +154,7 @@ export default function PasswordGate({
 
           <button
             type="submit"
+            disabled={checking}
             style={{
               width: '100%',
               padding: '14px 20px',
@@ -183,18 +165,19 @@ export default function PasswordGate({
               fontFamily: 'DM Sans, sans-serif',
               fontSize: 14,
               fontWeight: 500,
-              cursor: 'pointer',
+              cursor: checking ? 'default' : 'pointer',
               letterSpacing: '0.02em',
               transition: 'all 0.2s',
+              opacity: checking ? 0.6 : 1,
             }}
             onMouseEnter={(e) => {
-              e.target.style.background = 'oklch(50% 0.1 38)';
+              if (!checking) e.target.style.background = 'oklch(50% 0.1 38)';
             }}
             onMouseLeave={(e) => {
-              e.target.style.background = accent;
+              if (!checking) e.target.style.background = accent;
             }}
           >
-            Access Guide
+            {checking ? 'Checking...' : 'Access Guide'}
           </button>
         </form>
 
