@@ -171,7 +171,6 @@ export default function PinchaGuide() {
         guideSlug="pinchaguide"
         titleTop="Forearm Stand Fundamentals"
         titleEm="Guide"
-        fallbackPassword={import.meta.env.VITE_GUIDE_PASSWORD || 'pincha2026'}
       />
     );
   }

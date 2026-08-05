@@ -1435,20 +1435,20 @@ CREATE TABLE IF NOT EXISTS guides (
 -- Enable Row Level Security
 ALTER TABLE guides ENABLE ROW LEVEL SECURITY;
 
--- Create policy to allow public read access (so password gate can fetch the password)
-CREATE POLICY "Allow public read access" ON guides FOR SELECT USING (true);
-
--- Create policy to allow authenticated updates (you can customize this based on your auth setup)
-CREATE POLICY "Allow authenticated updates" ON guides FOR UPDATE USING (true);
+-- Reads are authenticated-only: this table holds guide passwords, and the
+-- anon key is public. The password gate calls the check-guide-password
+-- Edge Function instead of reading the password directly.
+CREATE POLICY "Authenticated can read guides" ON guides FOR SELECT TO authenticated USING (true);
+CREATE POLICY "Authenticated can update guides" ON guides FOR UPDATE TO authenticated USING (true);
 
 -- Insert the handstand guide (if it doesn't exist)
 INSERT INTO guides (title, slug, password, description)
-VALUES ('Handstand Fundamentals Guide', 'handstandguide', 'handstand2026', 'A structured approach to building your handstand practice')
+VALUES ('Handstand Fundamentals Guide', 'handstandguide', '<choose-a-password>', 'A structured approach to building your handstand practice')
 ON CONFLICT (slug) DO NOTHING;
 
 -- Insert the pincha mayurasana guide (if it doesn't exist)
 INSERT INTO guides (title, slug, password, description)
-VALUES ('Forearm Stand Fundamentals Guide', 'pinchaguide', 'pincha2026', 'A structured approach to building your Pincha Mayurasana (forearm stand) practice')
+VALUES ('Forearm Stand Fundamentals Guide', 'pinchaguide', '<choose-a-password>', 'A structured approach to building your Pincha Mayurasana (forearm stand) practice')
 ON CONFLICT (slug) DO NOTHING;
 
 -- Create the guide_views table to track views
