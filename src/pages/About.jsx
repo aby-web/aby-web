@@ -9,7 +9,7 @@ export default function About() {
     <div className="min-h-screen">
       <Helmet>
         <title>About Ammar Bass | London Yoga Teacher | Strength & Alignment Focus</title>
-        <meta name="description" content="Vipassana meditation practitioner with competitive swimming and powerlifting background. Teaching alignment-focused vinyasa at BXR and Flo Yoga in London. Specializing in arm balances, inversions, and biomechanics." />
+        <meta name="description" content="Vipassana meditation practitioner with competitive swimming and powerlifting background. Teaching alignment-focused vinyasa at HOME Wellness, Indaba, BXR, Yogarise and Flo Yoga in London. Specializing in arm balances, inversions, and biomechanics." />
         <meta name="keywords" content="Ammar Bass, yoga teacher background, Vipassana meditation, powerlifting yoga, biomechanics yoga, London yoga instructor, arm balance specialist, inversion training" />
 
         {/* Open Graph */}
@@ -44,6 +44,33 @@ export default function About() {
                 "addressLocality": "London",
                 "addressCountry": "GB"
               },
+              "worksFor": [
+                {
+                  "@type": "Organization",
+                  "name": "HOME Wellness",
+                  "url": "http://homewellness.uk/"
+                },
+                {
+                  "@type": "Organization",
+                  "name": "Indaba Yoga",
+                  "url": "https://indabayoga.com/"
+                },
+                {
+                  "@type": "Organization",
+                  "name": "BXR London",
+                  "url": "https://www.bxrlondon.com/"
+                },
+                {
+                  "@type": "Organization",
+                  "name": "Yogarise",
+                  "url": "https://yogarise.london/"
+                },
+                {
+                  "@type": "Organization",
+                  "name": "Flo Yoga",
+                  "url": "https://www.floyogastudio.co.uk/"
+                }
+              ],
               "hasCredential": [
                 {
                   "@type": "EducationalOccupationalCredential",

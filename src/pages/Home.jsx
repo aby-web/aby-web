@@ -15,8 +15,8 @@ export default function Home() {
     <div className="min-h-screen">
       <Helmet>
         <title>Ammar Bass | Yoga Teacher London | Strength-Based Vinyasa Classes</title>
-        <meta name="description" content="London-based yoga teacher specializing in alignment, arm balances and inversions. Strong, structured practice for people who take their training seriously. Classes at BXR and Flo Yoga." />
-        <meta name="keywords" content="yoga teacher London, vinyasa yoga London, strength yoga, arm balances, inversions, private yoga sessions London, yoga BXR, Flo Yoga" />
+        <meta name="description" content="London-based yoga teacher specializing in alignment, arm balances and inversions. Strong, structured practice for people who take their training seriously. Classes at HOME Wellness, Indaba, BXR, Yogarise and Flo Yoga." />
+        <meta name="keywords" content="yoga teacher London, vinyasa yoga London, strength yoga, arm balances, inversions, private yoga sessions London, yoga HOME Wellness Primrose Hill, Indaba Marylebone, yoga BXR, Yogarise Queens Park, Flo Yoga Hampstead" />
 
         {/* Open Graph */}
         <meta property="og:title" content="Ammar Bass | Yoga Teacher London" />
@@ -64,11 +64,28 @@ export default function Home() {
             "worksFor": [
               {
                 "@type": "Organization",
-                "name": "BXR London"
+                "name": "HOME Wellness",
+                "url": "http://homewellness.uk/"
               },
               {
                 "@type": "Organization",
-                "name": "Flo Yoga"
+                "name": "Indaba Yoga",
+                "url": "https://indabayoga.com/"
+              },
+              {
+                "@type": "Organization",
+                "name": "BXR London",
+                "url": "https://www.bxrlondon.com/"
+              },
+              {
+                "@type": "Organization",
+                "name": "Yogarise",
+                "url": "https://yogarise.london/"
+              },
+              {
+                "@type": "Organization",
+                "name": "Flo Yoga",
+                "url": "https://www.floyogastudio.co.uk/"
               }
             ],
             "sameAs": [
@@ -98,10 +115,13 @@ export default function Home() {
             },
             "priceRange": "££",
             "image": "https://ammarbass.com/images/about.webp",
-            "areaServed": {
-              "@type": "City",
-              "name": "London"
-            },
+            "areaServed": [
+              { "@type": "City", "name": "London" },
+              { "@type": "Place", "name": "Primrose Hill, London" },
+              { "@type": "Place", "name": "Marylebone, London" },
+              { "@type": "Place", "name": "Queens Park, London" },
+              { "@type": "Place", "name": "Hampstead, London" }
+            ],
             "hasOfferCatalog": {
               "@type": "OfferCatalog",
               "name": "Yoga Services",
@@ -111,7 +131,7 @@ export default function Home() {
                   "itemOffered": {
                     "@type": "Service",
                     "name": "Group Vinyasa Classes",
-                    "description": "Strength-based vinyasa yoga classes at BXR London and Flo Yoga"
+                    "description": "Strength-based vinyasa yoga classes at HOME Wellness (Primrose Hill), Indaba (Marylebone), BXR (Marylebone), Yogarise (Queens Park) and Flo Yoga (Hampstead)"
                   }
                 },
                 {

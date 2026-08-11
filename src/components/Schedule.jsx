@@ -1,7 +1,7 @@
 export default function Schedule() {
   const scheduleData = [
     {
-      location: 'HOME',
+      location: 'HOME Wellness',
       area: 'Primrose Hill',
       classes: [
         { day: 'Wednesday', time: '18:00', name: 'Vinyasa', url: 'http://homewellness.uk/' },
