@@ -131,10 +131,14 @@ export default function Events() {
           "@type": "Person",
           "name": "Ammar Bass"
         },
+        "endDate": event.date,
         "offers": event.booking_link ? {
           "@type": "Offer",
           "url": event.booking_link,
-          "availability": "https://schema.org/InStock"
+          "availability": "https://schema.org/InStock",
+          "validFrom": event.created_at
+            ? event.created_at.split('T')[0]
+            : undefined
         } : undefined,
         "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
         "eventStatus": "https://schema.org/EventScheduled"
