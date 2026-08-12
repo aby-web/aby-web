@@ -39,8 +39,8 @@ const IMG = {
   food1: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=1200&q=80',
   // Berries, nuts and granola — Dan Counsell
   food2: 'https://images.unsplash.com/photo-1504708706948-13d6cbba4062?w=1200&q=80',
-  // Middle Eastern spread across a table — Zion C
-  food3: 'https://images.unsplash.com/photo-1785734290864-eca98549d0b6?w=1200&q=80',
+  // Mezze platter — hummus, tabbouleh, pita — Zoshua Colah
+  food3: 'https://images.unsplash.com/photo-1743674453093-592bed88018e?w=1200&q=80',
   // Carrots and leeks at a market in Nice — Peter Wendt
   produce: 'https://images.unsplash.com/photo-1471193945509-9ad0617afabf?w=1600&q=80',
   // Patio table with a valley view — Flo P
@@ -441,7 +441,7 @@ export default function ChefIna() {
             {[
               [IMG.food1, 'A colourful vegetable bowl'],
               [IMG.food2, 'A breakfast spread in natural light'],
-              [IMG.food3, 'Shared plates on a table'],
+              [IMG.food3, 'A mezze platter of hummus, tabbouleh and warm flatbread'],
             ].map(([src, alt]) => (
               <img
                 key={src}
