@@ -216,12 +216,20 @@ export default function ChefIna() {
     setSubmitted(true);
   };
 
+  // text-base (16px) on mobile prevents iOS Safari from auto-zooming on focus.
   const field =
-    'w-full px-4 py-3 bg-white text-[#22312a] border border-[#cbd6cf] rounded-sm outline-none focus:border-[#334d3f] transition-colors placeholder-[#96a89e] text-[15px]';
+    'w-full px-4 py-3 bg-white text-[#22312a] border border-[#cbd6cf] rounded-sm outline-none focus:border-[#334d3f] transition-colors placeholder-[#96a89e] text-base sm:text-[15px]';
   const label = 'block text-[12px] uppercase tracking-[0.14em] text-[#6f8b7b] mb-2';
 
   return (
-    <div className="min-h-screen bg-[#faf7f2]" style={{ fontFamily: "'Open Sans', sans-serif" }}>
+    <div
+      className="min-h-screen bg-[#faf7f2] overflow-x-hidden"
+      style={{
+        fontFamily: "'Open Sans', sans-serif",
+        // Keep the footer clear of the fixed draft banner.
+        paddingBottom: showDraftBanner ? '5.5rem' : 0,
+      }}
+    >
       <Helmet>
         <title>Chef Ina | Retreat Catering for Yoga & Wellness Retreats — UK & Europe</title>
         <meta
@@ -237,11 +245,17 @@ export default function ChefIna() {
 
       {/* ── DRAFT BANNER ───────────────────────────────────────────────── */}
       {showDraftBanner && (
-        <div className="fixed bottom-0 left-0 right-0 z-[60] bg-[#c1734a] text-white px-5 py-3 flex items-start sm:items-center justify-between gap-4 shadow-lg">
-          <p className="text-[13px] leading-relaxed">
-            <strong className="font-semibold">Draft concept.</strong> Credentials,
-            numbers and testimonials on this page are placeholders and not yet
-            true. The enquiry form does not send anywhere.
+        <div className="fixed bottom-0 left-0 right-0 z-[60] bg-[#c1734a] text-white px-4 sm:px-5 py-2.5 sm:py-3 flex items-center justify-between gap-3 shadow-lg">
+          {/* Short on phones, full sentence from sm up. */}
+          <p className="text-[12px] sm:text-[13px] leading-snug sm:leading-relaxed">
+            <strong className="font-semibold">Draft concept.</strong>{' '}
+            <span className="sm:hidden">
+              Details are placeholders. Form does not send.
+            </span>
+            <span className="hidden sm:inline">
+              Credentials, numbers and testimonials on this page are placeholders
+              and not yet true. The enquiry form does not send anywhere.
+            </span>
           </p>
           <button
             onClick={() => setShowDraftBanner(false)}
@@ -293,7 +307,10 @@ export default function ChefIna() {
       </nav>
 
       {/* ── HERO ───────────────────────────────────────────────────────── */}
-      <section id="top" className="relative h-[92vh] min-h-[600px] flex items-center">
+      <section
+        id="top"
+        className="relative min-h-[640px] h-[92vh] max-h-[900px] flex items-center pt-24 pb-12"
+      >
         <img
           src={IMG.hero}
           alt="A long table set for a shared meal outdoors"
@@ -306,10 +323,10 @@ export default function ChefIna() {
               Retreat catering · UK &amp; Europe
             </p>
             <h1
-              className="text-[42px] md:text-[64px] leading-[1.05] text-white mb-7"
+              className="text-[34px] sm:text-[42px] md:text-[64px] leading-[1.08] md:leading-[1.05] text-white mb-6 md:mb-7"
               style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 400 }}
             >
-              Do you need a chef for your&nbsp;retreat?
+              Do you need a chef for your retreat?
             </h1>
             <p className="text-lg md:text-xl text-white/85 leading-relaxed mb-10 font-light">
               I cook for yoga and wellness retreats across the UK and Europe — three
@@ -341,12 +358,14 @@ export default function ChefIna() {
           {CREDS.map((c) => (
             <div key={c.label}>
               <p
-                className="text-[32px] md:text-[38px] text-[#bec5fa] leading-none mb-2"
+                className="text-[26px] sm:text-[32px] md:text-[38px] text-[#bec5fa] leading-none mb-2 break-words"
                 style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
               >
                 {c.figure}
               </p>
-              <p className="text-[13px] text-white/70 leading-snug">{c.label}</p>
+              <p className="text-[12px] sm:text-[13px] text-white/70 leading-snug">
+                {c.label}
+              </p>
             </div>
           ))}
         </div>
@@ -389,7 +408,7 @@ export default function ChefIna() {
             <img
               src={IMG.chef}
               alt="A chef preparing food in a kitchen filled with natural light"
-              className="w-full h-[420px] md:h-[560px] object-cover rounded-sm"
+              className="w-full h-[300px] sm:h-[420px] md:h-[560px] object-cover rounded-sm"
             />
             <p className="mt-3 text-[11px] text-[#96a89e] italic">
               Placeholder image — replace with a photo of Ina
@@ -428,7 +447,7 @@ export default function ChefIna() {
                 key={src}
                 src={src}
                 alt={alt}
-                className="w-full h-[260px] md:h-[320px] object-cover rounded-sm"
+                className="w-full h-[200px] sm:h-[260px] md:h-[320px] object-cover rounded-sm"
               />
             ))}
           </div>
@@ -528,7 +547,7 @@ export default function ChefIna() {
             Dietary requirements
           </p>
           <h2
-            className="text-[32px] md:text-[42px] leading-[1.15] text-white mb-6"
+            className="text-[28px] sm:text-[32px] md:text-[42px] leading-[1.15] text-white mb-6"
             style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 400 }}
           >
             Send me the list. All of it.
