@@ -22,7 +22,68 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIST = join(__dirname, '..', 'dist');
 const SITE = 'https://ammarbass.com';
 
+// Default share image for the main site — a 1200x630 crop of the hero.
+const OG_HOME = `${SITE}/images/og-home.jpg`;
+const OG_HOME_ALT = 'Ammar Bass seated in meditation at the Barbican, London';
+
 const ROUTES = [
+  {
+    // The homepage. `path: ''` writes dist/index.html itself.
+    path: '',
+    title: 'Ammar Bass | Yoga Teacher London | Vinyasa, Handstands & Arm Balances',
+    description:
+      'London yoga teacher specialising in strong vinyasa, handstands and arm balances. Classes at HOME Wellness, Indaba, BXR, Yogarise and Flo. Workshops and retreats.',
+    image: OG_HOME,
+    imageAlt: OG_HOME_ALT,
+  },
+  {
+    path: 'about',
+    title: 'About Ammar Bass | London Yoga Teacher | Strength & Alignment Focus',
+    description:
+      'Vipassana meditation practitioner with a competitive swimming and powerlifting background. Teaching alignment-focused vinyasa across London, specialising in arm balances, inversions and biomechanics.',
+    image: OG_HOME,
+    imageAlt: OG_HOME_ALT,
+  },
+  {
+    path: 'private-sessions',
+    title: 'Private Yoga Sessions in West Hampstead | Ammar Bass',
+    description:
+      'One-to-one yoga in West Hampstead, London. Build strong foundations or work toward handstands and arm balances — sessions designed around you. Free 15-min discovery call.',
+    image: `${SITE}/images/og-private.jpg`,
+    imageAlt: 'Ammar Bass, yoga teacher in West Hampstead, London',
+  },
+  {
+    path: 'events',
+    title: 'Yoga Workshops & Retreats London | Ammar Bass Events',
+    description:
+      'Yoga workshops, arm balance intensives and retreats in London. Deepen your practice with events focused on alignment, inversions and strength.',
+    image: OG_HOME,
+    imageAlt: OG_HOME_ALT,
+  },
+  {
+    path: 'practice',
+    title: 'Free Practice Videos | Ammar Bass Yoga',
+    description:
+      'Free full-length yoga classes with Ammar Bass. Practice strength-based vinyasa flows, arm balances and mindful movement from home.',
+    image: OG_HOME,
+    imageAlt: OG_HOME_ALT,
+  },
+  {
+    path: 'faq',
+    title: 'FAQ | Ammar Bass Yoga | Common Questions Answered',
+    description:
+      'Questions about classes, private sessions, workshops and practice philosophy — everything worth knowing before training with Ammar Bass in London.',
+    image: OG_HOME,
+    imageAlt: OG_HOME_ALT,
+  },
+  {
+    path: 'bootcamp',
+    title: 'Yoga Intensive Bootcamp — Bulgaria 2026 | Ammar Bass',
+    description:
+      '5-day yoga intensive in Varna, Bulgaria. 4–9 September 2026. Forest setting, minutes from the beach. Progressive flow, workshops and immersive practice.',
+    image: `${SITE}/images/og-bootcamp.jpg`,
+    imageAlt: 'Forest cabins at the retreat venue near Varna, Bulgaria',
+  },
   {
     path: 'chefina',
     title: 'Chef Ina | Retreat Catering for Yoga & Wellness Retreats',
@@ -48,7 +109,8 @@ const template = readFileSync(join(DIST, 'index.html'), 'utf8');
 let written = 0;
 
 for (const r of ROUTES) {
-  const url = `${SITE}/${r.path}`;
+  const isHome = r.path === '';
+  const url = isHome ? `${SITE}/` : `${SITE}/${r.path}`;
 
   const tags = [
     `<title>${esc(r.title)}</title>`,
@@ -81,12 +143,20 @@ for (const r of ROUTES) {
 
   html = html.replace(/<\/head>/i, `    ${tags}\n  </head>`);
 
-  const outDir = join(DIST, r.path);
-  mkdirSync(outDir, { recursive: true });
-  writeFileSync(join(outDir, 'index.html'), html, 'utf8');
+  // The homepage overwrites dist/index.html; every other route gets its own
+  // directory so Vercel can serve it as a static file.
+  let outFile;
+  if (isHome) {
+    outFile = join(DIST, 'index.html');
+  } else {
+    const outDir = join(DIST, r.path);
+    mkdirSync(outDir, { recursive: true });
+    outFile = join(outDir, 'index.html');
+  }
+  writeFileSync(outFile, html, 'utf8');
 
   written += 1;
-  console.log(`  prerendered meta → /${r.path}/index.html`);
+  console.log(`  prerendered meta → /${r.path || ''}${isHome ? 'index.html' : '/index.html'}`);
 }
 
 console.log(`✓ meta pre-render complete (${written} route${written === 1 ? '' : 's'})`);

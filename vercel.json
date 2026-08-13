@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/((?!chefina$|chefina/|assets/|images/).*)",
+      "source": "/((?!about$|about/|private-sessions$|private-sessions/|events$|events/|practice$|practice/|faq$|faq/|bootcamp$|bootcamp/|chefina$|chefina/|assets/|images/).*)",
       "destination": "/index.html"
     }
   ]
