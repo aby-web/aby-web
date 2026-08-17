@@ -31,11 +31,18 @@ export default function EventsStrip() {
     return date.toLocaleDateString('en-GB', options);
   };
 
+  // The strip renders a 3-column grid. With only one event on, a single card sat
+  // in a third of the width with two empty columns beside it, which read as a
+  // quiet business rather than a busy one. So: show every upcoming event, then
+  // top the row up to TARGET_CARDS with the most recent past events. Once there
+  // are 3 or more upcoming, no past events appear at all and this is a no-op.
+  const TARGET_CARDS = 3;
+
   const fetchEvents = async () => {
     try {
       const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
 
-      const { data, error } = await supabase
+      const { data: upcoming, error } = await supabase
         .from('events')
         .select('*')
         .gte('date', today) // Greater than or equal to today
@@ -43,7 +50,28 @@ export default function EventsStrip() {
 
       if (error) throw error;
 
-      setEvents(data || []);
+      const list = (upcoming || []).map((e) => ({ ...e, isPast: false }));
+
+      // Only query for past events if there is actually a gap to fill.
+      const gap = TARGET_CARDS - list.length;
+      if (gap > 0) {
+        const { data: past, error: pastError } = await supabase
+          .from('events')
+          .select('*')
+          .lt('date', today)
+          .order('date', { ascending: false })
+          .limit(gap);
+
+        // A failure here is not fatal: the upcoming events are the point, so log
+        // it and render what we have rather than blanking the whole section.
+        if (pastError) {
+          console.error('Error fetching past events:', pastError);
+        } else {
+          list.push(...(past || []).map((e) => ({ ...e, isPast: true })));
+        }
+      }
+
+      setEvents(list);
     } catch (error) {
       console.error('Error fetching events:', error);
     } finally {
@@ -56,8 +84,9 @@ export default function EventsStrip() {
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-12">
+          {/* Don't say "Upcoming" over a row that is partly past events. */}
           <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-4">
-            Upcoming
+            {events.some((e) => e.isPast) ? 'Recent & upcoming' : 'Upcoming'}
           </p>
           <h2 className="text-4xl md:text-5xl font-light text-[#1C1410]">
             Workshops & retreats
@@ -69,8 +98,10 @@ export default function EventsStrip() {
             Loading events...
           </div>
         ) : events.length === 0 ? (
+          /* Reached only when there are no events at all, past or upcoming,
+             since past events are used to top up the row. */
           <div className="text-center py-12 text-[#6B5740]">
-            No upcoming events at the moment. Check back soon!
+            Nothing on the calendar just now. Check back soon!
           </div>
         ) : (
           <>
@@ -98,7 +129,13 @@ export default function EventsStrip() {
 
                   {/* Content */}
                   <div className="p-6">
+                    {/* Past events keep full-strength imagery deliberately:
+                        desaturating them reads as cancelled or broken rather
+                        than finished. The label does the work instead. */}
                     <p className="text-xs uppercase tracking-wide text-[#785E3D] mb-2">
+                      {event.isPast && (
+                        <span className="text-[#A08155]">Past &middot; </span>
+                      )}
                       {formatDate(event.date)}
                     </p>
                     <h3 className="text-xl font-light text-[#1C1410] mb-2">
@@ -108,7 +145,7 @@ export default function EventsStrip() {
                       {event.location}
                     </p>
                     <p className="text-xs text-[#785E3D]">
-                      Click for details →
+                      {event.isPast ? 'Look back →' : 'Click for details →'}
                     </p>
                   </div>
                 </div>
@@ -169,15 +206,26 @@ export default function EventsStrip() {
                     {selectedEvent.description}
                   </p>
                 )}
-                {selectedEvent.booking_link && (
-                  <a
-                    href={selectedEvent.booking_link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block px-8 py-4 rounded-full bg-[#1C1410] text-[#F4EFE6] hover:bg-[#2A1E16] transition-colors text-sm uppercase tracking-wide"
-                  >
-                    {selectedEvent.button_label || 'Secure Your Spot'}
-                  </a>
+                {/* No booking CTA on a past event: the link is stale and inviting
+                    someone to "secure a spot" at something finished is a dead end. */}
+                {selectedEvent.isPast ? (
+                  <p className="text-[13px] text-[#785E3D]">
+                    This one has already run.{' '}
+                    <a href="/events" className="border-b border-[#785E3D] hover:text-[#1C1410]">
+                      See what else is on
+                    </a>
+                  </p>
+                ) : (
+                  selectedEvent.booking_link && (
+                    <a
+                      href={selectedEvent.booking_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block px-8 py-4 rounded-full bg-[#1C1410] text-[#F4EFE6] hover:bg-[#2A1E16] transition-colors text-sm uppercase tracking-wide"
+                    >
+                      {selectedEvent.button_label || 'Secure Your Spot'}
+                    </a>
+                  )
                 )}
               </div>
             </div>
