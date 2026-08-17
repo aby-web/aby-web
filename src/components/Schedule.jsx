@@ -15,7 +15,7 @@ export default function Schedule() {
       classes: [
         { day: 'Tuesday', time: '07:30', name: 'Morning Vinyasa', url: 'https://indabayoga.com/timetable' },
         { day: 'Thursday', time: '18:00', name: 'Vinyasa & Meditation (75)', url: 'https://indabayoga.com/timetable' },
-        { day: 'Saturday', time: '11:30', name: 'Power (75)', url: 'https://indabayoga.com/timetable' },
+        { day: 'Saturday', time: '11:30', name: 'Vinyasa (75)', url: 'https://indabayoga.com/timetable' },
       ],
     },
     {
