@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 
 /*
  * ─────────────────────────────────────────────────────────────────────────────
- * DRAFT / CONCEPT PAGE — Coaching (corporate-billed one-to-one work)
+ * PUBLISHED PAGE — Coaching (corporate-billed one-to-one work)
  * ─────────────────────────────────────────────────────────────────────────────
  * Positions Ammar's existing private work for a buyer who expenses it through
  * a company. This is a REFRAME of what he already does, not a new product.
@@ -26,10 +26,14 @@ import Footer from '../components/Footer';
  * either — his own read is that as executive CVs go it is unremarkable, and
  * itemising it invites a comparison he loses.
  *
- * The client testimonial is a FICTIONAL PLACEHOLDER (Elena Marchetti) with a
- * stock portrait, marked as such in the visible UI. The real candidate is a
- * private client who asked to be invoiced through her company; she has NOT
- * been asked for consent. See DRAFT_NOTES at the foot of this file.
+ * PUBLISHED 17 Aug 2026 as a deliberately thin first version, so the URL starts
+ * accruing search history while the page is developed. Two fictional client
+ * testimonials were REMOVED before publishing: invented endorsements on an
+ * indexed page are not defensible whatever banner sits beside them. Do not add
+ * client quotes back without that person's consent.
+ *
+ * The enquiry form was also removed in favour of the Calendly popup and a mailto
+ * link, because a live form that silently discards enquiries loses business.
  *
  * Deliberately NOT linked from /private-sessions, and vice versa. That page
  * publishes a £70–80 rate card aimed at individuals; one click between the two
@@ -51,10 +55,9 @@ import Footer from '../components/Footer';
 const IMG = {
   // B&W, downward dog, visible muscular effort, empty studio — Karl Solano
   hero: 'https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=2000&q=80',
-  // Woman in blazer by an office window — Christina @ wocintechchat
-  clientElena: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80',
-  // Studio headshot, white tee, plain background — Sarah Cervantes
-  clientSecond: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=800&q=80',
+  // NOTE: two portrait URLs were removed here along with the fictional
+  // testimonial section. Do not reinstate invented client quotes on a page that
+  // is publicly indexed; a real consented quote is the only replacement.
   // B&W, folded forward, face down, hands spread — complete inward attention.
   // Replaced a team-around-a-table stock photo, which illustrated the client's
   // DAY JOB rather than the work, and implied sessions happen in offices. This
@@ -111,58 +114,67 @@ const FORMAT = [
 ];
 
 export default function Coaching() {
-  const [showDraftBanner, setShowDraftBanner] = useState(true);
-  const [form, setForm] = useState({ name: '', email: '', company: '', message: '' });
-  const [submitted, setSubmitted] = useState(false);
+  // Calendly popup, same pattern as /private-sessions.
+  useEffect(() => {
+    const link = document.createElement('link');
+    link.href = 'https://assets.calendly.com/assets/external/widget.css';
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
 
-  // NON-FUNCTIONAL: draft only. Validates and shows a success state, sends nothing.
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
-  };
+    const script = document.createElement('script');
+    script.src = 'https://assets.calendly.com/assets/external/widget.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      document.head.removeChild(link);
+      document.body.removeChild(script);
+    };
+  }, []);
 
   return (
-    <div
-      className="min-h-screen bg-[#F4EFE6] overflow-x-hidden"
-      style={{ paddingBottom: showDraftBanner ? '5.5rem' : 0 }}
-    >
+    <div className="min-h-screen bg-[#F4EFE6] overflow-x-hidden">
       <Helmet>
-        <title>Coaching | Ammar Bass</title>
+        <title>Coaching for Founders & Senior Operators | London | Ammar Bass</title>
         <meta
           name="description"
-          content="One-to-one coaching for founders and senior operators, taught through physical practice, by someone who spent years in finance first. Programmes of 7–10 sessions in London."
+          content="One-to-one coaching in London for founders and senior operators, taught through physical practice, by someone who spent years in finance first. Programmes of 7–10 sessions."
         />
-        <meta name="robots" content="noindex, nofollow" />
+        <meta
+          name="keywords"
+          content="executive coaching London, coaching for founders, performance coaching London, embodied leadership, somatic coaching London"
+        />
+        <meta property="og:title" content="Coaching for Founders & Senior Operators | Ammar Bass" />
+        <meta
+          property="og:description"
+          content="One-to-one coaching in London, taught through physical practice. Years in finance, then years in meditation and a demanding physical practice. I work at the join between the two."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://ammarbass.com/coaching" />
+        <meta property="og:image" content="https://ammarbass.com/images/og-private.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <link rel="canonical" href="https://ammarbass.com/coaching" />
         <link rel="preconnect" href="https://images.unsplash.com" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Service',
+            serviceType: 'One-to-one coaching through physical practice',
+            provider: {
+              '@type': 'Person',
+              name: 'Ammar Bass',
+              url: 'https://ammarbass.com',
+            },
+            areaServed: { '@type': 'Place', name: 'London' },
+            description:
+              'One-to-one coaching for founders and senior operators, delivered through physical practice. Programmes of 7 to 10 sessions.',
+          })}
+        </script>
       </Helmet>
 
       {/* dark, not light: the hero is a dark photograph, and theme="light"
           renders near-black nav links that vanish against it until scroll. */}
       <Nav theme="dark" />
-
-      {/* ── DRAFT BANNER ───────────────────────────────────────────────── */}
-      {showDraftBanner && (
-        <div className="fixed bottom-0 left-0 right-0 z-[60] bg-[#B35C2E] text-white px-4 sm:px-5 py-2.5 sm:py-3 flex items-center justify-between gap-3 shadow-lg">
-          <p className="text-[12px] sm:text-[13px] leading-snug sm:leading-relaxed">
-            <strong className="font-semibold">Draft concept.</strong>{' '}
-            <span className="sm:hidden">
-              Client stories are invented placeholders. Form does not send.
-            </span>
-            <span className="hidden sm:inline">
-              Not published or linked from anywhere on the site. Both client stories are
-              invented placeholders with stock portraits, not real clients. The enquiry
-              form does not send anywhere.
-            </span>
-          </p>
-          <button
-            onClick={() => setShowDraftBanner(false)}
-            className="text-white/80 hover:text-white text-xl leading-none shrink-0"
-            aria-label="Dismiss draft notice"
-          >
-            ×
-          </button>
-        </div>
-      )}
 
       {/* ── HERO ───────────────────────────────────────────────────────── */}
       <section className="relative min-h-[92vh] flex items-center">
@@ -301,81 +313,6 @@ export default function Coaching() {
         </div>
       </section>
 
-      {/* ── CLIENT STORY — FICTIONAL PLACEHOLDER ───────────────────────── */}
-      <section className="bg-[#F4EFE6] px-8 md:px-12 py-24">
-        <div className="max-w-5xl mx-auto">
-          {/* Unmissable in the UI, not just in code — this must never be mistaken
-              for a real endorsement if the page is shown to anyone. */}
-          <div className="mb-10 border-2 border-dashed border-[#B35C2E] bg-[#B35C2E]/8 px-5 py-4 rounded-md">
-            <p className="text-[12px] leading-relaxed text-[#8A4620]">
-              <strong className="font-semibold uppercase tracking-wider">
-                Placeholder, invented
-              </strong>
-              <br />
-              Both people below are fictional and the portraits are stock photography. They
-              illustrate the shape of a real client story; nobody has said these words.
-              Replace with a consented client, or delete this section entirely.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-10 md:gap-14">
-            {/* Client one. flex-col + mt-auto on the caption keeps both cards'
-                attributions aligned at the foot despite unequal quote lengths. */}
-            <figure className="bg-[#EAE0CF] p-8 md:p-10 rounded-lg flex flex-col">
-              <blockquote className="text-[17px] md:text-lg font-light leading-relaxed text-[#1C1410] mb-8">
-                &ldquo;I came in wanting to fix my back and left doing something I
-                can&rsquo;t really explain to my board. I spent the first month furious,
-                because I run a company and I am not accustomed to being bad at things
-                for four consecutive weeks. That turned out to be the whole lesson, and it
-                followed me straight back into how I handle a product that isn&rsquo;t
-                landing.&rdquo;
-              </blockquote>
-              <figcaption className="flex items-center gap-4 mt-auto">
-                <img
-                  src={IMG.clientElena}
-                  alt=""
-                  className="w-14 h-14 rounded-full object-cover object-top grayscale"
-                />
-                <div>
-                  <p className="text-[15px] text-[#1C1410]">Elena Marchetti</p>
-                  <p className="text-[13px] text-[#785E3D]">
-                    Co-founder &amp; Creative Director
-                  </p>
-                  <p className="text-[11px] uppercase tracking-wider text-[#B35C2E] mt-1">
-                    Fictional placeholder
-                  </p>
-                </div>
-              </figcaption>
-            </figure>
-
-            {/* Client two */}
-            <figure className="bg-[#EAE0CF] p-8 md:p-10 rounded-lg flex flex-col">
-              <blockquote className="text-[17px] md:text-lg font-light leading-relaxed text-[#1C1410] mb-8">
-                &ldquo;My team noticed before I did. I stopped answering a question while
-                still reading the message. An hour a week where you physically cannot
-                multitask turns out to reset something.&rdquo;
-              </blockquote>
-              <figcaption className="flex items-center gap-4 mt-auto">
-                <img
-                  src={IMG.clientSecond}
-                  alt=""
-                  className="w-14 h-14 rounded-full object-cover object-top grayscale"
-                />
-                <div>
-                  <p className="text-[15px] text-[#1C1410]">Hannah Reeve</p>
-                  <p className="text-[13px] text-[#785E3D]">
-                    VP Engineering
-                  </p>
-                  <p className="text-[11px] uppercase tracking-wider text-[#B35C2E] mt-1">
-                    Fictional placeholder
-                  </p>
-                </div>
-              </figcaption>
-            </figure>
-          </div>
-        </div>
-      </section>
-
       {/* ── WHO IT IS FOR ──────────────────────────────────────────────── */}
       <section className="relative">
         <div className="grid md:grid-cols-2">
@@ -494,59 +431,32 @@ export default function Coaching() {
             </p>
           </div>
 
-          {submitted ? (
-            <div className="text-center py-12 border border-white/15 rounded-lg">
-              <p className="text-[#C9A87C] text-lg mb-2">Thanks, noted.</p>
-              <p className="text-white/40 text-[13px]">
-                (Draft page: this form does not send anywhere.)
-              </p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid sm:grid-cols-2 gap-4">
-                <input
-                  type="text"
-                  required
-                  placeholder="Your name"
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full px-4 py-3.5 bg-white/5 text-white border border-white/20 rounded-md outline-none focus:border-[#C9A87C] placeholder-white/40 text-[15px]"
-                />
-                <input
-                  type="text"
-                  placeholder="Company (optional)"
-                  value={form.company}
-                  onChange={(e) => setForm({ ...form, company: e.target.value })}
-                  className="w-full px-4 py-3.5 bg-white/5 text-white border border-white/20 rounded-md outline-none focus:border-[#C9A87C] placeholder-white/40 text-[15px]"
-                />
-              </div>
-              <input
-                type="email"
-                required
-                placeholder="Email"
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full px-4 py-3.5 bg-white/5 text-white border border-white/20 rounded-md outline-none focus:border-[#C9A87C] placeholder-white/40 text-[15px]"
-              />
-              <textarea
-                required
-                rows="5"
-                placeholder="What's prompting this?"
-                value={form.message}
-                onChange={(e) => setForm({ ...form, message: e.target.value })}
-                className="w-full px-4 py-3.5 bg-white/5 text-white border border-white/20 rounded-md outline-none focus:border-[#C9A87C] placeholder-white/40 text-[15px]"
-              />
-              <button
-                type="submit"
-                className="w-full px-8 py-4 rounded-full bg-[#F4EFE6] text-[#1C1410] hover:bg-white transition-colors text-sm uppercase tracking-wide"
-              >
-                Send enquiry
-              </button>
-              <p className="text-center text-[12px] text-white/30 pt-2">
-                Draft page. This form does not send anywhere yet.
-              </p>
-            </form>
-          )}
+          {/* No form. A live form that silently discards enquiries loses
+              business, and wiring one up is not a prerequisite for publishing.
+              Mirrors /private-sessions: Calendly popup plus a direct email. */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href=""
+              className="inline-block px-8 py-4 rounded-full bg-[#F4EFE6] text-[#1C1410] hover:bg-white transition-colors text-sm uppercase tracking-wide text-center cursor-pointer"
+              onClick={(e) => {
+                e.preventDefault();
+                if (window.Calendly) {
+                  window.Calendly.initPopupWidget({
+                    url: 'https://calendly.com/ammar-ammarbass/30min',
+                  });
+                }
+                return false;
+              }}
+            >
+              Book a call
+            </a>
+            <a
+              href="mailto:ammar@ammarbass.com?subject=Coaching%20enquiry"
+              className="inline-block px-8 py-4 rounded-full bg-transparent border-2 border-white/40 text-white hover:bg-white hover:text-[#1C1410] transition-colors text-sm uppercase tracking-wide text-center"
+            >
+              Email me
+            </a>
+          </div>
         </div>
       </section>
 
@@ -557,7 +467,7 @@ export default function Coaching() {
 
 /*
  * ─────────────────────────────────────────────────────────────────────────────
- * DRAFT_NOTES — settle before this goes anywhere near a live domain
+ * NOTES — what this page still needs
  * ─────────────────────────────────────────────────────────────────────────────
  *
  * INVENTED / PLACEHOLDER CONTENT:

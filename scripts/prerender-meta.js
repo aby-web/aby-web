@@ -95,6 +95,14 @@ const ROUTES = [
     // Draft page — keep it out of search results.
     noindex: true,
   },
+  {
+    path: 'coaching',
+    title: 'Coaching for Founders & Senior Operators | London | Ammar Bass',
+    description:
+      'One-to-one coaching in London for founders and senior operators, taught through physical practice, by someone who spent years in finance first. Programmes of 7–10 sessions.',
+    image: `${SITE}/images/og-private.jpg`,
+    imageAlt: 'Ammar Bass, coaching and private sessions in London',
+  },
 ];
 
 const esc = (s) =>
