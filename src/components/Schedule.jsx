@@ -13,9 +13,9 @@ export default function Schedule() {
       location: 'Indaba',
       area: 'Marylebone',
       classes: [
-        { day: 'Tuesday', time: '07:30', name: 'Morning Vinyasa', url: 'https://indabayoga.com/timetable' },
+        { day: 'Tuesday', time: '07:30', name: 'Morning Flow', url: 'https://indabayoga.com/timetable' },
         { day: 'Thursday', time: '18:00', name: 'Vinyasa & Meditation (75)', url: 'https://indabayoga.com/timetable' },
-        { day: 'Saturday', time: '11:30', name: 'Power (75)', url: 'https://indabayoga.com/timetable' },
+        { day: 'Saturday', time: '11:30', name: 'Vinyasa (75)', url: 'https://indabayoga.com/timetable' },
       ],
     },
     {
@@ -36,9 +36,10 @@ export default function Schedule() {
       location: 'Flo',
       area: 'Hampstead',
       classes: [
-        { day: 'Monday', time: '07:15', name: 'Morning Flow', url: 'https://www.floyogastudio.co.uk/book-a-class' },
+        // "Flo" not "Flow" — named after the studio.
+        { day: 'Monday', time: '07:15', name: 'Flo', url: 'https://www.floyogastudio.co.uk/book-a-class' },
         { day: 'Thursday', time: '16:30', name: 'Handstands', url: 'https://www.floyogastudio.co.uk/book-a-class' },
-        { day: 'Saturday', time: '09:00', name: 'Power (75)', url: 'https://www.floyogastudio.co.uk/book-a-class' },
+        { day: 'Saturday', time: '09:15', name: 'Power (75)', url: 'https://www.floyogastudio.co.uk/book-a-class' },
       ],
     },
   ];
