@@ -15,6 +15,8 @@ import NewClientIntake from './pages/NewClientIntake';
 import Yogami from './pages/Yogami';
 import CV from './pages/CV';
 import ChefIna from './pages/ChefIna';
+import Coaching from './pages/Coaching';
+import Story from './pages/Story';
 
 function ScrollToHash() {
   const location = useLocation();
@@ -59,6 +61,8 @@ function App() {
         <Route path="/yogami" element={<Yogami />} />
         <Route path="/cv" element={<CV />} />
         <Route path="/chefina" element={<ChefIna />} />
+        <Route path="/coaching" element={<Coaching />} />
+        <Route path="/story" element={<Story />} />
       </Routes>
     </Router>
   );
