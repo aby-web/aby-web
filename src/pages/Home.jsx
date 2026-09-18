@@ -3,7 +3,7 @@ import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
 import Hero from '../components/Hero';
 import Schedule from '../components/Schedule';
-import EventsStrip from '../components/EventsStrip';
+import PrivateSessionsTeaser from '../components/PrivateSessionsTeaser';
 import PracticeVideos from '../components/PracticeVideos';
 import About from '../components/About';
 import InstagramFeed from '../components/InstagramFeed';
@@ -160,7 +160,7 @@ export default function Home() {
       <VacationBanner />
       <main>
         <Hero />
-        <EventsStrip />
+        <PrivateSessionsTeaser />
         <Schedule />
         <About />
         <PracticeVideos />
