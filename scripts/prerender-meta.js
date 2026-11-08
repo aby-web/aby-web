@@ -53,6 +53,14 @@ const ROUTES = [
     imageAlt: 'Ammar Bass, yoga teacher in West Hampstead, London',
   },
   {
+    path: 'how-privates-work',
+    title: 'How Private Yoga Works in West Hampstead | Ammar Bass',
+    description:
+      'How private yoga in West Hampstead works: prices, a free 15-minute discovery call, a short form before your first session, and what a one-to-one session looks like.',
+    image: `${SITE}/images/og-private.jpg`,
+    imageAlt: 'Ammar Bass, yoga teacher in West Hampstead, London',
+  },
+  {
     path: 'events',
     title: 'Yoga Workshops & Retreats London | Ammar Bass Events',
     description:

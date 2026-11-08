@@ -14,7 +14,7 @@ Deno.serve(async (req) => {
       },
       body: JSON.stringify({
         from: 'noreply@ammarbass.com',
-        to: ['ammar@ammarbass.com'],
+        to: ['gammar@gmail.com'], // internal notification only; clients see ammar@ammarbass.com
         subject: `New private session enquiry from ${record.name}`,
         html: `
           <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">

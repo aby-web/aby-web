@@ -12,6 +12,7 @@ export default function Admin() {
   const [subscribers, setSubscribers] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
   const [privateEnquiries, setPrivateEnquiries] = useState([]);
+  const [clientIntakes, setClientIntakes] = useState([]);
   const [yogamiInterest, setYogamiInterest] = useState([]);
   const [vacations, setVacations] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -84,6 +85,7 @@ export default function Admin() {
       fetchSubscribers();
       fetchTestimonials();
       fetchPrivateEnquiries();
+      fetchClientIntakes();
       fetchVacations();
       fetchYogamiInterest();
     }
@@ -111,6 +113,7 @@ export default function Admin() {
       fetchSubscribers();
       fetchTestimonials();
       fetchPrivateEnquiries();
+      fetchClientIntakes();
       fetchVacations();
       fetchYogamiInterest();
       fetchGuides();
@@ -307,6 +310,38 @@ export default function Admin() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const fetchClientIntakes = async () => {
+    try {
+      const { ok, status, data } = await adminFetch('admin-data', {
+        action: 'select', table: 'client_intakes', orderBy: 'created_at', ascending: false,
+      });
+      if (!ok) {
+        if (status === 401) { clearSession(); setIsAuthenticated(false); }
+        return;
+      }
+      setClientIntakes(data.data || []);
+    } catch (error) {
+      console.error('Error fetching client intakes:', error);
+    }
+  };
+
+  const handleToggleIntakeFollowedUp = async (intake) => {
+    const { ok } = await adminFetch('admin-data', {
+      action: 'update', table: 'client_intakes', id: intake.id,
+      values: { followed_up: !intake.followed_up },
+    });
+    if (ok) fetchClientIntakes();
+    else showToast('Could not update that form', 'error');
+  };
+
+  const handleDeleteIntake = (id) => {
+    showConfirm('Delete this new client form, including any health notes? This cannot be undone.', async () => {
+      const { ok } = await adminFetch('admin-data', { action: 'delete', table: 'client_intakes', id });
+      if (ok) { fetchClientIntakes(); showToast('Form deleted'); }
+      else showToast('Could not delete that form', 'error');
+    });
   };
 
   const fetchYogamiInterest = async () => {
@@ -753,6 +788,12 @@ export default function Admin() {
             Private Enquiries ({privateEnquiries.length})
           </button>
           <button
+            onClick={() => setActiveTab('clientIntakes')}
+            className={`pb-4 px-4 text-sm font-medium transition-colors ${activeTab === 'clientIntakes' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740] hover:text-[#1C1410]'}`}
+          >
+            New Clients ({clientIntakes.length})
+          </button>
+          <button
             onClick={() => setActiveTab('testimonials')}
             className={`pb-4 px-4 text-sm font-medium transition-colors ${activeTab === 'testimonials' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740] hover:text-[#1C1410]'}`}
           >
@@ -1122,6 +1163,63 @@ export default function Admin() {
                       </button>
                       <button
                         onClick={() => handleDeleteEnquiry(enquiry.id)}
+                        className="px-4 py-2 bg-red-100 text-red-700 border border-red-200 rounded-md text-sm hover:bg-red-200 transition-colors"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* New Client Forms Tab */}
+        {activeTab === 'clientIntakes' && (
+          <div className="bg-white p-6 rounded-lg border border-[#C9B99A] shadow-sm">
+            <h2 className="text-xl font-light mb-1 text-[#1C1410]">New Client Forms ({clientIntakes.length})</h2>
+            <p className="text-xs text-[#6B5740] mb-4">Health notes are confidential. Delete forms you no longer need.</p>
+            {clientIntakes.length === 0 ? (
+              <p className="text-[#6B5740]">No new client forms yet.</p>
+            ) : (
+              <div className="space-y-4">
+                {clientIntakes.map((c) => (
+                  <div key={c.id} className="bg-[#F4EFE6] p-6 rounded-md border border-[#C9B99A]">
+                    <div className="flex justify-between items-start mb-4 gap-4">
+                      <div>
+                        <div className="flex items-center gap-3 mb-1">
+                          <h3 className="text-lg font-medium text-[#1C1410]">{c.name}</h3>
+                          {c.followed_up && <span className="text-xs px-2 py-1 rounded bg-[#785E3D] text-white">Followed up</span>}
+                        </div>
+                        <a href={`mailto:${c.email}`} className="text-sm text-[#785E3D] hover:text-[#6B5030]">{c.email}</a>
+                        {c.phone && <p className="text-sm text-[#6B5740]">{c.phone}</p>}
+                      </div>
+                      <span className="text-xs text-[#6B5740] whitespace-nowrap">
+                        {new Date(c.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                      </span>
+                    </div>
+                    <dl className="bg-white p-4 rounded-md mb-4 border border-[#C9B99A] grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-x-4 gap-y-2 text-sm">
+                      <dt className="text-[#6B5740]">Format</dt>
+                      <dd className="text-[#1C1410]">{{ studio: 'Studio', online: 'Online (WhatsApp)', home: 'At their home' }[c.format]}{c.home_area ? ` — ${c.home_area}` : ''}</dd>
+                      <dt className="text-[#6B5740]">Experience</dt>
+                      <dd className="text-[#1C1410]">{{ complete_beginner: 'Complete beginner', some: 'Some experience', regular: 'Practises regularly', experienced: 'Experienced' }[c.experience]}</dd>
+                      <dt className="text-[#6B5740]">Goals</dt>
+                      <dd className="text-[#1C1410] whitespace-pre-wrap">{c.goals}</dd>
+                      <dt className="text-[#6B5740]">Availability</dt>
+                      <dd className="text-[#1C1410] whitespace-pre-wrap">{c.availability}</dd>
+                      <dt className="text-[#6B5740]">Health notes</dt>
+                      <dd className="text-[#1C1410] whitespace-pre-wrap">{c.health_notes || 'None given'}</dd>
+                    </dl>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleToggleIntakeFollowedUp(c)}
+                        className={`px-4 py-2 rounded-md text-sm transition-colors ${c.followed_up ? 'bg-[#EAE0CF] text-[#6B5740] hover:bg-[#C9B99A]' : 'bg-[#785E3D] text-white hover:bg-[#6B5030]'}`}
+                      >
+                        {c.followed_up ? 'Mark as not followed up' : 'Mark as followed up'}
+                      </button>
+                      <button
+                        onClick={() => handleDeleteIntake(c.id)}
                         className="px-4 py-2 bg-red-100 text-red-700 border border-red-200 rounded-md text-sm hover:bg-red-200 transition-colors"
                       >
                         Delete

@@ -12,8 +12,8 @@ const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 const SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
 // Only these tables may be reached, so a caller cannot name an arbitrary one.
-const READABLE = ['private_enquiries', 'guides', 'guide_views', 'yogami_interest', 'subscribers'];
-const WRITABLE = ['private_enquiries'];
+const READABLE = ['private_enquiries', 'client_intakes', 'guides', 'guide_views', 'yogami_interest', 'subscribers'];
+const WRITABLE = ['private_enquiries', 'client_intakes'];
 
 Deno.serve(async (req) => {
   const cors = corsHeaders(req.headers.get('Origin'));

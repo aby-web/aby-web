@@ -14,7 +14,8 @@ React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all s
 ## ⚠️ WORK IN PROGRESS — SEO overhaul, paused 14 Oct 2026
 
 **If the user starts a session (even just "run the dev server"), tell them this work is
-parked and show them the two open questions below.**
+parked.** The two open questions below were **answered on 8 Nov 2026** — see `SEO_TASKS.md`
+Phase 3 note. Prices and session formats now live in `src/data/privateSessions.js`.
 
 We are working through `SEO_TASKS.md` (in this repo) phase by phase, committing after each
 phase. **Status: exploration done, Phase 1 planned, NO CODE CHANGED YET.**
@@ -42,7 +43,9 @@ Known risks: components touching `window`/`localStorage`/Calendly at module or r
 will throw under `renderToString` and need guarding; hydration mismatches likely in
 `VacationBanner` and `Testimonials` (both fetch on mount) — render their loading state server-side.
 
-### ❓ Two questions for the user — answer these to unblock Phases 3–5
+### ✅ Answered 8 Nov 2026 — beginners welcome privately (recommended start); studio, online
+(WhatsApp video), at-home (travel fee may apply) and small groups (price on request) all offered;
+no couples/duo; £80/60 min, £90/75 min. Original questions kept below for history.
 
 1. **Are complete beginners welcome in private sessions?** The new copy says yes
    ("whether you've never practised"), but the current FAQ says the opposite for *classes*
