@@ -122,7 +122,7 @@ export default function HowPrivatesWork() {
           <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-4">03 / Before your first session</p>
           <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-6">A short form, so I can plan for you.</h2>
           <p className="text-[15px] text-[#6B5740] leading-relaxed mb-10">
-            Once we've booked your first session, please fill in my new client form. It asks about any injuries or health conditions I should know about, so I can keep you safe and plan a session that fits your body. It only takes a couple of minutes.
+            Once we've booked your first session, please fill in my new client form. It asks what you'd like to work on, your experience (complete beginners very welcome), when you're free, whether you'd like the studio, online or at home, and about any injuries or health conditions, so I can keep you safe and plan a session that fits you. It only takes a few minutes.
           </p>
           <a
             href="/onboard"
