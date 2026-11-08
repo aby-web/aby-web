@@ -79,6 +79,12 @@ export default function Nav({ theme = 'dark' }) {
               Private
             </a>
             <a
+              href="/how-privates-work"
+              className={`${isActive('/how-privates-work') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
+            >
+              How privates work
+            </a>
+            <a
               href="/events"
               className={`${isActive('/events') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
             >
@@ -134,6 +140,13 @@ export default function Nav({ theme = 'dark' }) {
             className={`${isActive('/private-sessions') ? 'text-[#C9A878]' : 'text-white/90'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/20`}
           >
             Private
+          </a>
+          <a
+            href="/how-privates-work"
+            onClick={() => setMobileMenuOpen(false)}
+            className={`${isActive('/how-privates-work') ? 'text-[#C9A878]' : 'text-white/90'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/20`}
+          >
+            How privates work
           </a>
           <a
             href="/events"
