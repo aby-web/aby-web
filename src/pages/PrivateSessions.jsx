@@ -55,7 +55,7 @@ export default function PrivateSessions() {
   const pricing = [
     { label: '60-minute session', price: '£80' },
     { label: '75-minute session', price: '£90' },
-    { label: '5-class pack', price: '15% off, pre-paid' },
+    { label: '5-session pack', price: '15% off, pre-paid' },
     { label: 'Discovery call', price: 'Free — 15 min' },
   ];
 
