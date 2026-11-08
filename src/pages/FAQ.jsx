@@ -51,7 +51,7 @@ export default function FAQ() {
       questions: [
         {
           q: "How much do private sessions cost?",
-          a: "Rates vary based on session length (60 or 90 minutes) and whether it's one-on-one or small group (up to 3 people). Get in touch via the contact form and I'll send you the current pricing."
+          a: "Private sessions are one-to-one: £80 for 60 minutes or £90 for 75 minutes. A pre-paid pack of 5 sessions is 15% off, and the 15-minute discovery call is free."
         },
         {
           q: "Where do private sessions take place?",

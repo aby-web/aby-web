@@ -53,10 +53,9 @@ export default function PrivateSessions() {
   };
 
   const pricing = [
-    { label: '60-minute session', price: '£70' },
-    { label: '75-minute session', price: '£80' },
+    { label: '60-minute session', price: '£80' },
+    { label: '75-minute session', price: '£90' },
     { label: '5-class pack', price: '15% off, pre-paid' },
-    { label: 'Couples / duo', price: '+20%' },
     { label: 'Discovery call', price: 'Free — 15 min' },
   ];
 
@@ -80,8 +79,8 @@ export default function PrivateSessions() {
             "provider": { "@type": "Person", "name": "Ammar Bass", "url": "https://www.ammarbass.com" },
             "areaServed": { "@type": "Place", "name": "West Hampstead, London NW6" },
             "offers": [
-              { "@type": "Offer", "name": "60-minute session", "price": "70", "priceCurrency": "GBP" },
-              { "@type": "Offer", "name": "75-minute session", "price": "80", "priceCurrency": "GBP" }
+              { "@type": "Offer", "name": "60-minute session", "price": "80", "priceCurrency": "GBP" },
+              { "@type": "Offer", "name": "75-minute session", "price": "90", "priceCurrency": "GBP" }
             ]
           })}
         </script>
