@@ -19,7 +19,8 @@ const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 const SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
 
-const NOTIFY_TO = 'ammar@ammarbass.com';
+// Internal notification only. Everything a client sees uses ammar@ammarbass.com.
+const NOTIFY_TO = 'gammar@gmail.com';
 const MIN_SUBMIT_MS = 2500;
 const MAX_PER_HOUR = 20;
 
