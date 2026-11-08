@@ -41,7 +41,7 @@ Use `react-helmet-async` or the SSG's head API so each route has its own tags. E
 | Route | Title | Meta description |
 | --- | --- | --- |
 | `/` | keep current | keep current, but replace with the fallback above if it lacks West Hampstead |
-| `/private-sessions` | Private Yoga Classes in West Hampstead, NW6 \| Ammar Bass | One-to-one yoga in a private loft studio in West Hampstead. Strength-focused vinyasa, handstands and arm balances, for all levels. From £70. Free discovery call. |
+| `/private-sessions` | Private Yoga Classes in West Hampstead, NW6 \| Ammar Bass | One-to-one yoga in a private loft studio in West Hampstead. Strength-focused vinyasa, handstands and arm balances, for all levels, beginners welcome. From £80. Free discovery call. |
 | `/handstand-coaching` (new) | Private Handstand & Arm Balance Coaching, London \| Ammar Bass | One-to-one handstand, inversion and arm balance coaching in West Hampstead, London. Progressive, strength-based training from a specialist yoga teacher. |
 | `/about` | About Ammar Bass \| Yoga Teacher, West Hampstead, London | Write one in the same style from the page content (under 160 characters, mention West Hampstead and private sessions). |
 | `/faq` | keep current | keep current |
@@ -51,19 +51,19 @@ Use `react-helmet-async` or the SSG's head API so each route has its own tags. E
 
 Replace the copy on `/private-sessions` with the text below. Keep the site's existing design, components and booking buttons — only change words and structure. Use one `<h1>` and `<h2>`s for the sections.
 
-> **NOTE — confirm with me:** the copy assumes complete beginners are welcome privately. Ask me before shipping.
+> **CONFIRMED 8 Nov 2026:** complete beginners are very welcome privately, and Ammar recommends starting there (group classes assume some experience). Make it a clear selling point. Session types: studio (main), online over WhatsApp video (same prices), at your home (same prices, "travel fee may apply"), small groups of friends/colleagues at a similar level (price on request). **No couples/duo sessions** — if mentioned, say warmly that sessions work best when everyone is at a similar level.
 
 ---
 
 **H1:** Private yoga in West Hampstead
 
-One-to-one and duo sessions in a dedicated loft studio in West Hampstead, London NW6. Each session is built around you: your body, your goals and the pace that suits you.
+One-to-one sessions in a dedicated loft studio in West Hampstead, London NW6, or online and at your home. Each session is built around you: your body, your goals and the pace that suits you.
 
 [Button: Book a free 15-minute discovery call]
 
 **H2: Who it's for**
 
-- **Newer practitioners** who want to learn the foundations properly, without keeping up with a busy class.
+- **Complete beginners and newer practitioners** who want to learn the foundations properly. Group classes assume some experience and can feel daunting; a private is the most comfortable place to start.
 - **Regular class-goers** who want precise feedback on alignment and breath that a group setting can't give.
 - **People working towards handstands, arm balances and inversions** who need a structured, progressive plan. (Link "handstands, arm balances and inversions" to `/handstand-coaching`.)
 - **Anyone returning to practice** after time away, who wants to rebuild strength sustainably.
@@ -76,6 +76,8 @@ We start with a short conversation about how you're feeling and what you're work
 
 A quiet, dedicated loft studio in West Hampstead, close to West Hampstead's Jubilee line, Overground and Thameslink stations. All mats and props are provided. The full address is sent when you book.
 
+Can't make it to the studio? Sessions also run online over WhatsApp video, or at your home (same prices; a travel fee may apply). Small groups of friends or colleagues at a similar level are welcome, price on request.
+
 **H2: About Ammar**
 
 Ammar teaches strong vinyasa at HOME Wellness, Indaba, Flo, Yogarise and BXR, where his classes are among the busiest on the timetable. He trained at Sivananda Kutir in India and has since trained in alignment and assists with Stewart Gilchrist, whom he assists in teaching, and in arm balances with David Kyle. A former competitive swimmer and powerlifter, he brings an athlete's understanding of strength and progression to every session.
@@ -84,16 +86,20 @@ Ammar teaches strong vinyasa at HOME Wellness, Indaba, Flo, Yogarise and BXR, wh
 
 | Session | Price |
 | --- | --- |
-| 60 minutes | £70 |
-| 75 minutes | £80 |
+| 60 minutes | £80 |
+| 75 minutes | £90 |
 | 5-session pack, prepaid | 15% off |
-| Duo (two people) | +20% |
+| Online (WhatsApp video) | Same prices |
+| At your home | Same prices, travel fee may apply |
+| Small group | Price on request |
+
+(Already live from `src/data/privateSessions.js` — render from there, don't retype.)
 
 **H2: How to book**
 
 1. Book a free 15-minute discovery call, or message on Instagram.
 2. We agree on your goals and a time that suits you.
-3. Come to the studio; the address is sent on booking.
+3. Fill in the new client form at `/onboard`, then come to the studio (address sent on booking), join online, or I come to you.
 
 [Button: Book a free discovery call]
 
@@ -135,7 +141,7 @@ Ammar specialises in arm balances, inversions and handstands, and is Rocket Leve
 
 **H2: Pricing**
 
-Same rates as private sessions: £70 for 60 minutes, £80 for 75 minutes, 15% off a prepaid 5-session pack. (Link "private sessions" to `/private-sessions`.)
+Same rates as private sessions: £80 for 60 minutes, £90 for 75 minutes, 15% off a prepaid 5-session pack. (Link "private sessions" to `/private-sessions`.)
 
 **H2: Questions** — include FAQ 4 from Phase 5.
 
@@ -148,15 +154,15 @@ Same rates as private sessions: £70 for 60 minutes, £80 for 75 minutes, 15% of
 Add these to `/faq` (keep any existing FAQs that don't duplicate them). Question as heading or `<summary>`, answer as text. **The answer text must be visible in the HTML on load** — if the FAQ uses accordions, the answers must still be in the pre-rendered HTML, not injected on click.
 
 1. **How much does a private yoga class cost in West Hampstead?**
-   Private sessions with Ammar cost £70 for 60 minutes or £80 for 75 minutes. A prepaid pack of five is 15% off, and duo sessions for two people are an extra 20%.
+   Private sessions with Ammar cost £80 for 60 minutes or £90 for 75 minutes. A prepaid pack of five is 15% off. Online sessions are the same price; at-home sessions too, though a travel fee may apply. Small groups are priced on request.
 2. **Where are sessions held?**
-   In a private loft studio in West Hampstead, London NW6, close to West Hampstead station. The full address is sent when you book.
+   Mostly in a private loft studio in West Hampstead, London NW6, close to West Hampstead station; the full address is sent when you book. Sessions are also available online over WhatsApp video, or at your home.
 3. **Do I need any yoga experience?**
-   No. Sessions are planned around your level, whether you've never practised or you're working on advanced arm balances.
+   No — complete beginners are very welcome, and a private is the best place to start. Group classes assume some experience; one-to-one, you learn the foundations at your own pace.
 4. **Can I learn to do a handstand in private sessions?**
    Yes. Handstands, arm balances and inversions are Ammar's specialism. Most people need several sessions plus practice in between; progress depends on your shoulder strength and mobility.
-5. **Can I book a session with a partner or friend?**
-   Yes. Duo sessions are available at the standard rate plus 20%.
+5. **Can I book a session with friends or colleagues?**
+   Yes, as a small group if you're at a similar level — price on request. There are no couples sessions: sessions work best when everyone is at a similar stage.
 6. **What should I bring?**
    Comfortable clothes you can move in. Mats and props are provided.
 7. **How do I book?**
@@ -187,7 +193,7 @@ Inject as `<script type="application/ld+json">` in the head, in the pre-rendered
     "addressCountry": "GB"
   },
   "areaServed": ["West Hampstead", "Hampstead", "Kilburn", "Swiss Cottage", "Queen's Park", "Belsize Park"],
-  "priceRange": "£70–£80",
+  "priceRange": "£80–£90",
   "founder": {
     "@type": "Person",
     "name": "Ammar Bass",
@@ -196,8 +202,8 @@ Inject as `<script type="application/ld+json">` in the head, in the pre-rendered
     "sameAs": ["INSTAGRAM_URL"]
   },
   "makesOffer": [
-    {"@type": "Offer", "name": "Private yoga session, 60 minutes", "price": "70", "priceCurrency": "GBP"},
-    {"@type": "Offer", "name": "Private yoga session, 75 minutes", "price": "80", "priceCurrency": "GBP"}
+    {"@type": "Offer", "name": "Private yoga session, 60 minutes", "price": "80", "priceCurrency": "GBP"},
+    {"@type": "Offer", "name": "Private yoga session, 75 minutes", "price": "90", "priceCurrency": "GBP"}
   ],
   "sameAs": ["INSTAGRAM_URL"]
 }

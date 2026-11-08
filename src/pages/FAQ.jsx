@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
 import Footer from '../components/Footer';
+import { priceSummary } from '../data/privateSessions';
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(null);
@@ -13,7 +14,7 @@ export default function FAQ() {
       questions: [
         {
           q: "I'm new to yoga. Are your classes suitable for beginners?",
-          a: "My classes are designed for people with some yoga experience. If you're completely new, I recommend starting with 3-4 beginner classes elsewhere to learn basic poses and breathing. Once you're comfortable in downward dog and can hold plank for 30 seconds, you're ready for my classes."
+          a: "My group classes are designed for people with some yoga experience. If you're completely new, I'd recommend starting with a few private sessions. We go at your pace and build the foundations properly, so when you do come to a class you'll feel at home rather than thrown in at the deep end."
         },
         {
           q: "What should I bring to class?",
@@ -51,11 +52,19 @@ export default function FAQ() {
       questions: [
         {
           q: "How much do private sessions cost?",
-          a: "Private sessions are one-to-one: £80 for 60 minutes or £90 for 75 minutes. A pre-paid pack of 5 sessions is 15% off, and the 15-minute discovery call is free."
+          a: `Private sessions are ${priceSummary}. Online sessions are the same price, and at-home sessions are too, though a travel fee may apply. Small groups are priced on request, and the 15-minute discovery call is free.`
         },
         {
           q: "Where do private sessions take place?",
-          a: "Sessions can be at my studio space, online via video call, or at your home if you have space and a mat. We'll discuss the best option for your needs during the discovery call."
+          a: "Mostly in my loft studio in West Hampstead, NW6 — the address is sent when you book. I also teach online over WhatsApp video, or at your home if you have room for a mat. We'll find what suits you on the discovery call."
+        },
+        {
+          q: "I've never done yoga. Can I book a private session?",
+          a: "Absolutely — complete beginners are very welcome, and it's where I'd suggest you start. A group class where everyone seems to know what they're doing can feel daunting. One-to-one, we can take our time, learn the foundations properly and build your confidence."
+        },
+        {
+          q: "Can I book a session with friends or colleagues?",
+          a: "If you have friends or colleagues who practise at a similar level, I'm happy to put together a small group session — get in touch for a price. I don't run couples sessions: sessions work best when everyone's at a similar stage, so I keep things one-to-one or in small groups of people who are."
         },
         {
           q: "How many sessions will I need?",

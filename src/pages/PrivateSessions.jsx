@@ -4,6 +4,7 @@ import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
 import Footer from '../components/Footer';
 import { supabase } from '../lib/supabase';
+import { pricing, offers, CALENDLY_URL } from '../data/privateSessions';
 
 export default function PrivateSessions() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -52,13 +53,6 @@ export default function PrivateSessions() {
     }
   };
 
-  const pricing = [
-    { label: '60-minute session', price: '£80' },
-    { label: '75-minute session', price: '£90' },
-    { label: '5-session pack', price: '15% off, pre-paid' },
-    { label: 'Discovery call', price: 'Free — 15 min' },
-  ];
-
   return (
     <div className="min-h-screen">
       <Helmet>
@@ -78,10 +72,7 @@ export default function PrivateSessions() {
             "serviceType": "Private one-to-one yoga tuition",
             "provider": { "@type": "Person", "name": "Ammar Bass", "url": "https://www.ammarbass.com" },
             "areaServed": { "@type": "Place", "name": "West Hampstead, London NW6" },
-            "offers": [
-              { "@type": "Offer", "name": "60-minute session", "price": "80", "priceCurrency": "GBP" },
-              { "@type": "Offer", "name": "75-minute session", "price": "90", "priceCurrency": "GBP" }
-            ]
+            "offers": offers
           })}
         </script>
       </Helmet>
@@ -101,6 +92,24 @@ export default function PrivateSessions() {
           <p className="text-lg text-[#6B5740] max-w-2xl mx-auto">
             One-to-one sessions for students who want focused, progressive guidance. I can help you build a strong foundation, or work towards a specific skill like a handstand or arm balance.
           </p>
+        </div>
+      </section>
+
+      {/* New to yoga */}
+      <section className="bg-[#EAE0CF] px-8 md:px-12 py-20">
+        <div className="max-w-3xl mx-auto text-center">
+          <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-4">New to yoga?</p>
+          <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-6 leading-snug">
+            Complete beginners are very welcome. In fact, this is where I'd suggest you start.
+          </h2>
+          <div className="space-y-4 text-[15px] text-[#6B5740] leading-relaxed">
+            <p>
+              My group classes assume some experience, and walking into a room where everyone seems to know what they're doing can feel daunting. A private session takes that pressure away.
+            </p>
+            <p>
+              We go at your pace, I explain the why behind each pose, and you learn the foundations properly from the start: how to breathe, how to set up safely, and how to build strength without strain. When you're ready, you'll walk into any class with confidence.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -190,7 +199,10 @@ export default function PrivateSessions() {
                 In-person sessions take place at my private home studio in West Hampstead (NW6) — a clean, quiet space set up specifically for one-to-one practice. No distractions, no drop-ins.
               </p>
               <p>
-                If you'd prefer to work remotely, online sessions are available too. The same structure, the same attention.
+                If the studio doesn't suit you, I also teach online over WhatsApp video, or at your home (a travel fee may apply). The same structure, the same attention.
+              </p>
+              <p>
+                Practising with friends or colleagues at a similar level? I can put together a small group session — just ask.
               </p>
             </div>
           </div>
@@ -212,6 +224,9 @@ export default function PrivateSessions() {
               </div>
             ))}
           </div>
+          <p className="text-center text-[15px] text-[#6B5740] mt-10">
+            New here? <a href="/how-privates-work" className="text-[#785E3D] underline underline-offset-4 hover:text-[#1C1410]">See how private sessions work</a>, from the discovery call to your first session.
+          </p>
         </div>
       </section>
 
@@ -231,7 +246,7 @@ export default function PrivateSessions() {
               onClick={(e) => {
                 e.preventDefault();
                 if (window.Calendly) {
-                  window.Calendly.initPopupWidget({ url: 'https://calendly.com/ammar-ammarbass/30min' });
+                  window.Calendly.initPopupWidget({ url: CALENDLY_URL });
                 }
                 return false;
               }}
