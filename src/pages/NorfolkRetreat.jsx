@@ -3,7 +3,7 @@ import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 
 // Spring Yoga Immersion 2027, from the pre-launch brochure (Google Drive:
-// Yoga/Retreats/Norfolk 2027). Images are cropped from the brochure pages,
+// Yoga/Retreats/Norfolk 2027). ina-ammar.webp is from the original photo; the rest are cropped from the brochure pages,
 // so they top out around 400–1360px wide; swap in the originals if they turn up.
 
 const IMG = '/images/norfolk-2027';
@@ -96,7 +96,7 @@ export default function NorfolkRetreat() {
         <meta property="og:description" content={DESCRIPTION} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://ammarbass.com/norfolk-retreat" />
-        <meta property="og:image" content="https://ammarbass.com/images/og-norfolk-wide.jpg" />
+        <meta property="og:image" content="https://ammarbass.com/images/og-norfolk-2027.jpg" />
         <link rel="canonical" href="https://ammarbass.com/norfolk-retreat" />
         <script type="application/ld+json">
           {JSON.stringify({
@@ -113,7 +113,7 @@ export default function NorfolkRetreat() {
               "name": "The House of Bohème",
               "address": { "@type": "PostalAddress", "addressLocality": "Near Norwich", "addressRegion": "Norfolk", "addressCountry": "GB" }
             },
-            "image": "https://ammarbass.com/images/og-norfolk-wide.jpg",
+            "image": "https://ammarbass.com/images/og-norfolk-2027.jpg",
             "organizer": { "@type": "Person", "name": "Ammar Bass", "url": "https://ammarbass.com" },
             "performer": [
               { "@type": "Person", "name": "Ina" },
