@@ -199,7 +199,7 @@ export default function PrivateSessions() {
                 In-person sessions take place at my private home studio in West Hampstead (NW6) — a clean, quiet space set up specifically for one-to-one practice. No distractions, no drop-ins.
               </p>
               <p>
-                If the studio doesn't suit you, I also teach online over WhatsApp video, or at your home (a travel fee may apply). The same structure, the same attention.
+                If the studio doesn't suit you, I also teach online, or at your home (a travel fee may apply). The same structure, the same attention.
               </p>
               <p>
                 Practising with friends or colleagues at a similar level? I can put together a small group session — just ask.

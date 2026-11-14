@@ -56,7 +56,7 @@ export default function FAQ() {
         },
         {
           q: "Where do private sessions take place?",
-          a: "Mostly in my loft studio in West Hampstead, NW6 — the address is sent when you book. I also teach online over WhatsApp video, or at your home if you have room for a mat. We'll find what suits you on the discovery call."
+          a: "Mostly in my loft studio in West Hampstead, NW6 — the address is sent when you book. I also teach online, or at your home if you have room for a mat. We'll find what suits you on the discovery call."
         },
         {
           q: "I've never done yoga. Can I book a private session?",
