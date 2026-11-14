@@ -98,7 +98,7 @@ const ROUTES = [
     description:
       'A three-night yoga retreat near Norwich, 6–9 May 2027, with Ina and Ammar. 11 hours of practice, home-cooked vegetarian food, sauna, ice bath and hot tub. Only 10 places.',
     image: `${SITE}/images/og-norfolk.jpg`,
-    imageAlt: 'Ina and Ammar in a partner backbend',
+    imageAlt: 'Ina and Ammar in triangle pose in a forest',
   },
   {
     path: 'chefina',
