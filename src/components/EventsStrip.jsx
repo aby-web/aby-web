@@ -158,7 +158,7 @@ export default function EventsStrip() {
                 href="/events"
                 className="inline-block text-[13px] text-[#1C1410] border-b border-[#785E3D] hover:text-[#785E3D] transition-colors"
               >
-                See all events & past workshops →
+                See all upcoming & past events →
               </a>
             </div>
           </>

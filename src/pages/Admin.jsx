@@ -1803,6 +1803,13 @@ CREATE INDEX IF NOT EXISTS idx_guide_views_slug ON guide_views(guide_slug);`}
                   onCropComplete={onCropComplete}
                 />
               </div>
+              {/* Phones need ~1200px across to look sharp; smaller crops get stretched and blur. */}
+              {croppedAreaPixels && croppedAreaPixels.width < 1200 && (
+                <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900" role="alert">
+                  <strong className="font-medium">Low resolution:</strong> this crop is only {Math.round(croppedAreaPixels.width)}×{Math.round(croppedAreaPixels.height)}px, so it will look blurry on phones.
+                  {' '}Zoom out, or use the original photo (at least 1600px wide). Screenshots and photos saved from WhatsApp or Instagram are usually too small.
+                </div>
+              )}
               <div className="mb-4">
                 <label className="block text-sm font-medium text-[#6B5740] mb-2">Zoom</label>
                 <input
