@@ -96,7 +96,7 @@ export default function NorfolkRetreat() {
         <meta property="og:description" content={DESCRIPTION} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://ammarbass.com/norfolk-retreat" />
-        <meta property="og:image" content="https://ammarbass.com/images/og-norfolk-triangle.jpg" />
+        <meta property="og:image" content="https://ammarbass.com/images/og-norfolk-wide.jpg" />
         <link rel="canonical" href="https://ammarbass.com/norfolk-retreat" />
         <script type="application/ld+json">
           {JSON.stringify({
@@ -113,7 +113,7 @@ export default function NorfolkRetreat() {
               "name": "The House of Bohème",
               "address": { "@type": "PostalAddress", "addressLocality": "Near Norwich", "addressRegion": "Norfolk", "addressCountry": "GB" }
             },
-            "image": "https://ammarbass.com/images/og-norfolk-triangle.jpg",
+            "image": "https://ammarbass.com/images/og-norfolk-wide.jpg",
             "organizer": { "@type": "Person", "name": "Ammar Bass", "url": "https://ammarbass.com" },
             "performer": [
               { "@type": "Person", "name": "Ina" },
