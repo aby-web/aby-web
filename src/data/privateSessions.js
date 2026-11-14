@@ -17,8 +17,7 @@ export const pricing = [
   { label: '60-minute session', price: `£${PRICE_60}` },
   { label: '75-minute session', price: `£${PRICE_75}` },
   { label: `${PACK_SIZE}-session pack`, price: `${PACK_DISCOUNT}% off, pre-paid` },
-  { label: 'Online, over WhatsApp video', price: 'Same prices' },
-  { label: 'At your home', price: 'Same prices, travel fee may apply' },
+  { label: 'Online', price: 'Same prices' },
   { label: 'Small group (friends or colleagues)', price: 'Price on request' },
   { label: 'Discovery call', price: 'Free — 15 min' },
 ];
@@ -42,7 +41,7 @@ export const formats = [
   },
   {
     name: 'Online',
-    text: 'Over WhatsApp video, from wherever you are. Same structure, same attention, same prices.',
+    text: 'From wherever you are. Same structure, same attention, same prices.',
   },
   {
     name: 'At your home',

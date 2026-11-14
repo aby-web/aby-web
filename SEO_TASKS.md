@@ -51,7 +51,7 @@ Use `react-helmet-async` or the SSG's head API so each route has its own tags. E
 
 Replace the copy on `/private-sessions` with the text below. Keep the site's existing design, components and booking buttons — only change words and structure. Use one `<h1>` and `<h2>`s for the sections.
 
-> **CONFIRMED 8 Nov 2026:** complete beginners are very welcome privately, and Ammar recommends starting there (group classes assume some experience). Make it a clear selling point. Session types: studio (main), online over WhatsApp video (same prices), at your home (same prices, "travel fee may apply"), small groups of friends/colleagues at a similar level (price on request). **No couples/duo sessions** — if mentioned, say warmly that sessions work best when everyone is at a similar level.
+> **CONFIRMED 8 Nov 2026:** complete beginners are very welcome privately, and Ammar recommends starting there (group classes assume some experience). Make it a clear selling point. Session types: studio (main), online (same prices; don't name the video platform), at your home (same prices, "travel fee may apply"; not in the price list), small groups of friends/colleagues at a similar level (price on request). **No couples/duo sessions** — if mentioned, say warmly that sessions work best when everyone is at a similar level.
 
 ---
 
@@ -76,7 +76,7 @@ We start with a short conversation about how you're feeling and what you're work
 
 A quiet, dedicated loft studio in West Hampstead, close to West Hampstead's Jubilee line, Overground and Thameslink stations. All mats and props are provided. The full address is sent when you book.
 
-Can't make it to the studio? Sessions also run online over WhatsApp video, or at your home (same prices; a travel fee may apply). Small groups of friends or colleagues at a similar level are welcome, price on request.
+Can't make it to the studio? Sessions also run online, or at your home (same prices; a travel fee may apply). Small groups of friends or colleagues at a similar level are welcome, price on request.
 
 **H2: About Ammar**
 
@@ -89,8 +89,7 @@ Ammar teaches strong vinyasa at HOME Wellness, Indaba, Flo, Yogarise and BXR, wh
 | 60 minutes | £80 |
 | 75 minutes | £90 |
 | 5-session pack, prepaid | 15% off |
-| Online (WhatsApp video) | Same prices |
-| At your home | Same prices, travel fee may apply |
+| Online | Same prices |
 | Small group | Price on request |
 
 (Already live from `src/data/privateSessions.js` — render from there, don't retype.)
@@ -156,7 +155,7 @@ Add these to `/faq` (keep any existing FAQs that don't duplicate them). Question
 1. **How much does a private yoga class cost in West Hampstead?**
    Private sessions with Ammar cost £80 for 60 minutes or £90 for 75 minutes. A prepaid pack of five is 15% off. Online sessions are the same price; at-home sessions too, though a travel fee may apply. Small groups are priced on request.
 2. **Where are sessions held?**
-   Mostly in a private loft studio in West Hampstead, London NW6, close to West Hampstead station; the full address is sent when you book. Sessions are also available online over WhatsApp video, or at your home.
+   Mostly in a private loft studio in West Hampstead, London NW6, close to West Hampstead station; the full address is sent when you book. Sessions are also available online, or at your home.
 3. **Do I need any yoga experience?**
    No — complete beginners are very welcome, and a private is the best place to start. Group classes assume some experience; one-to-one, you learn the foundations at your own pace.
 4. **Can I learn to do a handstand in private sessions?**

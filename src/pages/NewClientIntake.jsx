@@ -19,13 +19,13 @@ const EXPERIENCE_OPTIONS = [
 
 const FORMAT_OPTIONS = [
   { value: 'studio', label: 'In your studio in West Hampstead' },
-  { value: 'online', label: 'Online, over WhatsApp video' },
+  { value: 'online', label: 'Online' },
   { value: 'home', label: 'At my home' },
 ];
 
 const LOCATION_TEXT = {
   studio: "My loft studio in West Hampstead, NW6, a few minutes from West Hampstead station. I'll send you the full address when I confirm your first session. Mats and props are provided.",
-  online: "I'll send you a WhatsApp video call at the time of your session. Find a quiet spot with room for a mat, and set your phone or laptop up so I can see your whole body.",
+  online: "I'll send you the details for joining before your session. Find a quiet spot with room for a mat, and set your phone or laptop up so I can see your whole body.",
   home: "I'll come to you. You'll need enough room to lie down with your arms stretched out. Same prices as the studio; a travel fee may apply depending on where you are, and I'll confirm it before we book.",
 };
 

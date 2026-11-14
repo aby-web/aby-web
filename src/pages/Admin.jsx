@@ -1201,7 +1201,7 @@ export default function Admin() {
                     </div>
                     <dl className="bg-white p-4 rounded-md mb-4 border border-[#C9B99A] grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-x-4 gap-y-2 text-sm">
                       <dt className="text-[#6B5740]">Format</dt>
-                      <dd className="text-[#1C1410]">{{ studio: 'Studio', online: 'Online (WhatsApp)', home: 'At their home' }[c.format]}{c.home_area ? ` — ${c.home_area}` : ''}</dd>
+                      <dd className="text-[#1C1410]">{{ studio: 'Studio', online: 'Online', home: 'At their home' }[c.format]}{c.home_area ? ` — ${c.home_area}` : ''}</dd>
                       <dt className="text-[#6B5740]">Experience</dt>
                       <dd className="text-[#1C1410]">{{ complete_beginner: 'Complete beginner', some: 'Some experience', regular: 'Practises regularly', experienced: 'Experienced' }[c.experience]}</dd>
                       <dt className="text-[#6B5740]">Goals</dt>

@@ -52,7 +52,7 @@ const EXPERIENCE: Record<string, string> = {
 };
 const FORMAT: Record<string, string> = {
   studio: 'In the studio (West Hampstead)',
-  online: 'Online (WhatsApp video)',
+  online: 'Online',
   home: 'At their home',
 };
 
