@@ -93,6 +93,14 @@ const ROUTES = [
     imageAlt: 'Forest cabins at the retreat venue near Varna, Bulgaria',
   },
   {
+    path: 'norfolk-retreat',
+    title: 'Spring Yoga Immersion 2027 — Norfolk Yoga Retreat | Ammar Bass',
+    description:
+      'A three-night yoga retreat near Norwich, 6–9 May 2027, with Ina and Ammar. 11 hours of practice, home-cooked vegetarian food, sauna, ice bath and hot tub. Only 10 places.',
+    image: `${SITE}/images/og-norfolk.jpg`,
+    imageAlt: 'Ina and Ammar in a partner backbend',
+  },
+  {
     path: 'chefina',
     title: 'Chef Ina | Retreat Catering for Yoga & Wellness Retreats',
     description:

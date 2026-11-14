@@ -12,6 +12,7 @@ import FAQ from './pages/FAQ';
 import Admin from './pages/Admin';
 import Join from './pages/Join';
 import Bootcamp from './pages/Bootcamp';
+import NorfolkRetreat from './pages/NorfolkRetreat';
 import NewClientIntake from './pages/NewClientIntake';
 import Yogami from './pages/Yogami';
 import CV from './pages/CV';
@@ -59,6 +60,7 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/join" element={<Join />} />
         <Route path="/bootcamp" element={<Bootcamp />} />
+        <Route path="/norfolk-retreat" element={<NorfolkRetreat />} />
         <Route path="/onboard" element={<NewClientIntake />} />
         <Route path="/yogami" element={<Yogami />} />
         <Route path="/cv" element={<CV />} />

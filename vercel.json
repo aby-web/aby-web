@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/((?!about$|about/|private-sessions$|private-sessions/|how-privates-work$|how-privates-work/|events$|events/|practice$|practice/|faq$|faq/|bootcamp$|bootcamp/|chefina$|chefina/|coaching$|coaching/|assets/|images/).*)",
+      "source": "/((?!about$|about/|private-sessions$|private-sessions/|how-privates-work$|how-privates-work/|events$|events/|practice$|practice/|faq$|faq/|bootcamp$|bootcamp/|norfolk-retreat$|norfolk-retreat/|chefina$|chefina/|coaching$|coaching/|assets/|images/).*)",
       "destination": "/index.html"
     }
   ]
