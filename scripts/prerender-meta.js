@@ -149,7 +149,7 @@ for (const r of ROUTES) {
     `<meta property="og:description" content="${esc(r.description)}" />`,
     `<meta property="og:image" content="${esc(r.image)}" />`,
     `<meta property="og:image:width" content="1200" />`,
-    `<meta property="og:image:height" content="675" />`,
+    `<meta property="og:image:height" content="630" />`,
     `<meta property="og:image:alt" content="${esc(r.imageAlt)}" />`,
     // Twitter/X
     `<meta name="twitter:card" content="summary_large_image" />`,
