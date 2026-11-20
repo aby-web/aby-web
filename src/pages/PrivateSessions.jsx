@@ -184,8 +184,8 @@ export default function PrivateSessions() {
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           <div>
             <img
-              src="/images/homestudio-warm.webp"
-              alt="The loft yoga studio in West Hampstead, with skylights, plants and warm lighting"
+              src="/images/homestudio1.webp"
+              alt="Home studio — West Hampstead"
               className="w-full h-[480px] object-cover rounded-lg"
             />
           </div>
