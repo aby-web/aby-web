@@ -7,7 +7,7 @@ import Footer from '../components/Footer';
 // so they top out around 400–1360px wide; swap in the originals if they turn up.
 
 const IMG = '/images/norfolk-2027';
-const BOOK_EMAIL = 'mailto:ammar@ammarbass.com?subject=Spring%20Yoga%20Immersion%202027';
+const BOOK_URL = 'https://yorigam.com/book/0598a6673f16f55fa16313fc144b9453';
 
 const TITLE = 'Spring Yoga Immersion 2027 — Norfolk Yoga Retreat | Ammar Bass';
 const DESCRIPTION =
@@ -166,7 +166,7 @@ export default function NorfolkRetreat() {
             Our next retreat brings together strong practice, workshops and home-cooked food. A small group of lovely people sharing a garden, sauna, ice bath and wood-fired hot tub.
           </p>
 
-          <a href="#book" className="inline-block px-8 py-4 rounded-full bg-[#1C1410] text-[#F4EFE6] hover:bg-[#2A1E16] transition-colors text-sm uppercase tracking-wide">
+          <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="inline-block px-8 py-4 rounded-full bg-[#1C1410] text-[#F4EFE6] hover:bg-[#2A1E16] transition-colors text-sm uppercase tracking-wide">
             Book your place
           </a>
         </div>
@@ -331,7 +331,7 @@ export default function NorfolkRetreat() {
           <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-6">How to book your place</h2>
           <ol className="border-t border-[#1C1410] mb-6">
             {[
-              <>Message us with your room choice.</>,
+              <>Choose your room on the booking page.</>,
               <>Pay a <strong className="font-medium text-[#1C1410]">£300 deposit</strong> by bank transfer to hold your place.</>,
               <>Pay the balance by <strong className="font-medium text-[#1C1410]">31 March 2027</strong>. Payment plans possible.</>,
             ].map((step, i) => (
@@ -344,8 +344,8 @@ export default function NorfolkRetreat() {
           <div className="bg-[#F4EFE6] rounded-lg p-5 mb-10 text-[15px] text-[#6B5740]">
             <strong className="font-medium text-[#1C1410]">Only 10 places.</strong> Rooms are allocated in the order bookings are received. The deposit is non-refundable.
           </div>
-          <a href={BOOK_EMAIL} className="inline-block px-8 py-4 rounded-full bg-[#1C1410] text-[#F4EFE6] hover:bg-[#2A1E16] transition-colors text-sm uppercase tracking-wide mb-16">
-            Email to book
+          <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="inline-block px-8 py-4 rounded-full bg-[#1C1410] text-[#F4EFE6] hover:bg-[#2A1E16] transition-colors text-sm uppercase tracking-wide mb-16">
+            Book your place
           </a>
 
           <Eyebrow>Who's teaching</Eyebrow>
