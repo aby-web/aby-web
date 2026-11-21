@@ -8,6 +8,7 @@ import Guide from './pages/Guide';
 import PinchaGuide from './pages/PinchaGuide';
 import PrivateSessions from './pages/PrivateSessions';
 import HowPrivatesWork from './pages/HowPrivatesWork';
+import SaturdayClass from './pages/SaturdayClass';
 import FAQ from './pages/FAQ';
 import Admin from './pages/Admin';
 import Join from './pages/Join';
@@ -55,6 +56,7 @@ function App() {
         <Route path="/pinchaguide" element={<PinchaGuide />} />
         <Route path="/private-sessions" element={<PrivateSessions />} />
         <Route path="/how-privates-work" element={<HowPrivatesWork />} />
+        <Route path="/saturday-class" element={<SaturdayClass />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/join" element={<Join />} />

@@ -22,7 +22,7 @@ export default function PracticeVideos() {
       <div className="max-w-7xl mx-auto px-8">
         <div className="text-center mb-8">
           <h2 className="text-4xl md:text-5xl font-light mb-4 text-[#3D3D3D]">
-            Practice With Me
+            Practise With Me
           </h2>
           <p className="text-lg text-[#666666] max-w-2xl mx-auto">
             Free full-length classes to deepen your practice at home.
@@ -109,7 +109,7 @@ export default function PracticeVideos() {
             to="/practice"
             className="inline-block px-8 py-4 bg-[#785E3D] text-[#F4EFE6] rounded hover:bg-[#665033] transition-colors duration-200 font-medium"
           >
-            View All Practice Videos
+            Watch the class
           </Link>
         </div>
       </div>

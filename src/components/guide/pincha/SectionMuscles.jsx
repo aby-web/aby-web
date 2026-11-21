@@ -413,7 +413,7 @@ export default function SectionMuscles() {
             fontWeight: 300,
           }}
         >
-          When the shoulders close to less than 180°, the trunk drifts toward a planche — and a planche demands far
+          When the shoulders close to less than 180°, the trunk drifts towards a planche — and a planche demands far
           more shoulder strength than a balance ever should. It also shifts your centre of mass away from the
           forearms. The body compensates the only way it can: by arching. That is the banana back, and it is almost
           always a shoulder-flexion problem, not a core problem.
@@ -585,7 +585,7 @@ export default function SectionMuscles() {
               moves: [
                 {
                   name: 'Flexion',
-                  action: 'Arms overhead toward 180°',
+                  action: 'Arms overhead towards 180°',
                   muscle: 'Anterior Deltoid, Serratus',
                   goal: true,
                 },
@@ -600,7 +600,7 @@ export default function SectionMuscles() {
           ]}
           note={
             <>
-              Pincha needs <strong style={{ fontWeight: 500, color: 'oklch(30% 0.015 55)' }}>flexion toward 180° combined with external rotation</strong>. Tight internal rotators (lats, pecs) both limit flexion and drive the elbows wide — the two faults are the same fault.
+              Pincha needs <strong style={{ fontWeight: 500, color: 'oklch(30% 0.015 55)' }}>flexion towards 180° combined with external rotation</strong>. Tight internal rotators (lats, pecs) both limit flexion and drive the elbows wide — the two faults are the same fault.
             </>
           }
         />
@@ -651,7 +651,7 @@ export default function SectionMuscles() {
                 },
                 {
                   name: 'Dorsiflexion',
-                  action: 'Flexed foot, toes toward shin',
+                  action: 'Flexed foot, toes towards shin',
                   muscle: 'Tibialis Anterior',
                   goal: false,
                 },

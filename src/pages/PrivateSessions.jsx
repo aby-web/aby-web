@@ -4,7 +4,9 @@ import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
 import Footer from '../components/Footer';
 import { supabase } from '../lib/supabase';
-import { pricing, offers, CALENDLY_URL } from '../data/privateSessions';
+import Testimonials from '../components/Testimonials';
+import { WhatsAppButton } from '../components/WhatsAppGroupButton';
+import { pricing, offers, CALENDLY_URL, PRIVATE_WHATSAPP_URL } from '../data/privateSessions';
 
 export default function PrivateSessions() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -57,10 +59,10 @@ export default function PrivateSessions() {
     <div className="min-h-screen">
       <Helmet>
         <title>Private Yoga Sessions in West Hampstead | Ammar Bass</title>
-        <meta name="description" content="One-to-one yoga in West Hampstead, London. Build strong foundations or work toward handstands and arm balances — sessions designed around you. Free 15-min discovery call." />
+        <meta name="description" content="One-to-one yoga in West Hampstead, London. Build strong foundations or work towards handstands and arm balances — sessions designed around you. Free 15-min discovery call." />
         <meta name="keywords" content="private yoga West Hampstead, 1-to-1 yoga London, handstand coaching, arm balance tuition, NW6 yoga teacher" />
         <meta property="og:title" content="Private Yoga Sessions in West Hampstead | Ammar Bass" />
-        <meta property="og:description" content="One-to-one yoga in West Hampstead, London. Build strong foundations or work toward handstands and arm balances." />
+        <meta property="og:description" content="One-to-one yoga in West Hampstead, London. Build strong foundations or work towards handstands and arm balances." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://ammarbass.com/private-sessions" />
         <meta property="og:image" content="https://ammarbass.com/images/about.webp" />
@@ -199,6 +201,9 @@ export default function PrivateSessions() {
                 In-person sessions take place at my private home studio in West Hampstead (NW6) — a clean, quiet space set up specifically for one-to-one practice. No distractions, no drop-ins.
               </p>
               <p>
+                About 15 minutes' walk from West Hampstead station. Free parking.
+              </p>
+              <p>
                 If the studio doesn't suit you, I also teach online, or at your home (a travel fee may apply). The same structure, the same attention.
               </p>
               <p>
@@ -208,6 +213,9 @@ export default function PrivateSessions() {
           </div>
         </div>
       </section>
+
+      {/* Testimonials */}
+      <Testimonials page="private-sessions" heading="What private clients say" />
 
       {/* Pricing */}
       <section className="bg-[#EAE0CF] px-8 md:px-12 py-24">
@@ -237,7 +245,7 @@ export default function PrivateSessions() {
             Let's discuss your goals
           </h2>
           <p className="text-lg text-[#6B5740] mb-12">
-            Book a complimentary 15-minute discovery call or send me a message about your goals.
+            Book a complimentary 15-minute discovery call, or message me about your goals.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
@@ -253,13 +261,25 @@ export default function PrivateSessions() {
             >
               Book Discovery Call
             </a>
+            <WhatsAppButton
+              href={PRIVATE_WHATSAPP_URL}
+              ariaLabel="Message Ammar on WhatsApp about private sessions (opens WhatsApp)"
+              variant="outlineDark"
+              className="px-8 py-4 text-sm"
+            >
+              Message me on WhatsApp
+            </WhatsAppButton>
+          </div>
+          {/* The enquiry form stays, as the quieter third option */}
+          <p className="mt-6 text-sm text-[#6B5740]">
+            Not on WhatsApp?{' '}
             <button
               onClick={() => setShowContactModal(true)}
-              className="inline-block px-8 py-4 rounded-full bg-transparent border-2 border-[#1C1410] text-[#1C1410] hover:bg-[#1C1410] hover:text-[#F4EFE6] transition-colors text-sm uppercase tracking-wide"
+              className="min-h-[44px] underline underline-offset-4 text-[#785E3D] hover:text-[#1C1410] transition-colors"
             >
-              Send Message
+              Send me a message here
             </button>
-          </div>
+          </p>
         </div>
       </section>
 

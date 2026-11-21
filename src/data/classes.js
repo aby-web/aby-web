@@ -1,8 +1,8 @@
 // Weekly class schedule, plus the details of my own Saturday class.
 // The first block (the Saturday class) is shown as a full-width card above
 // the studio grid; the rest are laid out two per row in the order below.
-// Edit this file to change the timetable; Schedule.jsx, the hero and the
-// mobile menu all read from here.
+// Edit this file to change the timetable; Schedule.jsx, the hero, the menu
+// and the Saturday class page all read from here.
 //
 // Dates are 'YYYY-MM-DD' in London time:
 //   from  – first class. Before this date the entry shows "From Sat 5 Dec".
@@ -11,33 +11,59 @@
 // the day by themselves. No redeploy or follow-up commit is needed.
 
 // ── Ammar's Saturday class ────────────────────────────────────────────────
-// Swap the venue here once it's confirmed; it's used everywhere.
-export const SATURDAY_VENUE = 'Marylebone, venue confirmed in the WhatsApp group';
+// Everything about the class is set here and read by /saturday-class, the
+// homepage hero note, the schedule card, the menu and the footer.
+export const SATURDAY_PAGE = '/saturday-class';
 export const SATURDAY_AREA = 'Marylebone';
 export const SATURDAY_START = '2026-12-05';
+export const SATURDAY_PRICE = 15; // £, drop-in
+
+// TODO(Ammar): venue name once the school confirms, e.g. 'St Example Hall'.
+// While this is null the site says only "Marylebone" and the address is
+// shared in the WhatsApp group. Set it and it appears on the page, the
+// schedule card and the search-engine data.
+export const SATURDAY_VENUE_NAME = null;
+
+// Indaba's last day. Until then the page says Indaba "closes at the end of
+// November"; from the next day it says it "has closed". Switches by itself.
+export const INDABA_LAST_DAY = '2026-11-30';
 
 export const WHATSAPP_GROUP_URL = 'https://chat.whatsapp.com/CUYlKibLFgpFfFPRXp7O5t?s=qt&p=i&iam=2';
 export const WHATSAPP_GROUP_NAME = "Ammar's Saturday 11:30";
 
+// TODO(Ammar): when the Yorigam booking page for the class exists, paste its
+// address here (e.g. 'https://yorigam.com/book/...'). The main button on
+// /saturday-class then becomes "Book your place" and the WhatsApp group
+// becomes the second link. Leave null to keep booking through WhatsApp.
+export const SATURDAY_BOOKING_URL = null;
+
+// "Marylebone, W1" or "St Example Hall, Marylebone, W1".
+export const saturdayWhere = () =>
+  (SATURDAY_VENUE_NAME ? `${SATURDAY_VENUE_NAME}, ` : '') + `${SATURDAY_AREA}, W1`;
+
 export const YORIGAM_URL = 'https://yorigam.com';
 
-const HOME_URL = 'http://homewellness.uk/';
-const FLO_URL = 'https://www.floyogastudio.co.uk/book-a-class';
+const HOME_URL = 'https://homewellness.uk/book-yoga/';
+// Flo's West Hampstead studio page: live timetable with booking.
+const FLO_URL = 'https://www.floyogastudio.co.uk/west-hampstead';
 
 export const schedule = [
   {
     id: 'saturday-class',
     location: "Ammar's Saturday class",
     area: SATURDAY_AREA,
-    // Shown under the heading; joining the group is how you book.
+    // Shown under the heading. The card links to the class page, where the
+    // WhatsApp / booking button lives.
     note: [
-      SATURDAY_VENUE + '.',
-      'Join the WhatsApp group to come along. Bring your own mat.',
+      SATURDAY_VENUE_NAME
+        ? `${saturdayWhere()}.`
+        : `${saturdayWhere()}. The exact address is shared in the WhatsApp group.`,
+      `£${SATURDAY_PRICE} drop-in. Bring your own mat.`,
     ],
     classes: [
       {
         day: 'Saturday', time: '11:30–13:00', name: 'Vinyasa (90)',
-        from: SATURDAY_START, url: WHATSAPP_GROUP_URL, cta: 'whatsapp',
+        from: SATURDAY_START, url: SATURDAY_PAGE, cta: 'details',
       },
     ],
   },
@@ -45,7 +71,7 @@ export const schedule = [
     location: 'HOME Wellness',
     area: 'Primrose Hill · 7 Erskine Road, NW3 3AJ',
     classes: [
-      { day: 'Tuesday', time: '07:15', name: 'Warm Vinyasa', from: '2026-12-01', url: 'https://homewellness.uk/book-yoga/' },
+      { day: 'Tuesday', time: '07:15', name: 'Warm Vinyasa', from: '2026-12-01', url: HOME_URL },
       { day: 'Wednesday', time: '18:00', name: 'Vinyasa', url: HOME_URL },
       { day: 'Friday', time: '18:00', name: 'Vinyasa (75)', url: HOME_URL },
       { day: 'Sunday', time: '10:00', name: 'Vinyasa (75)', url: HOME_URL },
@@ -53,7 +79,7 @@ export const schedule = [
   },
   {
     location: 'Flo',
-    area: 'Hampstead',
+    area: 'West Hampstead',
     classes: [
       // "Flo" not "Flow" — named after the studio.
       { day: 'Monday', time: '07:15', name: 'Flo', url: FLO_URL },

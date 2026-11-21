@@ -67,7 +67,7 @@ export default function HowPrivatesWork() {
             Private sessions
           </p>
           <h1 className="text-5xl md:text-6xl font-light leading-tight mb-6">
-            How privates work
+            How private sessions work
           </h1>
           <p className="text-lg text-[#6B5740] max-w-2xl mx-auto">
             Everything you need to know before we start: what it costs, how to book, and what happens when you arrive. If you're looking for private yoga in West Hampstead, this is the whole picture in one place.

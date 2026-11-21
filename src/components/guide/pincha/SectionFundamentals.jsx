@@ -16,7 +16,7 @@ export default function SectionFundamentals() {
       name: 'Elbows',
       key: 'Shoulder-width apart and fixed there. Elbows must never splay wider than the shoulders.',
       detail:
-        'This is the defining challenge of Pincha. As you kick up, tight shoulders drive the elbows outward, collapsing the base. Hug the forearms toward the midline and stack elbow directly under shoulder. If they drift wide, the whole structure loses its stack and the shoulders take the strain.',
+        'This is the defining challenge of Pincha. As you kick up, tight shoulders drive the elbows outward, collapsing the base. Hug the forearms towards the midline and stack elbow directly under shoulder. If they drift wide, the whole structure loses its stack and the shoulders take the strain.',
     },
     {
       num: '03',

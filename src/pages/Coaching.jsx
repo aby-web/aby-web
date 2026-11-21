@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
+import { CALENDLY_URL } from '../data/privateSessions';
 
 /*
  * ─────────────────────────────────────────────────────────────────────────────
@@ -442,7 +443,7 @@ export default function Coaching() {
                 e.preventDefault();
                 if (window.Calendly) {
                   window.Calendly.initPopupWidget({
-                    url: 'https://calendly.com/ammar-ammarbass/30min',
+                    url: CALENDLY_URL,
                   });
                 }
                 return false;

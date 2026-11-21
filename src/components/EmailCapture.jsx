@@ -59,7 +59,7 @@ export default function EmailCapture() {
           Stay connected
         </h2>
         <p className="text-base text-[#6B5740] mb-8">
-          Get first access to new classes, workshops, and international retreats before they fill up.
+          One email a month: new classes, 120 Power dates and retreat places before they go public.
         </p>
 
         {status === 'success' || status === 'exists' ? (

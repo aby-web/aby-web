@@ -1,4 +1,4 @@
-import { YORIGAM_URL } from '../data/classes';
+import { YORIGAM_URL, SATURDAY_PAGE } from '../data/classes';
 
 export default function Footer() {
   return (
@@ -29,7 +29,10 @@ export default function Footer() {
                 About
               </a>
               <a href="/private-sessions" className="text-sm text-[#C9B99A] hover:text-[#E5D5B7] transition-colors">
-                Private
+                Private sessions
+              </a>
+              <a href={SATURDAY_PAGE} className="text-sm text-[#C9B99A] hover:text-[#E5D5B7] transition-colors">
+                Saturday class
               </a>
               <a href="/events" className="text-sm text-[#C9B99A] hover:text-[#E5D5B7] transition-colors">
                 Events

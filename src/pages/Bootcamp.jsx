@@ -162,7 +162,7 @@ export default function Bootcamp() {
           <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-3">Who is it for?</p>
           <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-6">This is an intensive, not a holiday</h2>
           <p className="text-[#6B5740] leading-relaxed mb-6">
-            This bootcamp is open to those who practice with us regularly. It's an intensive yoga program designed to deepen your practice — not a retreat for beginners. You'll gain new skills and tools, approach challenging poses with confidence, and connect with yoga beyond just the physical.
+            This bootcamp is open to those who practise with us regularly. It's an intensive yoga programme designed to deepen your practice — not a retreat for beginners. You'll gain new skills and tools, approach challenging poses with confidence, and connect with yoga beyond just the physical.
           </p>
           <p className="text-[#6B5740] leading-relaxed mb-8">
             That said, it's not all hard work. There's time to relax, connect with others, and enjoy the setting.

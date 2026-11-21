@@ -9,7 +9,7 @@ export default function About() {
     <div className="min-h-screen">
       <Helmet>
         <title>About Ammar Bass | London Yoga Teacher | Strength & Alignment Focus</title>
-        <meta name="description" content="Vipassana meditation practitioner with competitive swimming and powerlifting background. Teaching alignment-focused vinyasa at HOME Wellness, BXR, Yogarise, Flo Yoga and his own Saturday class in Marylebone. Specializing in arm balances, inversions, and biomechanics." />
+        <meta name="description" content="Vipassana meditation practitioner with competitive swimming and powerlifting background. Teaching alignment-focused vinyasa at HOME Wellness, BXR, Yogarise, Flo Yoga and his own Saturday class in Marylebone. Specialising in arm balances, inversions, and biomechanics." />
         <meta name="keywords" content="Ammar Bass, yoga teacher background, Vipassana meditation, powerlifting yoga, biomechanics yoga, London yoga instructor, arm balance specialist, inversion training" />
 
         {/* Open Graph */}
@@ -48,7 +48,7 @@ export default function About() {
                 {
                   "@type": "Organization",
                   "name": "HOME Wellness",
-                  "url": "http://homewellness.uk/"
+                  "url": "https://homewellness.uk/"
                 },
                 {
                   "@type": "Organization",
@@ -146,7 +146,7 @@ export default function About() {
       </section>
 
       {/* Testimonials */}
-      <Testimonials />
+      <Testimonials page="about" />
 
       {/* CTA Section */}
       <section className="bg-[#EAE0CF] px-8 md:px-12 py-18">

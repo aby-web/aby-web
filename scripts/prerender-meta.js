@@ -48,9 +48,17 @@ const ROUTES = [
     path: 'private-sessions',
     title: 'Private Yoga Sessions in West Hampstead | Ammar Bass',
     description:
-      'One-to-one yoga in West Hampstead, London. Build strong foundations or work toward handstands and arm balances — sessions designed around you. Free 15-min discovery call.',
+      'One-to-one yoga in West Hampstead, London. Build strong foundations or work towards handstands and arm balances — sessions designed around you. Free 15-min discovery call.',
     image: `${SITE}/images/og-private.jpg`,
     imageAlt: 'Ammar Bass, yoga teacher in West Hampstead, London',
+  },
+  {
+    path: 'saturday-class',
+    title: 'Saturday Yoga Class in Marylebone | Ammar Bass',
+    description:
+      'A strong 90-minute vinyasa class with Ammar Bass in Marylebone, London. Saturdays 11:30–13:00, from 5 December 2026. £15 drop-in. Join the WhatsApp group to come.',
+    image: `${SITE}/images/og-saturday-class.jpg`,
+    imageAlt: 'Students resting at the end of a yoga class while Ammar Bass sits at the front of the room',
   },
   {
     path: 'how-privates-work',

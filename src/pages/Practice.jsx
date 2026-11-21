@@ -16,16 +16,6 @@ const PRACTICE_VIDEOS = [
     youtubeId: 'jdQFOMM0Hsw',
     comingSoon: false,
   },
-  {
-    id: 2,
-    title: 'Open Level Vinyasa',
-    description: 'An accessible yet engaging 75-minute practice suitable for all levels. Explore mindful movement and breath awareness through thoughtfully sequenced flows. Perfect for building consistency in your practice.',
-    duration: '75 min',
-    level: 'Open Level',
-    thumbnail: '/images/about.webp',
-    focus: ['Mindfulness', 'Foundations', 'Flow'],
-    comingSoon: true,
-  },
 ];
 
 export default function Practice() {
@@ -39,11 +29,11 @@ export default function Practice() {
     <div className="min-h-screen">
       <Helmet>
         <title>Free Practice Videos | Ammar Bass Yoga</title>
-        <meta name="description" content="Free full-length yoga classes with Ammar Bass. Practice strength-based vinyasa flows, arm balances, and mindful movement from home." />
+        <meta name="description" content="Free full-length yoga classes with Ammar Bass. Practise strength-based vinyasa flows, arm balances, and mindful movement from home." />
         <meta name="keywords" content="free yoga videos, vinyasa flow online, yoga practice videos, strength yoga at home, online yoga classes" />
 
         <meta property="og:title" content="Free Practice Videos | Ammar Bass Yoga" />
-        <meta property="og:description" content="Free full-length yoga classes. Practice strength-based vinyasa flows from home." />
+        <meta property="og:description" content="Free full-length yoga classes. Practise strength-based vinyasa flows from home." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://ammarbass.com/practice" />
 
@@ -58,7 +48,7 @@ export default function Practice() {
           {/* Header */}
           <div className="text-center mb-16">
             <h1 className="text-5xl md:text-6xl font-light mb-6 text-[#3D3D3D]">
-              Practice With Me
+              Practise With Me
             </h1>
             <p className="text-xl text-[#666666] max-w-3xl mx-auto">
               Free full-length classes to support your practice at home. Each class is thoughtfully sequenced
@@ -169,7 +159,7 @@ export default function Practice() {
                         onClick={() => setSelectedVideo(video.id)}
                         className="w-full px-6 py-3 bg-[#785E3D] text-[#F4EFE6] rounded hover:bg-[#665033] transition-colors duration-200 font-medium"
                       >
-                        Practice Now
+                        Practise Now
                       </button>
                     )}
                   </div>
@@ -184,7 +174,7 @@ export default function Practice() {
               Want More Personalised Guidance?
             </h2>
             <p className="text-[#666666] mb-6 max-w-2xl mx-auto">
-              These free classes are a great way to practice with me at home.
+              These free classes are a great way to practise with me at home.
               For personalised instruction tailored to your goals, consider booking a private session.
             </p>
             <a

@@ -10,7 +10,14 @@ export const PRICE_75 = 90;
 export const PACK_SIZE = 5;
 export const PACK_DISCOUNT = 15; // per cent
 
+// The discovery call is 15 minutes. The Calendly event is a 15-minute event;
+// only its address still says "30min" (confirmed by Ammar, 21 Nov 2026).
+// Every discovery call button on the site reads this one link.
 export const CALENDLY_URL = 'https://calendly.com/ammar-ammarbass/30min';
+
+// WhatsApp for private session enquiries. Change the number here only.
+export const PRIVATE_WHATSAPP_NUMBER = '447877786632';
+export const PRIVATE_WHATSAPP_URL = `https://wa.me/${PRIVATE_WHATSAPP_NUMBER}`;
 
 // Rows for the visible price list.
 export const pricing = [

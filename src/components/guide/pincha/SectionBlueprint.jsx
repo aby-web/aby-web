@@ -12,7 +12,7 @@ export default function SectionBlueprint() {
     {
       time: '2 min',
       phase: 'Dolphin Hold',
-      desc: 'Your foundation drill. Build toward a comfortable two-minute hold in clean form — this is the entry ticket to forearm balance.',
+      desc: 'Your foundation drill. Build towards a comfortable two-minute hold in clean form — this is the entry ticket to forearm balance.',
     },
     {
       time: '15–20 min',
@@ -66,7 +66,7 @@ export default function SectionBlueprint() {
       <SectionHeader
         number="04"
         title="Your Practice Blueprint"
-        subtitle="A general framework built toward a 30-second freestanding hold. Adjust the emphasis to whatever your own practice needs most."
+        subtitle="A general framework built towards a 30-second freestanding hold. Adjust the emphasis to whatever your own practice needs most."
       />
 
       <div style={{ marginBottom: 48 }}>

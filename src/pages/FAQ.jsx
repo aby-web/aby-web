@@ -18,7 +18,7 @@ export default function FAQ() {
         },
         {
           q: "What should I bring to class?",
-          a: "Most studios provide mats and props. Just bring water, a towel, and wear comfortable athletic clothing. Avoid anything too loose that will flip over your head in inversions."
+          a: "The studios provide mats and props. For my Saturday class in Marylebone, bring your own mat. Either way, bring water and a towel, and wear comfortable athletic clothing. Avoid anything too loose that will flip over your head in inversions."
         },
         {
           q: "What if I can't do arm balances or inversions?",
@@ -31,7 +31,7 @@ export default function FAQ() {
       questions: [
         {
           q: "How do I book a class?",
-          a: "All classes are booked through the individual studio systems or via Mindbody. Booking links are provided in the schedule section of the homepage."
+          a: "Studio classes are booked on each studio's own website; the links are in the schedule on the homepage. My Saturday class in Marylebone is booked through its WhatsApp group."
         },
         {
           q: "What's the cancellation policy?",
@@ -43,7 +43,7 @@ export default function FAQ() {
         },
         {
           q: "What's the difference between your class types?",
-          a: "All my classes are vinyasa-based with a focus on strength and alignment. The main difference is intensity level and time spent on arm balances/inversions. Check the Classes page for detailed descriptions."
+          a: "All my classes are vinyasa-based with a focus on strength and alignment. The main difference is intensity level and time spent on arm balances/inversions."
         }
       ]
     },
@@ -71,8 +71,8 @@ export default function FAQ() {
           a: "It depends on your goal. Most students see significant progress in 8-12 sessions. Some specific goals (like a solid handstand) typically take 10-15 sessions with consistent practice between sessions. Book a discovery call to discuss your specific goals and create a plan."
         },
         {
-          q: "Do I need to practice between sessions?",
-          a: "It helps, but it's not essential — it depends on your goals and available time. Private sessions give you the technique and progression plan. If you're working toward a specific skill, practicing 3-4 times per week will accelerate progress. I'll give you exercises to work on at your own pace."
+          q: "Do I need to practise between sessions?",
+          a: "It helps, but it's not essential — it depends on your goals and available time. Private sessions give you the technique and progression plan. If you're working towards a specific skill, practising 3-4 times per week will accelerate progress. I'll give you exercises to work on at your own pace."
         }
       ]
     },
@@ -81,7 +81,7 @@ export default function FAQ() {
       questions: [
         {
           q: "How are workshops different from regular classes?",
-          a: "Workshops are 2-3 hours focused on one specific skill (like arm balances or inversions). You get detailed breakdowns, individual feedback, and time to practice progressions you wouldn't cover in a regular class."
+          a: "Workshops are 2-3 hours focused on one specific skill (like arm balances or inversions). You get detailed breakdowns, individual feedback, and time to practise progressions you wouldn't cover in a regular class."
         },
         {
           q: "What level do I need to be for workshops?",
@@ -106,11 +106,11 @@ export default function FAQ() {
         },
         {
           q: "I have an injury. Can I still attend?",
-          a: "Maybe. Tell me about it before class or book a private session where we can work around limitations. For ongoing injuries, I recommend working one-on-one so I can give you proper modifications."
+          a: "Usually, yes. Tell me before class and I will give you alternatives. For anything ongoing, a private session is the better place to start."
         },
         {
           q: "How is your approach different from other yoga teachers?",
-          a: "I approach yoga as a holistic practice centred around longevity. Everything we do is structured and progressive — we train specific skills with discipline, but always in service of a sustainable lifelong practice. We develop strength in neglected areas of the body, touch on the importance of mindfulness, and treat the practice as a way to train both mind and body for meditation. I can be strict in classes, but it's to help students maintain focus and concentration. The practice requires great effort, but it's effort directed toward something that lasts."
+          a: "I approach yoga as a holistic practice centred around longevity. Everything we do is structured and progressive — we train specific skills with discipline, but always in service of a sustainable lifelong practice. We develop strength in neglected areas of the body, touch on the importance of mindfulness, and treat the practice as a way to train both mind and body for meditation. I keep the room quiet and focused, so you can concentrate on your own practice. The practice requires great effort, but it's effort directed towards something that lasts."
         }
       ]
     }

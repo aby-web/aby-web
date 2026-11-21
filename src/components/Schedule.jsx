@@ -1,5 +1,4 @@
-import { currentSchedule, londonToday, shortDate } from '../data/classes';
-import WhatsAppGroupButton from './WhatsAppGroupButton';
+import { currentSchedule, londonToday, shortDate, SATURDAY_PAGE } from '../data/classes';
 
 // The timetable lives in src/data/classes.js. Classes past their `until`
 // date drop off and "From …" labels disappear on the start date, on their own.
@@ -32,8 +31,8 @@ function ClassRow({ classItem, today }) {
         </div>
       </div>
 
-      {/* Book Button (the Saturday class books through WhatsApp instead) */}
-      {classItem.cta !== 'whatsapp' && (
+      {/* Book Button (the Saturday card has one button under the row instead) */}
+      {classItem.cta !== 'details' && (
         <a
           href={classItem.url}
           target="_blank"
@@ -79,7 +78,7 @@ export default function Schedule() {
           </h2>
         </div>
 
-        {/* My own Saturday class: full-width card, joined via WhatsApp */}
+        {/* My own Saturday class: full-width card linking to its own page */}
         <div
           id={featured.id}
           className="scroll-mt-24 mb-16 bg-[#EAE0CF] rounded-lg p-6 md:p-10 grid gap-8 lg:grid-cols-2 lg:gap-12 lg:items-center"
@@ -101,7 +100,12 @@ export default function Schedule() {
                 <ClassRow key={c.day + c.time} classItem={c} today={today} />
               ))}
             </div>
-            <WhatsAppGroupButton className="mt-6 w-full sm:w-auto" />
+            <a
+              href={SATURDAY_PAGE}
+              className="mt-6 w-full sm:w-auto inline-flex items-center justify-center min-h-[44px] px-6 rounded-full bg-[#1C1410] text-[#F4EFE6] hover:bg-[#2A1E16] transition-colors text-xs uppercase tracking-wide"
+            >
+              Class details and how to join
+            </a>
           </div>
         </div>
 

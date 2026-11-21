@@ -568,7 +568,7 @@ export default function SectionMuscles() {
                 },
                 {
                   name: 'Dorsiflexion',
-                  action: 'Flexed foot, toes toward shin',
+                  action: 'Flexed foot, toes towards shin',
                   muscle: 'Tibialis Anterior',
                   goal: false,
                 },

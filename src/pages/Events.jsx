@@ -150,7 +150,7 @@ export default function Events() {
     <div className="min-h-screen bg-[#F4EFE6]">
       <Helmet>
         <title>Yoga Workshops & Retreats London | Ammar Bass Events</title>
-        <meta name="description" content="Join Ammar Bass for yoga workshops, arm balance intensives, and transformative retreats in London. Deepen your practice with specialized events focusing on alignment, inversions, and strength." />
+        <meta name="description" content="Join Ammar Bass for yoga workshops, arm balance intensives, and transformative retreats in London. Deepen your practice with specialised events focusing on alignment, inversions, and strength." />
         <meta name="keywords" content="yoga workshops London, yoga retreats UK, arm balance workshop, inversion workshop, yoga events London, vinyasa intensive, yoga teacher workshop" />
 
         {/* Open Graph */}

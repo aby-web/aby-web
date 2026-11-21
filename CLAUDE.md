@@ -11,6 +11,23 @@ React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all s
 
 ---
 
+## Site review and staged plan (21 Nov 2026)
+
+`docs/site-review.md` is the current plan: five stages, each with its own prompt.
+**Stage 1 (fix facts, launch `/saturday-class`) shipped 21 Nov 2026.** Stage 2 (pre-render for
+crawlers) supersedes the Phase 1 plan below; read both before starting it.
+
+Where things are set, each in one place:
+
+- `src/data/classes.js`: weekly schedule; Saturday class price, start date, venue name
+  (`SATURDAY_VENUE_NAME`, null until confirmed), booking link (`SATURDAY_BOOKING_URL`, null =
+  book through WhatsApp), WhatsApp group link.
+- `src/data/privateSessions.js`: private prices, Calendly link (a 15-minute event; only the
+  address says "30min"), WhatsApp number for private enquiries.
+- `src/data/testimonials.js`: named testimonials and which pages show them. Quotes are verbatim;
+  do not edit the wording. The Supabase `testimonials` table and the Admin tab for it are no
+  longer shown anywhere on the site.
+
 ## ⚠️ WORK IN PROGRESS — SEO overhaul, paused 14 Oct 2026
 
 **If the user starts a session (even just "run the dev server"), tell them this work is

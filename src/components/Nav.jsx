@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import WhatsAppGroupButton from './WhatsAppGroupButton';
+import { SATURDAY_PAGE } from '../data/classes';
 
 export default function Nav({ theme = 'dark' }) {
   const [scrolled, setScrolled] = useState(false);
@@ -37,6 +38,8 @@ export default function Nav({ theme = 'dark' }) {
 
   // Helper function to check if link is active
   const isActive = (path) => location.pathname === path;
+  // "Private sessions" also covers the how-it-works page, which has no menu item of its own.
+  const isPrivate = isActive('/private-sessions') || isActive('/how-privates-work');
 
   // Active link color - white when dark/scrolled, accent when light
   const getActiveColor = () => {
@@ -65,8 +68,8 @@ export default function Nav({ theme = 'dark' }) {
             />
           </a>
 
-          {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-8">
+          {/* Desktop Nav Links (from 1024px; six items don't fit on a tablet) */}
+          <div className="hidden lg:flex items-center gap-8 whitespace-nowrap">
             <a
               href="/about"
               className={`${isActive('/about') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
@@ -75,15 +78,15 @@ export default function Nav({ theme = 'dark' }) {
             </a>
             <a
               href="/private-sessions"
-              className={`${isActive('/private-sessions') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
+              className={`${isPrivate ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
             >
-              Private
+              Private sessions
             </a>
             <a
-              href="/how-privates-work"
-              className={`${isActive('/how-privates-work') ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
+              href={SATURDAY_PAGE}
+              className={`${isActive(SATURDAY_PAGE) ? getActiveColor() : textOpacity} text-[13px] uppercase tracking-[0.06em] ${textColorHover} transition-colors`}
             >
-              How privates work
+              Saturday class
             </a>
             <a
               href="/events"
@@ -108,7 +111,7 @@ export default function Nav({ theme = 'dark' }) {
           {/* Mobile Hamburger Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`md:hidden flex flex-col gap-1.5 ${mobileMenuOpen ? 'text-[#C9A878]' : textColor} transition-colors relative z-[60]`}
+            className={`lg:hidden flex flex-col gap-1.5 ${mobileMenuOpen ? 'text-[#C9A878]' : textColor} transition-colors relative z-[60]`}
             aria-label="Toggle menu"
           >
             <span className={`w-6 h-0.5 bg-current transition-all ${mobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
@@ -120,7 +123,7 @@ export default function Nav({ theme = 'dark' }) {
 
       {/* Mobile Menu - Outside nav to avoid backdrop-blur inheritance */}
       <div
-        className={`md:hidden fixed inset-0 top-[72px] transform transition-transform duration-300 ease-in-out z-[55] ${
+        className={`lg:hidden fixed inset-0 top-[72px] transform transition-transform duration-300 ease-in-out z-[55] ${
           mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         style={{
@@ -138,16 +141,16 @@ export default function Nav({ theme = 'dark' }) {
           <a
             href="/private-sessions"
             onClick={() => setMobileMenuOpen(false)}
-            className={`${isActive('/private-sessions') ? 'text-[#C9A878]' : 'text-white/90'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/20`}
+            className={`${isPrivate ? 'text-[#C9A878]' : 'text-white/90'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/20`}
           >
-            Private
+            Private sessions
           </a>
           <a
-            href="/how-privates-work"
+            href={SATURDAY_PAGE}
             onClick={() => setMobileMenuOpen(false)}
-            className={`${isActive('/how-privates-work') ? 'text-[#C9A878]' : 'text-white/90'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/20`}
+            className={`${isActive(SATURDAY_PAGE) ? 'text-[#C9A878]' : 'text-white/90'} text-lg uppercase tracking-[0.06em] hover:text-white transition-colors py-3 border-b border-white/20`}
           >
-            How privates work
+            Saturday class
           </a>
           <a
             href="/events"
