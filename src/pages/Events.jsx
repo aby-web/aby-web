@@ -22,7 +22,7 @@ function EventCard({ event }) {
         <div className="relative h-56 w-full">
           <img
             src={event.image_url}
-            alt={`${event.title} at ${event.location}`}
+            alt={`Photo for ${event.title} at ${event.location}, ${longDate(event.date)}`}
             loading="lazy"
             className="h-full w-full object-cover"
           />

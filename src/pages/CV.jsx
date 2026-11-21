@@ -252,7 +252,7 @@ export default function CV() {
           </div>
 
           <div className="photo-wrap">
-            <img src="/images/ammar-cv.jpg" alt="Ammar Bass" />
+            <img src="/images/ammar-cv.jpg" alt="Portrait of Ammar Bass, smiling in a white T-shirt" />
           </div>
 
           <div className="main">

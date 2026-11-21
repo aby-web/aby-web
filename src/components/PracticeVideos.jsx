@@ -9,6 +9,7 @@ const PRACTICE_VIDEOS = [
     duration: '75 min',
     level: 'All Levels',
     thumbnail: '/images/video1_thumb.webp',
+    thumbnailAlt: 'Ammar Bass in a side-angle lunge on a mat in his loft studio, from the Dynamic Vinyasa Flow class',
     youtubeId: 'jdQFOMM0Hsw',
     comingSoon: false,
   },
@@ -44,7 +45,7 @@ export default function PracticeVideos() {
                     <img
                       src={video.thumbnail}
                       loading="lazy"
-                      alt={video.title}
+                      alt={video.thumbnailAlt || video.title}
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
@@ -70,7 +71,7 @@ export default function PracticeVideos() {
                     <img
                       src={video.thumbnail}
                       loading="lazy"
-                      alt={video.title}
+                      alt={video.thumbnailAlt || video.title}
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors duration-200 flex items-center justify-center">

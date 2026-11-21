@@ -35,7 +35,7 @@ function GuideHeader() {
       <a href="/" className="flex items-center">
         <img
           src="/images/logo.png"
-          alt="Ammar Bass"
+          alt="Ammar Bass logo"
           className="w-auto transition-all duration-300"
           style={{ height: '22px' }}
         />

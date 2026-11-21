@@ -13,7 +13,7 @@ export default function Bootcamp() {
       <section className="relative h-[45vh] min-h-[580px] md:min-h-[420px] flex items-center justify-center overflow-hidden">
         <img
           src="/images/d.jpeg"
-          alt="Bulgaria sunset beach"
+          alt="Sunset over the Black Sea from a rocky shore near Varna, Bulgaria"
           className="absolute inset-0 w-full h-full object-cover"
         />
         {/* Fallback: swap to /images/retreat-beach.jpg if sunset colours don't work */}
@@ -99,13 +99,13 @@ export default function Bootcamp() {
             <img
               loading="lazy"
               src="/images/retreat-cabin.jpg"
-              alt="Accommodation at Blue Summer Eco Houses"
+              alt="Twin beds in a wooden cabin bedroom at Blue Summer Eco Houses"
               className="w-full rounded-lg object-cover h-56"
             />
             <img
               loading="lazy"
               src="/images/retreat-forest.jpg"
-              alt="Forest dining area"
+              alt="A white cabin with a small terrace among the trees at Blue Summer Eco Houses"
               className="w-full rounded-lg object-cover h-56"
             />
           </div>
@@ -129,7 +129,7 @@ export default function Bootcamp() {
           <img
             loading="lazy"
             src="/images/b.jpeg"
-            alt="Yoga practice on podium"
+            alt="A group of students standing together on the wooden practice deck in the forest"
             className="w-full rounded-lg object-cover h-64 md:h-80 mb-8"
             style={{ objectPosition: 'center bottom' }}
           />
@@ -169,7 +169,7 @@ export default function Bootcamp() {
           <img
             loading="lazy"
             src="/images/retreat-practice.jpg"
-            alt="Group yoga practice"
+            alt="A group practising a warrior pose on a wooden deck among the trees, with the sea behind"
             className="w-full rounded-lg object-cover h-64 md:h-80"
           />
         </div>
@@ -205,7 +205,7 @@ export default function Bootcamp() {
               <img
                 loading="lazy"
                 src="/images/c.jpeg"
-                alt="Blue Summer Eco Houses location"
+                alt="Aerial map of the Black Sea coastline showing where Blue Summer Eco Houses is"
                 className="w-full object-cover h-56 group-hover:scale-105 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors flex items-center justify-center">
@@ -227,7 +227,7 @@ export default function Bootcamp() {
               <img
                 loading="lazy"
                 src="/images/ammar.jpg"
-                alt="Ammar Bass"
+                alt="Portrait of Ammar Bass in a black T-shirt"
                 className="w-full h-72 object-cover object-top rounded-lg mb-5"
               />
               <p className="text-lg font-light text-[#1C1410] mb-1">Ammar Bass</p>
@@ -240,7 +240,7 @@ export default function Bootcamp() {
               <img
                 loading="lazy"
                 src="/images/ina.jpg"
-                alt="Ina Yordanova"
+                alt="Portrait of Ina Yordanova in a black top"
                 className="w-full h-72 object-cover object-top rounded-lg mb-5"
               />
               <p className="text-lg font-light text-[#1C1410] mb-1">Ina Yordanova</p>
@@ -258,7 +258,7 @@ export default function Bootcamp() {
         <img
           loading="lazy"
           src="/images/a.jpeg"
-          alt="Bulgaria beach"
+          alt="People walking along the beach below wooded cliffs near the retreat venue"
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/60"></div>

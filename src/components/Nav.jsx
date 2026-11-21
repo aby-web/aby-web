@@ -62,7 +62,7 @@ export default function Nav({ theme = 'dark' }) {
           <a href="/" className="flex items-center">
             <img
               src="/images/logo.png"
-              alt="Ammar Bass"
+              alt="Ammar Bass, yoga teacher: home page"
               className="w-auto"
               style={{ height: '22px', filter: logoFilter }}
             />

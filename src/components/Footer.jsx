@@ -11,7 +11,7 @@ export default function Footer() {
             <img
               loading="lazy"
               src="/images/logo.png"
-              alt="Ammar Bass"
+              alt="Ammar Bass logo"
               className="w-auto mb-4"
               style={{ height: '20px', filter: 'brightness(0) invert(1)' }}
             />

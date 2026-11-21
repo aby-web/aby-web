@@ -101,7 +101,7 @@ export default function EventPage() {
           {event.image_url && (
             <img
               src={event.image_url}
-              alt={`${event.title} at ${event.location}`}
+              alt={`Photo for ${event.title} at ${event.location}, ${longDate(event.date)}`}
               className="w-full max-h-[480px] object-cover rounded-lg mt-4 mb-10"
             />
           )}

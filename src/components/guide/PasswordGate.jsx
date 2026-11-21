@@ -76,7 +76,7 @@ export default function PasswordGate({
         <a href="/" style={{ display: 'inline-block', marginBottom: 32 }}>
           <img
             src="/images/logo.png"
-            alt="Ammar Bass"
+            alt="Ammar Bass logo"
             style={{ height: 22, width: 'auto' }}
           />
         </a>

@@ -82,7 +82,7 @@ export default function EmailGate({
         <a href="/" style={{ display: 'inline-block', marginBottom: 24 }}>
           <img
             src="/images/logo.png"
-            alt="Ammar Bass"
+            alt="Ammar Bass logo"
             style={{ height: 22, width: 'auto' }}
           />
         </a>

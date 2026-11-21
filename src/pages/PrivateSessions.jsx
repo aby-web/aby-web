@@ -108,7 +108,7 @@ export default function PrivateSessions() {
         <img
           loading="lazy"
           src="/images/private-session.webp"
-          alt="Private yoga session"
+          alt="Ammar Bass holding a handstand, seen from behind"
           className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/0 via-black/10 to-black/65" />
@@ -177,7 +177,7 @@ export default function PrivateSessions() {
             <img
               loading="lazy"
               src="/images/homestudio1.webp"
-              alt="Home studio — West Hampstead"
+              alt="The loft studio in West Hampstead where private sessions take place, with mats laid out under the skylights"
               className="w-full h-[480px] object-cover rounded-lg"
             />
           </div>

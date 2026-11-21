@@ -38,7 +38,7 @@ export default function About() {
             <img
               loading="lazy"
               src="/images/about.webp"
-              alt="Ammar Bass"
+              alt="Portrait of Ammar Bass, yoga teacher in London, smiling in a white T-shirt"
               className="w-full h-full object-cover"
             />
           </div>

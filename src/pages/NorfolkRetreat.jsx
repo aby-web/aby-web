@@ -274,7 +274,7 @@ export default function NorfolkRetreat() {
           </p>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
             {house.map(([name, caption]) => (
-              <Photo key={name} name={`house-${name}`} alt={caption} caption={caption} className="aspect-[3/4]" />
+              <Photo key={name} name={`house-${name}`} alt={`${caption} at the retreat house in Norfolk`} caption={caption} className="aspect-[3/4]" />
             ))}
           </div>
         </div>

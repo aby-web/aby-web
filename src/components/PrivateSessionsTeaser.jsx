@@ -13,7 +13,7 @@ export default function PrivateSessionsTeaser() {
             <img
               loading="lazy"
               src="/images/homestudio1.webp"
-              alt="Private home studio — West Hampstead"
+              alt="Ammar's loft yoga studio in West Hampstead: two mats, blocks and towels laid out under the skylights"
               className="w-full h-[420px] object-cover rounded-lg"
             />
           </div>
