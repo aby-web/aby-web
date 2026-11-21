@@ -50,11 +50,12 @@ React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all s
 ## Site review and staged plan (21 Nov 2026)
 
 `docs/site-review.md` is the current plan: five stages, each with its own prompt.
-**Stage 1 (fix facts, launch `/saturday-class`) shipped 21 Nov 2026.** Stage 2 (pre-render for
-crawlers) is in progress and supersedes the paused Phase 1 plan further down. Its agreed order:
-1 full-content pages, 2 event pages + rebuild trigger, 3 real 404 (all live 21 Nov 2026);
-still to do: 4 JSON-LD, 5 generated sitemap + llms.txt, 6 performance, 7 alt text, then the
-per-route proof (curl word counts and JSON-LD types).
+**Stage 1 (fix facts, launch `/saturday-class`) and Stage 2 (pre-rendering, event pages, real 404,
+structured data, generated sitemap and llms.txt, performance, alt text) shipped 21 Nov 2026.**
+Stage 2 superseded the paused Phase 1 plan further down, which is kept only for history.
+Next is Stage 3 (private journey, homepage, footer). Shared structured data is in
+`src/data/schema.js`; `llms.txt` is generated from `src/data/llms.js`; a page's sitemap date is
+its `updated` field in `pages.js` (change it by hand when the page's content changes).
 Agreed rules: the Vercel deploy hook URL is a secret (server-side env var only, called from a
 function that checks admin auth, never in client code); build-time Supabase access uses only the
 anon key and only already-public data; if the events fetch fails, the build must fail.
