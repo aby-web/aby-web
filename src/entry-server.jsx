@@ -10,6 +10,7 @@ import { EventsProvider } from './lib/events.jsx'
 
 export { pages, SITE } from './data/pages.js'
 export { londonToday } from './data/classes.js'
+export { llmsText } from './data/llms.js'
 // The same fetch the browser uses: public key, public columns only.
 export { fetchEvents, eventPath } from './lib/events.jsx'
 

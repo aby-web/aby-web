@@ -18,6 +18,9 @@
  *   index     – false adds <meta name="robots" content="noindex, nofollow">.
  *   sitemap   – true lists the page in the sitemap. Never true unless index
  *               and prerender are both true.
+ *   updated   – the date the page's CONTENT last changed ('YYYY-MM-DD'). It is
+ *               the sitemap's "last modified" date, so change it by hand when
+ *               you change what a page says, and only then.
  *
  * To add a page: add its route in src/App.jsx, an entry here, and
  * <PageMeta path="/your-path" /> in the page component. A private page
@@ -41,6 +44,7 @@ const PRIVATE = { prerender: false, index: false, sitemap: false };
 export const pages = [
   {
     path: '/',
+    updated: '2026-11-21',
     title: 'Ammar Bass | Yoga Teacher London | Vinyasa, Handstands & Arm Balances',
     description:
       'London yoga teacher specialising in strong vinyasa, handstands and arm balances. Classes at HOME Wellness, BXR, Yogarise, Flo and my own Saturday class in Marylebone. Events and retreats.',
@@ -50,6 +54,7 @@ export const pages = [
   },
   {
     path: '/about',
+    updated: '2026-11-21',
     title: 'About Ammar Bass | London Yoga Teacher | Strength & Alignment Focus',
     description:
       'Vipassana meditation practitioner with a competitive swimming and powerlifting background. Teaching alignment-focused vinyasa across London, specialising in arm balances, inversions and biomechanics.',
@@ -59,6 +64,7 @@ export const pages = [
   },
   {
     path: '/private-sessions',
+    updated: '2026-11-21',
     title: 'Private Yoga Sessions in West Hampstead | Ammar Bass',
     description:
       'One-to-one yoga in West Hampstead, London. Build strong foundations or work towards handstands and arm balances — sessions designed around you. Free 15-min discovery call.',
@@ -68,6 +74,7 @@ export const pages = [
   },
   {
     path: '/how-privates-work',
+    updated: '2026-11-21',
     title: 'How Private Yoga Works in West Hampstead | Ammar Bass',
     description:
       'How private yoga in West Hampstead works: prices, a free 15-minute discovery call, a short form before your first session, and what a one-to-one session looks like.',
@@ -77,6 +84,7 @@ export const pages = [
   },
   {
     path: '/saturday-class',
+    updated: '2026-11-21',
     title: 'Saturday Yoga Class in Marylebone | Ammar Bass',
     description:
       'A strong 90-minute vinyasa class with Ammar Bass in Marylebone, London. Saturdays 11:30–13:00, from 5 December 2026. £15 drop-in. Join the WhatsApp group to come.',
@@ -86,6 +94,7 @@ export const pages = [
   },
   {
     path: '/events',
+    updated: '2026-11-21',
     title: 'Yoga Workshops & Retreats London | Ammar Bass Events',
     description:
       'Yoga workshops, arm balance intensives and retreats in London. Deepen your practice with events focused on alignment, inversions and strength.',
@@ -95,6 +104,7 @@ export const pages = [
   },
   {
     path: '/practice',
+    updated: '2026-11-21',
     title: 'Free Practice Videos | Ammar Bass Yoga',
     description:
       'Free full-length yoga classes with Ammar Bass. Practise strength-based vinyasa flows, arm balances and mindful movement from home.',
@@ -104,6 +114,7 @@ export const pages = [
   },
   {
     path: '/faq',
+    updated: '2026-11-21',
     title: 'FAQ | Ammar Bass Yoga | Common Questions Answered',
     description:
       'Questions about classes, private sessions, workshops and practice philosophy — everything worth knowing before training with Ammar Bass in London.',
@@ -113,6 +124,7 @@ export const pages = [
   },
   {
     path: '/norfolk-retreat',
+    updated: '2026-11-20',
     title: 'Spring Yoga Immersion 2027 — Norfolk Yoga Retreat | Ammar Bass',
     description:
       'A three-night yoga retreat near Norwich, 6–9 May 2027, with Ina and Ammar. 11 hours of practice, home-cooked vegetarian food, sauna, ice bath and hot tub. Only 10 places.',

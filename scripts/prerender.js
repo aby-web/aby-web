@@ -38,7 +38,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const DIST = join(ROOT, 'dist');
 
-const { render, pages, londonToday, fetchEvents, eventPath } = await import(
+const { render, pages, SITE, londonToday, fetchEvents, eventPath, llmsText } = await import(
   pathToFileURL(join(ROOT, 'dist-ssr', 'entry-server.js')).href
 );
 
@@ -181,6 +181,30 @@ for (const event of events) {
   writePage({ path: eventPath(event), index: true, events: [event] });
 }
 
+// ── 3. sitemap.xml and llms.txt ─────────────────────────────────────────────
+// The sitemap lists every public, indexable page: the ones marked `sitemap`
+// in src/data/pages.js (with the date their content last changed) and every
+// event page. Events have no "last changed" date, so none is claimed.
+const xml = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const sitemapEntries = [
+  ...pages
+    .filter((p) => p.sitemap && p.index && p.prerender)
+    .map((p) => ({ loc: p.path === '/' ? `${SITE}/` : `${SITE}${p.path}`, lastmod: p.updated })),
+  ...events.map((e) => ({ loc: `${SITE}${eventPath(e)}` })),
+];
+const sitemap =
+  '<?xml version="1.0" encoding="UTF-8"?>\n' +
+  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+  sitemapEntries
+    .map((u) => `  <url>\n    <loc>${xml(u.loc)}</loc>\n${u.lastmod ? `    <lastmod>${u.lastmod}</lastmod>\n` : ''}  </url>\n`)
+    .join('') +
+  '</urlset>\n';
+writeFileSync(join(DIST, 'sitemap.xml'), sitemap, 'utf8');
+
+const llms = llmsText({ events, today: buildDate });
+if (OLD_APP_NAME.test(llms) || OLD_APP_NAME.test(sitemap)) fail("llms.txt or sitemap.xml mentions the app's old name");
+writeFileSync(join(DIST, 'llms.txt'), llms, 'utf8');
+
 for (const r of report) {
   console.log(
     `  prerendered ${r.path.padEnd(20)} ${String(r.words).padStart(5)} words  ${r.jsonLd} JSON-LD${r.index ? '' : '  (noindex)'}`
@@ -188,6 +212,7 @@ for (const r of report) {
 }
 const skipped = pages.filter((p) => !p.prerender).map((p) => p.path);
 console.log(`  shell only  ${skipped.join(' ')}`);
+console.log(`  wrote       sitemap.xml (${sitemapEntries.length} addresses), llms.txt (${words(llms)} words)`);
 console.log(`✓ pre-render complete (${report.length} pages, ${events.length} events, built for ${buildDate})`);
 
 // The Supabase client created when the pages were loaded can keep Node alive.
