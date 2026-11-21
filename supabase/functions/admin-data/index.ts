@@ -16,7 +16,7 @@ const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 const SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
 // Only these tables may be reached, so a caller cannot name an arbitrary one.
-const READABLE = ['private_enquiries', 'client_intakes', 'guides', 'guide_views', 'yogami_interest', 'subscribers'];
+const READABLE = ['private_enquiries', 'client_intakes', 'guides', 'guide_views', 'subscribers'];
 const WRITABLE = ['private_enquiries', 'client_intakes', 'events', 'vacations'];
 
 // For tables the public site reads, the only columns a caller may set. Anything

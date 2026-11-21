@@ -23,9 +23,9 @@ React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all s
   `/bootcamp` and `/join` are live but noindex; Stage 3 turns `/bootcamp` into a past-event page.
 - **The app is called Yorigam (yorigam.com). Its old name must not appear in anything visible or
   crawlable.** The old product page was deleted; the one place the old spelling is allowed is the
-  permanent redirect in `vercel.json`. Internal names that still carry it and are deliberately
-  left alone: the `yogami_interest` table and its policy, and the matching variable names in
-  `src/pages/Admin.jsx`. The build fails if the old name appears in any generated page.
+  permanent redirect in `vercel.json`. The only other trace is the empty sign-up table in the
+  database, whose removal is written in `supabase/pending/drop_old_interest_table.sql` (not
+  applied). The build fails if the old name appears in any generated page.
 - Pre-rendered pages are **hydrated**, so the first browser render must match the built HTML.
   Anything that depends on today's date goes through `src/lib/useToday.js`; format dates with
   the helpers in `src/data/classes.js`, never `toLocaleDateString`. Don't read `window`,
