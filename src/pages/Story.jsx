@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import PageMeta from '../components/PageMeta';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 
@@ -152,13 +153,8 @@ export default function Story() {
       className="min-h-screen bg-[#F4EFE6] overflow-x-hidden"
       style={{ paddingBottom: showDraftBanner ? '5.5rem' : 0 }}
     >
+      <PageMeta path="/story" />
       <Helmet>
-        <title>Story | Ammar Bass</title>
-        <meta
-          name="description"
-          content="The longer version. Hong Kong, a merchant family, finance, and the decision to leave it. Ammar Bass."
-        />
-        <meta name="robots" content="noindex, nofollow" />
         <link rel="preconnect" href="https://images.unsplash.com" />
       </Helmet>
 

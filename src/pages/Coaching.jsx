@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import PageMeta from '../components/PageMeta';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import { CALENDLY_URL } from '../data/privateSessions';
@@ -135,26 +136,12 @@ export default function Coaching() {
 
   return (
     <div className="min-h-screen bg-[#F4EFE6] overflow-x-hidden">
+      <PageMeta path="/coaching" />
       <Helmet>
-        <title>Coaching for Founders & Senior Operators | London | Ammar Bass</title>
-        <meta
-          name="description"
-          content="One-to-one coaching in London for founders and senior operators, taught through physical practice, by someone who spent years in finance first. Programmes of 7–10 sessions."
-        />
         <meta
           name="keywords"
           content="executive coaching London, coaching for founders, performance coaching London, embodied leadership, somatic coaching London"
         />
-        <meta property="og:title" content="Coaching for Founders & Senior Operators | Ammar Bass" />
-        <meta
-          property="og:description"
-          content="One-to-one coaching in London, taught through physical practice. Years in finance, then years in meditation and a demanding physical practice. I work at the join between the two."
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ammarbass.com/coaching" />
-        <meta property="og:image" content="https://ammarbass.com/images/og-private.jpg" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <link rel="canonical" href="https://ammarbass.com/coaching" />
         <link rel="preconnect" href="https://images.unsplash.com" />
         <script type="application/ld+json">
           {JSON.stringify({

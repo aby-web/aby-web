@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import PageMeta from '../components/PageMeta';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import { honeypotProps, useFormTimer } from '../lib/botCheck';
@@ -101,10 +101,7 @@ export default function NewClientIntake() {
 
   return (
     <div className="min-h-screen">
-      <Helmet>
-        <title>New Client Sign-Up | Ammar Bass</title>
-        <meta name="robots" content="noindex" />
-      </Helmet>
+      <PageMeta path="/onboard" />
 
       <Nav theme="light" />
 

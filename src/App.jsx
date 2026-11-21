@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Home from './pages/Home';
 import Events from './pages/Events';
@@ -43,9 +43,13 @@ function ScrollToHash() {
   return null;
 }
 
-function App() {
+// The route table, without a router around it, so the same table is used in
+// the browser (src/main.jsx wraps it in BrowserRouter) and at build time
+// (src/entry-server.jsx wraps it in StaticRouter to pre-render each page).
+// Every route also needs an entry in src/data/pages.js.
+function AppRoutes() {
   return (
-    <Router>
+    <>
       <ScrollToHash />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -68,8 +72,8 @@ function App() {
         <Route path="/coaching" element={<Coaching />} />
         <Route path="/story" element={<Story />} />
       </Routes>
-    </Router>
+    </>
   );
 }
 
-export default App;
+export default AppRoutes;

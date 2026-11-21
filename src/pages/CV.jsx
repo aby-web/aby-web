@@ -1,11 +1,11 @@
 import { Helmet } from 'react-helmet-async';
+import PageMeta from '../components/PageMeta';
 
 export default function CV() {
   return (
     <>
+      <PageMeta path="/cv" />
       <Helmet>
-        <title>Ammar Bass — Yoga Teacher CV</title>
-        <meta name="description" content="Curriculum vitae of Ammar Bass, yoga teacher in London — teaching philosophy, certifications, and experience." />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"

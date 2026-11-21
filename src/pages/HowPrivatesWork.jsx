@@ -1,13 +1,10 @@
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import PageMeta from '../components/PageMeta';
 import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
 import Footer from '../components/Footer';
 import { pricing, offers, formats, CALENDLY_URL } from '../data/privateSessions';
-
-const TITLE = 'How Private Yoga Works in West Hampstead | Ammar Bass';
-const DESCRIPTION =
-  'How private yoga in West Hampstead works: prices, a free 15-minute discovery call, a short form before your first session, and what a one-to-one session looks like.';
 
 export default function HowPrivatesWork() {
   useEffect(() => {
@@ -36,15 +33,8 @@ export default function HowPrivatesWork() {
 
   return (
     <div className="min-h-screen">
+      <PageMeta path="/how-privates-work" />
       <Helmet>
-        <title>{TITLE}</title>
-        <meta name="description" content={DESCRIPTION} />
-        <meta property="og:title" content={TITLE} />
-        <meta property="og:description" content={DESCRIPTION} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ammarbass.com/how-privates-work" />
-        <meta property="og:image" content="https://ammarbass.com/images/og-private.jpg" />
-        <link rel="canonical" href="https://ammarbass.com/how-privates-work" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",

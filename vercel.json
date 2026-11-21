@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/((?!about$|about/|private-sessions$|private-sessions/|how-privates-work$|how-privates-work/|saturday-class$|saturday-class/|events$|events/|practice$|practice/|faq$|faq/|bootcamp$|bootcamp/|norfolk-retreat$|norfolk-retreat/|coaching$|coaching/|assets/|images/).*)",
-      "destination": "/index.html"
+      "source": "/((?!about$|about/|private-sessions$|private-sessions/|how-privates-work$|how-privates-work/|saturday-class$|saturday-class/|events$|events/|practice$|practice/|faq$|faq/|norfolk-retreat$|norfolk-retreat/|coaching$|coaching/|bootcamp$|bootcamp/|yogami$|yogami/|join$|join/|assets/|images/).+)",
+      "destination": "/shell.html"
     }
   ]
 }

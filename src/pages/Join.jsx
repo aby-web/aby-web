@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { honeypotProps, isLikelyBot, useFormTimer } from '../lib/botCheck';
 import { subscribeEmail } from '../lib/subscribe';
+import PageMeta from '../components/PageMeta';
 
 export default function Join() {
   const [fullName, setFullName] = useState('');
@@ -34,6 +35,7 @@ export default function Join() {
 
   return (
     <div className="min-h-screen bg-[#F4EFE6] flex flex-col items-center justify-center px-6">
+      <PageMeta path="/join" />
 
       <p className="text-[11px] uppercase tracking-[0.3em] text-[#785E3D] mb-12">
         Ammar Bass

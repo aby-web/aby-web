@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import PageMeta from '../components/PageMeta';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import { supabase } from '../lib/supabase';
@@ -58,11 +58,7 @@ export default function Yogami() {
 
   return (
     <div className="min-h-screen">
-      <Helmet>
-        <title>Yogami — Business tools for yoga teachers</title>
-        <meta name="description" content="Yogami is a management app built specifically for yoga teachers. Clients, invoicing, scheduling, and income tracking — all in one place." />
-        <link rel="canonical" href="https://ammarbass.com/yogami" />
-      </Helmet>
+      <PageMeta path="/yogami" />
 
       <Nav theme="light" />
 

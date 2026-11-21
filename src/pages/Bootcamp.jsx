@@ -1,15 +1,11 @@
-import { Helmet } from 'react-helmet-async';
+import PageMeta from '../components/PageMeta';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 
 export default function Bootcamp() {
   return (
     <div className="min-h-screen">
-      <Helmet>
-        <title>Yoga Intensive Bootcamp — Bulgaria 2026 | Ammar Bass</title>
-        <meta name="description" content="5-day yoga intensive bootcamp in Varna, Bulgaria. 4–9 September 2026. Forest setting, minutes from the beach. Progressive flow, workshops, and immersive practice with Ammar Bass and Ina." />
-        <link rel="canonical" href="https://ammarbass.com/bootcamp" />
-      </Helmet>
+      <PageMeta path="/bootcamp" />
 
       <Nav theme="dark" />
 

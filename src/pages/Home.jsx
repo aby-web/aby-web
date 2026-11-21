@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import PageMeta from '../components/PageMeta';
 import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
 import Hero from '../components/Hero';
@@ -13,27 +14,10 @@ import Footer from '../components/Footer';
 export default function Home() {
   return (
     <div className="min-h-screen">
+      <PageMeta path="/" />
       <Helmet>
-        <title>Ammar Bass | Yoga Teacher London | Strength-Based Vinyasa Classes</title>
-        <meta name="description" content="London-based yoga teacher specialising in alignment, arm balances and inversions. Strong, structured practice for people who take their training seriously. Classes at HOME Wellness, BXR, Yogarise, Flo Yoga and my own Saturday class in Marylebone." />
         <meta name="keywords" content="yoga teacher London, vinyasa yoga London, strength yoga, arm balances, inversions, private yoga sessions London, yoga HOME Wellness Primrose Hill, Saturday yoga class Marylebone, yoga BXR, Yogarise Queens Park, Flo Yoga West Hampstead" />
 
-        {/* Open Graph */}
-        <meta property="og:title" content="Ammar Bass | Yoga Teacher London" />
-        <meta property="og:description" content="Strong, structured yoga practice for people who take their training seriously. Specialising in alignment, arm balances and inversions." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ammarbass.com" />
-        <meta property="og:image" content="https://ammarbass.com/images/about.webp" />
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Ammar Bass | Yoga Teacher London" />
-        <meta name="twitter:description" content="Strong, structured yoga practice for people who take their training seriously." />
-        <meta name="twitter:image" content="https://ammarbass.com/images/about.webp" />
-
-        <link rel="canonical" href="https://ammarbass.com" />
-
-        {/* Schema.org structured data */}
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
@@ -149,7 +133,6 @@ export default function Home() {
             }
           })}
         </script>
-
       </Helmet>
 
       <Nav />

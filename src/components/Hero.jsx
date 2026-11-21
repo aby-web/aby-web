@@ -1,7 +1,8 @@
-import { SATURDAY_AREA, SATURDAY_PAGE, SATURDAY_START, londonToday, shortDate } from '../data/classes';
+import { SATURDAY_AREA, SATURDAY_PAGE, SATURDAY_START, shortDate } from '../data/classes';
+import useToday from '../lib/useToday';
 
 export default function Hero() {
-  const startsLater = londonToday() < SATURDAY_START;
+  const startsLater = useToday() < SATURDAY_START;
 
   return (
     <section className="relative w-full h-screen overflow-hidden">

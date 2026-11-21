@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import PageMeta from '../components/PageMeta';
 import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
 import Footer from '../components/Footer';
@@ -27,17 +28,9 @@ export default function Practice() {
 
   return (
     <div className="min-h-screen">
+      <PageMeta path="/practice" />
       <Helmet>
-        <title>Free Practice Videos | Ammar Bass Yoga</title>
-        <meta name="description" content="Free full-length yoga classes with Ammar Bass. Practise strength-based vinyasa flows, arm balances, and mindful movement from home." />
         <meta name="keywords" content="free yoga videos, vinyasa flow online, yoga practice videos, strength yoga at home, online yoga classes" />
-
-        <meta property="og:title" content="Free Practice Videos | Ammar Bass Yoga" />
-        <meta property="og:description" content="Free full-length yoga classes. Practise strength-based vinyasa flows from home." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ammarbass.com/practice" />
-
-        <link rel="canonical" href="https://ammarbass.com/practice" />
       </Helmet>
 
       <Nav theme="light" />

@@ -1,4 +1,5 @@
-import { currentSchedule, londonToday, shortDate, SATURDAY_PAGE } from '../data/classes';
+import { currentSchedule, shortDate, SATURDAY_PAGE } from '../data/classes';
+import useToday from '../lib/useToday';
 
 // The timetable lives in src/data/classes.js. Classes past their `until`
 // date drop off and "From …" labels disappear on the start date, on their own.
@@ -62,7 +63,7 @@ function BlockHeader({ block }) {
 }
 
 export default function Schedule() {
-  const today = londonToday();
+  const today = useToday();
   const [featured, ...studios] = currentSchedule(today);
 
   return (

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
+import PageMeta from '../components/PageMeta';
 import {
   SectionFoundation,
   SectionFundamentals,
@@ -162,14 +162,7 @@ export default function Guide() {
 
   return (
     <div style={{ background: 'oklch(97% 0.012 78)' }}>
-      <Helmet>
-        <title>Handstand Fundamentals Guide | Ammar Bass</title>
-        <meta
-          name="description"
-          content="A structured approach to building your handstand practice. Learn the foundations, fundamentals, and key muscles for sustainable handstand training."
-        />
-        <meta name="robots" content="noindex, nofollow" />
-      </Helmet>
+      <PageMeta path="/handstandguide" />
 
       <style>{`
         @media print {

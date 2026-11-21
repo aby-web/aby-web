@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
+import PageMeta from '../components/PageMeta';
 import {
   SectionFoundation,
   SectionFundamentals,
@@ -188,14 +188,7 @@ export default function PinchaGuide() {
 
   return (
     <div style={{ background: 'oklch(97% 0.012 78)' }}>
-      <Helmet>
-        <title>Pincha Mayurasana (Forearm Stand) Fundamentals Guide | Ammar Bass</title>
-        <meta
-          name="description"
-          content="A structured approach to building your Pincha Mayurasana (forearm stand) practice. Learn the biomechanics, fundamentals, and key muscles for a sustainable forearm balance."
-        />
-        <meta name="robots" content="noindex, nofollow" />
-      </Helmet>
+      <PageMeta path="/pinchaguide" />
 
       <style>{`
         @media print {

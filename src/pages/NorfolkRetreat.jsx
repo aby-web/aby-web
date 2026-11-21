@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import PageMeta from '../components/PageMeta';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 
@@ -9,7 +10,6 @@ import Footer from '../components/Footer';
 const IMG = '/images/norfolk-2027';
 const BOOK_URL = 'https://yorigam.com/book/0598a6673f16f55fa16313fc144b9453';
 
-const TITLE = 'Spring Yoga Immersion 2027 — Norfolk Yoga Retreat | Ammar Bass';
 const DESCRIPTION =
   'A three-night yoga retreat near Norwich, 6–9 May 2027, with Ina and Ammar. 11 hours of practice, home-cooked vegetarian food, sauna, ice bath and hot tub. Only 10 places.';
 
@@ -89,15 +89,8 @@ const Photo = ({ name, alt, caption, className = '' }) => (
 export default function NorfolkRetreat() {
   return (
     <div className="min-h-screen bg-[#F4EFE6]">
+      <PageMeta path="/norfolk-retreat" />
       <Helmet>
-        <title>{TITLE}</title>
-        <meta name="description" content={DESCRIPTION} />
-        <meta property="og:title" content={TITLE} />
-        <meta property="og:description" content={DESCRIPTION} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ammarbass.com/norfolk-retreat" />
-        <meta property="og:image" content="https://ammarbass.com/images/og-norfolk-2027.jpg" />
-        <link rel="canonical" href="https://ammarbass.com/norfolk-retreat" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",

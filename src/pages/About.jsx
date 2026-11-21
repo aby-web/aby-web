@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import PageMeta from '../components/PageMeta';
 import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
 import Testimonials from '../components/Testimonials';
@@ -7,27 +8,10 @@ import Footer from '../components/Footer';
 export default function About() {
   return (
     <div className="min-h-screen">
+      <PageMeta path="/about" />
       <Helmet>
-        <title>About Ammar Bass | London Yoga Teacher | Strength & Alignment Focus</title>
-        <meta name="description" content="Vipassana meditation practitioner with competitive swimming and powerlifting background. Teaching alignment-focused vinyasa at HOME Wellness, BXR, Yogarise, Flo Yoga and his own Saturday class in Marylebone. Specialising in arm balances, inversions, and biomechanics." />
         <meta name="keywords" content="Ammar Bass, yoga teacher background, Vipassana meditation, powerlifting yoga, biomechanics yoga, London yoga instructor, arm balance specialist, inversion training" />
 
-        {/* Open Graph */}
-        <meta property="og:title" content="About Ammar Bass | London Yoga Teacher" />
-        <meta property="og:description" content="Vipassana meditation practitioner with an athlete's understanding of movement. Teaching strength-based vinyasa that blends technical precision with meditative depth." />
-        <meta property="og:type" content="profile" />
-        <meta property="og:url" content="https://ammarbass.com/about" />
-        <meta property="og:image" content="https://ammarbass.com/images/about-teaching.jpg" />
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="About Ammar Bass | London Yoga Teacher" />
-        <meta name="twitter:description" content="Vipassana meditation practitioner with an athlete's understanding of movement. Teaching strength-based vinyasa in London." />
-        <meta name="twitter:image" content="https://ammarbass.com/images/about-teaching.jpg" />
-
-        <link rel="canonical" href="https://ammarbass.com/about" />
-
-        {/* Schema.org structured data */}
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",

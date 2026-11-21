@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import PageMeta from '../components/PageMeta';
 import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
 import Footer from '../components/Footer';
@@ -57,16 +58,9 @@ export default function PrivateSessions() {
 
   return (
     <div className="min-h-screen">
+      <PageMeta path="/private-sessions" />
       <Helmet>
-        <title>Private Yoga Sessions in West Hampstead | Ammar Bass</title>
-        <meta name="description" content="One-to-one yoga in West Hampstead, London. Build strong foundations or work towards handstands and arm balances — sessions designed around you. Free 15-min discovery call." />
         <meta name="keywords" content="private yoga West Hampstead, 1-to-1 yoga London, handstand coaching, arm balance tuition, NW6 yoga teacher" />
-        <meta property="og:title" content="Private Yoga Sessions in West Hampstead | Ammar Bass" />
-        <meta property="og:description" content="One-to-one yoga in West Hampstead, London. Build strong foundations or work towards handstands and arm balances." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ammarbass.com/private-sessions" />
-        <meta property="og:image" content="https://ammarbass.com/images/about.webp" />
-        <link rel="canonical" href="https://ammarbass.com/private-sessions" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",

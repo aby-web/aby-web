@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import PageMeta from '../components/PageMeta';
 import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
 import Footer from '../components/Footer';
@@ -11,8 +12,9 @@ import {
   SATURDAY_START,
   SATURDAY_VENUE_NAME,
   INDABA_LAST_DAY,
-  londonToday,
+  longDate,
 } from '../data/classes';
+import useToday from '../lib/useToday';
 
 /*
  * /saturday-class — Ammar's own Saturday class in Marylebone.
@@ -29,17 +31,7 @@ import {
  */
 
 const PAGE_URL = 'https://ammarbass.com/saturday-class';
-const TITLE = 'Saturday Yoga Class in Marylebone | Ammar Bass';
-const DESCRIPTION =
-  `A strong 90-minute vinyasa class with Ammar Bass in Marylebone, London. Saturdays 11:30–13:00, from 5 December 2026. £${SATURDAY_PRICE} drop-in. Join the WhatsApp group to come.`;
 const OG_IMAGE = 'https://ammarbass.com/images/og-saturday-class.jpg';
-const OG_IMAGE_ALT = 'Students resting at the end of a yoga class while Ammar Bass sits at the front of the room';
-
-// "5 December 2026" from '2026-12-05'.
-const longDate = (iso) =>
-  new Date(iso + 'T12:00:00Z').toLocaleDateString('en-GB', {
-    day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC',
-  });
 
 const PRIMARY_BUTTON =
   'inline-flex items-center justify-center min-h-[48px] px-8 rounded-full bg-[#1C1410] text-[#F4EFE6] hover:bg-[#2A1E16] transition-colors text-sm uppercase tracking-wide';
@@ -62,27 +54,15 @@ function JoinButtons() {
 }
 
 export default function SaturdayClass() {
-  const today = londonToday();
+  const today = useToday();
   const notStartedYet = today < SATURDAY_START;
   const indabaStillOpen = today <= INDABA_LAST_DAY;
   const where = SATURDAY_VENUE_NAME ? `${SATURDAY_VENUE_NAME}, ${SATURDAY_AREA}` : SATURDAY_AREA;
 
   return (
     <div className="min-h-screen bg-[#F4EFE6]">
+      <PageMeta path="/saturday-class" />
       <Helmet>
-        <title>{TITLE}</title>
-        <meta name="description" content={DESCRIPTION} />
-        <meta property="og:title" content={TITLE} />
-        <meta property="og:description" content={DESCRIPTION} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={PAGE_URL} />
-        <meta property="og:image" content={OG_IMAGE} />
-        <meta property="og:image:alt" content={OG_IMAGE_ALT} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={TITLE} />
-        <meta name="twitter:description" content={DESCRIPTION} />
-        <meta name="twitter:image" content={OG_IMAGE} />
-        <link rel="canonical" href={PAGE_URL} />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
@@ -163,7 +143,7 @@ export default function SaturdayClass() {
             <p>
               This is the class I taught at Indaba on Saturday mornings.{' '}
               {indabaStillOpen
-                ? `Indaba closes at the end of November, so from ${longDate(SATURDAY_START).replace(/ \d{4}$/, '')} the class runs independently:`
+                ? `Indaba closes at the end of November, so from ${longDate(SATURDAY_START, false)} the class runs independently:`
                 : 'Indaba has closed, so the class now runs independently:'}{' '}
               same time, same teacher, and a longer 90-minute practice.
             </p>

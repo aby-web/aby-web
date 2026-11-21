@@ -2,12 +2,24 @@
 
 React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all site copy.
 
-- Routes: `src/App.jsx` (17 routes, `BrowserRouter`)
+- Routes: `src/App.jsx` exports the route table (`AppRoutes`); `src/main.jsx` wraps it in
+  `BrowserRouter`, `src/entry-server.jsx` in `StaticRouter`.
 - Page copy: lives in JSX components, not a CMS
-- Head tags: `react-helmet-async` per page, **plus** `scripts/prerender-meta.js` which runs
-  after `vite build` and writes a static `index.html` per route with meta tags baked in.
-  Its `ROUTES` array is the source of truth — add a route there and nothing else needs changing.
-- Build: `npm run build` (= `vite build` + the prerender script). Dev: `npm run dev`.
+- **`src/data/pages.js` is the single source** for every page's title, description, share image,
+  and whether it is public (`prerender`, `index`, `sitemap` flags). Pages render those tags with
+  `<PageMeta path="..." />`; a page's own `<Helmet>` holds only keywords and JSON-LD.
+- Build: `npm run build` = `vite build` (→ `dist/`) + `vite build --ssr src/entry-server.jsx`
+  (→ `dist-ssr/`, not published) + `node scripts/prerender.js`, which writes each public page's
+  full HTML into `dist/<path>/index.html`. Private pages (`prerender: false`: `/admin`,
+  `/onboard`, `/cv`, `/story`, the gated guides) get `dist/shell.html`, an empty noindex page,
+  via the rewrite in `vercel.json`. The build fails rather than publish an empty or odd page.
+- Adding a page: route in `App.jsx`, entry in `pages.js`, `<PageMeta>` in the component, and (if
+  pre-rendered) its path in the `vercel.json` exclusion list.
+- Pre-rendered pages are **hydrated**, so the first browser render must match the built HTML.
+  Anything that depends on today's date goes through `src/lib/useToday.js`; format dates with
+  the helpers in `src/data/classes.js`, never `toLocaleDateString`. Don't read `window`,
+  `localStorage` or the clock during render.
+- Dev: `npm run dev` (no pre-rendering; pages build in the browser).
 
 ---
 
@@ -15,7 +27,12 @@ React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all s
 
 `docs/site-review.md` is the current plan: five stages, each with its own prompt.
 **Stage 1 (fix facts, launch `/saturday-class`) shipped 21 Nov 2026.** Stage 2 (pre-render for
-crawlers) supersedes the Phase 1 plan below; read both before starting it.
+crawlers) is in progress and supersedes the paused Phase 1 plan further down. Its agreed order:
+1 full-content pages (built 21 Nov 2026), 2 event pages + rebuild trigger, 3 real 404,
+4 JSON-LD, 5 generated sitemap + llms.txt, 6 performance, 7 alt text.
+Agreed rules: the Vercel deploy hook URL is a secret (server-side env var only, called from a
+function that checks admin auth, never in client code); build-time Supabase access uses only the
+anon key and only already-public data; if the events fetch fails, the build must fail.
 
 Where things are set, each in one place:
 

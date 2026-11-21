@@ -108,11 +108,27 @@ export function londonToday(now = new Date()) {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London' }).format(now);
 }
 
+// Dates are formatted by hand, not with toLocaleDateString: the pages are
+// pre-rendered at build time and browsers format dates slightly differently
+// ("Sat 5 Dec" vs "Sat, 5 Dec"), which would make the built page and the
+// browser's version disagree.
+const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const parts = (iso) => {
+  const d = new Date(iso + 'T12:00:00Z');
+  return { day: DAYS[d.getUTCDay()], date: d.getUTCDate(), month: MONTHS[d.getUTCMonth()], year: d.getUTCFullYear() };
+};
+
 // "Sat 5 Dec" from '2026-12-05'.
 export function shortDate(iso) {
-  return new Date(iso + 'T12:00:00Z').toLocaleDateString('en-GB', {
-    weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC',
-  });
+  const { day, date, month } = parts(iso);
+  return `${day} ${date} ${month.slice(0, 3)}`;
+}
+
+// "5 December 2026" from '2026-12-05'; pass false to leave the year off.
+export function longDate(iso, withYear = true) {
+  const { date, month, year } = parts(iso);
+  return `${date} ${month}` + (withYear ? ` ${year}` : '');
 }
 
 // Blocks with only the classes still running today; empty blocks dropped.

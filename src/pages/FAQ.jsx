@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import PageMeta from '../components/PageMeta';
 import { useState } from 'react';
 import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
@@ -123,25 +124,9 @@ export default function FAQ() {
 
   return (
     <div className="min-h-screen">
+      <PageMeta path="/faq" />
       <Helmet>
-        <title>FAQ | Ammar Bass Yoga | Common Questions Answered</title>
-        <meta name="description" content="Frequently asked questions about yoga classes, private sessions, workshops, and practice philosophy. Everything you need to know before training with Ammar Bass in London." />
         <meta name="keywords" content="yoga FAQ, yoga questions, beginner yoga London, private yoga sessions, yoga workshop questions, arm balance training, yoga class questions" />
-
-        {/* Open Graph */}
-        <meta property="og:title" content="FAQ | Ammar Bass Yoga" />
-        <meta property="og:description" content="Common questions about classes, private sessions, and training approach answered." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ammarbass.com/faq" />
-        <meta property="og:image" content="https://ammarbass.com/images/about.webp" />
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="FAQ | Ammar Bass Yoga" />
-        <meta name="twitter:description" content="Common questions about classes, private sessions, and training approach answered." />
-        <meta name="twitter:image" content="https://ammarbass.com/images/about.webp" />
-
-        <link rel="canonical" href="https://ammarbass.com/faq" />
       </Helmet>
 
       <Nav theme="light" />

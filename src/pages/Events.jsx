@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import PageMeta from '../components/PageMeta';
 import { supabase } from '../lib/supabase';
 import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
@@ -148,25 +149,9 @@ export default function Events() {
 
   return (
     <div className="min-h-screen bg-[#F4EFE6]">
+      <PageMeta path="/events" />
       <Helmet>
-        <title>Yoga Workshops & Retreats London | Ammar Bass Events</title>
-        <meta name="description" content="Join Ammar Bass for yoga workshops, arm balance intensives, and transformative retreats in London. Deepen your practice with specialised events focusing on alignment, inversions, and strength." />
         <meta name="keywords" content="yoga workshops London, yoga retreats UK, arm balance workshop, inversion workshop, yoga events London, vinyasa intensive, yoga teacher workshop" />
-
-        {/* Open Graph */}
-        <meta property="og:title" content="Yoga Workshops & Retreats | Ammar Bass" />
-        <meta property="og:description" content="Transformative workshops, retreats, and special events designed to deepen your yoga practice and connect with community." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ammarbass.com/events" />
-        <meta property="og:image" content="https://ammarbass.com/images/about.webp" />
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Yoga Workshops & Retreats | Ammar Bass" />
-        <meta name="twitter:description" content="Transformative workshops, retreats, and special events designed to deepen your yoga practice." />
-        <meta name="twitter:image" content="https://ammarbass.com/images/about.webp" />
-
-        <link rel="canonical" href="https://ammarbass.com/events" />
 
         {/* Schema.org structured data for events */}
         {eventsSchema && (
