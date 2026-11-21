@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import PageMeta from '../components/PageMeta';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
+import { personRef } from '../data/schema';
 
 // Spring Yoga Immersion 2027, from the pre-launch brochure (Google Drive:
 // Yoga/Retreats/Norfolk 2027). ina-ammar.webp is from the original photo; the rest are cropped from the brochure pages,
@@ -107,7 +108,7 @@ export default function NorfolkRetreat() {
               "address": { "@type": "PostalAddress", "addressLocality": "Near Norwich", "addressRegion": "Norfolk", "addressCountry": "GB" }
             },
             "image": "https://ammarbass.com/images/og-norfolk-2027.jpg",
-            "organizer": { "@type": "Person", "name": "Ammar Bass", "url": "https://ammarbass.com" },
+            "organizer": personRef,
             "performer": [
               { "@type": "Person", "name": "Ina" },
               { "@type": "Person", "name": "Ammar Bass" }

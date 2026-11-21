@@ -4,6 +4,7 @@ import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
 import Testimonials from '../components/Testimonials';
 import Footer from '../components/Footer';
+import { person } from '../data/schema';
 
 export default function About() {
   return (
@@ -16,71 +17,8 @@ export default function About() {
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "ProfilePage",
-            "mainEntity": {
-              "@type": "Person",
-              "name": "Ammar Bass",
-              "jobTitle": "Yoga Instructor & Movement Coach",
-              "description": "Vipassana meditation practitioner with competitive swimming and powerlifting background. Teaching alignment-focused vinyasa in London.",
-              "url": "https://ammarbass.com/about",
-              "image": "https://ammarbass.com/images/about-teaching.jpg",
-              "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "London",
-                "addressCountry": "GB"
-              },
-              "worksFor": [
-                {
-                  "@type": "Organization",
-                  "name": "HOME Wellness",
-                  "url": "https://homewellness.uk/"
-                },
-                {
-                  "@type": "Organization",
-                  "name": "BXR London",
-                  "url": "https://www.bxrlondon.com/"
-                },
-                {
-                  "@type": "Organization",
-                  "name": "Yogarise",
-                  "url": "https://yogarise.london/"
-                },
-                {
-                  "@type": "Organization",
-                  "name": "Flo Yoga",
-                  "url": "https://www.floyogastudio.co.uk/"
-                }
-              ],
-              "hasCredential": [
-                {
-                  "@type": "EducationalOccupationalCredential",
-                  "credentialCategory": "certification",
-                  "name": "200hr Registered Yoga Teacher (RYT-200)"
-                },
-                {
-                  "@type": "EducationalOccupationalCredential",
-                  "credentialCategory": "training",
-                  "name": "Vipassana Meditation - Sivananda Kutir, Himalayas"
-                },
-                {
-                  "@type": "EducationalOccupationalCredential",
-                  "credentialCategory": "certification",
-                  "name": "Powerlifting & Strength Training Certified Coach"
-                }
-              ],
-              "knowsAbout": [
-                "Vinyasa Yoga",
-                "Arm Balances",
-                "Inversions",
-                "Vipassana Meditation",
-                "Biomechanics",
-                "Progressive Movement",
-                "Strength Training",
-                "Competitive Swimming",
-                "Powerlifting"
-              ],
-              "nationality": "Indian",
-              "birthPlace": "Hong Kong"
-            }
+            "url": "https://ammarbass.com/about",
+            "mainEntity": { ...person, "image": "https://ammarbass.com/images/about-teaching.jpg" }
           })}
         </script>
       </Helmet>

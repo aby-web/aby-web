@@ -3,6 +3,7 @@ import PageMeta from '../components/PageMeta';
 import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
 import Footer from '../components/Footer';
+import { personRef } from '../data/schema';
 import Testimonials from '../components/Testimonials';
 import WhatsAppGroupButton from '../components/WhatsAppGroupButton';
 import {
@@ -90,7 +91,7 @@ export default function SaturdayClass() {
               "name": SATURDAY_VENUE_NAME || "Marylebone, London",
               "address": { "@type": "PostalAddress", "addressLocality": "London", "addressCountry": "GB" }
             },
-            "organizer": { "@type": "Person", "name": "Ammar Bass", "url": "https://ammarbass.com" },
+            "organizer": personRef,
             "performer": { "@type": "Person", "name": "Ammar Bass" },
             "offers": {
               "@type": "Offer",

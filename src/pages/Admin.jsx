@@ -681,7 +681,6 @@ export default function Admin() {
     { label: 'Pincha Guide', path: '/pinchaguide', description: 'Password-protected guide' },
     { label: 'New Client Intake', path: '/onboard', description: 'Onboarding form for new clients' },
     { label: 'CV', path: '/cv', description: 'Teaching CV' },
-    { label: 'Yogami', path: '/yogami', description: 'Yogami product page' },
     { label: 'Admin', path: '/admin', description: 'This dashboard', internal: true },
   ];
 
@@ -785,7 +784,7 @@ export default function Admin() {
             onClick={() => setActiveTab('yogamiInterest')}
             className={`pb-4 px-4 text-sm font-medium transition-colors ${activeTab === 'yogamiInterest' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740] hover:text-[#1C1410]'}`}
           >
-            Yogami Interest ({yogamiInterest.length})
+            Yorigam Interest ({yogamiInterest.length})
           </button>
           <button
             onClick={() => setActiveTab('pages')}
@@ -1509,11 +1508,11 @@ CREATE INDEX IF NOT EXISTS idx_guide_views_slug ON guide_views(guide_slug);`}
           </div>
         )}
 
-        {/* Yogami Interest Tab */}
+        {/* Yorigam Interest Tab */}
         {activeTab === 'yogamiInterest' && (
           <div className="bg-white p-6 rounded-lg border border-[#C9B99A] shadow-sm">
-            <h2 className="text-xl font-light mb-4 text-[#1C1410]">Yogami Interest ({yogamiInterest.length})</h2>
-            <p className="text-sm text-[#6B5740] mb-6">Teachers who registered interest from ammarbass.com/yogami</p>
+            <h2 className="text-xl font-light mb-4 text-[#1C1410]">Yorigam Interest ({yogamiInterest.length})</h2>
+            <p className="text-sm text-[#6B5740] mb-6">Teachers who registered interest in Yorigam through the old page on this site (now redirected to yorigam.com)</p>
             {yogamiInterest.length === 0 ? (
               <p className="text-[#6B5740]">No registrations yet.</p>
             ) : (

@@ -5,6 +5,7 @@ import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
 import Footer from '../components/Footer';
 import { pricing, offers, formats, CALENDLY_URL } from '../data/privateSessions';
+import { privateService } from '../data/schema';
 
 export default function HowPrivatesWork() {
   useEffect(() => {
@@ -36,14 +37,7 @@ export default function HowPrivatesWork() {
       <PageMeta path="/how-privates-work" />
       <Helmet>
         <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Service",
-            "serviceType": "Private one-to-one yoga tuition",
-            "provider": { "@type": "Person", "name": "Ammar Bass", "url": "https://www.ammarbass.com" },
-            "areaServed": { "@type": "Place", "name": "West Hampstead, London NW6" },
-            "offers": offers
-          })}
+          {JSON.stringify(privateService(offers))}
         </script>
       </Helmet>
 

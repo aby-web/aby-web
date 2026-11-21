@@ -7,6 +7,7 @@ import Footer from '../components/Footer';
 import NotFound from './NotFound';
 import { longDate } from '../data/classes';
 import { SITE } from '../data/pages';
+import { personRef } from '../data/schema';
 import { eventPath, useEvents } from '../lib/events';
 import useToday from '../lib/useToday';
 
@@ -76,7 +77,7 @@ export default function EventPage() {
             "eventStatus": "https://schema.org/EventScheduled",
             "location": { "@type": "Place", "name": event.location, "address": event.location },
             "image": event.image_url || `${SITE}/images/og-home.jpg`,
-            "organizer": { "@type": "Person", "name": "Ammar Bass", "url": SITE },
+            "organizer": personRef,
             "performer": { "@type": "Person", "name": "Ammar Bass" },
             ...(event.booking_link && !isPast
               ? { "offers": { "@type": "Offer", "url": event.booking_link, "availability": "https://schema.org/InStock" } }

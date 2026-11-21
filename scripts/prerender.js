@@ -119,6 +119,8 @@ const inlineJson = (value) =>
     .replace(/\u2029/g, '\\u2029');
 
 // ── 2b. Render ──────────────────────────────────────────────────────────────
+// Written this way so this file doesn't contain the old spelling itself.
+const OLD_APP_NAME = new RegExp('yo' + 'gami', 'i');
 const report = [];
 
 // page: { path, index, file?, events? }
@@ -155,6 +157,9 @@ function writePage(page) {
   if (/eyJ[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{10,}|sb_secret_|sbp_[a-z0-9]{20,}|service_role/i.test(html)) {
     fail(`${page.path} contains something that looks like a key or token`);
   }
+
+  // The app is called Yorigam. Its old name must never reach a page.
+  if (OLD_APP_NAME.test(html)) fail(`${page.path} mentions the app's old name; it is called Yorigam`);
 
   const outFile = page.file
     ? join(DIST, page.file)

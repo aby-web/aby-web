@@ -17,9 +17,13 @@ React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all s
   empty or odd page.
 - Adding a page: route in `App.jsx`, entry in `pages.js`, `<PageMeta>` in the component, and (if
   private) its path in the shell rewrite in `vercel.json`.
-- Parked on 21 Nov 2026 (files kept, not routed): `src/pages/Coaching.jsx` (`/coaching` now 404s)
-  and `src/pages/Yogami.jsx` (`/yogami` redirects permanently to yorigam.com). `/bootcamp` and
-  `/join` are live but noindex; Stage 3 turns `/bootcamp` into a past-event page.
+- Parked on 21 Nov 2026 (file kept, not routed): `src/pages/Coaching.jsx` (`/coaching` now 404s).
+  `/bootcamp` and `/join` are live but noindex; Stage 3 turns `/bootcamp` into a past-event page.
+- **The app is called Yorigam (yorigam.com). Its old name must not appear in anything visible or
+  crawlable.** The old product page was deleted; the one place the old spelling is allowed is the
+  permanent redirect in `vercel.json`. Internal names that still carry it and are deliberately
+  left alone: the `yogami_interest` table and its policy, and the matching variable names in
+  `src/pages/Admin.jsx`. The build fails if the old name appears in any generated page.
 - Pre-rendered pages are **hydrated**, so the first browser render must match the built HTML.
   Anything that depends on today's date goes through `src/lib/useToday.js`; format dates with
   the helpers in `src/data/classes.js`, never `toLocaleDateString`. Don't read `window`,
@@ -136,7 +140,7 @@ Corrections to the audit in `SEO_TASKS.md` (it was written 12 Oct and is partly 
   **already satisfied** by the component as written.
 - Nav has 5 desktop links with room for a 6th, so `/handstand-coaching` (Phase 4) can go in
   the nav rather than the footer.
-- Only `/events`, `/yogami`, `Testimonials`, `EventsStrip` and `VacationBanner` fetch from
+- Only `/events`, `Testimonials`, `EventsStrip` and `VacationBanner` fetch from
   Supabase at runtime.
 
 Baseline confirmed by running `npm run build`: build passes, every `dist/**/index.html` has

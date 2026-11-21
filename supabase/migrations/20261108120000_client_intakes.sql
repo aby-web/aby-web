@@ -1,6 +1,6 @@
 -- New client intake form (/onboard), moved into this project.
 --
--- The form used to post to the Yogami project, which switched that route off
+-- The form used to post to the Yorigam app's project, which switched that route off
 -- on 30 Oct 2026, so /onboard has been failing since. It now posts to the
 -- new-client-intake Edge Function here.
 --

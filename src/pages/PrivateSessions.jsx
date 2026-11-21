@@ -8,6 +8,7 @@ import { supabase } from '../lib/supabase';
 import Testimonials from '../components/Testimonials';
 import { WhatsAppButton } from '../components/WhatsAppGroupButton';
 import { pricing, offers, CALENDLY_URL, PRIVATE_WHATSAPP_URL } from '../data/privateSessions';
+import { privateService } from '../data/schema';
 
 export default function PrivateSessions() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -62,14 +63,7 @@ export default function PrivateSessions() {
       <Helmet>
         <meta name="keywords" content="private yoga West Hampstead, 1-to-1 yoga London, handstand coaching, arm balance tuition, NW6 yoga teacher" />
         <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Service",
-            "serviceType": "Private one-to-one yoga tuition",
-            "provider": { "@type": "Person", "name": "Ammar Bass", "url": "https://www.ammarbass.com" },
-            "areaServed": { "@type": "Place", "name": "West Hampstead, London NW6" },
-            "offers": offers
-          })}
+          {JSON.stringify(privateService(offers))}
         </script>
       </Helmet>
 

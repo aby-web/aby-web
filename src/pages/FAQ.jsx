@@ -5,6 +5,7 @@ import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
 import Footer from '../components/Footer';
 import { priceSummary } from '../data/privateSessions';
+import { faqPage } from '../data/schema';
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(null);
@@ -127,6 +128,9 @@ export default function FAQ() {
       <PageMeta path="/faq" />
       <Helmet>
         <meta name="keywords" content="yoga FAQ, yoga questions, beginner yoga London, private yoga sessions, yoga workshop questions, arm balance training, yoga class questions" />
+        <script type="application/ld+json">
+          {JSON.stringify(faqPage(faqs))}
+        </script>
       </Helmet>
 
       <Nav theme="light" />

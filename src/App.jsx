@@ -70,8 +70,9 @@ function AppRoutes() {
         <Route path="/onboard" element={<NewClientIntake />} />
         <Route path="/cv" element={<CV />} />
         <Route path="/story" element={<Story />} />
-        {/* /coaching and /yogami are parked: see the notes at the top of
-            src/pages/Coaching.jsx and src/pages/Yogami.jsx. */}
+        {/* /coaching is parked: see the note at the top of src/pages/Coaching.jsx.
+            The old Yorigam page was deleted; its address redirects to
+            yorigam.com (see "redirects" in vercel.json). */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
