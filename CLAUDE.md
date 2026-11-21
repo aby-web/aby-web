@@ -51,7 +51,11 @@ React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all s
 
 `docs/site-review.md` is the current plan: five stages, each with its own prompt.
 **Stages 1 and 2 shipped 21 Nov 2026; Stage 3 (one private-sessions page, new homepage order,
-`/schedule`, new menu and footer, phone booking bar) shipped overnight 21–22 Nov 2026.**
+`/schedule`, new menu and footer, phone booking bar) and Stage 4 (type, colour, buttons, About
+page, swipeable testimonials) shipped overnight 21–22 Nov 2026.** Stage 5 is off-site work for
+Ammar. Design rules now in force: body text 16–17px at normal weight in `#5C4A36`; labels never
+under 12px; no centred paragraph longer than two lines; contrast at least 4.5:1; each page ends
+with a dark (`#1C1410`) call-to-action section; buttons only from `ui.js`.
 `docs/overnight-report.md` records what was decided that night and what is still missing.
 Stage 2 superseded the paused Phase 1 plan further down, which is kept only for history.
 

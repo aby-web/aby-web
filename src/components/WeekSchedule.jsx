@@ -92,7 +92,7 @@ export function StudioLinks() {
       {studios(today).map((studio) => (
         <li key={studio.location} className="border border-[#C9B99A] rounded-md p-5 flex flex-col">
           <p className="text-xl font-light text-[#1C1410]">{studio.location}</p>
-          <p className="text-[15px] text-[#5C4A36] mb-4">{studio.address || studio.area}</p>
+          <p className="text-[17px] text-[#5C4A36] mb-4">{studio.address || studio.area}</p>
           <a
             href={studio.url}
             target="_blank"

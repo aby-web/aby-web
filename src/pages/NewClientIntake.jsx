@@ -30,7 +30,7 @@ const LOCATION_TEXT = {
 };
 
 const inputClass =
-  'w-full px-4 py-3 bg-[#F4EFE6] text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#9C8770] text-sm';
+  'w-full px-4 py-3 bg-[#F4EFE6] text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#785E3D] text-base';
 
 export default function NewClientIntake() {
   const [form, setForm] = useState({
@@ -109,13 +109,13 @@ export default function NewClientIntake() {
         <div className="max-w-xl mx-auto">
 
           {/* Header */}
-          <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-4">
+          <p className="text-xs uppercase tracking-[0.2em] text-[#785E3D] mb-4">
             Private sessions
           </p>
           <h1 className="text-4xl md:text-5xl font-light text-[#1C1410] mb-4">
             Welcome
           </h1>
-          <p className="text-base text-[#6B5740] mb-10 leading-relaxed">
+          <p className="text-base text-[#5C4A36] mb-10 leading-relaxed">
             Please fill this in before your first session. It helps me understand where you're
             starting from and what you'd like to work on, so I can plan a session that suits you
             and keep you safe.
@@ -125,7 +125,7 @@ export default function NewClientIntake() {
             <div className="bg-white border border-[#C9B99A] rounded-lg p-10 text-center">
               <div className="text-4xl mb-4">✓</div>
               <h2 className="text-2xl font-light text-[#1C1410] mb-3">All done</h2>
-              <p className="text-[#6B5740] text-base">
+              <p className="text-[#5C4A36] text-base">
                 Thank you. I've got your details and I'll be in touch shortly to confirm your first session.
               </p>
             </div>
@@ -138,17 +138,17 @@ export default function NewClientIntake() {
                 <h2 className="text-sm uppercase tracking-[0.15em] text-[#785E3D]">Your details</h2>
 
                 <div>
-                  <label htmlFor="name" className="block text-sm text-[#1C1410] mb-1">Full name *</label>
+                  <label htmlFor="name" className="block text-base text-[#1C1410] mb-1">Full name *</label>
                   <input id="name" type="text" name="name" value={form.name} onChange={handleChange} required maxLength={200} className={inputClass} placeholder="Your full name" />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm text-[#1C1410] mb-1">Email address *</label>
+                  <label htmlFor="email" className="block text-base text-[#1C1410] mb-1">Email address *</label>
                   <input id="email" type="email" name="email" value={form.email} onChange={handleChange} required maxLength={320} className={inputClass} placeholder="your@email.com" />
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="block text-sm text-[#1C1410] mb-1">Phone number</label>
+                  <label htmlFor="phone" className="block text-base text-[#1C1410] mb-1">Phone number</label>
                   <input id="phone" type="tel" name="phone" value={form.phone} onChange={handleChange} maxLength={50} className={inputClass} placeholder="+44 7700 000000" />
                 </div>
               </div>
@@ -158,7 +158,7 @@ export default function NewClientIntake() {
                 <h2 className="text-sm uppercase tracking-[0.15em] text-[#785E3D]">Your practice</h2>
 
                 <div>
-                  <label htmlFor="goals" className="block text-sm text-[#1C1410] mb-1">What would you like to work on? *</label>
+                  <label htmlFor="goals" className="block text-base text-[#1C1410] mb-1">What would you like to work on? *</label>
                   <textarea
                     id="goals"
                     name="goals"
@@ -173,10 +173,10 @@ export default function NewClientIntake() {
                 </div>
 
                 <fieldset>
-                  <legend className="block text-sm text-[#1C1410] mb-2">Your yoga or movement experience *</legend>
+                  <legend className="block text-base text-[#1C1410] mb-2">Your yoga or movement experience *</legend>
                   <div className="space-y-2">
                     {EXPERIENCE_OPTIONS.map((o) => (
-                      <label key={o.value} className="flex items-start gap-3 cursor-pointer text-sm text-[#1C1410]">
+                      <label key={o.value} className="flex items-start gap-3 cursor-pointer text-base text-[#1C1410]">
                         <input
                           type="radio"
                           name="experience"
@@ -189,7 +189,7 @@ export default function NewClientIntake() {
                       </label>
                     ))}
                   </div>
-                  <p className="text-xs text-[#9C8770] mt-2">
+                  <p className="text-xs text-[#785E3D] mt-2">
                     Complete beginners are very welcome. Mention any other sport or movement you do in your goals above.
                   </p>
                 </fieldset>
@@ -200,10 +200,10 @@ export default function NewClientIntake() {
                 <h2 className="text-sm uppercase tracking-[0.15em] text-[#785E3D]">Where and when</h2>
 
                 <fieldset>
-                  <legend className="block text-sm text-[#1C1410] mb-2">Where would you like to practise? *</legend>
+                  <legend className="block text-base text-[#1C1410] mb-2">Where would you like to practise? *</legend>
                   <div className="space-y-2">
                     {FORMAT_OPTIONS.map((o) => (
-                      <label key={o.value} className="flex items-start gap-3 cursor-pointer text-sm text-[#1C1410]">
+                      <label key={o.value} className="flex items-start gap-3 cursor-pointer text-base text-[#1C1410]">
                         <input
                           type="radio"
                           name="format"
@@ -221,20 +221,20 @@ export default function NewClientIntake() {
                 {form.format && (
                   <div className="bg-[#F4EFE6] border border-[#C9B99A] rounded-md p-4">
                     <p className="text-xs uppercase tracking-[0.15em] text-[#785E3D] mb-2">Session location</p>
-                    <p className="text-sm text-[#6B5740] leading-relaxed">{LOCATION_TEXT[form.format]}</p>
+                    <p className="text-base text-[#5C4A36] leading-relaxed">{LOCATION_TEXT[form.format]}</p>
                   </div>
                 )}
 
                 {form.format === 'home' && (
                   <div>
-                    <label htmlFor="home_area" className="block text-sm text-[#1C1410] mb-1">Your area or postcode</label>
+                    <label htmlFor="home_area" className="block text-base text-[#1C1410] mb-1">Your area or postcode</label>
                     <input id="home_area" type="text" name="home_area" value={form.home_area} onChange={handleChange} maxLength={200} className={inputClass} placeholder="e.g. NW3, or Kilburn" />
-                    <p className="text-xs text-[#9C8770] mt-1">So I can let you know about any travel fee. No need for your full address yet.</p>
+                    <p className="text-xs text-[#785E3D] mt-1">So I can let you know about any travel fee. No need for your full address yet.</p>
                   </div>
                 )}
 
                 <div>
-                  <label htmlFor="availability" className="block text-sm text-[#1C1410] mb-1">When are you usually free? *</label>
+                  <label htmlFor="availability" className="block text-base text-[#1C1410] mb-1">When are you usually free? *</label>
                   <textarea
                     id="availability"
                     name="availability"
@@ -252,7 +252,7 @@ export default function NewClientIntake() {
               {/* Health */}
               <div className="bg-white border border-[#C9B99A] rounded-lg p-6 space-y-5">
                 <h2 className="text-sm uppercase tracking-[0.15em] text-[#785E3D]">Health &amp; injuries</h2>
-                <p className="text-sm text-[#6B5740]">
+                <p className="text-base text-[#5C4A36]">
                   Please share any injuries, chronic pain, medical conditions, pregnancy or physical limitations I should be aware of.
                   Leave blank if none.
                 </p>
@@ -275,7 +275,7 @@ export default function NewClientIntake() {
                       onChange={handleChange}
                       className="mt-0.5 h-4 w-4 accent-[#785E3D] flex-shrink-0"
                     />
-                    <span className="text-sm text-[#1C1410]">
+                    <span className="text-base text-[#1C1410]">
                       I agree to Ammar storing these health details securely, to plan my sessions safely. They won't be shared with anyone. *
                     </span>
                   </label>
@@ -285,7 +285,7 @@ export default function NewClientIntake() {
               {/* Disclaimer */}
               <div className="bg-white border border-[#C9B99A] rounded-lg p-6">
                 <h2 className="text-sm uppercase tracking-[0.15em] text-[#785E3D] mb-3">Disclaimer</h2>
-                <div className="text-sm text-[#6B5740] leading-relaxed mb-5 space-y-2">
+                <div className="text-base text-[#5C4A36] leading-relaxed mb-5 space-y-2">
                   <p>
                     I understand that yoga and movement practice involves physical activity and carries an inherent risk of injury.
                     I confirm that I am voluntarily participating in sessions with Ammar Bass and that I have disclosed
@@ -304,7 +304,7 @@ export default function NewClientIntake() {
                     onChange={handleChange}
                     className="mt-0.5 h-4 w-4 accent-[#785E3D] flex-shrink-0"
                   />
-                  <span className="text-sm text-[#1C1410]">
+                  <span className="text-base text-[#1C1410]">
                     I have read and agree to the above disclaimer *
                   </span>
                 </label>
@@ -322,7 +322,7 @@ export default function NewClientIntake() {
                 {submitting ? 'Submitting…' : 'Submit'}
               </button>
 
-              <p className="text-xs text-[#9C8770] text-center">
+              <p className="text-xs text-[#785E3D] text-center">
                 Your information is stored securely and will only be used in connection with your sessions.
               </p>
             </form>

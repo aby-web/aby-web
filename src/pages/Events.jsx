@@ -4,6 +4,7 @@ import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
 import Footer from '../components/Footer';
 import { longDate } from '../data/classes';
+import { BTN, TEXT } from '../components/ui';
 import { SITE } from '../data/pages';
 import { eventPath, useEvents } from '../lib/events';
 import useToday from '../lib/useToday';
@@ -38,7 +39,7 @@ function EventCard({ event }) {
         <h3 className="text-2xl font-light text-[#1C1410] mb-3">
           {event.title}
         </h3>
-        <p className="text-sm text-[#6B5740] mb-2">
+        <p className="text-base text-[#5C4A36] mb-2">
           {event.location}
         </p>
         <p className="text-xs text-[#785E3D] mt-4">
@@ -85,23 +86,20 @@ export default function Events() {
       <Nav theme="light" />
       <VacationBanner />
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-12 px-8 md:px-12 bg-[#F4EFE6]">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-4">
-            Events & retreats
-          </p>
-          <h1 className="text-5xl md:text-6xl font-light text-[#1C1410] mb-6">
+      <section className="pt-28 md:pt-32 pb-12 px-8 md:px-12 bg-[#F4EFE6]">
+        <div className="max-w-6xl mx-auto">
+          <p className={`${TEXT.eyebrow} mb-5`}>Events & retreats</p>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-light leading-tight text-[#1C1410] mb-6">
             Events
           </h1>
-          <p className="text-lg text-[#6B5740] max-w-2xl mx-auto">
+          <p className={`${TEXT.body} max-w-2xl`}>
             Workshops, retreats, and specialty sessions to develop specific skills and deepen your practice.
           </p>
         </div>
       </section>
 
       {loading ? (
-        <div className="text-center py-20 text-[#6B5740]">
+        <div className="text-center py-20 text-[#5C4A36]">
           Loading events...
         </div>
       ) : (
@@ -140,11 +138,21 @@ export default function Events() {
 
           {upcomingEvents.length === 0 && pastEvents.length === 0 && (
             <section className="py-20 px-8 text-center">
-              <p className="text-[#6B5740]">No events at the moment. Check back soon!</p>
+              <p className="text-[#5C4A36]">No events at the moment. Check back soon!</p>
             </section>
           )}
         </>
       )}
+
+      <section className="bg-[#1C1410] px-8 md:px-12 py-18">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-light text-[#F4EFE6] mb-4">Hear about new dates first</h2>
+          <p className={`${TEXT.bodyOnDark} mb-8`}>
+            One email a month: new classes, 120 Power dates and retreat places before they go public.
+          </p>
+          <a href="/join" className={BTN.primaryOnDark}>Join the mailing list</a>
+        </div>
+      </section>
 
       <Footer />
     </div>

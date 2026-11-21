@@ -37,7 +37,7 @@ export default function Join() {
     <div className="min-h-screen bg-[#F4EFE6] flex flex-col items-center justify-center px-6">
       <PageMeta path="/join" />
 
-      <p className="text-[11px] uppercase tracking-[0.3em] text-[#785E3D] mb-12">
+      <p className="text-xs uppercase tracking-[0.3em] text-[#785E3D] mb-12">
         Ammar Bass
       </p>
 
@@ -46,7 +46,7 @@ export default function Join() {
           <h1 className="text-4xl md:text-5xl font-light text-[#1C1410] mb-4">
             You're on the list
           </h1>
-          <p className="text-[#6B5740]">
+          <p className="text-[#5C4A36]">
             I'll be in touch with classes, workshops, and retreats.
           </p>
         </div>
@@ -55,7 +55,7 @@ export default function Join() {
           <h1 className="text-4xl md:text-5xl font-light text-[#1C1410] mb-4">
             Already subscribed
           </h1>
-          <p className="text-[#6B5740]">
+          <p className="text-[#5C4A36]">
             You're already on the list — I'll be in touch soon.
           </p>
         </div>
@@ -64,7 +64,7 @@ export default function Join() {
           <h1 className="text-4xl md:text-5xl font-light text-[#1C1410] mb-4">
             Join my mailing list
           </h1>
-          <p className="text-[#6B5740] mb-10">
+          <p className="text-[#5C4A36] mb-10">
             First access to classes, workshops, and retreats.
           </p>
 
@@ -103,7 +103,7 @@ export default function Join() {
             )}
           </form>
 
-          <p className="text-[11px] text-[#785E3D] mt-6">
+          <p className="text-xs text-[#785E3D] mt-6">
             No spam. Unsubscribe any time.
           </p>
         </div>
@@ -111,7 +111,7 @@ export default function Join() {
 
       <a
         href="/"
-        className="absolute bottom-8 text-xs text-[#C9B99A] hover:text-[#785E3D] transition-colors tracking-wide"
+        className="absolute bottom-8 text-xs text-[#785E3D] hover:text-[#785E3D] transition-colors tracking-wide"
       >
         ammarbass.com
       </a>

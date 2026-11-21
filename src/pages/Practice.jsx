@@ -4,6 +4,7 @@ import PageMeta from '../components/PageMeta';
 import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
 import Footer from '../components/Footer';
+import { BTN, TEXT } from '../components/ui';
 
 const PRACTICE_VIDEOS = [
   {
@@ -37,148 +38,90 @@ export default function Practice() {
       <Nav theme="light" />
       <VacationBanner />
 
-      <main className="pt-32 pb-24 bg-[#F4EFE6]">
-        <div className="max-w-7xl mx-auto px-8">
+      <main className="pt-28 md:pt-32 bg-[#F4EFE6]">
+        <div className="max-w-5xl mx-auto px-8 md:px-12 pb-18">
           {/* Header */}
-          <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-6xl font-light mb-6 text-[#3D3D3D]">
-              Practise With Me
+          <div className="mb-12 max-w-2xl">
+            <p className={`${TEXT.eyebrow} mb-5`}>Free videos</p>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-light leading-tight text-[#1C1410] mb-6">
+              Practise with me
             </h1>
-            <p className="text-xl text-[#666666] max-w-3xl mx-auto">
-              Free full-length classes to support your practice at home. Each class is thoughtfully sequenced
-              to help you build strength, refine alignment, and deepen your connection to breath and movement.
+            <p className={TEXT.body}>
+              Free full-length classes to support your practice at home. Each class is thoughtfully sequenced to help you build strength, refine alignment, and deepen your connection to breath and movement.
             </p>
           </div>
 
-          {/* Video Grid */}
+          {/* Videos */}
           <div className="space-y-12">
             {PRACTICE_VIDEOS.map((video) => (
-              <div
-                key={video.id}
-                className="bg-white rounded-lg shadow-xl overflow-hidden"
-              >
-                <div className="grid md:grid-cols-5 gap-0">
-                  {/* Video Player / Thumbnail */}
-                  <div className="md:col-span-3">
-                    <div className="relative aspect-video bg-black">
-                      {video.comingSoon ? (
-                        <div className="relative w-full h-full">
-                          <img
-                            src={video.thumbnail}
-                            alt={video.thumbnailAlt || video.title}
-                            className="w-full h-full object-cover"
-                          />
-                          <div className="absolute inset-0 bg-black/70 flex items-center justify-center">
-                            <div className="text-center px-8">
-                              <div className="text-white text-3xl md:text-4xl font-light mb-3">
-                                Coming Soon
-                              </div>
-                              <div className="text-white/80 text-lg mb-4">
-                                Currently in production
-                              </div>
-                              <div className="text-white/60 text-sm">
-                                {video.duration} practice
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      ) : (
-                        selectedVideo === video.id ? (
-                          <iframe
-                            className="absolute inset-0 w-full h-full"
-                            src={`https://www.youtube.com/embed/${video.youtubeId}?autoplay=1`}
-                            title={video.title}
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                          ></iframe>
-                        ) : (
-                          <div
-                            className="relative w-full h-full cursor-pointer group"
-                            onClick={() => setSelectedVideo(video.id)}
-                          >
-                            <img
-                              src={video.thumbnail}
-                              alt={video.thumbnailAlt || video.title}
-                              className="w-full h-full object-cover"
-                            />
-                            <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors duration-200 flex items-center justify-center">
-                              <div className="w-20 h-20 bg-white/90 group-hover:bg-white rounded-full flex items-center justify-center transform group-hover:scale-110 transition-all duration-200">
-                                <svg className="w-10 h-10 text-[#785E3D] ml-1" fill="currentColor" viewBox="0 0 20 20">
-                                  <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
-                                </svg>
-                              </div>
-                            </div>
-                            <div className="absolute top-4 right-4 bg-black/80 text-white px-3 py-1.5 rounded text-sm font-medium">
-                              {video.duration}
-                            </div>
-                          </div>
-                        )
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Video Info */}
-                  <div className="md:col-span-2 p-8">
-                    <div className="flex items-center gap-2 mb-4">
-                      <span className="text-xs font-medium px-3 py-1 bg-[#785E3D]/10 text-[#785E3D] rounded">
-                        {video.level}
-                      </span>
-                      <span className="text-sm text-[#666666]">{video.duration}</span>
-                    </div>
-
-                    <h2 className="text-2xl font-medium mb-4 text-[#3D3D3D]">
-                      {video.title}
-                    </h2>
-
-                    <p className="text-[#666666] mb-6 leading-relaxed">
-                      {video.description}
-                    </p>
-
-                    <div className="mb-6">
-                      <h3 className="text-sm font-medium text-[#3D3D3D] mb-2">Focus Areas:</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {video.focus.map((area) => (
-                          <span
-                            key={area}
-                            className="text-xs px-3 py-1 bg-[#F4EFE6] text-[#785E3D] rounded-full"
-                          >
-                            {area}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {!video.comingSoon && selectedVideo !== video.id && (
+              <div key={video.id} className="border border-[#C9B99A] rounded-lg overflow-hidden grid md:grid-cols-5">
+                {/* Player / thumbnail */}
+                <div className="md:col-span-3">
+                  <div className="relative aspect-video bg-black">
+                    {selectedVideo === video.id ? (
+                      <iframe
+                        className="absolute inset-0 w-full h-full"
+                        src={`https://www.youtube.com/embed/${video.youtubeId}?autoplay=1`}
+                        title={video.title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
+                    ) : (
                       <button
+                        type="button"
                         onClick={() => setSelectedVideo(video.id)}
-                        className="w-full px-6 py-3 bg-[#785E3D] text-[#F4EFE6] rounded hover:bg-[#665033] transition-colors duration-200 font-medium"
+                        aria-label={`Play ${video.title}`}
+                        className="group absolute inset-0 w-full h-full cursor-pointer"
                       >
-                        Practise Now
+                        <img
+                          src={video.thumbnail}
+                          alt={video.thumbnailAlt || video.title}
+                          className="w-full h-full object-cover"
+                        />
+                        <span className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
+                          <span className="w-16 h-16 rounded-full bg-[#F4EFE6] flex items-center justify-center">
+                            <svg aria-hidden="true" className="w-7 h-7 text-[#1C1410] ml-1" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                            </svg>
+                          </span>
+                        </span>
+                        <span className="absolute top-4 right-4 bg-black/75 text-white px-3 py-1 rounded text-sm">
+                          {video.duration}
+                        </span>
                       </button>
                     )}
                   </div>
                 </div>
+
+                {/* Details */}
+                <div className="md:col-span-2 p-7 flex flex-col">
+                  <p className={`${TEXT.eyebrow} mb-3`}>{video.level} · {video.duration}</p>
+                  <h2 className="text-2xl md:text-3xl font-light text-[#1C1410] mb-4">{video.title}</h2>
+                  <p className="text-[16px] leading-relaxed text-[#5C4A36] mb-5">{video.description}</p>
+                  <p className="text-[16px] text-[#5C4A36] mb-6">
+                    <span className="text-[#1C1410]">Focus:</span> {video.focus.join(', ')}
+                  </p>
+                  {selectedVideo !== video.id && (
+                    <button type="button" onClick={() => setSelectedVideo(video.id)} className={`${BTN.primary} mt-auto self-start`}>
+                      Play the class
+                    </button>
+                  )}
+                </div>
               </div>
             ))}
           </div>
-
-          {/* Private Sessions CTA */}
-          <div className="mt-12 text-center bg-[#F4EFE6] rounded-lg shadow-lg p-12">
-            <h2 className="text-3xl font-light mb-4 text-[#3D3D3D]">
-              Want More Personalised Guidance?
-            </h2>
-            <p className="text-[#666666] mb-6 max-w-2xl mx-auto">
-              These free classes are a great way to practise with me at home.
-              For personalised instruction tailored to your goals, consider booking a private session.
-            </p>
-            <a
-              href="/private-sessions"
-              className="inline-block px-8 py-4 bg-[#785E3D] text-[#F4EFE6] rounded hover:bg-[#665033] transition-colors duration-200 font-medium"
-            >
-              Book Private Session
-            </a>
-          </div>
         </div>
+
+        {/* Final call to action */}
+        <section className="bg-[#1C1410] px-8 md:px-12 py-18">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-light text-[#F4EFE6] mb-4">Want more personalised guidance?</h2>
+            <p className={`${TEXT.bodyOnDark} mb-8`}>
+              These free classes are a great way to practise with me at home. For personalised instruction tailored to your goals, consider booking a private session.
+            </p>
+            <a href="/private-sessions" className={BTN.primaryOnDark}>About private sessions</a>
+          </div>
+        </section>
       </main>
 
       <Footer />

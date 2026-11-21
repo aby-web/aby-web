@@ -40,7 +40,7 @@ export default function EventPage() {
     return (
       <div className="min-h-screen bg-[#F4EFE6]">
         <Nav theme="light" />
-        <div className="pt-40 pb-24 text-center text-[#6B5740]">Loading event...</div>
+        <div className="pt-40 pb-24 text-center text-[#5C4A36]">Loading event...</div>
       </div>
     );
   }
@@ -107,7 +107,7 @@ export default function EventPage() {
         <article className="max-w-3xl mx-auto">
           <a
             href="/events"
-            className="inline-flex items-center min-h-[44px] text-[13px] text-[#785E3D] hover:text-[#1C1410] transition-colors"
+            className="inline-flex items-center min-h-[44px] text-sm text-[#785E3D] hover:text-[#1C1410] transition-colors"
           >
             ← All events
           </a>

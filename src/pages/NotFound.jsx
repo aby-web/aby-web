@@ -21,11 +21,11 @@ export default function NotFound() {
 
       <main className="flex-1 pt-40 pb-24 px-8 md:px-12">
         <div className="max-w-3xl mx-auto">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-6">Page not found</p>
+          <p className="text-xs uppercase tracking-[0.2em] text-[#785E3D] mb-6">Page not found</p>
           <h1 className="text-4xl sm:text-5xl font-light leading-tight text-[#1C1410] mb-6">
             That page isn't here.
           </h1>
-          <p className="text-[17px] text-[#6B5740] leading-relaxed mb-10">
+          <p className="text-[17px] text-[#5C4A36] leading-relaxed mb-10">
             It may have moved, or the link may be out of date. These will get you back on track:
           </p>
           <ul className="border-t border-[#C9B99A]">

@@ -77,13 +77,13 @@ const included = [
 ];
 
 const Eyebrow = ({ children }) => (
-  <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-3">{children}</p>
+  <p className="text-xs uppercase tracking-[0.2em] text-[#785E3D] mb-3">{children}</p>
 );
 
 const Photo = ({ name, alt, caption, className = '' }) => (
   <figure>
     <img src={`${IMG}/${name}.webp`} alt={alt} loading="lazy" className={`w-full object-cover rounded-lg ${className}`} />
-    {caption && <figcaption className="text-sm text-[#6B5740] mt-2">{caption}</figcaption>}
+    {caption && <figcaption className="text-base text-[#5C4A36] mt-2">{caption}</figcaption>}
   </figure>
 );
 
@@ -134,7 +134,7 @@ export default function NorfolkRetreat() {
           <h1 className="text-5xl md:text-6xl font-light text-[#1C1410] leading-tight mb-6">
             Spring Yoga Immersion
           </h1>
-          <p className="text-lg md:text-xl text-[#6B5740] max-w-2xl mb-10">
+          <p className="text-lg md:text-xl text-[#5C4A36] max-w-2xl mb-10">
             Three days of practice, learning and good company. A beautiful space in the English countryside.
           </p>
 
@@ -151,12 +151,12 @@ export default function NorfolkRetreat() {
             ].map(([head, sub, accent]) => (
               <div key={head} className="border-t border-[#1C1410]/70 pt-3">
                 <p className={`text-lg ${accent ? 'text-[#785E3D]' : 'text-[#1C1410]'}`}>{head}</p>
-                <p className="text-sm text-[#6B5740]">{sub}</p>
+                <p className="text-base text-[#5C4A36]">{sub}</p>
               </div>
             ))}
           </div>
 
-          <p className="text-[17px] text-[#6B5740] leading-relaxed max-w-3xl mb-10">
+          <p className="text-[17px] text-[#5C4A36] leading-relaxed max-w-3xl mb-10">
             Our next retreat brings together strong practice, workshops and home-cooked food. A small group of lovely people sharing a garden, sauna, ice bath and wood-fired hot tub.
           </p>
 
@@ -173,7 +173,7 @@ export default function NorfolkRetreat() {
           <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-6 max-w-3xl leading-snug">
             A weekend of yoga practice, workshops, good food and good company
           </h2>
-          <div className="space-y-4 text-[17px] text-[#6B5740] leading-relaxed max-w-3xl mb-10">
+          <div className="space-y-4 text-[17px] text-[#5C4A36] leading-relaxed max-w-3xl mb-10">
             <p>
               Our favourite part of every retreat has been the people — conversations over dinner, practising side by side, walks in the garden, games, laughter and the friendships that carry on long after.
             </p>
@@ -186,7 +186,7 @@ export default function NorfolkRetreat() {
             {stats.map(([n, label]) => (
               <div key={n} className="border-t border-[#1C1410]/70 pt-3">
                 <p className="text-3xl font-light text-[#1C1410] mb-1">{n}</p>
-                <p className="text-sm text-[#6B5740]">{label}</p>
+                <p className="text-base text-[#5C4A36]">{label}</p>
               </div>
             ))}
           </div>
@@ -202,7 +202,7 @@ export default function NorfolkRetreat() {
             {practice.map(([head, text]) => (
               <div key={head} className="bg-white border border-[#C9B99A] rounded-lg p-6">
                 <p className="text-[#1C1410] font-medium mb-2">{head}</p>
-                <p className="text-[15px] text-[#6B5740] leading-relaxed">{text}</p>
+                <p className="text-[17px] text-[#5C4A36] leading-relaxed">{text}</p>
               </div>
             ))}
           </div>
@@ -211,7 +211,7 @@ export default function NorfolkRetreat() {
             <Photo name="group-mountains" alt="A retreat group jumping for a photo in the mountains" className="aspect-[4/5]" />
             <Photo name="practice-deck" alt="Students in warrior pose on an outdoor deck among trees" className="aspect-[4/5]" />
           </div>
-          <p className="text-sm text-[#6B5740] mt-4">Recommended for students who have yoga experience.</p>
+          <p className="text-base text-[#5C4A36] mt-4">Recommended for students who have yoga experience.</p>
         </div>
       </section>
 
@@ -219,25 +219,25 @@ export default function NorfolkRetreat() {
       <section className="bg-[#EAE0CF] px-6 md:px-12 py-20">
         <div className="max-w-3xl mx-auto">
           <div className="flex items-baseline justify-between border-b border-[#1C1410] pb-3 mb-1">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D]">A day on retreat</p>
-            <p className="text-sm text-[#6B5740]">Friday and Saturday</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-[#785E3D]">A day on retreat</p>
+            <p className="text-base text-[#5C4A36]">Friday and Saturday</p>
           </div>
           <dl className="divide-y divide-[#C9B99A] mb-3">
             {day.map(([time, what]) => (
               <div key={time} className="grid grid-cols-[110px_1fr] sm:grid-cols-[140px_1fr] gap-4 py-3">
-                <dt className="text-[15px] text-[#6B5740]">{time}</dt>
-                <dd className="text-[15px] text-[#1C1410]">{what}</dd>
+                <dt className="text-[17px] text-[#5C4A36]">{time}</dt>
+                <dd className="text-[17px] text-[#1C1410]">{what}</dd>
               </div>
             ))}
           </dl>
-          <p className="text-xs text-[#6B5740] mb-8">* Suitable for vegans</p>
-          <div className="space-y-3 text-[16px] text-[#6B5740] leading-relaxed mb-10">
+          <p className="text-xs text-[#5C4A36] mb-8">* Suitable for vegans</p>
+          <div className="space-y-3 text-[16px] text-[#5C4A36] leading-relaxed mb-10">
             <p><strong className="font-medium text-[#1C1410]">Thursday</strong> · Arrive from 15:00, opening circle at 17:00, opening vinyasa with Ammar, then dinner.</p>
             <p><strong className="font-medium text-[#1C1410]">Sunday</strong> · Closing practice and circle at 9:00, then a farewell brunch.</p>
           </div>
           <div className="bg-[#F4EFE6] border border-[#C9B99A] rounded-lg p-6">
             <p className="text-[#1C1410] font-medium mb-2">Getting there</p>
-            <p className="text-[15px] text-[#6B5740] leading-relaxed">
+            <p className="text-[17px] text-[#5C4A36] leading-relaxed">
               Liverpool Street to Norwich in about 1½ hours, then a 20-minute taxi. Parking on site, and we'll help you share lifts.
             </p>
           </div>
@@ -249,7 +249,7 @@ export default function NorfolkRetreat() {
         <div className="max-w-5xl mx-auto">
           <Eyebrow>The food</Eyebrow>
           <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-6">Meals cooked by Ina</h2>
-          <div className="space-y-4 text-[17px] text-[#6B5740] leading-relaxed max-w-3xl mb-10">
+          <div className="space-y-4 text-[17px] text-[#5C4A36] leading-relaxed max-w-3xl mb-10">
             <p>
               Nourishing, seasonal food made with care by a former professional chef: homemade granola and snacks, generous brunches, and long shared dinners around one table.
             </p>
@@ -268,7 +268,7 @@ export default function NorfolkRetreat() {
         <div className="max-w-5xl mx-auto">
           <Eyebrow>The house</Eyebrow>
           <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-6">A calm, private home for the weekend</h2>
-          <p className="text-[17px] text-[#6B5740] leading-relaxed max-w-3xl mb-10">
+          <p className="text-[17px] text-[#5C4A36] leading-relaxed max-w-3xl mb-10">
             The House of Bohème, near Norwich, is our home for three nights. A bright studio, a lounge with a wood burner, a long table for meals, and 1.5 acres of garden with a{' '}
             <strong className="font-medium text-[#1C1410]">sauna, ice bath and wood-fired hot tub</strong>, yours to use in the free time each day.
           </p>
@@ -292,26 +292,26 @@ export default function NorfolkRetreat() {
               <div key={r.name} className="flex justify-between items-start gap-6 py-5">
                 <div>
                   <p className={`text-lg ${r.highlight ? 'text-[#785E3D]' : 'text-[#1C1410]'}`}>{r.name}</p>
-                  <p className="text-[15px] text-[#6B5740]">{r.detail}</p>
+                  <p className="text-[17px] text-[#5C4A36]">{r.detail}</p>
                 </div>
                 <div className="text-right shrink-0">
-                  <p className="text-xl text-[#1C1410]">{r.price} <span className="text-sm text-[#6B5740]">{r.unit}</span></p>
-                  {r.note && <p className="text-sm text-[#6B5740]">{r.note}</p>}
+                  <p className="text-xl text-[#1C1410]">{r.price} <span className="text-base text-[#5C4A36]">{r.unit}</span></p>
+                  {r.note && <p className="text-base text-[#5C4A36]">{r.note}</p>}
                 </div>
               </div>
             ))}
           </div>
-          <p className="text-sm text-[#6B5740] mb-8">Coming alone? We'll pair you thoughtfully.</p>
+          <p className="text-base text-[#5C4A36] mb-8">Coming alone? We'll pair you thoughtfully.</p>
           <div className="bg-white border border-[#C9B99A] rounded-lg p-6">
             <p className="text-[#1C1410] font-medium mb-3">Included</p>
             <ul className="space-y-2 mb-5">
               {included.map((item) => (
-                <li key={item} className="flex items-start gap-3 text-[15px] text-[#6B5740]">
+                <li key={item} className="flex items-start gap-3 text-[17px] text-[#5C4A36]">
                   <span className="text-[#785E3D]">—</span>{item}
                 </li>
               ))}
             </ul>
-            <p className="text-[15px] text-[#6B5740] pt-4 border-t border-[#C9B99A]">
+            <p className="text-[17px] text-[#5C4A36] pt-4 border-t border-[#C9B99A]">
               <strong className="font-medium text-[#1C1410]">Not included</strong> · Travel
             </p>
           </div>
@@ -331,11 +331,11 @@ export default function NorfolkRetreat() {
             ].map((step, i) => (
               <li key={i} className="flex gap-6 py-5 border-b border-[#1C1410]/70">
                 <span className="text-2xl font-light text-[#785E3D] w-6 shrink-0">{i + 1}</span>
-                <span className="text-[17px] text-[#6B5740] leading-relaxed">{step}</span>
+                <span className="text-[17px] text-[#5C4A36] leading-relaxed">{step}</span>
               </li>
             ))}
           </ol>
-          <div className="bg-[#F4EFE6] rounded-lg p-5 mb-10 text-[15px] text-[#6B5740]">
+          <div className="bg-[#F4EFE6] rounded-lg p-5 mb-10 text-[17px] text-[#5C4A36]">
             <strong className="font-medium text-[#1C1410]">Only 10 places.</strong> Rooms are allocated in the order bookings are received. The deposit is non-refundable.
           </div>
           <a href={BOOK_URL} target="_blank" rel="noopener noreferrer" className="inline-block px-8 py-4 rounded-full bg-[#1C1410] text-[#F4EFE6] hover:bg-[#2A1E16] transition-colors text-sm uppercase tracking-wide mb-16">
@@ -346,16 +346,16 @@ export default function NorfolkRetreat() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-10">
             <div>
               <p className="text-2xl font-light text-[#1C1410] mb-2">Ina</p>
-              <p className="text-[15px] text-[#6B5740]"><a href="mailto:me@inayoga.co.uk" className="hover:text-[#1C1410]">me@inayoga.co.uk</a></p>
-              <p className="text-[15px] text-[#6B5740]">
+              <p className="text-[17px] text-[#5C4A36]"><a href="mailto:me@inayoga.co.uk" className="hover:text-[#1C1410]">me@inayoga.co.uk</a></p>
+              <p className="text-[17px] text-[#5C4A36]">
                 <a href="https://instagram.com/inayo.ga" className="hover:text-[#1C1410]">@inayo.ga</a> ·{' '}
                 <a href="https://inayoga.co.uk" className="hover:text-[#1C1410]">inayoga.co.uk</a>
               </p>
             </div>
             <div>
               <p className="text-2xl font-light text-[#1C1410] mb-2">Ammar</p>
-              <p className="text-[15px] text-[#6B5740]"><a href="mailto:ammar@ammarbass.com" className="hover:text-[#1C1410]">ammar@ammarbass.com</a></p>
-              <p className="text-[15px] text-[#6B5740]">
+              <p className="text-[17px] text-[#5C4A36]"><a href="mailto:ammar@ammarbass.com" className="hover:text-[#1C1410]">ammar@ammarbass.com</a></p>
+              <p className="text-[17px] text-[#5C4A36]">
                 <a href="https://instagram.com/ammarbass" className="hover:text-[#1C1410]">@ammarbass</a> ·{' '}
                 <a href="/" className="hover:text-[#1C1410]">ammarbass.com</a>
               </p>

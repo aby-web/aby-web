@@ -10,7 +10,7 @@ export default function Bootcamp() {
       <Nav theme="dark" />
 
       {/* Hero */}
-      <section className="relative h-[45vh] min-h-[580px] md:min-h-[420px] flex items-center justify-center overflow-hidden">
+      <section className="relative flex items-center overflow-hidden pt-32 pb-16 md:min-h-[560px]">
         <img
           src="/images/d.jpeg"
           alt="Sunset over the Black Sea from a rocky shore near Varna, Bulgaria"
@@ -19,17 +19,17 @@ export default function Bootcamp() {
         {/* Fallback: swap to /images/retreat-beach.jpg if sunset colours don't work */}
         {/* Dark overlay for text legibility */}
         <div className="absolute inset-0 bg-black/45"></div>
-        <div className="relative z-10 max-w-3xl mx-auto text-center px-8 md:px-12 pt-24 md:pt-0">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-white/70 mb-6">
+        <div className="relative z-10 w-full max-w-3xl mx-auto px-8 md:px-12">
+          <p className="text-xs uppercase tracking-[0.2em] text-white/70 mb-6">
             Past event &nbsp;·&nbsp; 4–9 September 2026 &nbsp;·&nbsp; Varna, Bulgaria
           </p>
           <h1 className="text-5xl md:text-6xl font-light text-white leading-tight mb-6">
             Yoga Intensive Bootcamp
           </h1>
-          <p className="text-lg text-white/80 max-w-2xl mx-auto mb-10">
+          <p className="text-lg text-white/90 max-w-2xl mb-6">
             Five days of practice in a forest, minutes from some of Bulgaria's most beautiful beaches. Immersive, progressive, and intentional — with a small group of people who love to practice.
           </p>
-          <p className="text-[17px] text-white mb-8 max-w-xl mx-auto">
+          <p className="text-[17px] text-white mb-8 max-w-xl">
             This bootcamp ran from 4 to 9 September 2026. This page is kept as a record of it.
           </p>
           <a
@@ -45,12 +45,12 @@ export default function Bootcamp() {
       {/* Pricing */}
       <section className="bg-[#F4EFE6] px-8 md:px-12 py-16">
         <div className="max-w-3xl mx-auto">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-3 text-center">The stay</p>
+          <p className="text-xs uppercase tracking-[0.2em] text-[#785E3D] mb-3 text-center">The stay</p>
           <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-10 text-center">What was included</h2>
 
           {/* What's included */}
           <div className="bg-[#EAE0CF] rounded-lg p-8 mb-6">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-4">Included</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-[#785E3D] mb-4">Included</p>
             <ul className="space-y-3">
               {[
                 '5 hours of yoga and workshops daily',
@@ -58,7 +58,7 @@ export default function Bootcamp() {
                 'All meals — breakfast, lunch, dinner, and one coffee',
                 'Transfer to and from Varna airport',
               ].map((item) => (
-                <li key={item} className="flex items-start gap-3 text-[#6B5740] text-sm">
+                <li key={item} className="flex items-start gap-3 text-[#5C4A36] text-base">
                   <span className="text-[#785E3D] mt-0.5">—</span>
                   {item}
                 </li>
@@ -67,14 +67,14 @@ export default function Bootcamp() {
           </div>
 
           <div className="bg-[#EAE0CF] rounded-lg p-8">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-4">Not included</p>
+            <p className="text-xs uppercase tracking-[0.2em] text-[#785E3D] mb-4">Not included</p>
             <ul className="space-y-3">
               {[
                 'Flights — direct Wizz Air from Luton to Varna costs £150–£250',
                 'Additional food and drinks from the restaurant',
                 'Alcohol is not permitted during the stay',
               ].map((item) => (
-                <li key={item} className="flex items-start gap-3 text-[#6B5740] text-sm">
+                <li key={item} className="flex items-start gap-3 text-[#5C4A36] text-base">
                   <span className="text-[#785E3D] mt-0.5">—</span>
                   {item}
                 </li>
@@ -103,10 +103,10 @@ export default function Bootcamp() {
       {/* What's the plan */}
       <section className="bg-[#EAE0CF] px-8 md:px-12 py-16">
         <div className="max-w-3xl mx-auto">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-3">The programme</p>
+          <p className="text-xs uppercase tracking-[0.2em] text-[#785E3D] mb-3">The programme</p>
           <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-8">What's the plan?</h2>
 
-          <p className="text-[#6B5740] mb-8 leading-relaxed">
+          <p className="text-[#5C4A36] mb-8 leading-relaxed">
             Each day includes 5 hours of yoga — a morning practice, a focused workshop, and an evening practice. The structure stays flexible, adapting to the group's energy and needs, but the goal is a well-rounded, immersive experience.
           </p>
 
@@ -120,20 +120,20 @@ export default function Bootcamp() {
 
           <div className="space-y-6">
             <div className="border-t border-[#C9B99A] pt-6">
-              <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-2">Progressive flow</p>
-              <p className="text-[#6B5740] text-sm leading-relaxed">We build a base vinyasa sequence across the week, adding transitions, variations, and new layers as we go.</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-[#785E3D] mb-2">Progressive flow</p>
+              <p className="text-[#5C4A36] text-base leading-relaxed">We build a base vinyasa sequence across the week, adding transitions, variations, and new layers as we go.</p>
             </div>
             <div className="border-t border-[#C9B99A] pt-6">
-              <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-2">Workshops</p>
-              <p className="text-[#6B5740] text-sm leading-relaxed">Focused on key areas: inversions, arm balances, binds, backbends, and splits — with mobility training and techniques to help you explore poses safely and with confidence.</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-[#785E3D] mb-2">Workshops</p>
+              <p className="text-[#5C4A36] text-base leading-relaxed">Focused on key areas: inversions, arm balances, binds, backbends, and splits — with mobility training and techniques to help you explore poses safely and with confidence.</p>
             </div>
             <div className="border-t border-[#C9B99A] pt-6">
-              <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-2">Beyond the physical</p>
-              <p className="text-[#6B5740] text-sm leading-relaxed">Philosophy, breathwork, meditation, partner work, and Thai massage woven throughout the week.</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-[#785E3D] mb-2">Beyond the physical</p>
+              <p className="text-[#5C4A36] text-base leading-relaxed">Philosophy, breathwork, meditation, partner work, and Thai massage woven throughout the week.</p>
             </div>
             <div className="border-t border-[#C9B99A] pt-6">
-              <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-2">Free time</p>
-              <p className="text-[#6B5740] text-sm leading-relaxed">Beaches at Chernomorets and Pasha Dere, forest hikes, and time to connect with the group.</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-[#785E3D] mb-2">Free time</p>
+              <p className="text-[#5C4A36] text-base leading-relaxed">Beaches at Chernomorets and Pasha Dere, forest hikes, and time to connect with the group.</p>
             </div>
           </div>
         </div>
@@ -142,12 +142,12 @@ export default function Bootcamp() {
       {/* Who is it for */}
       <section className="bg-[#F4EFE6] px-8 md:px-12 py-16">
         <div className="max-w-3xl mx-auto">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-3">Who is it for?</p>
+          <p className="text-xs uppercase tracking-[0.2em] text-[#785E3D] mb-3">Who is it for?</p>
           <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-6">This is an intensive, not a holiday</h2>
-          <p className="text-[#6B5740] leading-relaxed mb-6">
+          <p className="text-[#5C4A36] leading-relaxed mb-6">
             This bootcamp is open to those who practise with us regularly. It's an intensive yoga programme designed to deepen your practice — not a retreat for beginners. You'll gain new skills and tools, approach challenging poses with confidence, and connect with yoga beyond just the physical.
           </p>
-          <p className="text-[#6B5740] leading-relaxed mb-8">
+          <p className="text-[#5C4A36] leading-relaxed mb-8">
             That said, it's not all hard work. There's time to relax, connect with others, and enjoy the setting.
           </p>
           <img
@@ -162,21 +162,21 @@ export default function Bootcamp() {
       {/* Weather & Flights */}
       <section className="bg-[#EAE0CF] px-8 md:px-12 py-16">
         <div className="max-w-3xl mx-auto">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-3">Practical info</p>
+          <p className="text-xs uppercase tracking-[0.2em] text-[#785E3D] mb-3">Practical info</p>
           <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-10">Getting there</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-3">Weather</p>
-              <p className="text-[#6B5740] text-sm leading-relaxed">Early September in Varna: 23–25°C days, 15–18°C evenings. Sea temperature around 22–23°C. Minimal rainfall and clear skies.</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-[#785E3D] mb-3">Weather</p>
+              <p className="text-[#5C4A36] text-base leading-relaxed">Early September in Varna: 23–25°C days, 15–18°C evenings. Sea temperature around 22–23°C. Minimal rainfall and clear skies.</p>
             </div>
             <div>
-              <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-3">Flights</p>
-              <p className="text-[#6B5740] text-sm leading-relaxed">Direct Wizz Air from Luton to Varna. Outbound 8:25am Sep 4, inbound 5:55am Sep 9. Airport transfers included.</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-[#785E3D] mb-3">Flights</p>
+              <p className="text-[#5C4A36] text-base leading-relaxed">Direct Wizz Air from Luton to Varna. Outbound 8:25am Sep 4, inbound 5:55am Sep 9. Airport transfers included.</p>
             </div>
             <div>
-              <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-3">Yoga mat</p>
-              <p className="text-[#6B5740] text-sm leading-relaxed">Bring a full-size grippy mat. Mats can go in checked luggage or as carry-on with priority boarding and 2 cabin bags.</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-[#785E3D] mb-3">Yoga mat</p>
+              <p className="text-[#5C4A36] text-base leading-relaxed">Bring a full-size grippy mat. Mats can go in checked luggage or as carry-on with priority boarding and 2 cabin bags.</p>
             </div>
           </div>
           <a
@@ -203,7 +203,7 @@ export default function Bootcamp() {
       {/* Teachers */}
       <section className="bg-[#F4EFE6] px-8 md:px-12 py-16">
         <div className="max-w-3xl mx-auto">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-3">Who's teaching</p>
+          <p className="text-xs uppercase tracking-[0.2em] text-[#785E3D] mb-3">Who's teaching</p>
           <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-10">Your teachers</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -215,10 +215,10 @@ export default function Bootcamp() {
                 className="w-full h-72 object-cover object-top rounded-lg mb-5"
               />
               <p className="text-lg font-light text-[#1C1410] mb-1">Ammar Bass</p>
-              <p className="text-sm text-[#785E3D] mb-3">
+              <p className="text-base text-[#785E3D] mb-3">
                 <a href="https://www.instagram.com/ammarbass" target="_blank" rel="noopener noreferrer" className="hover:underline">@ammarbass</a>
               </p>
-              <a href="https://www.ammarbass.com" className="text-sm text-[#785E3D] underline">ammarbass.com</a>
+              <a href="https://www.ammarbass.com" className="text-base text-[#785E3D] underline">ammarbass.com</a>
             </div>
             <div>
               <img
@@ -228,10 +228,10 @@ export default function Bootcamp() {
                 className="w-full h-72 object-cover object-top rounded-lg mb-5"
               />
               <p className="text-lg font-light text-[#1C1410] mb-1">Ina Yordanova</p>
-              <p className="text-sm text-[#785E3D] mb-3">
+              <p className="text-base text-[#785E3D] mb-3">
                 <a href="https://www.instagram.com/inayo.ga" target="_blank" rel="noopener noreferrer" className="hover:underline">@inayo.ga</a>
               </p>
-              <a href="https://www.inayoga.co.uk" className="text-sm text-[#785E3D] underline">inayoga.co.uk</a>
+              <a href="https://www.inayoga.co.uk" className="text-base text-[#785E3D] underline">inayoga.co.uk</a>
             </div>
           </div>
         </div>
