@@ -35,9 +35,8 @@ React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all s
   and for the nightly `pg_cron` job `nightly-site-rebuild` (00:10 UTC), which authenticates with
   `REBUILD_CRON_SECRET` (function env + Supabase Vault).
 - **Admin writes** to `events`, `vacations` and the `event-images` bucket go through the
-  `admin-data` Edge Function (admin login required). `supabase/pending/lock_down_public_writes.sql`
-  removes the old "anyone can write" policies on those; it is **not applied yet** — apply it only
-  once Ammar confirms saving events (with a photo) and vacations works in `/admin`.
+  `admin-data` Edge Function (admin login required). The old "anyone can write" policies on
+  those were removed on 21 Nov 2026; the public key can only read them.
 - Dev: `npm run dev` (no pre-rendering; pages build in the browser).
 
 ---
