@@ -4,6 +4,14 @@ import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import { supabase } from '../lib/supabase';
 
+/*
+ * PARKED — removed from the site on 21 Nov 2026 at Ammar's request.
+ * /yogami now permanently redirects to https://yorigam.com (see "redirects"
+ * in vercel.json). This file is kept for reference but is NOT routed: it has
+ * no <Route> in src/App.jsx and no entry in src/data/pages.js, so nothing
+ * here is built into the site.
+ */
+
 const features = [
   {
     number: '01',

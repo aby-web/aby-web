@@ -18,12 +18,12 @@ export default function PageMeta({ path }) {
       <title>{title}</title>
       {description && <meta name="description" content={description} />}
       {!page.index && <meta name="robots" content="noindex, nofollow" />}
-      <link rel="canonical" href={url} />
+      {page.canonical !== false && <link rel="canonical" href={url} />}
 
       {/* Open Graph — WhatsApp, iMessage, Facebook, LinkedIn, Slack */}
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content="Ammar Bass" />
-      <meta property="og:url" content={url} />
+      {page.canonical !== false && <meta property="og:url" content={url} />}
       <meta property="og:title" content={title} />
       {description && <meta property="og:description" content={description} />}
       {image && <meta property="og:image" content={image} />}

@@ -1,7 +1,27 @@
 {
+  "redirects": [
+    {
+      "source": "/yogami",
+      "destination": "https://yorigam.com",
+      "permanent": true
+    },
+    {
+      "source": "/yogami/",
+      "destination": "https://yorigam.com",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
-      "source": "/((?!about$|about/|private-sessions$|private-sessions/|how-privates-work$|how-privates-work/|saturday-class$|saturday-class/|events$|events/|practice$|practice/|faq$|faq/|norfolk-retreat$|norfolk-retreat/|coaching$|coaching/|bootcamp$|bootcamp/|yogami$|yogami/|join$|join/|assets/|images/).+)",
+      "source": "/(admin|onboard|cv|story|handstandguide|pinchaguide)",
+      "destination": "/shell.html"
+    },
+    {
+      "source": "/(admin|onboard|cv|story|handstandguide|pinchaguide)/",
+      "destination": "/shell.html"
+    },
+    {
+      "source": "/join",
       "destination": "/shell.html"
     }
   ]

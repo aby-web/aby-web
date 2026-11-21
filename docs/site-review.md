@@ -515,3 +515,4 @@ Most questions were answered on 21 November. Nothing left open blocks Stage 1 or
 - [ ] Consent from students whose faces are clear in the low-lunge photo, or a crop that avoids them.
 - [ ] One photo of you teaching a single student in the loft studio. This is still the main gap.
 - [ ] A date for the second free video.
+- [ ] Stage 3: convert `/bootcamp` to a past-event page: remove the booking buttons, say it ran in September 2026, and link to `/norfolk-retreat`. It is noindex until then. (Added 21 November.)

@@ -7,7 +7,15 @@ import { CALENDLY_URL } from '../data/privateSessions';
 
 /*
  * ─────────────────────────────────────────────────────────────────────────────
- * PUBLISHED PAGE — Coaching (corporate-billed one-to-one work)
+ * PARKED — taken offline on 21 Nov 2026 at Ammar's request.
+ * This file is kept for reference but is NOT routed: it has no <Route> in
+ * src/App.jsx and no entry in src/data/pages.js, so /coaching shows the
+ * "page not found" page and nothing here is built into the site.
+ * To bring it back: add the route and a pages.js entry (title and description
+ * are in git history, commit "Stage 2 step 1").
+ * It has no Calendly link of its own; it reads the shared CALENDLY_URL.
+ * ─────────────────────────────────────────────────────────────────────────────
+ * WAS: PUBLISHED PAGE — Coaching (corporate-billed one-to-one work)
  * ─────────────────────────────────────────────────────────────────────────────
  * Positions Ammar's existing private work for a buyer who expenses it through
  * a company. This is a REFRAME of what he already does, not a new product.

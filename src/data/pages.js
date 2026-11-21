@@ -20,8 +20,9 @@
  *               and prerender are both true.
  *
  * To add a page: add its route in src/App.jsx, an entry here, and
- * <PageMeta path="/your-path" /> in the page component. Pre-rendered pages
- * also need their path in the rewrite exclusion list in vercel.json.
+ * <PageMeta path="/your-path" /> in the page component. A private page
+ * (prerender: false) also needs its path in the shell rewrite in vercel.json,
+ * or its address will show the "page not found" page.
  */
 
 export const SITE = 'https://ammarbass.com';
@@ -32,8 +33,8 @@ const OG_HOME_ALT = 'Ammar Bass seated in meditation at the Barbican, London';
 const OG_PRIVATE = `${SITE}/images/og-private.jpg`;
 
 const PUBLIC = { prerender: true, index: true, sitemap: true };
-// Public and indexable, but not promoted in the sitemap.
-const UNLISTED = { prerender: true, index: true, sitemap: false };
+// Public pages kept out of search results: pre-rendered, but noindex.
+const HIDDEN = { prerender: true, index: false, sitemap: false };
 // Private, client-specific or visitor-dependent: never pre-rendered or indexed.
 const PRIVATE = { prerender: false, index: false, sitemap: false };
 
@@ -120,16 +121,9 @@ export const pages = [
     ...PUBLIC,
   },
 
-  // ── Public, but not in the menu or the sitemap ───────────────────────────
-  {
-    path: '/coaching',
-    title: 'Coaching for Founders & Senior Operators | London | Ammar Bass',
-    description:
-      'One-to-one coaching in London for founders and senior operators, taught through physical practice, by someone who spent years in finance first. Programmes of 7–10 sessions.',
-    image: OG_PRIVATE,
-    imageAlt: 'Ammar Bass, coaching and private sessions in London',
-    ...UNLISTED,
-  },
+  // ── Public, but noindex and not in the menu or the sitemap ───────────────
+  // /bootcamp ran in September 2026. Stage 3 of docs/site-review.md turns it
+  // into a past-event page; until then it stays up but out of search.
   {
     path: '/bootcamp',
     title: 'Yoga Intensive Bootcamp — Bulgaria 2026 | Ammar Bass',
@@ -137,16 +131,7 @@ export const pages = [
       '5-day yoga intensive in Varna, Bulgaria. 4–9 September 2026. Forest setting, minutes from the beach. Progressive flow, workshops and immersive practice.',
     image: `${SITE}/images/og-bootcamp.jpg`,
     imageAlt: 'Forest cabins at the retreat venue near Varna, Bulgaria',
-    ...UNLISTED,
-  },
-  {
-    path: '/yogami',
-    title: 'Yogami — Business tools for yoga teachers',
-    description:
-      'Yogami is a management app built specifically for yoga teachers. Clients, invoicing, scheduling, and income tracking — all in one place.',
-    image: OG_HOME,
-    imageAlt: OG_HOME_ALT,
-    ...UNLISTED,
+    ...HIDDEN,
   },
   {
     path: '/join',
@@ -155,7 +140,7 @@ export const pages = [
       'One email a month from Ammar Bass: new classes, 120 Power dates and retreat places before they go public.',
     image: OG_HOME,
     imageAlt: OG_HOME_ALT,
-    ...UNLISTED,
+    ...HIDDEN,
   },
 
   // ── Private, client-specific or gated: empty noindex shell only ──────────
@@ -197,8 +182,18 @@ export const pages = [
     title: 'Admin | Ammar Bass',
     ...PRIVATE,
   },
+
+  // ── The "page not found" page ────────────────────────────────────────────
+  // Written to dist/404.html; Vercel serves it with a 404 status for any
+  // address that has no page. It has no address of its own, so no canonical.
+  {
+    path: '/404',
+    file: '404.html',
+    title: 'Page Not Found | Ammar Bass',
+    canonical: false,
+    ...HIDDEN,
+  },
 ];
 
 export const pageMeta = (path) => pages.find((p) => p.path === path);
 export const pageUrl = (path) => (path === '/' ? `${SITE}/` : `${SITE}${path}`);
-export const prerenderPaths = pages.filter((p) => p.prerender).map((p) => p.path);

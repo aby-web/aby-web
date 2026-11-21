@@ -12,9 +12,14 @@ React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all s
   (→ `dist-ssr/`, not published) + `node scripts/prerender.js`, which writes each public page's
   full HTML into `dist/<path>/index.html`. Private pages (`prerender: false`: `/admin`,
   `/onboard`, `/cv`, `/story`, the gated guides) get `dist/shell.html`, an empty noindex page,
-  via the rewrite in `vercel.json`. The build fails rather than publish an empty or odd page.
+  via the rewrite in `vercel.json`. Any other unknown address gets `dist/404.html`
+  (`src/pages/NotFound.jsx`) with a real 404 status. The build fails rather than publish an
+  empty or odd page.
 - Adding a page: route in `App.jsx`, entry in `pages.js`, `<PageMeta>` in the component, and (if
-  pre-rendered) its path in the `vercel.json` exclusion list.
+  private) its path in the shell rewrite in `vercel.json`.
+- Parked on 21 Nov 2026 (files kept, not routed): `src/pages/Coaching.jsx` (`/coaching` now 404s)
+  and `src/pages/Yogami.jsx` (`/yogami` redirects permanently to yorigam.com). `/bootcamp` and
+  `/join` are live but noindex; Stage 3 turns `/bootcamp` into a past-event page.
 - Pre-rendered pages are **hydrated**, so the first browser render must match the built HTML.
   Anything that depends on today's date goes through `src/lib/useToday.js`; format dates with
   the helpers in `src/data/classes.js`, never `toLocaleDateString`. Don't read `window`,

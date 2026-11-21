@@ -23,6 +23,7 @@
  * empty, without exactly one <title>, or containing anything key-like.
  */
 
+/* global process */
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -52,8 +53,9 @@ const bare = template
   .replace(/<meta\s+name="description"[^>]*>\s*/i, '');
 
 // ── 1. The shell for private pages ──────────────────────────────────────────
-// Served (via the rewrite in vercel.json) for /admin, /onboard, the gated
-// guides and any other address without a pre-rendered file. Never indexed.
+// Served (via the rewrite in vercel.json) for /admin, /onboard, /cv, /story
+// and the gated guides. Never indexed. Any other address without a file gets
+// dist/404.html, the pre-rendered "page not found" page, with a 404 status.
 writeFileSync(
   join(DIST, 'shell.html'),
   template.replace(/<\/head>/i, '  <meta name="robots" content="noindex, nofollow" />\n  </head>'),
@@ -100,9 +102,13 @@ for (const page of pages.filter((p) => p.prerender)) {
     fail(`${page.path}: robots tag does not match its "index" flag in src/data/pages.js`);
   }
 
+  // The markers let src/main.jsx remove these tags if it ever has to rebuild
+  // the page from scratch instead of taking over this HTML.
   const head = [
+    '<!--prerender-head-->',
     `<script>window.__PRERENDER_DATE__=${JSON.stringify(buildDate)}</script>`,
     ...tags,
+    '<!--/prerender-head-->',
   ].join('\n    ');
 
   const html = bare
@@ -116,8 +122,9 @@ for (const page of pages.filter((p) => p.prerender)) {
     fail(`${page.path} contains something that looks like a key or token`);
   }
 
-  const outFile =
-    page.path === '/' ? join(DIST, 'index.html') : join(DIST, page.path, 'index.html');
+  const outFile = page.file
+    ? join(DIST, page.file)
+    : page.path === '/' ? join(DIST, 'index.html') : join(DIST, page.path, 'index.html');
   mkdirSync(dirname(outFile), { recursive: true });
   writeFileSync(outFile, html, 'utf8');
 

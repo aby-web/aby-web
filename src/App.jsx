@@ -15,9 +15,8 @@ import Join from './pages/Join';
 import Bootcamp from './pages/Bootcamp';
 import NorfolkRetreat from './pages/NorfolkRetreat';
 import NewClientIntake from './pages/NewClientIntake';
-import Yogami from './pages/Yogami';
 import CV from './pages/CV';
-import Coaching from './pages/Coaching';
+import NotFound from './pages/NotFound';
 import Story from './pages/Story';
 
 function ScrollToHash() {
@@ -67,10 +66,11 @@ function AppRoutes() {
         <Route path="/bootcamp" element={<Bootcamp />} />
         <Route path="/norfolk-retreat" element={<NorfolkRetreat />} />
         <Route path="/onboard" element={<NewClientIntake />} />
-        <Route path="/yogami" element={<Yogami />} />
         <Route path="/cv" element={<CV />} />
-        <Route path="/coaching" element={<Coaching />} />
         <Route path="/story" element={<Story />} />
+        {/* /coaching and /yogami are parked: see the notes at the top of
+            src/pages/Coaching.jsx and src/pages/Yogami.jsx. */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
