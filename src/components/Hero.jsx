@@ -1,4 +1,9 @@
+import WhatsAppGroupButton from './WhatsAppGroupButton';
+import { SATURDAY_AREA, SATURDAY_START, londonToday, shortDate } from '../data/classes';
+
 export default function Hero() {
+  const startsLater = londonToday() < SATURDAY_START;
+
   return (
     <section className="relative w-full h-screen overflow-hidden">
       {/* Background */}
@@ -55,6 +60,16 @@ export default function Hero() {
             >
               Find a Class
             </a>
+          </div>
+
+          {/* New Saturday class: you join via the WhatsApp group */}
+          <div className="mt-8 pt-6 border-t border-white/25 max-w-[420px]">
+            <p className="text-sm text-white/90 leading-relaxed mb-3" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.6)' }}>
+              <span className="text-[#C9A878] uppercase tracking-[0.15em] text-[11px] font-medium">New</span>{' '}
+              Ammar's Saturday class, 11:30–13:00 in {SATURDAY_AREA}
+              {startsLater ? `, from ${shortDate(SATURDAY_START)}` : ''}. Join the WhatsApp group to come.
+            </p>
+            <WhatsAppGroupButton variant="outline" />
           </div>
         </div>
       </div>

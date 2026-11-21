@@ -32,7 +32,7 @@ const ROUTES = [
     path: '',
     title: 'Ammar Bass | Yoga Teacher London | Vinyasa, Handstands & Arm Balances',
     description:
-      'London yoga teacher specialising in strong vinyasa, handstands and arm balances. Classes at HOME Wellness, Indaba, BXR, Yogarise and Flo. Workshops and retreats.',
+      'London yoga teacher specialising in strong vinyasa, handstands and arm balances. Classes at HOME Wellness, BXR, Yogarise, Flo and my own Saturday class in Marylebone. Events and retreats.',
     image: OG_HOME,
     imageAlt: OG_HOME_ALT,
   },
@@ -143,7 +143,7 @@ for (const r of ROUTES) {
     `<link rel="canonical" href="${url}" />`,
     // Open Graph — WhatsApp, iMessage, Facebook, LinkedIn, Slack
     `<meta property="og:type" content="website" />`,
-    `<meta property="og:site_name" content="Chef Ina" />`,
+    `<meta property="og:site_name" content="Ammar Bass" />`,
     `<meta property="og:url" content="${url}" />`,
     `<meta property="og:title" content="${esc(r.title)}" />`,
     `<meta property="og:description" content="${esc(r.description)}" />`,

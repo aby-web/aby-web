@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import WhatsAppGroupButton from './WhatsAppGroupButton';
 
 export default function Nav({ theme = 'dark' }) {
   const [scrolled, setScrolled] = useState(false);
@@ -169,6 +170,13 @@ export default function Nav({ theme = 'dark' }) {
           >
             Schedule
           </a>
+          <WhatsAppGroupButton
+            variant="light"
+            className="mt-2 text-sm"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Join the Saturday WhatsApp group
+          </WhatsAppGroupButton>
         </div>
       </div>
     </>

@@ -1,51 +1,14 @@
+import { currentSchedule, londonToday, shortDate } from '../data/classes';
+import WhatsAppGroupButton from './WhatsAppGroupButton';
+
+// The timetable lives in src/data/classes.js. Classes past their `until`
+// date drop off and "From …" labels disappear on the start date, on their own.
 export default function Schedule() {
-  const scheduleData = [
-    {
-      location: 'HOME Wellness',
-      area: 'Primrose Hill',
-      classes: [
-        { day: 'Wednesday', time: '18:00', name: 'Vinyasa', url: 'http://homewellness.uk/' },
-        { day: 'Friday', time: '18:00', name: 'Vinyasa (75)', url: 'http://homewellness.uk/' },
-        { day: 'Sunday', time: '10:00', name: 'Vinyasa (75)', url: 'http://homewellness.uk/' },
-      ],
-    },
-    {
-      location: 'Indaba',
-      area: 'Marylebone',
-      classes: [
-        { day: 'Tuesday', time: '07:30', name: 'Morning Flow', url: 'https://indabayoga.com/timetable' },
-        { day: 'Thursday', time: '18:00', name: 'Vinyasa & Meditation (75)', url: 'https://indabayoga.com/timetable' },
-        { day: 'Saturday', time: '11:30', name: 'Vinyasa (75)', url: 'https://indabayoga.com/timetable' },
-      ],
-    },
-    {
-      location: 'BXR',
-      area: 'Marylebone',
-      classes: [
-        { day: 'Thursday', time: '20:00', name: 'Power', url: 'https://www.bxrlondon.com/' },
-      ],
-    },
-    {
-      location: 'Yogarise',
-      area: 'Queens Park',
-      classes: [
-        { day: 'Monday', time: '18:30', name: 'Dynamic Flow', url: 'https://yogarise.london/book/' },
-      ],
-    },
-    {
-      location: 'Flo',
-      area: 'Hampstead',
-      classes: [
-        // "Flo" not "Flow" — named after the studio.
-        { day: 'Monday', time: '07:15', name: 'Flo', url: 'https://www.floyogastudio.co.uk/book-a-class' },
-        { day: 'Thursday', time: '16:30', name: 'Handstands', url: 'https://www.floyogastudio.co.uk/book-a-class' },
-        { day: 'Saturday', time: '09:15', name: 'Power (75)', url: 'https://www.floyogastudio.co.uk/book-a-class' },
-      ],
-    },
-  ];
+  const today = londonToday();
+  const blocks = currentSchedule(today);
 
   return (
-    <section id="schedule" className="bg-[#F4EFE6] px-8 md:px-12 py-18">
+    <section id="schedule" className="bg-[#F4EFE6] px-8 md:px-12 py-18 scroll-mt-20">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -59,267 +22,83 @@ export default function Schedule() {
 
         {/* Schedule Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* HOME - left column */}
-          <div>
-            {/* Location Header with Subtitle */}
-            <div className="pb-4 mb-6 border-b border-[#C9B99A]">
-              <h3 className="text-2xl md:text-[28px] font-light text-[#1C1410]">
-                {scheduleData[0].location}
-              </h3>
-              {scheduleData[0].area && (
-                <p className="text-[11px] uppercase tracking-[0.15em] text-[#9B8366] mt-1">
-                  {scheduleData[0].area}
-                </p>
-              )}
-            </div>
-
-            {/* Classes */}
-            <div>
-              {scheduleData[0].classes.map((classItem, classIndex) => (
-                <div
-                  key={classIndex}
-                  className="flex items-center justify-between py-4 border-b border-[#C9B99A]"
-                >
-                  <div className="flex items-center gap-6 flex-1">
-                    {/* Day & Time */}
-                    <div className="min-w-[120px]">
-                      <p className="text-[11px] uppercase tracking-wide text-[#785E3D] mb-1">
-                        {classItem.day}
-                      </p>
-                      <p className="text-xs text-[#6B5740]">
-                        {classItem.time}
-                      </p>
-                    </div>
-
-                    {/* Class Name */}
-                    <p className="text-base text-[#1C1410]">
-                      {classItem.name}
-                    </p>
-                  </div>
-
-                  {/* Book Button */}
-                  <a
-                    href={classItem.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 text-xs uppercase tracking-wide border border-[#785E3D] text-[#6B5740] rounded-full hover:bg-[#EAE0CF] transition-colors"
-                  >
-                    Book
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Indaba - right column */}
-          <div>
-            {/* Location Header with Subtitle */}
-            <div className="pb-4 mb-6 border-b border-[#C9B99A]">
-              <h3 className="text-2xl md:text-[28px] font-light text-[#1C1410]">
-                {scheduleData[1].location}
-              </h3>
-              {scheduleData[1].area && (
-                <p className="text-[11px] uppercase tracking-[0.15em] text-[#9B8366] mt-1">
-                  {scheduleData[1].area}
-                </p>
-              )}
-            </div>
-
-            {/* Classes */}
-            <div>
-              {scheduleData[1].classes.map((classItem, classIndex) => (
-                <div
-                  key={classIndex}
-                  className="flex items-center justify-between py-4 border-b border-[#C9B99A]"
-                >
-                  <div className="flex items-center gap-6 flex-1">
-                    {/* Day & Time */}
-                    <div className="min-w-[120px]">
-                      <p className="text-[11px] uppercase tracking-wide text-[#785E3D] mb-1">
-                        {classItem.day}
-                      </p>
-                      <p className="text-xs text-[#6B5740]">
-                        {classItem.time}
-                      </p>
-                    </div>
-
-                    {/* Class Name */}
-                    <p className="text-base text-[#1C1410]">
-                      {classItem.name}
-                    </p>
-                  </div>
-
-                  {/* Book Button */}
-                  <a
-                    href={classItem.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 text-xs uppercase tracking-wide border border-[#785E3D] text-[#6B5740] rounded-full hover:bg-[#EAE0CF] transition-colors"
-                  >
-                    Book
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* BXR - left column */}
-          <div>
-            {/* Location Header with Subtitle */}
-            <div className="pb-4 mb-6 border-b border-[#C9B99A]">
-              <h3 className="text-2xl md:text-[28px] font-light text-[#1C1410]">
-                {scheduleData[2].location}
-              </h3>
-              {scheduleData[2].area && (
-                <p className="text-[11px] uppercase tracking-[0.15em] text-[#9B8366] mt-1">
-                  {scheduleData[2].area}
-                </p>
-              )}
-            </div>
-
-            {/* Classes */}
-            <div>
-              {scheduleData[2].classes.map((classItem, classIndex) => (
-                <div
-                  key={classIndex}
-                  className="flex items-center justify-between py-4 border-b border-[#C9B99A]"
-                >
-                  <div className="flex items-center gap-6 flex-1">
-                    {/* Day & Time */}
-                    <div className="min-w-[120px]">
-                      <p className="text-[11px] uppercase tracking-wide text-[#785E3D] mb-1">
-                        {classItem.day}
-                      </p>
-                      <p className="text-xs text-[#6B5740]">
-                        {classItem.time}
-                      </p>
-                    </div>
-
-                    {/* Class Name */}
-                    <p className="text-base text-[#1C1410]">
-                      {classItem.name}
-                    </p>
-                  </div>
-
-                  {/* Book Button */}
-                  <a
-                    href={classItem.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 text-xs uppercase tracking-wide border border-[#785E3D] text-[#6B5740] rounded-full hover:bg-[#EAE0CF] transition-colors"
-                  >
-                    Book
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Yogarise - right column */}
-          <div>
-            <div>
+          {blocks.map((block) => (
+            <div key={block.location} id={block.id} className="scroll-mt-24">
               {/* Location Header with Subtitle */}
-              <div className="pb-4 mb-6 border-b border-[#C9B99A]">
+              <div className="pb-4 mb-2 border-b border-[#C9B99A]">
                 <h3 className="text-2xl md:text-[28px] font-light text-[#1C1410]">
-                  {scheduleData[3].location}
+                  {block.location}
                 </h3>
-                {scheduleData[3].area && (
+                {block.area && (
                   <p className="text-[11px] uppercase tracking-[0.15em] text-[#9B8366] mt-1">
-                    {scheduleData[3].area}
+                    {block.area}
                   </p>
                 )}
+                {block.note?.map((line) => (
+                  <p key={line} className="text-sm text-[#6B5740] mt-2 leading-relaxed">{line}</p>
+                ))}
               </div>
 
               {/* Classes */}
               <div>
-                {scheduleData[3].classes.map((classItem, classIndex) => (
-                  <div
-                    key={classIndex}
-                    className="flex items-center justify-between py-4 border-b border-[#C9B99A]"
-                  >
-                    <div className="flex items-center gap-6 flex-1">
-                      {/* Day & Time */}
-                      <div className="min-w-[120px]">
-                        <p className="text-[11px] uppercase tracking-wide text-[#785E3D] mb-1">
-                          {classItem.day}
-                        </p>
-                        <p className="text-xs text-[#6B5740]">
-                          {classItem.time}
-                        </p>
+                {block.classes.map((classItem) => {
+                  const upcoming = classItem.from && today < classItem.from;
+                  return (
+                    <div
+                      key={classItem.day + classItem.time}
+                      className="flex items-center justify-between gap-4 py-4 border-b border-[#C9B99A]"
+                    >
+                      <div className="flex items-center gap-6 flex-1 min-w-0">
+                        {/* Day & Time */}
+                        <div className="min-w-[96px] sm:min-w-[120px]">
+                          <p className="text-[11px] uppercase tracking-wide text-[#785E3D] mb-1">
+                            {classItem.day}
+                          </p>
+                          <p className="text-xs text-[#6B5740]">
+                            {classItem.time}
+                          </p>
+                        </div>
+
+                        {/* Class Name */}
+                        <div className="min-w-0">
+                          <p className="text-base text-[#1C1410]">
+                            {classItem.name}
+                          </p>
+                          {upcoming && (
+                            <p className="text-[11px] uppercase tracking-wide text-[#785E3D] mt-1">
+                              From {shortDate(classItem.from)}
+                            </p>
+                          )}
+                          {classItem.until && (
+                            <p className="text-[11px] uppercase tracking-wide text-[#9B8366] mt-1">
+                              Until {shortDate(classItem.until)}
+                            </p>
+                          )}
+                        </div>
                       </div>
 
-                      {/* Class Name */}
-                      <p className="text-base text-[#1C1410]">
-                        {classItem.name}
-                      </p>
+                      {/* Book Button */}
+                      {classItem.cta !== 'whatsapp' && (
+                        <a
+                          href={classItem.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="shrink-0 px-4 py-2 text-xs uppercase tracking-wide border border-[#785E3D] text-[#6B5740] rounded-full hover:bg-[#EAE0CF] transition-colors"
+                        >
+                          Book
+                        </a>
+                      )}
                     </div>
-
-                    {/* Book Button */}
-                    <a
-                      href={classItem.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-4 py-2 text-xs uppercase tracking-wide border border-[#785E3D] text-[#6B5740] rounded-full hover:bg-[#EAE0CF] transition-colors"
-                    >
-                      Book
-                    </a>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
-            </div>
-          </div>
 
-          {/* Flo - left column */}
-          <div>
-            {/* Location Header with Subtitle */}
-            <div className="pb-4 mb-6 border-b border-[#C9B99A]">
-              <h3 className="text-2xl md:text-[28px] font-light text-[#1C1410]">
-                {scheduleData[4].location}
-              </h3>
-              {scheduleData[4].area && (
-                <p className="text-[11px] uppercase tracking-[0.15em] text-[#9B8366] mt-1">
-                  {scheduleData[4].area}
-                </p>
+              {/* Joining the group is how you book the Saturday class */}
+              {block.classes.some((c) => c.cta === 'whatsapp') && (
+                <WhatsAppGroupButton className="mt-6 w-full sm:w-auto" />
               )}
             </div>
-
-            {/* Classes */}
-            <div>
-              {scheduleData[4].classes.map((classItem, classIndex) => (
-                <div
-                  key={classIndex}
-                  className="flex items-center justify-between py-4 border-b border-[#C9B99A]"
-                >
-                  <div className="flex items-center gap-6 flex-1">
-                    {/* Day & Time */}
-                    <div className="min-w-[120px]">
-                      <p className="text-[11px] uppercase tracking-wide text-[#785E3D] mb-1">
-                        {classItem.day}
-                      </p>
-                      <p className="text-xs text-[#6B5740]">
-                        {classItem.time}
-                      </p>
-                    </div>
-
-                    {/* Class Name */}
-                    <p className="text-base text-[#1C1410]">
-                      {classItem.name}
-                    </p>
-                  </div>
-
-                  {/* Book Button */}
-                  <a
-                    href={classItem.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 text-xs uppercase tracking-wide border border-[#785E3D] text-[#6B5740] rounded-full hover:bg-[#EAE0CF] transition-colors"
-                  >
-                    Book
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* Learn More Link */}

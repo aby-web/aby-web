@@ -9,14 +9,15 @@ import About from '../components/About';
 import InstagramFeed from '../components/InstagramFeed';
 import EmailCapture from '../components/EmailCapture';
 import Footer from '../components/Footer';
+import { SATURDAY_VENUE, SATURDAY_START, WHATSAPP_GROUP_URL } from '../data/classes';
 
 export default function Home() {
   return (
     <div className="min-h-screen">
       <Helmet>
         <title>Ammar Bass | Yoga Teacher London | Strength-Based Vinyasa Classes</title>
-        <meta name="description" content="London-based yoga teacher specializing in alignment, arm balances and inversions. Strong, structured practice for people who take their training seriously. Classes at HOME Wellness, Indaba, BXR, Yogarise and Flo Yoga." />
-        <meta name="keywords" content="yoga teacher London, vinyasa yoga London, strength yoga, arm balances, inversions, private yoga sessions London, yoga HOME Wellness Primrose Hill, Indaba Marylebone, yoga BXR, Yogarise Queens Park, Flo Yoga Hampstead" />
+        <meta name="description" content="London-based yoga teacher specializing in alignment, arm balances and inversions. Strong, structured practice for people who take their training seriously. Classes at HOME Wellness, BXR, Yogarise, Flo Yoga and my own Saturday class in Marylebone." />
+        <meta name="keywords" content="yoga teacher London, vinyasa yoga London, strength yoga, arm balances, inversions, private yoga sessions London, yoga HOME Wellness Primrose Hill, Saturday yoga class Marylebone, yoga BXR, Yogarise Queens Park, Flo Yoga Hampstead" />
 
         {/* Open Graph */}
         <meta property="og:title" content="Ammar Bass | Yoga Teacher London" />
@@ -66,11 +67,6 @@ export default function Home() {
                 "@type": "Organization",
                 "name": "HOME Wellness",
                 "url": "http://homewellness.uk/"
-              },
-              {
-                "@type": "Organization",
-                "name": "Indaba Yoga",
-                "url": "https://indabayoga.com/"
               },
               {
                 "@type": "Organization",
@@ -131,7 +127,7 @@ export default function Home() {
                   "itemOffered": {
                     "@type": "Service",
                     "name": "Group Vinyasa Classes",
-                    "description": "Strength-based vinyasa yoga classes at HOME Wellness (Primrose Hill), Indaba (Marylebone), BXR (Marylebone), Yogarise (Queens Park) and Flo Yoga (Hampstead)"
+                    "description": "Strength-based vinyasa yoga classes at HOME Wellness (Primrose Hill), BXR (Marylebone), Yogarise (Queens Park) and Flo Yoga (Hampstead), plus Ammar's own Saturday class in Marylebone"
                   }
                 },
                 {
@@ -152,6 +148,38 @@ export default function Home() {
                 }
               ]
             }
+          })}
+        </script>
+
+        {/* Ammar's Saturday class: weekly, joined via the WhatsApp group */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Event",
+            "name": "Ammar's Saturday class",
+            "description": "Weekly 90-minute strength-based vinyasa class in Marylebone. Join the WhatsApp group to come along. Bring your own mat.",
+            "url": "https://ammarbass.com/#saturday-class",
+            "startDate": `${SATURDAY_START}T11:30:00+00:00`,
+            "endDate": `${SATURDAY_START}T13:00:00+00:00`,
+            "eventSchedule": {
+              "@type": "Schedule",
+              "repeatFrequency": "P1W",
+              "byDay": "https://schema.org/Saturday",
+              "startDate": SATURDAY_START,
+              "startTime": "11:30",
+              "endTime": "13:00",
+              "scheduleTimezone": "Europe/London"
+            },
+            "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+            "eventStatus": "https://schema.org/EventScheduled",
+            "location": {
+              "@type": "Place",
+              "name": SATURDAY_VENUE,
+              "address": { "@type": "PostalAddress", "addressLocality": "London", "addressRegion": "Marylebone", "addressCountry": "GB" }
+            },
+            "organizer": { "@type": "Person", "name": "Ammar Bass", "url": "https://ammarbass.com" },
+            "performer": { "@type": "Person", "name": "Ammar Bass" },
+            "offers": { "@type": "Offer", "url": WHATSAPP_GROUP_URL, "availability": "https://schema.org/InStock" }
           })}
         </script>
       </Helmet>

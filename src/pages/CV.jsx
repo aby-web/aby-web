@@ -276,7 +276,7 @@ export default function CV() {
               <div className="teaching-block">
                 <div className="teaching-row">
                   <span className="teaching-type">Studio</span>
-                  <span className="teaching-detail">HOME Wellness &nbsp;&middot;&nbsp; Indaba &nbsp;&middot;&nbsp; BXR &nbsp;&middot;&nbsp; Yogarise &nbsp;&middot;&nbsp; Flo Yoga</span>
+                  <span className="teaching-detail">HOME Wellness &nbsp;&middot;&nbsp; BXR &nbsp;&middot;&nbsp; Yogarise &nbsp;&middot;&nbsp; Flo Yoga &nbsp;&middot;&nbsp; Ammar's Saturday class (Marylebone)</span>
                 </div>
 
                 <div className="teaching-row">

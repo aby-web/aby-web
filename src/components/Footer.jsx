@@ -1,3 +1,5 @@
+import { YORIGAM_URL } from '../data/classes';
+
 export default function Footer() {
   return (
     <footer className="bg-[#2A1E16] px-8 md:px-12 pt-14 pb-8">
@@ -75,6 +77,17 @@ export default function Footer() {
           </p>
           <p className="text-xs text-[#9B8366]">
             London, UK
+          </p>
+          <p className="text-[11px] text-[#9B8366]">
+            Bookings and invoicing run on{' '}
+            <a
+              href={YORIGAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-2 decoration-[#9B8366]/50 hover:text-[#C9B99A] transition-colors"
+            >
+              Yorigam
+            </a>
           </p>
         </div>
       </div>
