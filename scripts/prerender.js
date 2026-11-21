@@ -199,8 +199,8 @@ function writePage(page) {
 }
 
 for (const page of pages.filter((p) => p.prerender)) {
-  // The Events page is built with the full list.
-  writePage(page.path === '/events' ? { ...page, events } : page);
+  // The Events page and the homepage (its "Coming up" list) are built with the full list.
+  writePage(page.path === '/events' || page.path === '/' ? { ...page, events } : page);
 }
 
 // One page per event, built with just that event.

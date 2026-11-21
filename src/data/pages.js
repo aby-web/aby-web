@@ -73,13 +73,13 @@ export const pages = [
     ...PUBLIC,
   },
   {
-    path: '/how-privates-work',
+    path: '/schedule',
     updated: '2026-11-21',
-    title: 'How Private Yoga Works in West Hampstead | Ammar Bass',
+    title: 'Weekly Yoga Class Schedule in London | Ammar Bass',
     description:
-      'How private yoga in West Hampstead works: prices, a free 15-minute discovery call, a short form before your first session, and what a one-to-one session looks like.',
-    image: OG_PRIVATE,
-    imageAlt: 'Ammar Bass, yoga teacher in West Hampstead, London',
+      "Ammar Bass's weekly yoga classes by day: his own Saturday class in Marylebone, and classes at HOME Wellness, Flo, BXR and Yogarise, with a booking link for each studio.",
+    image: OG_HOME,
+    imageAlt: OG_HOME_ALT,
     ...PUBLIC,
   },
   {
@@ -133,17 +133,17 @@ export const pages = [
     ...PUBLIC,
   },
 
-  // ── Public, but noindex and not in the menu or the sitemap ───────────────
-  // /bootcamp ran in September 2026. Stage 3 of docs/site-review.md turns it
-  // into a past-event page; until then it stays up but out of search.
+  // ── Public, but noindex and not in the sitemap ───────────────────────────
+  // (/bootcamp, just above, ran in September 2026 and is kept as a past-event page.)
   {
     path: '/bootcamp',
-    title: 'Yoga Intensive Bootcamp — Bulgaria 2026 | Ammar Bass',
+    updated: '2026-11-21',
+    title: 'Yoga Intensive Bootcamp, Bulgaria, September 2026 (Past Event) | Ammar Bass',
     description:
-      '5-day yoga intensive in Varna, Bulgaria. 4–9 September 2026. Forest setting, minutes from the beach. Progressive flow, workshops and immersive practice.',
+      'A record of the five-day yoga intensive Ammar Bass and Ina ran near Varna, Bulgaria, on 4–9 September 2026: forest setting, minutes from the beach, progressive flow and workshops.',
     image: `${SITE}/images/og-bootcamp.jpg`,
     imageAlt: 'Forest cabins at the retreat venue near Varna, Bulgaria',
-    ...HIDDEN,
+    ...PUBLIC,
   },
   {
     path: '/join',

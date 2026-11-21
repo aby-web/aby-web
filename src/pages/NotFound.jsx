@@ -8,7 +8,7 @@ import { SATURDAY_PAGE } from '../data/classes';
 const LINKS = [
   ['/private-sessions', 'Private sessions'],
   [SATURDAY_PAGE, 'Saturday class'],
-  ['/#schedule', 'Weekly schedule'],
+  ['/schedule', 'Weekly schedule'],
   ['/events', 'Events and retreats'],
   ['/', 'Home'],
 ];

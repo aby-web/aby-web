@@ -9,6 +9,16 @@
       "source": "/yogami/",
       "destination": "https://yorigam.com",
       "permanent": true
+    },
+    {
+      "source": "/how-privates-work",
+      "destination": "/private-sessions#how-it-works",
+      "permanent": true
+    },
+    {
+      "source": "/how-privates-work/",
+      "destination": "/private-sessions#how-it-works",
+      "permanent": true
     }
   ],
   "rewrites": [

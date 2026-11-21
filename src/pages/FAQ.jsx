@@ -1,231 +1,55 @@
 import { Helmet } from 'react-helmet-async';
 import PageMeta from '../components/PageMeta';
-import { useState } from 'react';
 import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
 import Footer from '../components/Footer';
-import { priceSummary } from '../data/privateSessions';
+import FaqList from '../components/FaqList';
+import { BTN, TEXT } from '../components/ui';
+import { classFaqs } from '../data/faqs';
 import { faqPage } from '../data/schema';
 
+// Class and general questions. Questions about private sessions live on the
+// private sessions page (src/data/faqs.js holds both lists).
 export default function FAQ() {
-  const [openIndex, setOpenIndex] = useState(null);
-
-  const faqs = [
-    {
-      category: "Getting Started",
-      questions: [
-        {
-          q: "I'm new to yoga. Are your classes suitable for beginners?",
-          a: "My group classes are designed for people with some yoga experience. If you're completely new, I'd recommend starting with a few private sessions. We go at your pace and build the foundations properly, so when you do come to a class you'll feel at home rather than thrown in at the deep end."
-        },
-        {
-          q: "What should I bring to class?",
-          a: "The studios provide mats and props. For my Saturday class in Marylebone, bring your own mat. Either way, bring water and a towel, and wear comfortable athletic clothing. Avoid anything too loose that will flip over your head in inversions."
-        },
-        {
-          q: "What if I can't do arm balances or inversions?",
-          a: "That's exactly why you're here. Every class includes progressions and modifications. You'll work on the strength and technique needed to eventually get there. No one arrives knowing how to handstand."
-        }
-      ]
-    },
-    {
-      category: "Classes & Schedule",
-      questions: [
-        {
-          q: "How do I book a class?",
-          a: "Studio classes are booked on each studio's own website; the links are in the schedule on the homepage. My Saturday class in Marylebone is booked through its WhatsApp group."
-        },
-        {
-          q: "What's the cancellation policy?",
-          a: "This varies by studio — typically between 6-12 hours notice. Please refer to the individual studio's cancellation policy when booking."
-        },
-        {
-          q: "Do you offer drop-ins or do I need a membership?",
-          a: "All studios offer drop-in options and membership packages. Drop-ins are great for trying a class. If you're planning to come regularly, memberships work out more cost-effective."
-        },
-        {
-          q: "What's the difference between your class types?",
-          a: "All my classes are vinyasa-based with a focus on strength and alignment. The main difference is intensity level and time spent on arm balances/inversions."
-        }
-      ]
-    },
-    {
-      category: "Private Sessions",
-      questions: [
-        {
-          q: "How much do private sessions cost?",
-          a: `Private sessions are ${priceSummary}. Online sessions are the same price, and at-home sessions are too, though a travel fee may apply. Small groups are priced on request, and the 15-minute discovery call is free.`
-        },
-        {
-          q: "Where do private sessions take place?",
-          a: "Mostly in my loft studio in West Hampstead, NW6 — the address is sent when you book. I also teach online, or at your home if you have room for a mat. We'll find what suits you on the discovery call."
-        },
-        {
-          q: "I've never done yoga. Can I book a private session?",
-          a: "Absolutely — complete beginners are very welcome, and it's where I'd suggest you start. A group class where everyone seems to know what they're doing can feel daunting. One-to-one, we can take our time, learn the foundations properly and build your confidence."
-        },
-        {
-          q: "Can I book a session with friends or colleagues?",
-          a: "If you have friends or colleagues who practise at a similar level, I'm happy to put together a small group session — get in touch for a price. I don't run couples sessions: sessions work best when everyone's at a similar stage, so I keep things one-to-one or in small groups of people who are."
-        },
-        {
-          q: "How many sessions will I need?",
-          a: "It depends on your goal. Most students see significant progress in 8-12 sessions. Some specific goals (like a solid handstand) typically take 10-15 sessions with consistent practice between sessions. Book a discovery call to discuss your specific goals and create a plan."
-        },
-        {
-          q: "Do I need to practise between sessions?",
-          a: "It helps, but it's not essential — it depends on your goals and available time. Private sessions give you the technique and progression plan. If you're working towards a specific skill, practising 3-4 times per week will accelerate progress. I'll give you exercises to work on at your own pace."
-        }
-      ]
-    },
-    {
-      category: "Workshops & Events",
-      questions: [
-        {
-          q: "How are workshops different from regular classes?",
-          a: "Workshops are 2-3 hours focused on one specific skill (like arm balances or inversions). You get detailed breakdowns, individual feedback, and time to practise progressions you wouldn't cover in a regular class."
-        },
-        {
-          q: "What level do I need to be for workshops?",
-          a: "It depends on the workshop. Some are open to all levels with experience modifications. Others specify prerequisites (e.g., 'must be able to hold crow pose for 10 seconds'). Check the event description."
-        },
-        {
-          q: "How do I stay updated on upcoming workshops?",
-          a: "Join the mailing list at the bottom of the homepage. I send updates about new workshops, retreats, and special events about once a month."
-        }
-      ]
-    },
-    {
-      category: "Practice & Philosophy",
-      questions: [
-        {
-          q: "Your classes sound intense. Is it all about strength?",
-          a: "Strength is a tool, not the goal. The practice is about building control, understanding your body, and developing focus. Yes, you'll work hard physically, but the challenge is as much mental as it is physical."
-        },
-        {
-          q: "Do you teach meditation or breathwork?",
-          a: "Yes, but not in isolation. Vipassana meditation principles are woven throughout — observing sensations, staying present, working with discomfort. Pranayama (breathwork) is integrated where it serves the practice."
-        },
-        {
-          q: "I have an injury. Can I still attend?",
-          a: "Usually, yes. Tell me before class and I will give you alternatives. For anything ongoing, a private session is the better place to start."
-        },
-        {
-          q: "How is your approach different from other yoga teachers?",
-          a: "I approach yoga as a holistic practice centred around longevity. Everything we do is structured and progressive — we train specific skills with discipline, but always in service of a sustainable lifelong practice. We develop strength in neglected areas of the body, touch on the importance of mindfulness, and treat the practice as a way to train both mind and body for meditation. I keep the room quiet and focused, so you can concentrate on your own practice. The practice requires great effort, but it's effort directed towards something that lasts."
-        }
-      ]
-    }
-  ];
-
-  const toggleQuestion = (categoryIndex, questionIndex) => {
-    const index = `${categoryIndex}-${questionIndex}`;
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
   return (
     <div className="min-h-screen">
       <PageMeta path="/faq" />
       <Helmet>
-        <meta name="keywords" content="yoga FAQ, yoga questions, beginner yoga London, private yoga sessions, yoga workshop questions, arm balance training, yoga class questions" />
+        <meta name="keywords" content="yoga FAQ, yoga questions, beginner yoga London, yoga workshop questions, arm balance training, yoga class questions" />
         <script type="application/ld+json">
-          {JSON.stringify(faqPage(faqs))}
+          {JSON.stringify(faqPage(classFaqs))}
         </script>
       </Helmet>
 
       <Nav theme="light" />
       <VacationBanner />
 
-      {/* Hero Section */}
       <section className="bg-[#F4EFE6] text-[#1C1410] pt-32 pb-12 px-8 md:px-12">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-6">
-            Questions
-          </p>
-          <h1 className="text-5xl md:text-6xl font-light leading-tight mb-6">
-            Frequently Asked Questions
+        <div className="max-w-4xl mx-auto">
+          <p className={`${TEXT.eyebrow} mb-6`}>Questions</p>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-light leading-tight mb-6">
+            Frequently asked questions
           </h1>
-          <p className="text-lg text-[#6B5740] max-w-2xl mx-auto">
-            Everything you need to know about classes, private sessions, and training with me.
+          <p className={`${TEXT.body} max-w-2xl`}>
+            Classes, events and how I teach. Questions about one-to-one sessions are answered on the{' '}
+            <a href="/private-sessions#questions" className={TEXT.link}>private sessions page</a>.
           </p>
         </div>
       </section>
 
-      {/* FAQ Content */}
       <section className="bg-[#EAE0CF] px-8 md:px-12 py-18">
-        <div className="max-w-4xl mx-auto space-y-12">
-          {faqs.map((category, categoryIndex) => (
-            <div key={categoryIndex}>
-              {/* Category Title */}
-              <h2 className="text-3xl font-light text-[#1C1410] mb-6 pb-3 border-b border-[#C9B99A]">
-                {category.category}
-              </h2>
-
-              {/* Questions */}
-              <div className="space-y-4">
-                {category.questions.map((faq, questionIndex) => {
-                  const isOpen = openIndex === `${categoryIndex}-${questionIndex}`;
-                  return (
-                    <div
-                      key={questionIndex}
-                      className="bg-[#F4EFE6] border border-[#C9B99A] rounded-md overflow-hidden"
-                    >
-                      {/* Question */}
-                      <button
-                        onClick={() => toggleQuestion(categoryIndex, questionIndex)}
-                        className="w-full text-left px-6 py-5 flex items-center justify-between hover:bg-[#EAE0CF] transition-colors"
-                      >
-                        <span className="text-lg font-light text-[#1C1410] pr-4">
-                          {faq.q}
-                        </span>
-                        <span className={`text-2xl text-[#785E3D] transition-transform duration-300 flex-shrink-0 ${isOpen ? 'rotate-45' : ''}`}>
-                          +
-                        </span>
-                      </button>
-
-                      {/* Answer */}
-                      <div
-                        className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                          isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                        }`}
-                      >
-                        <div className="px-6 pb-5 pt-2">
-                          <p className="text-[15px] leading-relaxed text-[#6B5740]">
-                            {faq.a}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
+        <div className="max-w-4xl mx-auto">
+          <FaqList groups={classFaqs} />
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="bg-[#F4EFE6] px-8 md:px-12 py-18">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-light text-[#1C1410] mb-4">
-            Still have questions?
-          </h2>
-          <p className="text-lg text-[#6B5740] mb-8">
-            Get in touch and I'll respond within 24 hours.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/private-sessions#contact"
-              className="inline-block px-8 py-4 rounded-full bg-[#1C1410] text-[#F4EFE6] hover:bg-[#2A1E16] transition-colors text-sm uppercase tracking-wide"
-            >
-              Send a Message
-            </a>
-            <a
-              href="/#schedule"
-              className="inline-block px-8 py-4 rounded-full bg-transparent border-2 border-[#1C1410] text-[#1C1410] hover:bg-[#1C1410] hover:text-[#F4EFE6] transition-colors text-sm uppercase tracking-wide"
-            >
-              View Schedule
-            </a>
+      <section className="bg-[#2A1E16] px-8 md:px-12 py-18">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-light text-[#F4EFE6] mb-4">Still have questions?</h2>
+          <p className={`${TEXT.bodyOnDark} mb-8`}>Get in touch and I'll respond within 24 hours.</p>
+          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4">
+            <a href="/private-sessions#contact" className={BTN.primaryOnDark}>Send a message</a>
+            <a href="/schedule" className={BTN.secondaryOnDark}>View the schedule</a>
           </div>
         </div>
       </section>

@@ -5,7 +5,8 @@ import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
 import Footer from '../components/Footer';
 import NotFound from './NotFound';
-import { longDate } from '../data/classes';
+import { longDate, venueFor } from '../data/classes';
+import { BTN, TEXT } from '../components/ui';
 import { SITE } from '../data/pages';
 import { personRef } from '../data/schema';
 import { eventPath, useEvents } from '../lib/events';
@@ -45,6 +46,13 @@ export default function EventPage() {
   }
 
   const isPast = event.date < today;
+  // Venues whose address we know (src/data/classes.js), e.g. HOME Wellness.
+  const venue = venueFor(event.location);
+  // A link to one of this site's own pages is information, not a booking, so
+  // it stays once the event has passed.
+  const infoLink = /^https?:\/\/(www\.)?ammarbass\.com\//.test(event.booking_link || '')
+    ? event.booking_link.replace(/^https?:\/\/(www\.)?ammarbass\.com/, '')
+    : null;
   const url = `${SITE}${eventPath(event)}`;
   const date = longDate(event.date);
   const description = summary(event);
@@ -75,7 +83,13 @@ export default function EventPage() {
             "endDate": event.date,
             "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
             "eventStatus": "https://schema.org/EventScheduled",
-            "location": { "@type": "Place", "name": event.location, "address": event.location },
+            "location": {
+              "@type": "Place",
+              "name": event.location,
+              "address": venue
+                ? { "@type": "PostalAddress", "streetAddress": venue.streetAddress, "addressLocality": venue.locality, "postalCode": venue.postalCode, "addressCountry": "GB" }
+                : event.location
+            },
             "image": event.image_url || `${SITE}/images/og-home.jpg`,
             "organizer": personRef,
             "performer": { "@type": "Person", "name": "Ammar Bass" },
@@ -113,29 +127,32 @@ export default function EventPage() {
           <h1 className="text-4xl sm:text-5xl font-light leading-tight text-[#1C1410] mb-4">
             {event.title}
           </h1>
-          <p className="text-lg text-[#1C1410] mb-8">{event.location}</p>
+          <p className="text-lg text-[#1C1410] mb-8">
+            {event.location}
+            {venue && <span className="block text-[16px] text-[#5C4A36]">{venue.line}</span>}
+          </p>
 
           {event.description && (
-            <p className="text-[17px] leading-relaxed text-[#6B5740] mb-10 whitespace-pre-wrap">
+            <p className={`${TEXT.body} mb-10 whitespace-pre-wrap`}>
               {event.description}
             </p>
           )}
 
           {isPast ? (
-            <p className="text-[15px] text-[#6B5740]">
+            <p className={TEXT.body}>
               This event has taken place.{' '}
-              <a href="/events" className="text-[#785E3D] underline underline-offset-4 hover:text-[#1C1410]">
-                See what's coming up
-              </a>.
+              {infoLink && (
+                <>
+                  <a href={infoLink} className={TEXT.link}>More about this event</a>.{' '}
+                </>
+              )}
+              <a href="/events" className={TEXT.link}>See what's coming up</a>.
             </p>
+          ) : infoLink ? (
+            <a href={infoLink} className={BTN.primary}>{event.button_label || 'Details'}</a>
           ) : (
             event.booking_link && (
-              <a
-                href={event.booking_link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center min-h-[48px] px-8 rounded-full bg-[#1C1410] text-[#F4EFE6] hover:bg-[#2A1E16] transition-colors text-sm uppercase tracking-wide"
-              >
+              <a href={event.booking_link} target="_blank" rel="noopener noreferrer" className={BTN.primary}>
                 {event.button_label || 'Secure Your Spot'}
               </a>
             )

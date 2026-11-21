@@ -78,7 +78,7 @@ export default function About() {
           </h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="/#schedule"
+              href="/schedule"
               className="inline-block px-8 py-4 rounded-full bg-[#1C1410] text-[#F4EFE6] hover:bg-[#2A1E16] transition-colors text-sm uppercase tracking-wide"
             >
               Join a Class

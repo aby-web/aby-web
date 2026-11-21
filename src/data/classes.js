@@ -1,8 +1,6 @@
 // Weekly class schedule, plus the details of my own Saturday class.
-// The first block (the Saturday class) is shown as a full-width card above
-// the studio grid; the rest are laid out two per row in the order below.
-// Edit this file to change the timetable; Schedule.jsx, the hero, the menu
-// and the Saturday class page all read from here.
+// Edit this file to change the timetable: the schedule page, the homepage,
+// the Saturday class page, llms.txt and the menu all read from here.
 //
 // Dates are 'YYYY-MM-DD' in London time:
 //   from  – first class. Before this date the entry shows "From Sat 5 Dec".
@@ -47,58 +45,70 @@ const HOME_URL = 'https://homewellness.uk/book-yoga/';
 // Flo's West Hampstead studio page: live timetable with booking.
 const FLO_URL = 'https://www.floyogastudio.co.uk/west-hampstead';
 
+// Venue addresses, shown on event pages held there.
+// `match` is tested against the event's location text.
+export const VENUES = [
+  {
+    match: /home wellness/i,
+    name: 'HOME Wellness',
+    streetAddress: '7 Erskine Road',
+    locality: 'Primrose Hill, London',
+    postalCode: 'NW3 3AJ',
+    line: '7 Erskine Road, Primrose Hill, NW3 3AJ',
+  },
+];
+export const venueFor = (location) => VENUES.find((v) => v.match.test(location || '')) ?? null;
+
+// The first entry is Ammar's own Saturday class; the rest are the studios,
+// each with ONE booking link (`url`).
 export const schedule = [
   {
     id: 'saturday-class',
+    own: true,
     location: "Ammar's Saturday class",
     area: SATURDAY_AREA,
-    // Shown under the heading. The card links to the class page, where the
-    // WhatsApp / booking button lives.
-    note: [
-      SATURDAY_VENUE_NAME
-        ? `${saturdayWhere()}.`
-        : `${saturdayWhere()}. The exact address is shared in the WhatsApp group.`,
-      `£${SATURDAY_PRICE} drop-in. Bring your own mat.`,
-    ],
+    url: SATURDAY_PAGE,
     classes: [
-      {
-        day: 'Saturday', time: '11:30–13:00', name: 'Vinyasa (90)',
-        from: SATURDAY_START, url: SATURDAY_PAGE, cta: 'details',
-      },
+      { day: 'Saturday', time: '11:30–13:00', name: 'Vinyasa (90)', from: SATURDAY_START },
     ],
   },
   {
     location: 'HOME Wellness',
-    area: 'Primrose Hill · 7 Erskine Road, NW3 3AJ',
+    area: 'Primrose Hill',
+    address: '7 Erskine Road, Primrose Hill, NW3 3AJ',
+    url: HOME_URL,
     classes: [
-      { day: 'Tuesday', time: '07:15', name: 'Warm Vinyasa', from: '2026-12-01', url: HOME_URL },
-      { day: 'Wednesday', time: '18:00', name: 'Vinyasa', url: HOME_URL },
-      { day: 'Friday', time: '18:00', name: 'Vinyasa (75)', url: HOME_URL },
-      { day: 'Sunday', time: '10:00', name: 'Vinyasa (75)', url: HOME_URL },
+      { day: 'Tuesday', time: '07:15', name: 'Warm Vinyasa', from: '2026-12-01' },
+      { day: 'Wednesday', time: '18:00', name: 'Vinyasa' },
+      { day: 'Friday', time: '18:00', name: 'Vinyasa (75)' },
+      { day: 'Sunday', time: '10:00', name: 'Vinyasa (75)' },
     ],
   },
   {
     location: 'Flo',
     area: 'West Hampstead',
+    url: FLO_URL,
     classes: [
       // "Flo" not "Flow" — named after the studio.
-      { day: 'Monday', time: '07:15', name: 'Flo', url: FLO_URL },
-      { day: 'Thursday', time: '16:30', name: 'Handstands', url: FLO_URL },
-      { day: 'Saturday', time: '09:15', name: 'Power (75)', url: FLO_URL },
+      { day: 'Monday', time: '07:15', name: 'Flo' },
+      { day: 'Thursday', time: '16:30', name: 'Handstands' },
+      { day: 'Saturday', time: '09:15', name: 'Power (75)' },
     ],
   },
   {
     location: 'BXR',
     area: 'Marylebone',
+    url: 'https://www.bxrlondon.com/',
     classes: [
-      { day: 'Thursday', time: '20:00', name: 'Power', url: 'https://www.bxrlondon.com/' },
+      { day: 'Thursday', time: '20:00', name: 'Power' },
     ],
   },
   {
     location: 'Yogarise',
     area: 'Queens Park',
+    url: 'https://yogarise.london/book/',
     classes: [
-      { day: 'Monday', time: '18:30', name: 'Dynamic Flow', url: 'https://yogarise.london/book/' },
+      { day: 'Monday', time: '18:30', name: 'Dynamic Flow' },
     ],
   },
 ];
@@ -140,3 +150,26 @@ export function currentSchedule(today = londonToday()) {
     }))
     .filter((block) => block.classes.length > 0);
 }
+
+export const WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+// The week by day, for the schedule page and the homepage:
+// [{ day, classes: [{ time, name, studio, area, own, from }] }], days with no
+// class left out, each day's classes in time order.
+export function weekByDay(today = londonToday()) {
+  const all = currentSchedule(today).flatMap((block) =>
+    block.classes.map((c) => ({
+      ...c,
+      studio: block.own ? 'My own class' : block.location,
+      area: block.area,
+      own: !!block.own,
+    }))
+  );
+  return WEEK.map((day) => ({
+    day,
+    classes: all.filter((c) => c.day === day).sort((x, y) => x.time.localeCompare(y.time)),
+  })).filter((d) => d.classes.length > 0);
+}
+
+// The studios, each with its one booking link.
+export const studios = (today = londonToday()) => currentSchedule(today).filter((b) => !b.own);

@@ -89,7 +89,7 @@ export default function Events() {
       <section className="pt-32 pb-12 px-8 md:px-12 bg-[#F4EFE6]">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-4">
-            Workshops & Retreats
+            Events & retreats
           </p>
           <h1 className="text-5xl md:text-6xl font-light text-[#1C1410] mb-6">
             Events

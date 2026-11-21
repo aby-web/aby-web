@@ -6,6 +6,8 @@ import Footer from '../components/Footer';
 import { personRef } from '../data/schema';
 import Testimonials from '../components/Testimonials';
 import WhatsAppGroupButton from '../components/WhatsAppGroupButton';
+import BookingBar from '../components/BookingBar';
+import { BTN, TEXT } from '../components/ui';
 import {
   SATURDAY_AREA,
   SATURDAY_BOOKING_URL,
@@ -34,24 +36,21 @@ import useToday from '../lib/useToday';
 const PAGE_URL = 'https://ammarbass.com/saturday-class';
 const OG_IMAGE = 'https://ammarbass.com/images/og-saturday-class.jpg';
 
-const PRIMARY_BUTTON =
-  'inline-flex items-center justify-center min-h-[48px] px-8 rounded-full bg-[#1C1410] text-[#F4EFE6] hover:bg-[#2A1E16] transition-colors text-sm uppercase tracking-wide';
-
 // The page's action. Booking is through the WhatsApp group until
 // SATURDAY_BOOKING_URL is set in classes.js; then it becomes "Book your place"
 // with the WhatsApp group as the second link.
-function JoinButtons() {
+function JoinButtons({ dark = false }) {
   if (SATURDAY_BOOKING_URL) {
     return (
-      <div className="flex flex-col sm:flex-row gap-4">
-        <a href={SATURDAY_BOOKING_URL} target="_blank" rel="noopener noreferrer" className={PRIMARY_BUTTON}>
+      <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4">
+        <a href={SATURDAY_BOOKING_URL} target="_blank" rel="noopener noreferrer" className={dark ? BTN.primaryOnDark : BTN.primary}>
           Book your place
         </a>
-        <WhatsAppGroupButton variant="outlineDark" className="min-h-[48px] px-8 text-sm" />
+        <WhatsAppGroupButton variant={dark ? 'secondaryOnDark' : 'secondary'} />
       </div>
     );
   }
-  return <WhatsAppGroupButton className="w-full sm:w-auto min-h-[48px] px-8 text-sm" />;
+  return <WhatsAppGroupButton variant={dark ? 'primaryOnDark' : 'primary'} className="w-full sm:w-auto" />;
 }
 
 export default function SaturdayClass() {
@@ -112,9 +111,7 @@ export default function SaturdayClass() {
         {/* Hero */}
         <section className="pt-32 pb-12 px-8 md:px-12">
           <div className="max-w-3xl mx-auto">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-6">
-              Ammar's Saturday class
-            </p>
+            <p className={`${TEXT.eyebrow} mb-6`}>Ammar's Saturday class</p>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-light leading-tight text-[#1C1410] mb-6">
               Saturday yoga class in Marylebone
             </h1>
@@ -140,7 +137,7 @@ export default function SaturdayClass() {
 
         {/* About the class */}
         <section className="px-8 md:px-12 py-16">
-          <div className="max-w-3xl mx-auto space-y-10 text-[17px] text-[#6B5740] leading-relaxed">
+          <div className={`max-w-3xl mx-auto space-y-10 ${TEXT.body}`}>
             <p>
               This is the class I taught at Indaba on Saturday mornings.{' '}
               {indabaStillOpen
@@ -193,16 +190,27 @@ export default function SaturdayClass() {
         <Testimonials page="saturday-class" heading="What students say" />
 
         {/* Final call to action */}
-        <section className="bg-[#EAE0CF] px-8 md:px-12 py-18">
+        <section className="bg-[#1C1410] px-8 md:px-12 py-18">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-4">Come on Saturday</h2>
-            <p className="text-[17px] text-[#6B5740] leading-relaxed mb-8">
+            <h2 className="text-3xl md:text-4xl font-light text-[#F4EFE6] mb-4">Come on Saturday</h2>
+            <p className={`${TEXT.bodyOnDark} mb-8`}>
               Saturdays, 11:30–13:00 in {SATURDAY_AREA}. £{SATURDAY_PRICE} drop-in.
             </p>
-            <JoinButtons />
+            <JoinButtons dark />
           </div>
         </section>
       </main>
+
+      {/* Phones: the join button is always within reach */}
+      <BookingBar>
+        {SATURDAY_BOOKING_URL ? (
+          <a href={SATURDAY_BOOKING_URL} target="_blank" rel="noopener noreferrer" className={`${BTN.primary} flex-1`}>
+            Book your place
+          </a>
+        ) : (
+          <WhatsAppGroupButton className="flex-1" />
+        )}
+      </BookingBar>
 
       <Footer />
     </div>

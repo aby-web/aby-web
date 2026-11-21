@@ -1,7 +1,7 @@
 /*
  * Single source of truth for private session prices and formats.
  *
- * Used by /private-sessions, /how-privates-work and the FAQ. Change a price
+ * Used by /private-sessions, the homepage, llms.txt and the FAQ answers. Change a price
  * here and every page (and the search-engine data) picks it up.
  */
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { BTN } from './ui';
 
 const PRACTICE_VIDEOS = [
   {
@@ -110,7 +111,7 @@ export default function PracticeVideos() {
         <div className="text-center mt-8">
           <Link
             to="/practice"
-            className="inline-block px-8 py-4 bg-[#785E3D] text-[#F4EFE6] rounded hover:bg-[#665033] transition-colors duration-200 font-medium"
+            className={BTN.secondary}
           >
             Watch the class
           </Link>

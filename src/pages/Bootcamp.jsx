@@ -21,7 +21,7 @@ export default function Bootcamp() {
         <div className="absolute inset-0 bg-black/45"></div>
         <div className="relative z-10 max-w-3xl mx-auto text-center px-8 md:px-12 pt-24 md:pt-0">
           <p className="text-[11px] uppercase tracking-[0.2em] text-white/70 mb-6">
-            September 4–9, 2026 &nbsp;·&nbsp; Varna, Bulgaria
+            Past event &nbsp;·&nbsp; 4–9 September 2026 &nbsp;·&nbsp; Varna, Bulgaria
           </p>
           <h1 className="text-5xl md:text-6xl font-light text-white leading-tight mb-6">
             Yoga Intensive Bootcamp
@@ -29,11 +29,14 @@ export default function Bootcamp() {
           <p className="text-lg text-white/80 max-w-2xl mx-auto mb-10">
             Five days of practice in a forest, minutes from some of Bulgaria's most beautiful beaches. Immersive, progressive, and intentional — with a small group of people who love to practice.
           </p>
+          <p className="text-[17px] text-white mb-8 max-w-xl mx-auto">
+            This bootcamp ran from 4 to 9 September 2026. This page is kept as a record of it.
+          </p>
           <a
-            href="mailto:ammar@ammarbass.com"
-            className="inline-block px-8 py-4 bg-white text-[#1C1410] rounded-full hover:bg-[#EAE0CF] transition-colors text-sm uppercase tracking-wide"
+            href="/norfolk-retreat"
+            className="inline-flex items-center justify-center min-h-[48px] px-7 bg-[#F4EFE6] text-[#1C1410] rounded-full hover:bg-white transition-colors text-sm uppercase tracking-wide"
           >
-            Secure your spot
+            Next retreat: Norfolk, May 2027
           </a>
         </div>
       </section>
@@ -42,24 +45,8 @@ export default function Bootcamp() {
       {/* Pricing */}
       <section className="bg-[#F4EFE6] px-8 md:px-12 py-16">
         <div className="max-w-3xl mx-auto">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-3 text-center">Pricing</p>
-          <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-10 text-center">What's included</h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-            {/* Double Room */}
-            <div className="bg-white border border-[#C9B99A] rounded-lg p-8">
-              <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-2">Double Room</p>
-              <p className="text-4xl font-light text-[#1C1410] mb-1">£890</p>
-              <p className="text-sm text-[#6B5740]">Sharing a room with one other person. You can choose who, or be paired with someone new.</p>
-            </div>
-
-            {/* Single Room */}
-            <div className="bg-white border border-[#C9B99A] rounded-lg p-8">
-              <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-2">Single Room</p>
-              <p className="text-4xl font-light text-[#1C1410] mb-1">£1,090</p>
-              <p className="text-sm text-[#6B5740]">Your own private room for the duration of the retreat.</p>
-            </div>
-          </div>
+          <p className="text-[11px] uppercase tracking-[0.2em] text-[#785E3D] mb-3 text-center">The stay</p>
+          <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-10 text-center">What was included</h2>
 
           {/* What's included */}
           <div className="bg-[#EAE0CF] rounded-lg p-8 mb-6">
@@ -110,9 +97,6 @@ export default function Bootcamp() {
             />
           </div>
 
-          <p className="text-xs text-[#C9B99A] mt-4 text-center">
-            A £200 non-refundable deposit is required to secure your spot.
-          </p>
         </div>
       </section>
 
@@ -263,16 +247,16 @@ export default function Bootcamp() {
         />
         <div className="absolute inset-0 bg-black/60"></div>
         <div className="relative z-10 px-8 md:px-12 py-24 max-w-2xl mx-auto text-center">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-white/80 mb-4">Limited to 12 spaces</p>
-          <h2 className="text-4xl md:text-5xl font-light text-white mb-6">Ready to join?</h2>
-          <p className="text-white mb-10">
-            Get in touch to ask questions or secure your spot with a £200 deposit.
+          <p className="text-xs uppercase tracking-[0.2em] text-white/90 mb-4">This bootcamp has taken place</p>
+          <h2 className="text-4xl md:text-5xl font-light text-white mb-6">Next: Spring Yoga Immersion, Norfolk</h2>
+          <p className="text-[17px] text-white mb-10">
+            Three nights near Norwich with Ina and Ammar, 6–9 May 2027.
           </p>
           <a
-            href="mailto:ammar@ammarbass.com"
-            className="inline-block px-10 py-4 bg-white text-[#1C1410] rounded-full hover:bg-[#EAE0CF] transition-colors text-sm uppercase tracking-wide"
+            href="/norfolk-retreat"
+            className="inline-flex items-center justify-center min-h-[48px] px-8 bg-[#F4EFE6] text-[#1C1410] rounded-full hover:bg-white transition-colors text-sm uppercase tracking-wide"
           >
-            Get in touch
+            See the Norfolk retreat
           </a>
         </div>
       </section>

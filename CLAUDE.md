@@ -50,12 +50,23 @@ React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all s
 ## Site review and staged plan (21 Nov 2026)
 
 `docs/site-review.md` is the current plan: five stages, each with its own prompt.
-**Stage 1 (fix facts, launch `/saturday-class`) and Stage 2 (pre-rendering, event pages, real 404,
-structured data, generated sitemap and llms.txt, performance, alt text) shipped 21 Nov 2026.**
+**Stages 1 and 2 shipped 21 Nov 2026; Stage 3 (one private-sessions page, new homepage order,
+`/schedule`, new menu and footer, phone booking bar) shipped overnight 21–22 Nov 2026.**
+`docs/overnight-report.md` records what was decided that night and what is still missing.
 Stage 2 superseded the paused Phase 1 plan further down, which is kept only for history.
-Next is Stage 3 (private journey, homepage, footer). Shared structured data is in
-`src/data/schema.js`; `llms.txt` is generated from `src/data/llms.js`; a page's sitemap date is
-its `updated` field in `pages.js` (change it by hand when the page's content changes).
+
+Where things live after Stage 3:
+- `src/components/ui.js`: the two button looks (`btn(look, size)`, `BTN`) and text styles
+  (`TEXT`). Use them; don't hand-write button classes, and pick a size rather than overriding one.
+- `src/components/BookCallButton.jsx` + `src/lib/calendly.js`: the "book a free call" action
+  (Calendly loads on first click). `BookingBar.jsx`: the phone-only bar on `/private-sessions`
+  and `/saturday-class`.
+- `src/components/WeekSchedule.jsx`: Saturday card, week by day, one booking link per studio.
+- `src/data/faqs.js`: `classFaqs` (the FAQ page) and `privateFaqs` (the private sessions page).
+- `/how-privates-work` redirects to `/private-sessions#how-it-works`; `/bootcamp` is a past-event
+  page. Shared structured data is in `src/data/schema.js`; `llms.txt` comes from
+  `src/data/llms.js`; a page's sitemap date is its `updated` field in `pages.js` (change it by
+  hand when the page's content changes).
 Agreed rules: the Vercel deploy hook URL is a secret (server-side env var only, called from a
 function that checks admin auth, never in client code); build-time Supabase access uses only the
 anon key and only already-public data; if the events fetch fails, the build must fail.

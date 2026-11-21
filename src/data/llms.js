@@ -14,14 +14,14 @@ import {
   SATURDAY_PRICE,
   SATURDAY_START,
   SATURDAY_VENUE_NAME,
-  currentSchedule,
+  studios,
   longDate,
   saturdayWhere,
 } from './classes';
 
 export function llmsText({ events, today }) {
   const upcoming = events.filter((e) => e.date >= today);
-  const studios = currentSchedule(today).slice(1); // the first block is the Saturday class
+  const studioList = studios(today);
   const saturdayStarted = today >= SATURDAY_START;
 
   const lines = [
@@ -37,8 +37,7 @@ export function llmsText({ events, today }) {
     `- Prices: £${PRICE_60} for 60 minutes, £${PRICE_75} for 75 minutes. ${PACK_DISCOUNT}% off a pre-paid pack of ${PACK_SIZE} sessions. Online sessions are the same price. Small groups of friends or colleagues: price on request.`,
     '- Who they are for: complete beginners are welcome, and a private session is the recommended place to start. Also for people working towards handstands, arm balances or other specific skills.',
     '- How to book: start with a free 15-minute discovery call, booked from the private sessions page.',
-    `- Details and booking: ${SITE}/private-sessions`,
-    `- How it works, step by step: ${SITE}/how-privates-work`,
+    `- Details, how it works and booking: ${SITE}/private-sessions`,
     '',
     '## Saturday yoga class in Marylebone',
     '',
@@ -53,13 +52,13 @@ export function llmsText({ events, today }) {
     '',
     'Booked through each studio.',
     '',
-    ...studios.map(
+    ...studioList.map(
       (studio) =>
-        `- ${studio.location} (${studio.area}): ` +
+        `- ${studio.location} (${studio.address || studio.area}): ` +
         studio.classes.map((c) => `${c.day} ${c.time} ${c.name}`).join('; ') +
         '.'
     ),
-    `- Full schedule with booking links: ${SITE}/#schedule`,
+    `- Full schedule with booking links: ${SITE}/schedule`,
     '',
     '## Upcoming events and retreats',
     '',

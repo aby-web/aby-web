@@ -11,6 +11,7 @@ import { matchPath } from 'react-router-dom';
  *
  * Every route also needs an entry in src/data/pages.js.
  *
+ * /how-privates-work was folded into /private-sessions and redirects there.
  * /coaching is parked: see the note at the top of src/pages/Coaching.jsx.
  * The old Yorigam page was deleted; its address redirects to yorigam.com
  * (see "redirects" in vercel.json).
@@ -24,7 +25,7 @@ export const routes = [
   { path: '/handstandguide', file: 'src/pages/Guide.jsx', load: () => import('./pages/Guide.jsx') },
   { path: '/pinchaguide', file: 'src/pages/PinchaGuide.jsx', load: () => import('./pages/PinchaGuide.jsx') },
   { path: '/private-sessions', file: 'src/pages/PrivateSessions.jsx', load: () => import('./pages/PrivateSessions.jsx') },
-  { path: '/how-privates-work', file: 'src/pages/HowPrivatesWork.jsx', load: () => import('./pages/HowPrivatesWork.jsx') },
+  { path: '/schedule', file: 'src/pages/Schedule.jsx', load: () => import('./pages/Schedule.jsx') },
   { path: '/saturday-class', file: 'src/pages/SaturdayClass.jsx', load: () => import('./pages/SaturdayClass.jsx') },
   { path: '/faq', file: 'src/pages/FAQ.jsx', load: () => import('./pages/FAQ.jsx') },
   { path: '/admin', file: 'src/pages/Admin.jsx', load: () => import('./pages/Admin.jsx') },

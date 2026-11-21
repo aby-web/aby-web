@@ -115,7 +115,7 @@ export const business = {
   },
 };
 
-// The private sessions service, used on /private-sessions and /how-privates-work.
+// The private sessions service, used on /private-sessions.
 export const privateService = (offers) => ({
   '@context': 'https://schema.org',
   '@type': 'Service',

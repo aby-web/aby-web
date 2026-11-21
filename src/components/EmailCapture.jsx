@@ -78,7 +78,8 @@ export default function EmailCapture() {
                 type="text"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                placeholder="Full name"
+                placeholder="First name"
+                autoComplete="given-name"
                 disabled={status === 'loading'}
                 className="flex-1 px-6 py-3 bg-white border border-[#C9B99A] rounded-full outline-none text-[#1C1410] placeholder-[#6B5740] disabled:opacity-50"
               />
