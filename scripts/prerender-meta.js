@@ -101,17 +101,6 @@ const ROUTES = [
     imageAlt: 'Ina and Ammar in triangle pose in a forest',
   },
   {
-    path: 'chefina',
-    title: 'Chef Ina | Retreat Catering for Yoga & Wellness Retreats',
-    description:
-      'Private retreat chef for yoga and wellness retreats across the UK and Europe. Culinary-trained, yoga-teacher-led cooking that works with the rhythm of your retreat day.',
-    image:
-      'https://images.unsplash.com/photo-1681657687044-9bde75edb38e?w=1200&q=80',
-    imageAlt: 'A long table set for a shared meal',
-    // Draft page — keep it out of search results.
-    noindex: true,
-  },
-  {
     path: 'coaching',
     title: 'Coaching for Founders & Senior Operators | London | Ammar Bass',
     description:

@@ -75,7 +75,7 @@ Corrections to the audit in `SEO_TASKS.md` (it was written 12 Oct and is partly 
   "falls back to a generic title" finding predates this script, or the deployed build is
   older than `main`. **Check what's actually live on ammarbass.com before trusting the audit.**
 - `og:site_name="Chef Ina"` is one hardcoded line in the shared tag block, so it is wrong on
-  **all 9** routes, not just `/` and `/faq`. One-line fix.
+  **all 9** routes, not just `/` and `/faq`. One-line fix. **Fixed 21 Nov 2026** (now "Ammar Bass"); the /chefina draft page was deleted the same day.
 - `/private-sessions`' description already mentions West Hampstead; it is **`/about`'s** that
   is stale. No page mentions Triyoga anywhere in `src`.
 - The FAQ accordion keeps all answers mounted and hides them with CSS (`max-h-0 opacity-0`),

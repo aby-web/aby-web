@@ -1,10 +1,12 @@
 // Weekly class schedule, plus the details of my own Saturday class.
+// The first block (the Saturday class) is shown as a full-width card above
+// the studio grid; the rest are laid out two per row in the order below.
 // Edit this file to change the timetable; Schedule.jsx, the hero and the
 // mobile menu all read from here.
 //
 // Dates are 'YYYY-MM-DD' in London time:
 //   from  – first class. Before this date the entry shows "From Sat 5 Dec".
-//   until – last class. From the next day the entry disappears.
+//   until – last class (optional). From the next day the entry disappears.
 // The schedule is rendered in the visitor's browser, so these switch over on
 // the day by themselves. No redeploy or follow-up commit is needed.
 
@@ -20,8 +22,6 @@ export const WHATSAPP_GROUP_NAME = "Ammar's Saturday 11:30";
 export const YORIGAM_URL = 'https://yorigam.com';
 
 const HOME_URL = 'http://homewellness.uk/';
-const INDABA_URL = 'https://indabayoga.com/timetable';
-const INDABA_LAST_DAY = '2026-11-30';
 const FLO_URL = 'https://www.floyogastudio.co.uk/book-a-class';
 
 export const schedule = [
@@ -43,8 +43,7 @@ export const schedule = [
   },
   {
     location: 'HOME Wellness',
-    area: 'Primrose Hill',
-    note: ['7 Erskine Road, NW3 3AJ'],
+    area: 'Primrose Hill · 7 Erskine Road, NW3 3AJ',
     classes: [
       { day: 'Tuesday', time: '07:15', name: 'Warm Vinyasa', from: '2026-12-01', url: 'https://homewellness.uk/book-yoga/' },
       { day: 'Wednesday', time: '18:00', name: 'Vinyasa', url: HOME_URL },
@@ -53,13 +52,13 @@ export const schedule = [
     ],
   },
   {
-    // Closing: last classes Mon 30 Nov 2026, then this block disappears.
-    location: 'Indaba',
-    area: 'Marylebone',
+    location: 'Flo',
+    area: 'Hampstead',
     classes: [
-      { day: 'Tuesday', time: '07:30', name: 'Morning Flow', until: INDABA_LAST_DAY, url: INDABA_URL },
-      { day: 'Thursday', time: '18:00', name: 'Vinyasa & Meditation (75)', until: INDABA_LAST_DAY, url: INDABA_URL },
-      { day: 'Saturday', time: '11:30', name: 'Vinyasa (75)', until: INDABA_LAST_DAY, url: INDABA_URL },
+      // "Flo" not "Flow" — named after the studio.
+      { day: 'Monday', time: '07:15', name: 'Flo', url: FLO_URL },
+      { day: 'Thursday', time: '16:30', name: 'Handstands', url: FLO_URL },
+      { day: 'Saturday', time: '09:15', name: 'Power (75)', url: FLO_URL },
     ],
   },
   {
@@ -74,16 +73,6 @@ export const schedule = [
     area: 'Queens Park',
     classes: [
       { day: 'Monday', time: '18:30', name: 'Dynamic Flow', url: 'https://yogarise.london/book/' },
-    ],
-  },
-  {
-    location: 'Flo',
-    area: 'Hampstead',
-    classes: [
-      // "Flo" not "Flow" — named after the studio.
-      { day: 'Monday', time: '07:15', name: 'Flo', url: FLO_URL },
-      { day: 'Thursday', time: '16:30', name: 'Handstands', url: FLO_URL },
-      { day: 'Saturday', time: '09:15', name: 'Power (75)', url: FLO_URL },
     ],
   },
 ];
