@@ -30,7 +30,7 @@
  */
 
 /* global process */
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -38,9 +38,35 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const DIST = join(ROOT, 'dist');
 
-const { render, pages, SITE, londonToday, fetchEvents, eventPath, llmsText } = await import(
-  pathToFileURL(join(ROOT, 'dist-ssr', 'entry-server.js')).href
-);
+const { render, prepare, pageFileFor, pages, SITE, londonToday, fetchEvents, eventPath, llmsText } =
+  await import(pathToFileURL(join(ROOT, 'dist-ssr', 'entry-server.js')).href);
+
+// Each page's code is its own chunk; load them all before rendering.
+await prepare();
+
+// Vite's manifest maps a source file to its built chunk and the chunks it
+// imports. Used to preload a page's own code alongside the main script, so
+// the browser fetches both at once instead of one after the other.
+const MANIFEST_DIR = join(DIST, '.vite');
+const manifest = JSON.parse(readFileSync(join(MANIFEST_DIR, 'manifest.json'), 'utf8'));
+function chunksFor(sourceFile, seen = new Set()) {
+  const entry = manifest[sourceFile];
+  if (!entry || seen.has(sourceFile)) return seen;
+  seen.add(sourceFile);
+  for (const dep of entry.imports || []) chunksFor(dep, seen);
+  return seen;
+}
+const mainEntry = Object.keys(manifest).find((k) => manifest[k].isEntry);
+const mainChunks = chunksFor(mainEntry);
+// <link rel="modulepreload"> tags for a page's chunks that the main script
+// doesn't already bring in.
+function preloadTags(path) {
+  const file = pageFileFor(path);
+  if (!manifest[file]) fail(`no built chunk found for ${file} (${path})`);
+  return [...chunksFor(file)]
+    .filter((k) => !mainChunks.has(k))
+    .map((k) => `<link rel="modulepreload" crossorigin href="/${manifest[k].file}">`);
+}
 
 const fail = (msg) => {
   console.error(`\n✗ prerender failed: ${msg}\n`);
@@ -143,6 +169,7 @@ function writePage(page) {
     '<!--prerender-head-->',
     `<script>window.__PRERENDER_DATE__=${JSON.stringify(buildDate)}</script>`,
     ...(page.events ? [`<script>window.__EVENTS__=${inlineJson(page.events)}</script>`] : []),
+    ...preloadTags(page.path),
     ...tags,
     '<!--/prerender-head-->',
   ].join('\n    ');
@@ -185,6 +212,9 @@ for (const event of events) {
 // The sitemap lists every public, indexable page: the ones marked `sitemap`
 // in src/data/pages.js (with the date their content last changed) and every
 // event page. Events have no "last changed" date, so none is claimed.
+// The manifest is a build tool's file, not part of the site.
+rmSync(MANIFEST_DIR, { recursive: true, force: true });
+
 const xml = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const sitemapEntries = [
   ...pages

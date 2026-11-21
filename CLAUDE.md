@@ -2,8 +2,10 @@
 
 React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all site copy.
 
-- Routes: `src/App.jsx` exports the route table (`AppRoutes`); `src/main.jsx` wraps it in
-  `BrowserRouter`, `src/entry-server.jsx` in `StaticRouter`.
+- Routes: the table is `src/routes.js` (one lazily loaded chunk per page; the browser preloads
+  the current page's chunk before rendering). `src/App.jsx` renders it; `src/main.jsx` wraps it
+  in `BrowserRouter`, `src/entry-server.jsx` in `StaticRouter`. Import pages only through
+  `routes.js`, or their code lands in the main bundle.
 - Page copy: lives in JSX components, not a CMS
 - **`src/data/pages.js` is the single source** for every page's title, description, share image,
   and whether it is public (`prerender`, `index`, `sitemap` flags). Pages render those tags with
@@ -15,7 +17,7 @@ React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all s
   via the rewrite in `vercel.json`. Any other unknown address gets `dist/404.html`
   (`src/pages/NotFound.jsx`) with a real 404 status. The build fails rather than publish an
   empty or odd page.
-- Adding a page: route in `App.jsx`, entry in `pages.js`, `<PageMeta>` in the component, and (if
+- Adding a page: route in `routes.js`, entry in `pages.js`, `<PageMeta>` in the component, and (if
   private) its path in the shell rewrite in `vercel.json`.
 - Parked on 21 Nov 2026 (file kept, not routed): `src/pages/Coaching.jsx` (`/coaching` now 404s).
   `/bootcamp` and `/join` are live but noindex; Stage 3 turns `/bootcamp` into a past-event page.

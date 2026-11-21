@@ -9,6 +9,7 @@ export default function Footer() {
           {/* Column 1: Brand */}
           <div>
             <img
+              loading="lazy"
               src="/images/logo.png"
               alt="Ammar Bass"
               className="w-auto mb-4"

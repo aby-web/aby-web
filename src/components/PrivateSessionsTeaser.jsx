@@ -11,6 +11,7 @@ export default function PrivateSessionsTeaser() {
         <div className="grid md:grid-cols-2 gap-16 items-center mb-16">
           <div>
             <img
+              loading="lazy"
               src="/images/homestudio1.webp"
               alt="Private home studio — West Hampstead"
               className="w-full h-[420px] object-cover rounded-lg"

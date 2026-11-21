@@ -12,7 +12,7 @@ const PRACTICE_VIDEOS = [
     description: 'A powerful 75-minute practice focusing on strength, alignment and breath. This class will challenge you while maintaining mindful awareness throughout. Build heat through dynamic sequences and explore the relationship between movement and breath.',
     duration: '75 min',
     level: 'All Levels',
-    thumbnail: '/images/video1_thumb.png',
+    thumbnail: '/images/video1_thumb.webp',
     focus: ['Strength', 'Alignment', 'Breath Work'],
     youtubeId: 'jdQFOMM0Hsw',
     comingSoon: false,

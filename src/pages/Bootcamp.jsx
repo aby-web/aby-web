@@ -97,11 +97,13 @@ export default function Bootcamp() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
             <img
+              loading="lazy"
               src="/images/retreat-cabin.jpg"
               alt="Accommodation at Blue Summer Eco Houses"
               className="w-full rounded-lg object-cover h-56"
             />
             <img
+              loading="lazy"
               src="/images/retreat-forest.jpg"
               alt="Forest dining area"
               className="w-full rounded-lg object-cover h-56"
@@ -125,6 +127,7 @@ export default function Bootcamp() {
           </p>
 
           <img
+            loading="lazy"
             src="/images/b.jpeg"
             alt="Yoga practice on podium"
             className="w-full rounded-lg object-cover h-64 md:h-80 mb-8"
@@ -164,6 +167,7 @@ export default function Bootcamp() {
             That said, it's not all hard work. There's time to relax, connect with others, and enjoy the setting.
           </p>
           <img
+            loading="lazy"
             src="/images/retreat-practice.jpg"
             alt="Group yoga practice"
             className="w-full rounded-lg object-cover h-64 md:h-80"
@@ -199,6 +203,7 @@ export default function Bootcamp() {
           >
             <div className="relative overflow-hidden rounded-lg">
               <img
+                loading="lazy"
                 src="/images/c.jpeg"
                 alt="Blue Summer Eco Houses location"
                 className="w-full object-cover h-56 group-hover:scale-105 transition-transform duration-300"
@@ -220,6 +225,7 @@ export default function Bootcamp() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             <div>
               <img
+                loading="lazy"
                 src="/images/ammar.jpg"
                 alt="Ammar Bass"
                 className="w-full h-72 object-cover object-top rounded-lg mb-5"
@@ -232,6 +238,7 @@ export default function Bootcamp() {
             </div>
             <div>
               <img
+                loading="lazy"
                 src="/images/ina.jpg"
                 alt="Ina Yordanova"
                 className="w-full h-72 object-cover object-top rounded-lg mb-5"
@@ -249,6 +256,7 @@ export default function Bootcamp() {
       {/* CTA */}
       <section className="relative overflow-hidden">
         <img
+          loading="lazy"
           src="/images/a.jpeg"
           alt="Bulgaria beach"
           className="absolute inset-0 w-full h-full object-cover"

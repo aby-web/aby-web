@@ -8,6 +8,7 @@ import {
   SectionCoaching,
 } from '../components/guide/pincha';
 import PasswordGate from '../components/guide/PasswordGate';
+import GuideFonts from '../components/guide/GuideFonts';
 import EmailGate from '../components/guide/EmailGate';
 import { supabase } from '../lib/supabase';
 
@@ -166,28 +167,37 @@ export default function PinchaGuide() {
   // Show password gate first
   if (!hasAccess) {
     return (
-      <PasswordGate
+      <>
+        <GuideFonts />
+        <PageMeta path="/pinchaguide" />
+        <PasswordGate
         onSuccess={() => setHasAccess(true)}
         guideSlug="pinchaguide"
         titleTop="Forearm Stand Fundamentals"
         titleEm="Guide"
       />
+      </>
     );
   }
 
   // Then show email gate (if not already captured)
   if (!emailCaptured) {
     return (
-      <EmailGate
+      <>
+        <GuideFonts />
+        <PageMeta path="/pinchaguide" />
+        <EmailGate
         onContinue={() => setEmailCaptured(true)}
         source="pincha_guide"
         blurb="Get notified when new guides are released, plus exclusive inversion tips and early access to workshops."
       />
+      </>
     );
   }
 
   return (
     <div style={{ background: 'oklch(97% 0.012 78)' }}>
+      <GuideFonts />
       <PageMeta path="/pinchaguide" />
 
       <style>{`

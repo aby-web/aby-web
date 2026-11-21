@@ -8,6 +8,7 @@ import {
   SectionCoaching,
 } from '../components/guide';
 import PasswordGate from '../components/guide/PasswordGate';
+import GuideFonts from '../components/guide/GuideFonts';
 import EmailGate from '../components/guide/EmailGate';
 import { supabase } from '../lib/supabase';
 
@@ -152,16 +153,29 @@ export default function Guide() {
 
   // Show password gate first
   if (!hasAccess) {
-    return <PasswordGate onSuccess={() => setHasAccess(true)} />;
+    return (
+      <>
+        <GuideFonts />
+        <PageMeta path="/handstandguide" />
+        <PasswordGate onSuccess={() => setHasAccess(true)} />
+      </>
+    );
   }
 
   // Then show email gate (if not already captured)
   if (!emailCaptured) {
-    return <EmailGate onContinue={() => setEmailCaptured(true)} />;
+    return (
+      <>
+        <GuideFonts />
+        <PageMeta path="/handstandguide" />
+        <EmailGate onContinue={() => setEmailCaptured(true)} />
+      </>
+    );
   }
 
   return (
     <div style={{ background: 'oklch(97% 0.012 78)' }}>
+      <GuideFonts />
       <PageMeta path="/handstandguide" />
 
       <style>{`

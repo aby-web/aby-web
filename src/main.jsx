@@ -6,6 +6,7 @@ import './index.css'
 import AppRoutes from './App.jsx'
 import { pages } from './data/pages.js'
 import { EventsProvider } from './lib/events.jsx'
+import { preloadRoute } from './routes.js'
 
 const container = document.getElementById('root')
 
@@ -37,6 +38,10 @@ const isKnownPage = pages.some((p) => p.path !== '/404' && samePath(p.path, here
 const canHydrate =
   prerenderedPath !== undefined &&
   (samePath(prerenderedPath, here) || (prerenderedPath === '/404' && !isKnownPage))
+
+// Each page's code is a separate file. Fetch this page's code first, so the
+// first render is the whole page (and matches the pre-rendered HTML).
+await preloadRoute(here)
 
 if (canHydrate) {
   hydrateRoot(container, app, {

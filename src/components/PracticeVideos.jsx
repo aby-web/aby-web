@@ -8,7 +8,7 @@ const PRACTICE_VIDEOS = [
     description: 'A powerful practice focusing on strength, alignment and breath. Build heat and challenge yourself through dynamic sequences.',
     duration: '75 min',
     level: 'All Levels',
-    thumbnail: '/images/video1_thumb.png',
+    thumbnail: '/images/video1_thumb.webp',
     youtubeId: 'jdQFOMM0Hsw',
     comingSoon: false,
   },
@@ -43,6 +43,7 @@ export default function PracticeVideos() {
                   <div className="relative w-full h-full">
                     <img
                       src={video.thumbnail}
+                      loading="lazy"
                       alt={video.title}
                       className="w-full h-full object-cover"
                     />
@@ -68,6 +69,7 @@ export default function PracticeVideos() {
                   >
                     <img
                       src={video.thumbnail}
+                      loading="lazy"
                       alt={video.title}
                       className="w-full h-full object-cover"
                     />

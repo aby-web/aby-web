@@ -6,15 +6,21 @@ export default function Hero() {
 
   return (
     <section className="relative w-full h-screen overflow-hidden">
-      {/* Background */}
-      <div
-        className="absolute inset-0 bg-gradient-to-br from-[#3A2E26] via-[#2A1E16] to-[#1C1410]"
-        style={{
-          backgroundImage: 'url(/images/hero.webp)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      />
+      {/* Background photo. Phones in portrait get a centred portrait crop
+          (hero-phone.webp, ~100KB); everything else the 1600px version.
+          Both are cut from public/images/hero.webp, the full-size original. */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#3A2E26] via-[#2A1E16] to-[#1C1410]">
+        <picture>
+          <source media="(max-width: 640px) and (orientation: portrait)" srcSet="/images/hero-phone.webp" />
+          <img
+            src="/images/hero-1600.webp"
+            alt="Ammar Bass seated in meditation at the Barbican, London"
+            fetchPriority="high"
+            decoding="async"
+            className="absolute inset-0 w-full h-full object-cover object-center"
+          />
+        </picture>
+      </div>
 
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/20" />

@@ -7,12 +7,19 @@ import { StaticRouter } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import AppRoutes from './App.jsx'
 import { EventsProvider } from './lib/events.jsx'
+import { preloadAllRoutes, routeFor } from './routes.js'
 
 export { pages, SITE } from './data/pages.js'
 export { londonToday } from './data/classes.js'
 export { llmsText } from './data/llms.js'
 // The same fetch the browser uses: public key, public columns only.
 export { fetchEvents, eventPath } from './lib/events.jsx'
+
+// Load every page's code before anything is rendered.
+export const prepare = preloadAllRoutes
+
+// The source file of the page a path lands on, e.g. 'src/pages/Home.jsx'.
+export const pageFileFor = (path) => routeFor(path).file
 
 // Returns the page's markup. With React 19 the head tags a page renders
 // (<title>, <meta>, <link>) come out at the front of the string;

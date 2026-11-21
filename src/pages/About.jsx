@@ -58,7 +58,7 @@ export default function About() {
             {/* Photo */}
             <div className="h-[500px] bg-[#EAE0CF] border border-[#C9B99A] rounded-md overflow-hidden">
               <img
-                src="/images/about-teaching.jpg"
+                src="/images/about-teaching.webp"
                 alt="Ammar Bass demonstrating leg behind head side crow pose"
                 className="w-full h-full object-cover"
               />

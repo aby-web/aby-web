@@ -36,6 +36,7 @@ export default function About() {
           {/* Right: Image */}
           <div className="h-[440px] bg-[#EAE0CF] border border-[#C9B99A] rounded-md overflow-hidden">
             <img
+              loading="lazy"
               src="/images/about.webp"
               alt="Ammar Bass"
               className="w-full h-full object-cover"

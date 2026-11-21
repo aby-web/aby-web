@@ -106,7 +106,8 @@ export default function PrivateSessions() {
       {/* What to Expect — Desktop */}
       <section className="hidden md:block relative overflow-hidden h-[650px]">
         <img
-          src="/images/BBB09020.jpg"
+          loading="lazy"
+          src="/images/private-session.webp"
           alt="Private yoga session"
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -174,6 +175,7 @@ export default function PrivateSessions() {
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           <div>
             <img
+              loading="lazy"
               src="/images/homestudio1.webp"
               alt="Home studio — West Hampstead"
               className="w-full h-[480px] object-cover rounded-lg"
