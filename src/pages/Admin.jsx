@@ -10,7 +10,6 @@ export default function Admin() {
   const [activeTab, setActiveTab] = useState('events');
   const [events, setEvents] = useState([]);
   const [subscribers, setSubscribers] = useState([]);
-  const [testimonials, setTestimonials] = useState([]);
   const [privateEnquiries, setPrivateEnquiries] = useState([]);
   const [clientIntakes, setClientIntakes] = useState([]);
   const [yogamiInterest, setYogamiInterest] = useState([]);
@@ -83,7 +82,6 @@ export default function Admin() {
     if (isLoggedIn()) {
       fetchEvents();
       fetchSubscribers();
-      fetchTestimonials();
       fetchPrivateEnquiries();
       fetchClientIntakes();
       fetchVacations();
@@ -111,7 +109,6 @@ export default function Admin() {
       setPassword('');
       fetchEvents();
       fetchSubscribers();
-      fetchTestimonials();
       fetchPrivateEnquiries();
       fetchClientIntakes();
       fetchVacations();
@@ -271,23 +268,6 @@ export default function Admin() {
       setSubscribers(data.subscribers || []);
     } catch (error) {
       console.error('Error fetching subscribers from Kit:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchTestimonials = async () => {
-    setLoading(true);
-    try {
-      const { data, error } = await supabase
-        .from('testimonials')
-        .select('*')
-        .order('order_position', { ascending: true });
-
-      if (error) throw error;
-      setTestimonials(data || []);
-    } catch (error) {
-      console.error('Error fetching testimonials:', error);
     } finally {
       setLoading(false);
     }
@@ -519,28 +499,6 @@ export default function Admin() {
         showToast('Error deleting vacation', 'error');
       }
     });
-  };
-
-  const handleUpdateTestimonial = async (testimonial) => {
-    try {
-      const { error } = await supabase
-        .from('testimonials')
-        .update({
-          review: testimonial.review,
-          studio: testimonial.studio,
-          class_name: testimonial.class_name,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', testimonial.id);
-
-      if (error) throw error;
-
-      showToast('Testimonial updated successfully!');
-      fetchTestimonials();
-    } catch (error) {
-      console.error('Error updating testimonial:', error);
-      showToast('Error updating testimonial: ' + error.message, 'error');
-    }
   };
 
   const uploadImage = async (file) => {
@@ -792,12 +750,6 @@ export default function Admin() {
             className={`pb-4 px-4 text-sm font-medium transition-colors ${activeTab === 'clientIntakes' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740] hover:text-[#1C1410]'}`}
           >
             New Clients ({clientIntakes.length})
-          </button>
-          <button
-            onClick={() => setActiveTab('testimonials')}
-            className={`pb-4 px-4 text-sm font-medium transition-colors ${activeTab === 'testimonials' ? 'border-b-2 border-[#785E3D] text-[#785E3D]' : 'text-[#6B5740] hover:text-[#1C1410]'}`}
-          >
-            Testimonials
           </button>
           <button
             onClick={() => setActiveTab('vacations')}
@@ -1225,92 +1177,6 @@ export default function Admin() {
                         Delete
                       </button>
                     </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Testimonials Tab */}
-        {activeTab === 'testimonials' && (
-          <div className="bg-white p-6 rounded-lg border border-[#C9B99A] shadow-sm">
-            <h2 className="text-xl font-light mb-6 text-[#1C1410]">Manage Testimonials</h2>
-            <p className="text-sm text-[#6B5740] mb-6">Edit the 3 testimonials that appear on the homepage</p>
-
-            {loading ? (
-              <p className="text-[#6B5740]">Loading...</p>
-            ) : testimonials.length === 0 ? (
-              <p className="text-[#6B5740]">No testimonials found. Please run the setup SQL first.</p>
-            ) : (
-              <div className="space-y-6">
-                {testimonials.map((testimonial, index) => (
-                  <div key={testimonial.id} className="bg-[#F4EFE6] p-6 rounded-md border border-[#C9B99A]">
-                    <h3 className="text-lg font-medium mb-4 text-[#1C1410]">Testimonial {index + 1}</h3>
-                    <form
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        handleUpdateTestimonial(testimonial);
-                      }}
-                      className="space-y-4"
-                    >
-                      <div>
-                        <label className="block text-sm font-medium text-[#6B5740] mb-2">Review</label>
-                        <textarea
-                          value={testimonial.review}
-                          onChange={(e) => {
-                            const updatedTestimonials = [...testimonials];
-                            updatedTestimonials[index].review = e.target.value;
-                            setTestimonials(updatedTestimonials);
-                          }}
-                          placeholder="The review text"
-                          className="w-full px-4 py-3 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A]"
-                          rows="3"
-                          required
-                        />
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-sm font-medium text-[#6B5740] mb-2">Studio</label>
-                          <input
-                            type="text"
-                            value={testimonial.studio}
-                            onChange={(e) => {
-                              const updatedTestimonials = [...testimonials];
-                              updatedTestimonials[index].studio = e.target.value;
-                              setTestimonials(updatedTestimonials);
-                            }}
-                            placeholder="e.g., Flo Yoga"
-                            className="w-full px-4 py-3 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A]"
-                            required
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-sm font-medium text-[#6B5740] mb-2">Class</label>
-                          <input
-                            type="text"
-                            value={testimonial.class_name}
-                            onChange={(e) => {
-                              const updatedTestimonials = [...testimonials];
-                              updatedTestimonials[index].class_name = e.target.value;
-                              setTestimonials(updatedTestimonials);
-                            }}
-                            placeholder="e.g., Experienced Flow"
-                            className="w-full px-4 py-3 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A]"
-                            required
-                          />
-                        </div>
-                      </div>
-
-                      <button
-                        type="submit"
-                        className="bg-[#785E3D] text-white px-6 py-2 rounded-md hover:bg-[#6B5030] transition-colors"
-                      >
-                        Update Testimonial
-                      </button>
-                    </form>
                   </div>
                 ))}
               </div>

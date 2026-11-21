@@ -25,8 +25,8 @@ Where things are set, each in one place:
 - `src/data/privateSessions.js`: private prices, Calendly link (a 15-minute event; only the
   address says "30min"), WhatsApp number for private enquiries.
 - `src/data/testimonials.js`: named testimonials and which pages show them. Quotes are verbatim;
-  do not edit the wording. The Supabase `testimonials` table and the Admin tab for it are no
-  longer shown anywhere on the site.
+  do not edit the wording. The Admin tab for the old Supabase `testimonials` table was removed
+  on 21 Nov 2026; the table itself still exists but nothing reads it.
 
 ## ⚠️ WORK IN PROGRESS — SEO overhaul, paused 14 Oct 2026
 
