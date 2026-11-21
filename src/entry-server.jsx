@@ -6,19 +6,27 @@ import { renderToString } from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import AppRoutes from './App.jsx'
+import { EventsProvider } from './lib/events.jsx'
 
 export { pages, SITE } from './data/pages.js'
 export { londonToday } from './data/classes.js'
+// The same fetch the browser uses: public key, public columns only.
+export { fetchEvents, eventPath } from './lib/events.jsx'
 
 // Returns the page's markup. With React 19 the head tags a page renders
 // (<title>, <meta>, <link>) come out at the front of the string;
 // scripts/prerender.js moves them into <head>.
-export function render(path) {
+//
+// `events` is the list the page should be built with (the Events page and
+// each event's own page); other pages pass nothing.
+export function render(path, { events = null } = {}) {
   return renderToString(
     <HelmetProvider>
-      <StaticRouter location={path}>
-        <AppRoutes />
-      </StaticRouter>
+      <EventsProvider initial={events}>
+        <StaticRouter location={path}>
+          <AppRoutes />
+        </StaticRouter>
+      </EventsProvider>
     </HelmetProvider>
   )
 }

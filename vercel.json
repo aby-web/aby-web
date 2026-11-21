@@ -21,7 +21,11 @@
       "destination": "/shell.html"
     },
     {
-      "source": "/join",
+      "source": "/events/:slug",
+      "destination": "/shell.html"
+    },
+    {
+      "source": "/events/:slug/",
       "destination": "/shell.html"
     }
   ]

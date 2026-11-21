@@ -19,8 +19,14 @@
  * not rendered; they are served dist/shell.html, an empty noindex page that
  * builds itself in the browser exactly as the whole site used to.
  *
- * The build fails, leaving the current live site up, if a page comes out
- * empty, without exactly one <title>, or containing anything key-like.
+ * Events are the one thing fetched at build time. They come from the public
+ * `events` table through the same code, the same public (anon) key and the
+ * same columns the browser uses — nothing that isn't already on the site.
+ * Each event also gets its own page at /events/<slug>.
+ *
+ * The build fails, leaving the current live site up, if the events can't be
+ * fetched or come back empty, or if a page comes out empty, without exactly
+ * one <title>, or containing anything key-like.
  */
 
 /* global process */
@@ -32,7 +38,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const DIST = join(ROOT, 'dist');
 
-const { render, pages, londonToday } = await import(
+const { render, pages, londonToday, fetchEvents, eventPath } = await import(
   pathToFileURL(join(ROOT, 'dist-ssr', 'entry-server.js')).href
 );
 
@@ -87,10 +93,37 @@ const words = (html) =>
 // first render matches the built HTML (see src/lib/useToday.js).
 const buildDate = londonToday();
 
+// ── 2a. Events ──────────────────────────────────────────────────────────────
+// Never publish an empty events list: if the fetch fails or returns nothing,
+// stop here. Vercel then keeps the current live site.
+let events;
+try {
+  events = await fetchEvents();
+} catch (error) {
+  fail(`could not fetch events from Supabase: ${error?.message || error}`);
+}
+if (!Array.isArray(events) || events.length === 0) fail('the events fetch returned no events');
+for (const e of events) {
+  if (!e.slug || !/^[a-z0-9-]+$/.test(e.slug)) fail(`event "${e.title}" has no valid slug`);
+  if (!e.title || !/^\d{4}-\d{2}-\d{2}$/.test(e.date || '')) fail(`event "${e.slug}" is missing its title or date`);
+}
+
+// Data handed to the browser inside a <script> must not be able to close the
+// tag or start markup, whatever text an event contains.
+const inlineJson = (value) =>
+  JSON.stringify(value)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029');
+
+// ── 2b. Render ──────────────────────────────────────────────────────────────
 const report = [];
 
-for (const page of pages.filter((p) => p.prerender)) {
-  const { tags, body } = splitHead(render(page.path));
+// page: { path, index, file?, events? }
+function writePage(page) {
+  const { tags, body } = splitHead(render(page.path, { events: page.events ?? null }));
 
   const titles = tags.filter((t) => t.startsWith('<title'));
   if (titles.length !== 1) fail(`${page.path} rendered ${titles.length} <title> tags (expected 1)`);
@@ -99,7 +132,7 @@ for (const page of pages.filter((p) => p.prerender)) {
   const h1s = (body.match(/<h1\b/g) || []).length;
   if (h1s !== 1) fail(`${page.path} has ${h1s} <h1> headings (expected 1)`);
   if (!page.index !== tags.some((t) => /name="robots"[^>]*noindex/.test(t))) {
-    fail(`${page.path}: robots tag does not match its "index" flag in src/data/pages.js`);
+    fail(`${page.path}: robots tag does not match its "index" flag`);
   }
 
   // The markers let src/main.jsx remove these tags if it ever has to rebuild
@@ -107,13 +140,14 @@ for (const page of pages.filter((p) => p.prerender)) {
   const head = [
     '<!--prerender-head-->',
     `<script>window.__PRERENDER_DATE__=${JSON.stringify(buildDate)}</script>`,
+    ...(page.events ? [`<script>window.__EVENTS__=${inlineJson(page.events)}</script>`] : []),
     ...tags,
     '<!--/prerender-head-->',
   ].join('\n    ');
 
   const html = bare
-    .replace(/<\/head>/i, `  ${head}\n  </head>`)
-    .replace('<div id="root"></div>', `<div id="root" data-prerendered="${page.path}">${body}</div>`);
+    .replace(/<\/head>/i, () => `  ${head}\n  </head>`)
+    .replace('<div id="root"></div>', () => `<div id="root" data-prerendered="${page.path}">${body}</div>`);
 
   // Nothing key-like may ever reach the published HTML. (The site's public
   // Supabase key lives in the JavaScript bundle, as it always has; it has no
@@ -132,6 +166,16 @@ for (const page of pages.filter((p) => p.prerender)) {
   report.push({ path: page.path, words: wordCount, jsonLd, index: page.index });
 }
 
+for (const page of pages.filter((p) => p.prerender)) {
+  // The Events page is built with the full list.
+  writePage(page.path === '/events' ? { ...page, events } : page);
+}
+
+// One page per event, built with just that event.
+for (const event of events) {
+  writePage({ path: eventPath(event), index: true, events: [event] });
+}
+
 for (const r of report) {
   console.log(
     `  prerendered ${r.path.padEnd(20)} ${String(r.words).padStart(5)} words  ${r.jsonLd} JSON-LD${r.index ? '' : '  (noindex)'}`
@@ -139,7 +183,7 @@ for (const r of report) {
 }
 const skipped = pages.filter((p) => !p.prerender).map((p) => p.path);
 console.log(`  shell only  ${skipped.join(' ')}`);
-console.log(`✓ pre-render complete (${report.length} pages, built for ${buildDate})`);
+console.log(`✓ pre-render complete (${report.length} pages, ${events.length} events, built for ${buildDate})`);
 
 // The Supabase client created when the pages were loaded can keep Node alive.
 process.exit(0);

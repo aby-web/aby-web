@@ -2,6 +2,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Home from './pages/Home';
 import Events from './pages/Events';
+import EventPage from './pages/EventPage';
 import About from './pages/About';
 import Practice from './pages/Practice';
 import Guide from './pages/Guide';
@@ -53,6 +54,7 @@ function AppRoutes() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/events" element={<Events />} />
+        <Route path="/events/:slug" element={<EventPage />} />
         <Route path="/about" element={<About />} />
         <Route path="/practice" element={<Practice />} />
         <Route path="/handstandguide" element={<Guide />} />

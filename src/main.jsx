@@ -5,15 +5,19 @@ import { HelmetProvider } from 'react-helmet-async'
 import './index.css'
 import AppRoutes from './App.jsx'
 import { pages } from './data/pages.js'
+import { EventsProvider } from './lib/events.jsx'
 
 const container = document.getElementById('root')
 
 const app = (
   <StrictMode>
     <HelmetProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
+      {/* window.__EVENTS__ is written into pre-rendered event pages at build time */}
+      <EventsProvider initial={window.__EVENTS__ ?? null}>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </EventsProvider>
     </HelmetProvider>
   </StrictMode>
 )

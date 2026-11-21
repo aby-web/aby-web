@@ -440,28 +440,28 @@ export default function Admin() {
     try {
       if (vacationForm.id) {
         // Update existing vacation
-        const { error } = await supabase
-          .from('vacations')
-          .update({
+        await adminWrite({
+          action: 'update',
+          table: 'vacations',
+          id: vacationForm.id,
+          values: {
             start_date: vacationForm.start_date,
             end_date: vacationForm.end_date,
             reason: vacationForm.reason,
             updated_at: new Date().toISOString()
-          })
-          .eq('id', vacationForm.id);
-
-        if (error) throw error;
+          },
+        });
       } else {
         // Create new vacation
-        const { error} = await supabase
-          .from('vacations')
-          .insert([{
+        await adminWrite({
+          action: 'insert',
+          table: 'vacations',
+          values: {
             start_date: vacationForm.start_date,
             end_date: vacationForm.end_date,
             reason: vacationForm.reason
-          }]);
-
-        if (error) throw error;
+          },
+        });
       }
 
       setVacationForm({ id: null, start_date: '', end_date: '', reason: '' });
@@ -486,12 +486,7 @@ export default function Admin() {
   const handleDeleteVacation = async (id) => {
     showConfirm('Are you sure you want to delete this vacation period?', async () => {
       try {
-        const { error } = await supabase
-          .from('vacations')
-          .delete()
-          .eq('id', id);
-
-        if (error) throw error;
+        await adminWrite({ action: 'delete', table: 'vacations', id });
         fetchVacations();
         showToast('Vacation deleted successfully!');
       } catch (error) {
@@ -501,14 +496,51 @@ export default function Admin() {
     });
   };
 
+  // Every change to what the public site shows (events, vacations, event
+  // images) goes through the admin-data function, which checks the admin
+  // login. Throws with a readable message if it fails.
+  const adminWrite = async (body) => {
+    const { ok, status, data } = await adminFetch('admin-data', body);
+    if (!ok) {
+      if (status === 401) {
+        clearSession();
+        setIsAuthenticated(false);
+        throw new Error('Session expired. Please log in again.');
+      }
+      throw new Error('The change could not be saved.');
+    }
+    return data;
+  };
+
+  // The public pages are built ahead of time, so after an event changes the
+  // site is rebuilt (about a minute). The rebuild-site function holds the
+  // Vercel deploy hook; this only asks it to run.
+  const rebuildSite = async () => {
+    const { ok, status } = await adminFetch('rebuild-site');
+    if (ok) return 'started';
+    return status === 503 ? 'not-set-up' : 'failed';
+  };
+
+  const REBUILD_NOTE = {
+    started: ' The website is rebuilding and will show the change in about a minute.',
+    'not-set-up': ' The automatic website rebuild is not set up yet, so event pages update at the next deploy.',
+    failed: ' The website rebuild could not be started; use "Rebuild website" to try again.',
+  };
+
+  const handleRebuildSite = async () => {
+    const result = await rebuildSite();
+    if (result === 'started') showToast('Website rebuild started. It takes about a minute.');
+    else if (result === 'not-set-up') showToast('The website rebuild is not set up yet (the Vercel deploy hook is missing).', 'error');
+    else showToast('The website rebuild could not be started.', 'error');
+  };
+
   const uploadImage = async (file) => {
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${Date.now()}.${fileExt}`;
-    const filePath = `${fileName}`;
+    const extension = file.name.split('.').pop();
+    const { path: filePath, token } = await adminWrite({ action: 'upload-url', extension });
 
     const { error } = await supabase.storage
       .from('event-images')
-      .upload(filePath, file);
+      .uploadToSignedUrl(filePath, token, file, { contentType: file.type });
 
     if (error) throw error;
 
@@ -536,19 +568,10 @@ export default function Admin() {
 
       if (eventForm.id) {
         // Update existing event
-        const { error } = await supabase
-          .from('events')
-          .update(eventData)
-          .eq('id', eventForm.id);
-
-        if (error) throw error;
+        await adminWrite({ action: 'update', table: 'events', id: eventForm.id, values: eventData });
       } else {
-        // Insert new event
-        const { error } = await supabase
-          .from('events')
-          .insert([eventData]);
-
-        if (error) throw error;
+        // Insert new event (its page address, the slug, is set by the database)
+        await adminWrite({ action: 'insert', table: 'events', values: eventData });
       }
 
       // Reset form
@@ -566,7 +589,7 @@ export default function Admin() {
       setImageFile(null);
       setImagePreviewUrl(null);
       fetchEvents();
-      showToast('Event saved successfully!');
+      showToast('Event saved.' + REBUILD_NOTE[await rebuildSite()]);
     } catch (error) {
       console.error('Error saving event:', error);
       showToast('Error saving event: ' + error.message, 'error');
@@ -583,14 +606,9 @@ export default function Admin() {
   const handleDeleteEvent = async (id) => {
     showConfirm('Are you sure you want to delete this event?', async () => {
       try {
-        const { error } = await supabase
-          .from('events')
-          .delete()
-          .eq('id', id);
-
-        if (error) throw error;
+        await adminWrite({ action: 'delete', table: 'events', id });
         fetchEvents();
-        showToast('Event deleted successfully!');
+        showToast('Event deleted.' + REBUILD_NOTE[await rebuildSite()]);
       } catch (error) {
         console.error('Error deleting event:', error);
         showToast('Error deleting event: ' + error.message, 'error');
@@ -936,7 +954,17 @@ export default function Admin() {
 
             {/* Events List */}
             <div className="bg-white p-6 rounded-lg border border-[#C9B99A] shadow-sm">
-              <h2 className="text-xl font-light mb-4 text-[#1C1410]">All Events</h2>
+              <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+                <h2 className="text-xl font-light text-[#1C1410]">All Events</h2>
+                <button
+                  type="button"
+                  onClick={handleRebuildSite}
+                  title="Event pages are rebuilt automatically when you save an event, and every night. Use this if a change hasn't shown up."
+                  className="px-3 py-1 border border-[#785E3D] text-[#785E3D] rounded text-sm hover:bg-[#F4EFE6] transition-colors"
+                >
+                  Rebuild website
+                </button>
+              </div>
               {loading ? (
                 <p className="text-[#6B5740]">Loading...</p>
               ) : events.length === 0 ? (
@@ -952,6 +980,13 @@ export default function Admin() {
                           <div className="flex-1">
                             <h3 className="text-lg font-medium mb-1 text-[#1C1410]">{event.title}</h3>
                             <p className="text-sm text-[#785E3D] mb-2">{event.date} • {event.location}</p>
+                            {event.slug && (
+                              <p className="text-xs mb-2">
+                                <a href={`/events/${event.slug}`} target="_blank" rel="noopener noreferrer" className="text-[#785E3D] underline underline-offset-2 hover:text-[#1C1410]">
+                                  ammarbass.com/events/{event.slug}
+                                </a>
+                              </p>
+                            )}
                             {event.description && <p className="text-sm text-[#6B5740] mb-2">{event.description}</p>}
                             <div className="flex gap-2 items-center">
                               <span className={`text-xs px-2 py-1 rounded text-white ${isUpcoming ? 'bg-[#785E3D]' : 'bg-[#C9B99A]'}`}>

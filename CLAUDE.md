@@ -24,6 +24,20 @@ React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all s
   Anything that depends on today's date goes through `src/lib/useToday.js`; format dates with
   the helpers in `src/data/classes.js`, never `toLocaleDateString`. Don't read `window`,
   `localStorage` or the clock during render.
+- **Events** live in the Supabase `events` table. The build fetches them (anon key, public
+  columns only, via `src/lib/events.jsx`) and writes `/events` plus one page per event at
+  `/events/<slug>`; **if that fetch fails or is empty the build fails** so the live site stays up.
+  `slug` is set once by a database trigger on insert and never changes. An event added after the
+  last build is served the shell and loads in the browser until the rebuild finishes.
+- **Rebuilds**: the `rebuild-site` Edge Function holds the Vercel deploy hook in its environment
+  (`VERCEL_DEPLOY_HOOK_URL`; never in the repo or client code). It runs for a logged-in admin
+  (automatically when an event is saved or deleted in `/admin`, or the "Rebuild website" button)
+  and for the nightly `pg_cron` job `nightly-site-rebuild` (00:10 UTC), which authenticates with
+  `REBUILD_CRON_SECRET` (function env + Supabase Vault).
+- **Admin writes** to `events`, `vacations` and the `event-images` bucket go through the
+  `admin-data` Edge Function (admin login required). `supabase/pending/lock_down_public_writes.sql`
+  removes the old "anyone can write" policies on those; it is **not applied yet** — apply it only
+  once Ammar confirms saving events (with a photo) and vacations works in `/admin`.
 - Dev: `npm run dev` (no pre-rendering; pages build in the browser).
 
 ---
@@ -33,8 +47,9 @@ React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all s
 `docs/site-review.md` is the current plan: five stages, each with its own prompt.
 **Stage 1 (fix facts, launch `/saturday-class`) shipped 21 Nov 2026.** Stage 2 (pre-render for
 crawlers) is in progress and supersedes the paused Phase 1 plan further down. Its agreed order:
-1 full-content pages (built 21 Nov 2026), 2 event pages + rebuild trigger, 3 real 404,
-4 JSON-LD, 5 generated sitemap + llms.txt, 6 performance, 7 alt text.
+1 full-content pages, 2 event pages + rebuild trigger, 3 real 404 (all live 21 Nov 2026);
+still to do: 4 JSON-LD, 5 generated sitemap + llms.txt, 6 performance, 7 alt text, then the
+per-route proof (curl word counts and JSON-LD types).
 Agreed rules: the Vercel deploy hook URL is a secret (server-side env var only, called from a
 function that checks admin auth, never in client code); build-time Supabase access uses only the
 anon key and only already-public data; if the events fetch fails, the build must fail.

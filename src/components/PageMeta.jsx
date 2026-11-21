@@ -7,17 +7,20 @@ import { pageMeta, pageUrl } from '../data/pages';
 // and the tags the browser shows are always the same.
 //
 // Pages keep their own <Helmet> only for extras: keywords and JSON-LD.
-export default function PageMeta({ path }) {
-  const page = pageMeta(path);
+//
+// Pages built from data (one per event) pass their own `page` object instead
+// of a path: { path, title, description, image, imageAlt, index }.
+export default function PageMeta({ path, page: given }) {
+  const page = given ?? pageMeta(path);
   if (!page) return null;
-  const url = pageUrl(path);
+  const url = pageUrl(page.path);
   const { title, description, image, imageAlt } = page;
 
   return (
     <Helmet>
       <title>{title}</title>
       {description && <meta name="description" content={description} />}
-      {!page.index && <meta name="robots" content="noindex, nofollow" />}
+      {page.index === false && <meta name="robots" content="noindex, nofollow" />}
       {page.canonical !== false && <link rel="canonical" href={url} />}
 
       {/* Open Graph — WhatsApp, iMessage, Facebook, LinkedIn, Slack */}
@@ -27,8 +30,8 @@ export default function PageMeta({ path }) {
       <meta property="og:title" content={title} />
       {description && <meta property="og:description" content={description} />}
       {image && <meta property="og:image" content={image} />}
-      {image && <meta property="og:image:width" content="1200" />}
-      {image && <meta property="og:image:height" content="630" />}
+      {image && page.imageSize !== false && <meta property="og:image:width" content="1200" />}
+      {image && page.imageSize !== false && <meta property="og:image:height" content="630" />}
       {imageAlt && <meta property="og:image:alt" content={imageAlt} />}
 
       {/* Twitter/X */}
