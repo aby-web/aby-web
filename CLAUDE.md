@@ -54,6 +54,11 @@ React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all s
   `has_password`; view counts come from its `guide-views` action (counted in the database).
   Both guides have a row in `guides`; an empty password means "not set" and the gate refuses
   everyone. Passwords are set only by Ammar in `/admin` > Guides.
+- **Analytics events (22 Nov 2026)**: `src/lib/analytics.js` `track(name, position)` sends
+  `book_call_click`, `whatsapp_enquiry_click`, `whatsapp_group_click` and
+  `new_client_form_submit` through gtag with two parameters only (`page_path`,
+  `button_position`); never from `/admin`, never personal data. `BookCallButton` and the
+  WhatsApp buttons take a `position` prop; give every new one a position.
 - Dev: `npm run dev` (no pre-rendering; pages build in the browser).
 
 ---

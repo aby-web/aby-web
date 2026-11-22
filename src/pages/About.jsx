@@ -142,7 +142,7 @@ export default function About() {
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-5xl font-light text-[#F4EFE6] mb-8">Practise with me</h2>
             <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4">
-              <BookCallButton variant="primaryOnDark" />
+              <BookCallButton position="page_end" variant="primaryOnDark" />
               <a href="/schedule" className={BTN.secondaryOnDark}>See the schedule</a>
             </div>
           </div>

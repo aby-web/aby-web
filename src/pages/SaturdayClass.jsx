@@ -40,17 +40,19 @@ const OG_IMAGE = 'https://ammarbass.com/images/og-saturday-class.jpg';
 // SATURDAY_BOOKING_URL is set in classes.js; then it becomes "Book your place"
 // with the WhatsApp group as the second link.
 function JoinButtons({ dark = false }) {
+  // The light pair is at the top of the page, the dark pair in the closing section.
+  const position = dark ? 'page_end' : 'hero';
   if (SATURDAY_BOOKING_URL) {
     return (
       <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4">
         <a href={SATURDAY_BOOKING_URL} target="_blank" rel="noopener noreferrer" className={dark ? BTN.primaryOnDark : BTN.primary}>
           Book your place
         </a>
-        <WhatsAppGroupButton variant={dark ? 'secondaryOnDark' : 'secondary'} />
+        <WhatsAppGroupButton position={position} variant={dark ? 'secondaryOnDark' : 'secondary'} />
       </div>
     );
   }
-  return <WhatsAppGroupButton variant={dark ? 'primaryOnDark' : 'primary'} className="w-full sm:w-auto" />;
+  return <WhatsAppGroupButton position={position} variant={dark ? 'primaryOnDark' : 'primary'} className="w-full sm:w-auto" />;
 }
 
 export default function SaturdayClass() {
@@ -208,7 +210,7 @@ export default function SaturdayClass() {
             Book your place
           </a>
         ) : (
-          <WhatsAppGroupButton className="flex-1" />
+          <WhatsAppGroupButton position="booking_bar" className="flex-1" />
         )}
       </BookingBar>
 

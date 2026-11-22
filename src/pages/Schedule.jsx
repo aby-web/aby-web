@@ -57,7 +57,7 @@ export default function Schedule() {
               My group classes are designed for people with some yoga experience. If you're completely new, a private session is the best place to start.
             </p>
             <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4">
-              <BookCallButton variant="primaryOnDark" />
+              <BookCallButton position="page_end" variant="primaryOnDark" />
               <a href="/private-sessions" className={BTN.secondaryOnDark}>About private sessions</a>
             </div>
           </div>

@@ -42,7 +42,7 @@ export default function Hero() {
             Private sessions in my West Hampstead studio, and my own Saturday class in Marylebone. I also teach weekly at HOME Wellness, BXR, Flo and Yogarise.
           </p>
           <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4 sm:items-center">
-            <BookCallButton variant="primaryOnDark" />
+            <BookCallButton position="hero" variant="primaryOnDark" />
             <a href={SATURDAY_PAGE} className={BTN.secondaryOnDark}>Join the Saturday class</a>
           </div>
         </div>

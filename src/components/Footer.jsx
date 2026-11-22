@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { honeypotProps, isLikelyBot, useFormTimer } from '../lib/botCheck';
 import { subscribeEmail } from '../lib/subscribe';
+import { track } from '../lib/analytics';
 import { SATURDAY_PAGE, WHATSAPP_GROUP_URL, YORIGAM_URL } from '../data/classes';
 
 // The footer is where everything on the site can be found.
@@ -121,7 +122,13 @@ export default function Footer() {
             <h2 className={headingClass}>Connect</h2>
             <ul className="mb-4">
               <li>
-                <a href={WHATSAPP_GROUP_URL} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                <a
+                  href={WHATSAPP_GROUP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={linkClass}
+                  onClick={() => track('whatsapp_group_click', 'footer')}
+                >
                   Saturday WhatsApp group
                 </a>
               </li>

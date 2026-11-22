@@ -3,6 +3,7 @@ import PageMeta from '../components/PageMeta';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import { honeypotProps, useFormTimer } from '../lib/botCheck';
+import { track } from '../lib/analytics';
 
 // Posts to this site's own Supabase project, like the other forms. The
 // new-client-intake function does the validation and bot checks and holds
@@ -91,6 +92,8 @@ export default function NewClientIntake() {
         throw new Error(data.error || 'Something went wrong. Please email me directly.');
       }
 
+      // Counted only once the form has been saved. No form contents are sent.
+      track('new_client_form_submit', 'form');
       setSubmitted(true);
     } catch (err) {
       setError(err.message || 'Something went wrong. Please email me directly.');

@@ -1,18 +1,23 @@
 import { WHATSAPP_GROUP_URL, WHATSAPP_GROUP_NAME } from '../data/classes';
 import { btn } from './ui';
+import { track } from '../lib/analytics';
 
 // Plain links (no JS) so one tap on a phone opens WhatsApp directly.
 // They use the site's standard button looks (src/components/ui.js):
 // primary / secondary on light backgrounds, the "OnDark" pair on dark ones.
 
-// Any WhatsApp link: a group invite or a wa.me chat link.
-export function WhatsAppButton({ href, ariaLabel, variant = 'primary', size = 'md', className = '', children, onClick }) {
+// Any WhatsApp link: a group invite or a wa.me chat link. `eventName` and
+// `position` are what a press is counted as (see src/lib/analytics.js).
+export function WhatsAppButton({ href, ariaLabel, eventName, position, variant = 'primary', size = 'md', className = '', children, onClick }) {
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={onClick}
+      onClick={(e) => {
+        if (eventName) track(eventName, position);
+        onClick?.(e);
+      }}
       aria-label={ariaLabel}
       className={`${btn(variant, size)} ${className}`}
     >
@@ -30,6 +35,7 @@ export default function WhatsAppGroupButton({ children, ...props }) {
     <WhatsAppButton
       href={WHATSAPP_GROUP_URL}
       ariaLabel={`Join the WhatsApp group "${WHATSAPP_GROUP_NAME}" (opens WhatsApp)`}
+      eventName="whatsapp_group_click"
       {...props}
     >
       {children ?? 'Join the WhatsApp group'}

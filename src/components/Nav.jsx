@@ -87,7 +87,7 @@ export default function Nav({ theme = 'dark' }) {
             {/* The one always-visible action. On phones it sits in the menu
                 and in the booking bar instead, where there is room for it. */}
             <div className="hidden sm:block">
-              <BookCallButton variant={onDark ? 'primaryOnDark' : 'primary'} size="sm">
+              <BookCallButton position="header" variant={onDark ? 'primaryOnDark' : 'primary'} size="sm">
                 Book a free call
               </BookCallButton>
             </div>
@@ -131,7 +131,7 @@ export default function Nav({ theme = 'dark' }) {
               {link.label}
             </a>
           ))}
-          <BookCallButton variant="primaryOnDark" className="mt-8" onClick={() => setMobileMenuOpen(false)}>
+          <BookCallButton position="menu" variant="primaryOnDark" className="mt-8" onClick={() => setMobileMenuOpen(false)}>
             Book a free 15-minute call
           </BookCallButton>
         </div>

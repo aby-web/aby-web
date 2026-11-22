@@ -128,8 +128,8 @@ export default function PrivateSessions() {
                 One-to-one in my loft studio in NW6, online, or at your home. Whether you have never stepped on a mat or you are working towards a handstand, we build the session around you. From £{PRICE_60}. Free parking.
               </p>
               <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4">
-                <BookCallButton />
-                <WhatsAppButton href={PRIVATE_WHATSAPP_URL} ariaLabel={whatsAppLabel} variant="secondary">
+                <BookCallButton position="hero" />
+                <WhatsAppButton href={PRIVATE_WHATSAPP_URL} ariaLabel={whatsAppLabel} eventName="whatsapp_enquiry_click" position="hero" variant="secondary">
                   Message me on WhatsApp
                 </WhatsAppButton>
               </div>
@@ -246,8 +246,8 @@ export default function PrivateSessions() {
               Book a free 15-minute call, or message me about what you would like to work on.
             </p>
             <div className="flex flex-col sm:flex-row sm:flex-wrap gap-4">
-              <BookCallButton variant="primaryOnDark" />
-              <WhatsAppButton href={PRIVATE_WHATSAPP_URL} ariaLabel={whatsAppLabel} variant="secondaryOnDark">
+              <BookCallButton position="page_end" variant="primaryOnDark" />
+              <WhatsAppButton href={PRIVATE_WHATSAPP_URL} ariaLabel={whatsAppLabel} eventName="whatsapp_enquiry_click" position="page_end" variant="secondaryOnDark">
                 Message me on WhatsApp
               </WhatsAppButton>
             </div>
@@ -330,8 +330,8 @@ export default function PrivateSessions() {
 
       {/* Phones: the booking button is always within reach */}
       <BookingBar>
-        <BookCallButton className="flex-1">Book a free call</BookCallButton>
-        <WhatsAppButton href={PRIVATE_WHATSAPP_URL} ariaLabel={whatsAppLabel} variant="secondary">
+        <BookCallButton position="booking_bar" className="flex-1">Book a free call</BookCallButton>
+        <WhatsAppButton href={PRIVATE_WHATSAPP_URL} ariaLabel={whatsAppLabel} eventName="whatsapp_enquiry_click" position="booking_bar" variant="secondary">
           WhatsApp
         </WhatsAppButton>
       </BookingBar>
