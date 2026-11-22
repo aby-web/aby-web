@@ -44,9 +44,10 @@ export default function Admin() {
 
   // Guides state
   const [guides, setGuides] = useState([]);
-  const [guideViews, setGuideViews] = useState({});
+  const [guideViews, setGuideViews] = useState(null); // null = not loaded or could not be read
+  const [guidesFailed, setGuidesFailed] = useState(false);
   const [editingGuideId, setEditingGuideId] = useState(null);
-  const [newGuidePassword, setNewGuidePassword] = useState('');
+  const [guidePasswordDrafts, setGuidePasswordDrafts] = useState({}); // typed, unsaved passwords by guide id
 
   // Event form state
   const [eventForm, setEventForm] = useState({
@@ -356,53 +357,40 @@ export default function Admin() {
   const fetchGuides = async () => {
     setLoading(true);
     try {
+      // Rows arrive without the stored password: only `has_password`.
       const { ok, data } = await adminFetch('admin-data', {
         action: 'select', table: 'guides', orderBy: 'created_at', ascending: true,
       });
 
-      if (!ok) return;
-      setGuides(data.data || []);
-
-      // Fetch view counts for each guide
-      if (data && data.length > 0) {
-        await fetchGuideViews(data);
+      if (!ok) {
+        setGuidesFailed(true);
+        return;
       }
+      setGuidesFailed(false);
+      setGuides(data.data || []);
+      fetchGuideViews();
     } catch (error) {
       console.error('Error fetching guides:', error);
-      // If table doesn't exist yet, just set empty array
-      setGuides([]);
+      setGuidesFailed(true);
     } finally {
       setLoading(false);
     }
   };
 
-  const fetchGuideViews = async (guidesData) => {
+  // { slug: { count, last } }, counted on the server.
+  const fetchGuideViews = async () => {
     try {
-      const viewCounts = {};
-
-      // One fetch for all rows, then count per slug locally: the anon client
-      // can no longer read this table, and per-guide requests would be N calls.
-      const { ok, data } = await adminFetch('admin-data', {
-        action: 'select', table: 'guide_views', columns: 'guide_slug',
-      });
-
-      if (ok) {
-        for (const guide of guidesData) {
-          viewCounts[guide.slug] =
-            (data.data || []).filter((v) => v.guide_slug === guide.slug).length;
-        }
-      }
-
-      setGuideViews(viewCounts);
+      const { ok, data } = await adminFetch('admin-data', { action: 'guide-views' });
+      setGuideViews(ok && data.views ? data.views : null);
     } catch (error) {
       console.error('Error fetching guide views:', error);
-      // Fail silently
+      setGuideViews(null);
     }
   };
 
   const handleUpdateGuidePassword = async (guideId, password) => {
     if (!password || password.length < 6) {
-      alert('Password must be at least 6 characters long');
+      showToast('A guide password needs at least 6 characters.', 'error');
       return;
     }
 
@@ -424,9 +412,9 @@ export default function Admin() {
         throw new Error('Failed to update guide password');
       }
 
-      showToast('Guide password updated successfully!');
+      showToast('Guide password saved.');
       setEditingGuideId(null);
-      setNewGuidePassword('');
+      setGuidePasswordDrafts((drafts) => ({ ...drafts, [guideId]: '' }));
       fetchGuides();
     } catch (error) {
       console.error('Error updating guide password:', error);
@@ -1414,79 +1402,30 @@ export default function Admin() {
           <div className="bg-white p-6 rounded-lg border border-[#C9B99A] shadow-sm">
             <h2 className="text-xl font-light mb-4 text-[#1C1410]">Guides</h2>
             <p className="text-sm text-[#6B5740] mb-6">
-              Manage your password-protected guides. Click on a guide to view or change its access password.
+              Each guide opens with its own password. Stored passwords can't be shown, only replaced.
             </p>
 
-            {loading ? (
+            {loading && guides.length === 0 ? (
               <p className="text-[#6B5740]">Loading...</p>
+            ) : guidesFailed ? (
+              <p className="text-[#B42318]">The guides could not be loaded. Reload the page, and log in again if it asks.</p>
             ) : guides.length === 0 ? (
-              <div className="text-[#6B5740]">
-                <p className="mb-4">No guides found in database. You need to create the guides table first.</p>
-                <div className="bg-[#F4EFE6] p-4 rounded-md border border-[#C9B99A]">
-                  <p className="text-xs text-[#785E3D] mb-2">Run this SQL in your Supabase SQL editor:</p>
-                  <pre className="text-xs text-[#1C1410] overflow-x-auto whitespace-pre-wrap">
-{`-- Create the guides table
-CREATE TABLE IF NOT EXISTS guides (
-  id SERIAL PRIMARY KEY,
-  title TEXT NOT NULL,
-  slug TEXT NOT NULL UNIQUE,
-  password TEXT NOT NULL,
-  description TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- Enable Row Level Security
-ALTER TABLE guides ENABLE ROW LEVEL SECURITY;
-
--- Reads are authenticated-only: this table holds guide passwords, and the
--- anon key is public. The password gate calls the check-guide-password
--- Edge Function instead of reading the password directly.
-CREATE POLICY "Authenticated can read guides" ON guides FOR SELECT TO authenticated USING (true);
-CREATE POLICY "Authenticated can update guides" ON guides FOR UPDATE TO authenticated USING (true);
-
--- Insert the handstand guide (if it doesn't exist)
-INSERT INTO guides (title, slug, password, description)
-VALUES ('Handstand Fundamentals Guide', 'handstandguide', '<choose-a-password>', 'A structured approach to building your handstand practice')
-ON CONFLICT (slug) DO NOTHING;
-
--- Insert the pincha mayurasana guide (if it doesn't exist)
-INSERT INTO guides (title, slug, password, description)
-VALUES ('Forearm Stand Fundamentals Guide', 'pinchaguide', '<choose-a-password>', 'A structured approach to building your Pincha Mayurasana (forearm stand) practice')
-ON CONFLICT (slug) DO NOTHING;
-
--- Create the guide_views table to track views
-CREATE TABLE IF NOT EXISTS guide_views (
-  id SERIAL PRIMARY KEY,
-  guide_slug TEXT NOT NULL,
-  viewed_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- Enable Row Level Security
-ALTER TABLE guide_views ENABLE ROW LEVEL SECURITY;
-
--- Create policy to allow public inserts (so view tracking works)
-CREATE POLICY "Allow public inserts" ON guide_views FOR INSERT WITH CHECK (true);
-
--- Create policy to allow public reads (so admin can see view counts)
-CREATE POLICY "Allow public reads" ON guide_views FOR SELECT USING (true);
-
--- Create index for better performance
-CREATE INDEX IF NOT EXISTS idx_guide_views_slug ON guide_views(guide_slug);`}
-                  </pre>
-                </div>
-              </div>
+              <p className="text-[#6B5740]">No guides yet.</p>
             ) : (
               <div className="space-y-4">
-                {guides.map((guide) => (
-                  <div key={guide.id} className="bg-[#F4EFE6] p-6 rounded-md border border-[#C9B99A]">
-                    <div className="flex justify-between items-start mb-4">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-1">
+                {guides.map((guide) => {
+                  const views = guideViews?.[guide.slug];
+                  const day = (iso) => new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+                  const editing = editingGuideId === guide.id || !guide.has_password;
+                  return (
+                    <div key={guide.id} className="bg-[#F4EFE6] p-6 rounded-md border border-[#C9B99A]">
+                      <div className="mb-4">
+                        <div className="flex flex-wrap items-center gap-3 mb-1">
                           <h3 className="text-lg font-medium text-[#1C1410]">{guide.title}</h3>
                           <span className="px-2 py-1 bg-[#785E3D] text-white text-xs rounded">
-                            {guideViews[guide.slug] || 0} {guideViews[guide.slug] === 1 ? 'view' : 'views'}
+                            {guideViews === null ? 'Views not loaded' : `${views?.count ?? 0} ${views?.count === 1 ? 'view' : 'views'}`}
                           </span>
+                          {views?.last && <span className="text-xs text-[#6B5740]">Last viewed {day(views.last)}</span>}
                         </div>
                         {guide.description && (
                           <p className="text-sm text-[#6B5740] mb-2">{guide.description}</p>
@@ -1500,66 +1439,83 @@ CREATE INDEX IF NOT EXISTS idx_guide_views_slug ON guide_views(guide_slug);`}
                           /{guide.slug} →
                         </a>
                       </div>
-                      <span className="text-xs text-[#6B5740]">
-                        Updated {new Date(guide.updated_at).toLocaleDateString('en-GB', {
-                          day: 'numeric',
-                          month: 'short',
-                          year: 'numeric'
-                        })}
-                      </span>
-                    </div>
 
-                    {editingGuideId === guide.id ? (
-                      <div className="space-y-3">
-                        <div>
-                          <label className="block text-sm font-medium text-[#6B5740] mb-2">New Password</label>
-                          <input
-                            type="text"
-                            value={newGuidePassword}
-                            onChange={(e) => setNewGuidePassword(e.target.value)}
-                            placeholder="Enter new password (min 6 characters)"
-                            className="w-full px-4 py-2 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A]"
-                            minLength={6}
-                          />
-                        </div>
-                        <div className="flex gap-2">
-                          <button
-                            onClick={() => handleUpdateGuidePassword(guide.id, newGuidePassword)}
-                            disabled={loading}
-                            className="px-4 py-2 bg-[#785E3D] text-white rounded-md hover:bg-[#6B5030] transition-colors disabled:opacity-50 text-sm"
-                          >
-                            {loading ? 'Updating...' : 'Update Password'}
-                          </button>
-                          <button
-                            onClick={() => {
-                              setEditingGuideId(null);
-                              setNewGuidePassword('');
+                      <div className="bg-white px-4 py-3 rounded-md border border-[#C9B99A]">
+                        {guide.has_password ? (
+                          <div className="flex flex-wrap items-center justify-between gap-3">
+                            <p className="text-sm text-[#1C1410]">
+                              Password set
+                              {guide.updated_at && <span className="text-[#6B5740]"> · last changed {day(guide.updated_at)}</span>}
+                            </p>
+                            {!editing && (
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setEditingGuideId(guide.id);
+                                }}
+                                className="px-4 py-2 bg-[#785E3D] text-white rounded-md hover:bg-[#6B5030] transition-colors text-sm cursor-pointer"
+                              >
+                                Change password
+                              </button>
+                            )}
+                          </div>
+                        ) : (
+                          <p className="text-sm text-[#B42318]">
+                            No password set. Nobody can open this guide until you set one.
+                          </p>
+                        )}
+
+                        {editing && (
+                          <form
+                            className="mt-3 flex flex-wrap items-end gap-3"
+                            onSubmit={(e) => {
+                              e.preventDefault();
+                              handleUpdateGuidePassword(guide.id, guidePasswordDrafts[guide.id] ?? '');
                             }}
-                            className="px-4 py-2 bg-[#EAE0CF] text-[#1C1410] rounded-md hover:bg-[#C9B99A] transition-colors text-sm"
                           >
-                            Cancel
-                          </button>
-                        </div>
+                            <div className="flex-1 min-w-[14rem]">
+                              <label htmlFor={`guide-password-${guide.id}`} className="block text-sm text-[#5C4A36] mb-1.5">
+                                {guide.has_password ? 'New password' : 'Set a password'}
+                              </label>
+                              <input
+                                id={`guide-password-${guide.id}`}
+                                type="text"
+                                value={guidePasswordDrafts[guide.id] ?? ''}
+                                onChange={(e) => setGuidePasswordDrafts({ ...guidePasswordDrafts, [guide.id]: e.target.value })}
+                                className="w-full px-4 py-2 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D]"
+                                minLength={6}
+                                required
+                                autoComplete="off"
+                                autoCapitalize="none"
+                                spellCheck={false}
+                              />
+                              <p className="text-xs text-[#6B5740] mt-1">At least 6 characters. This is what you give to students.</p>
+                            </div>
+                            <button
+                              type="submit"
+                              disabled={loading}
+                              className="px-4 py-2 bg-[#785E3D] text-white rounded-md hover:bg-[#6B5030] transition-colors disabled:opacity-50 text-sm cursor-pointer"
+                            >
+                              {loading ? 'Saving…' : guide.has_password ? 'Save new password' : 'Set password'}
+                            </button>
+                            {guide.has_password && (
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setEditingGuideId(null);
+                                  setGuidePasswordDrafts({ ...guidePasswordDrafts, [guide.id]: '' });
+                                }}
+                                className="px-4 py-2 bg-[#EAE0CF] text-[#1C1410] rounded-md hover:bg-[#C9B99A] transition-colors text-sm cursor-pointer"
+                              >
+                                Cancel
+                              </button>
+                            )}
+                          </form>
+                        )}
                       </div>
-                    ) : (
-                      <div className="flex items-center gap-4">
-                        <div className="flex-1 bg-white px-4 py-3 rounded-md border border-[#C9B99A]">
-                          <p className="text-xs text-[#6B5740] mb-1">Current Password</p>
-                          <p className="text-sm text-[#1C1410] font-mono">{guide.password}</p>
-                        </div>
-                        <button
-                          onClick={() => {
-                            setEditingGuideId(guide.id);
-                            setNewGuidePassword(guide.password);
-                          }}
-                          className="px-4 py-2 bg-[#785E3D] text-white rounded-md hover:bg-[#6B5030] transition-colors text-sm"
-                        >
-                          Change Password
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                ))}
+                    </div>
+                  );
+                })}
               </div>
             )}
           </div>
@@ -1637,7 +1593,7 @@ CREATE INDEX IF NOT EXISTS idx_guide_views_slug ON guide_views(guide_slug);`}
                   minLength={6}
                   autoComplete="new-password"
                 />
-                <p className="text-xs text-[#6B5740] mt-1">Minimum 6 characters, leave blank to keep current password</p>
+                <p className="text-xs text-[#6B5740] mt-1">Minimum 8 characters, leave blank to keep current password</p>
               </div>
 
               <div>

@@ -59,12 +59,51 @@ Deno.serve(async (req) => {
     if (action === 'select') {
       if (!READABLE.includes(table)) return json({ error: 'table not allowed' }, 400);
 
-      let q = supabase.from(table).select(columns || '*');
+      // Guides: always read whole rows here, then strip the password (below).
+      let q = supabase.from(table).select(table === 'guides' ? '*' : (columns || '*'));
       if (orderBy) q = q.order(orderBy, { ascending: ascending ?? false });
 
       const { data, error } = await q;
       if (error) throw error;
+
+      // A guide's stored password (a hash) never leaves the server. The admin
+      // page only learns whether one is set.
+      if (table === 'guides') {
+        const rows = ((data ?? []) as unknown as Record<string, unknown>[]).map(({ password, ...rest }) => ({
+          ...rest,
+          has_password: typeof password === 'string' && password.length > 0,
+        }));
+        return json({ data: rows });
+      }
+
       return json({ data });
+    }
+
+    // View counts per guide, counted in the database (so there is no row limit),
+    // with the time of the latest view.
+    if (action === 'guide-views') {
+      const { data: guideRows, error } = await supabase.from('guides').select('slug');
+      if (error) throw error;
+
+      const views: Record<string, { count: number; last: string | null }> = {};
+      for (const { slug } of guideRows ?? []) {
+        const { count, error: countError } = await supabase
+          .from('guide_views')
+          .select('id', { count: 'exact', head: true })
+          .eq('guide_slug', slug);
+        if (countError) throw countError;
+
+        const { data: latest, error: latestError } = await supabase
+          .from('guide_views')
+          .select('viewed_at')
+          .eq('guide_slug', slug)
+          .order('viewed_at', { ascending: false })
+          .limit(1);
+        if (latestError) throw latestError;
+
+        views[slug] = { count: count ?? 0, last: latest?.[0]?.viewed_at ?? null };
+      }
+      return json({ views });
     }
 
     if (action === 'update') {

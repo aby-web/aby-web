@@ -50,6 +50,10 @@ React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all s
   password." / "Couldn't reach the server. Try again."); `login()` in `src/lib/adminAuth.js`
   returns `'ok' | 'refused' | 'error'`. With no `admin_username` row the username is the
   function's default.
+- **Guides tab (22 Nov 2026)**: `admin-data` never returns a guide's stored password, only
+  `has_password`; view counts come from its `guide-views` action (counted in the database).
+  Both guides have a row in `guides`; an empty password means "not set" and the gate refuses
+  everyone. Passwords are set only by Ammar in `/admin` > Guides.
 - Dev: `npm run dev` (no pre-rendering; pages build in the browser).
 
 ---
