@@ -23,6 +23,29 @@ export default function Admin() {
 
   // Confirm dialog state
   const [confirmDialog, setConfirmDialog] = useState(null);
+  const [confirmBusy, setConfirmBusy] = useState(false);
+  const confirmInFlight = useRef(false);
+
+  // Which slow action is running, so its button can be disabled and relabelled
+  // (for example 'followup-enquiry-12'). One per button; null when idle.
+  const [busy, setBusy] = useState({});
+  const busyNow = useRef({});
+  const runBusy = async (key, action) => {
+    if (busyNow.current[key]) return; // a second press while it runs is ignored
+    busyNow.current[key] = true;
+    setBusy((b) => ({ ...b, [key]: true }));
+    try {
+      return await action();
+    } finally {
+      delete busyNow.current[key];
+      setBusy((b) => { const next = { ...b }; delete next[key]; return next; });
+    }
+  };
+
+  // The website rebuild: one at a time, with its result kept on screen.
+  const [rebuilding, setRebuilding] = useState(false);
+  const [rebuildStatus, setRebuildStatus] = useState(null); // { ok, text }
+  const rebuildInFlight = useRef(null);
 
   const showToast = (message, type = 'success') => {
     setToast({ message, type });
@@ -320,14 +343,14 @@ export default function Admin() {
     }
   };
 
-  const handleToggleIntakeFollowedUp = async (intake) => {
+  const handleToggleIntakeFollowedUp = (intake) => runBusy(`followup-intake-${intake.id}`, async () => {
     const { ok } = await adminFetch('admin-data', {
       action: 'update', table: 'client_intakes', id: intake.id,
       values: { followed_up: !intake.followed_up },
     });
-    if (ok) fetchClientIntakes();
+    if (ok) await fetchClientIntakes();
     else showToast('Could not update that form', 'error');
-  };
+  });
 
   const handleDeleteIntake = (id) => {
     showConfirm('Delete this new client form, including any health notes? This cannot be undone.', async () => {
@@ -424,8 +447,12 @@ export default function Admin() {
     }
   };
 
-  const handleSaveVacation = async (e) => {
+  const handleSaveVacation = (e) => {
     e.preventDefault();
+    return runBusy('save-vacation', () => saveVacation());
+  };
+
+  const saveVacation = async () => {
     setLoading(true);
 
     try {
@@ -506,10 +533,32 @@ export default function Admin() {
   // The public pages are built ahead of time, so after an event changes the
   // site is rebuilt (about a minute). The rebuild-site function holds the
   // Vercel deploy hook; this only asks it to run.
-  const rebuildSite = async () => {
-    const { ok, status } = await adminFetch('rebuild-site');
-    if (ok) return 'started';
-    return status === 503 ? 'not-set-up' : 'failed';
+  // Takes several seconds (the function waits for Vercel). While one request
+  // is running, further calls share it rather than starting another build.
+  const rebuildSite = () => {
+    if (rebuildInFlight.current) return rebuildInFlight.current;
+    setRebuilding(true);
+    setRebuildStatus(null);
+    rebuildInFlight.current = (async () => {
+      try {
+        const { ok, status } = await adminFetch('rebuild-site');
+        const result = ok ? 'started' : status === 503 ? 'not-set-up' : 'failed';
+        const at = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+        setRebuildStatus({
+          ok: result === 'started',
+          text: result === 'started'
+            ? `Rebuild started at ${at}. The website updates in about a minute.`
+            : result === 'not-set-up'
+              ? 'The website rebuild is not set up (the Vercel deploy hook is missing).'
+              : 'The website rebuild could not be started. Try again.',
+        });
+        return result;
+      } finally {
+        rebuildInFlight.current = null;
+        setRebuilding(false);
+      }
+    })();
+    return rebuildInFlight.current;
   };
 
   const REBUILD_NOTE = {
@@ -578,7 +627,10 @@ export default function Admin() {
 
       resetEventForm();
       fetchEvents();
-      showToast('Event saved.' + REBUILD_NOTE[await rebuildSite()]);
+      // The save is done; the rebuild carries on by itself (the "Rebuild
+      // website" button shows it) so this form is free again straight away.
+      showToast('Event saved. Starting the website rebuild…');
+      rebuildSite().then((result) => showToast('Event saved.' + REBUILD_NOTE[result], result === 'started' ? 'success' : 'error'));
     } catch (error) {
       console.error('Error saving event:', error);
       showToast('Error saving event: ' + error.message, 'error');
@@ -623,7 +675,8 @@ export default function Admin() {
       try {
         await adminWrite({ action: 'delete', table: 'events', id });
         fetchEvents();
-        showToast('Event deleted.' + REBUILD_NOTE[await rebuildSite()]);
+        showToast('Event deleted. Starting the website rebuild…');
+        rebuildSite().then((result) => showToast('Event deleted.' + REBUILD_NOTE[result], result === 'started' ? 'success' : 'error'));
       } catch (error) {
         console.error('Error deleting event:', error);
         showToast('Error deleting event: ' + error.message, 'error');
@@ -667,7 +720,7 @@ export default function Admin() {
     });
   };
 
-  const handleToggleFollowedUp = async (enquiry) => {
+  const handleToggleFollowedUp = (enquiry) => runBusy(`followup-enquiry-${enquiry.id}`, async () => {
     try {
       const { ok } = await adminFetch('admin-data', {
         action: 'update', table: 'private_enquiries',
@@ -675,12 +728,12 @@ export default function Admin() {
       });
 
       if (!ok) throw new Error('Failed to update enquiry');
-      fetchPrivateEnquiries();
+      await fetchPrivateEnquiries();
     } catch (error) {
       console.error('Error updating enquiry:', error);
-      alert('Error updating enquiry: ' + error.message);
+      showToast('Could not update that enquiry', 'error');
     }
-  };
+  });
 
   // Public pages on the domain — keep in sync with the routes in App.jsx
   const sitePages = [
@@ -1000,14 +1053,20 @@ export default function Admin() {
             <div className="bg-white p-6 rounded-lg border border-[#C9B99A] shadow-sm">
               <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
                 <h2 className="text-xl font-light text-[#1C1410]">All Events</h2>
-                <button
-                  type="button"
-                  onClick={handleRebuildSite}
-                  title="Event pages are rebuilt automatically when you save an event, and every night. Use this if a change hasn't shown up."
-                  className="px-3 py-1 border border-[#785E3D] text-[#785E3D] rounded text-sm hover:bg-[#F4EFE6] transition-colors"
-                >
-                  Rebuild website
-                </button>
+                <div className="flex flex-wrap items-center justify-end gap-3">
+                  <p role="status" className={`text-sm ${rebuildStatus && !rebuildStatus.ok ? 'text-[#B42318]' : 'text-[#5C4A36]'}`}>
+                    {rebuilding ? 'Starting the rebuild. This takes a few seconds…' : rebuildStatus?.text}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={handleRebuildSite}
+                    disabled={rebuilding}
+                    title="Event pages are rebuilt automatically when you save an event, and every night. Use this if a change hasn't shown up."
+                    className="px-3 py-1 border border-[#785E3D] text-[#785E3D] rounded text-sm hover:bg-[#F4EFE6] transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-wait"
+                  >
+                    {rebuilding ? 'Starting…' : 'Rebuild website'}
+                  </button>
+                </div>
               </div>
               {loading ? (
                 <p className="text-[#6B5740]">Loading...</p>
@@ -1184,13 +1243,14 @@ export default function Admin() {
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleToggleFollowedUp(enquiry)}
-                        className={`px-4 py-2 rounded-md text-sm transition-colors ${
+                        disabled={!!busy[`followup-enquiry-${enquiry.id}`]}
+                        className={`px-4 py-2 rounded-md text-sm transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-wait ${
                           enquiry.followed_up
                             ? 'bg-[#EAE0CF] text-[#6B5740] hover:bg-[#C9B99A]'
                             : 'bg-[#785E3D] text-white hover:bg-[#6B5030]'
                         }`}
                       >
-                        {enquiry.followed_up ? 'Mark as not followed up' : 'Mark as followed up'}
+                        {busy[`followup-enquiry-${enquiry.id}`] ? 'Saving…' : enquiry.followed_up ? 'Mark as not followed up' : 'Mark as followed up'}
                       </button>
                       <button
                         onClick={() => handleDeleteEnquiry(enquiry.id)}
@@ -1245,9 +1305,10 @@ export default function Admin() {
                     <div className="flex gap-2">
                       <button
                         onClick={() => handleToggleIntakeFollowedUp(c)}
-                        className={`px-4 py-2 rounded-md text-sm transition-colors ${c.followed_up ? 'bg-[#EAE0CF] text-[#6B5740] hover:bg-[#C9B99A]' : 'bg-[#785E3D] text-white hover:bg-[#6B5030]'}`}
+                        disabled={!!busy[`followup-intake-${c.id}`]}
+                        className={`px-4 py-2 rounded-md text-sm transition-colors cursor-pointer disabled:opacity-60 disabled:cursor-wait ${c.followed_up ? 'bg-[#EAE0CF] text-[#6B5740] hover:bg-[#C9B99A]' : 'bg-[#785E3D] text-white hover:bg-[#6B5030]'}`}
                       >
-                        {c.followed_up ? 'Mark as not followed up' : 'Mark as followed up'}
+                        {busy[`followup-intake-${c.id}`] ? 'Saving…' : c.followed_up ? 'Mark as not followed up' : 'Mark as followed up'}
                       </button>
                       <button
                         onClick={() => handleDeleteIntake(c.id)}
@@ -1311,7 +1372,7 @@ export default function Admin() {
                     disabled={loading}
                     className="bg-[#785E3D] text-white px-6 py-3 rounded-md hover:bg-[#6B5030] transition-colors disabled:opacity-50"
                   >
-                    {vacationForm.id ? 'Update' : 'Add'} Vacation
+                    {busy['save-vacation'] ? 'Saving…' : `${vacationForm.id ? 'Update' : 'Add'} Vacation`}
                   </button>
                   {vacationForm.id && (
                     <button
@@ -1644,18 +1705,29 @@ export default function Admin() {
               <div className="flex gap-3 justify-end">
                 <button
                   onClick={() => setConfirmDialog(null)}
-                  className="px-4 py-2 bg-[#EAE0CF] text-[#1C1410] rounded-md hover:bg-[#C9B99A] transition-colors text-sm"
+                  disabled={confirmBusy}
+                  className="px-4 py-2 bg-[#EAE0CF] text-[#1C1410] rounded-md hover:bg-[#C9B99A] transition-colors text-sm cursor-pointer disabled:opacity-60"
                 >
                   Cancel
                 </button>
                 <button
-                  onClick={() => {
-                    confirmDialog.onConfirm();
-                    setConfirmDialog(null);
+                  onClick={async () => {
+                    // Stays open, disabled, until the delete has finished.
+                    if (confirmInFlight.current) return;
+                    confirmInFlight.current = true;
+                    setConfirmBusy(true);
+                    try {
+                      await confirmDialog.onConfirm();
+                    } finally {
+                      confirmInFlight.current = false;
+                      setConfirmBusy(false);
+                      setConfirmDialog(null);
+                    }
                   }}
-                  className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors text-sm"
+                  disabled={confirmBusy}
+                  className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors text-sm cursor-pointer disabled:opacity-60 disabled:cursor-wait"
                 >
-                  Delete
+                  {confirmBusy ? 'Deleting…' : 'Delete'}
                 </button>
               </div>
             </div>
