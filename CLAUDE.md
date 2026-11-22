@@ -74,6 +74,30 @@ React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all s
 
 ---
 
+## Still open (as of 22 Nov 2026)
+
+1. **Retire the `default` Supabase secret key.** Its value was shown in a Claude session on
+   22 Nov 2026, so it should be replaced. It cannot simply be deleted: every Edge Function
+   receives it as `SUPABASE_SERVICE_ROLE_KEY`, so deleting it would break admin login, the
+   admin tabs, newsletter sign-up, the guide gates and `/onboard`. The plan: Ammar creates a
+   second secret key for the functions; all 13 functions are changed to read that key by name
+   from `SUPABASE_SECRET_KEYS` and redeployed; the logs are checked until nothing presents
+   `default`; only then does Ammar delete it. The enquiry trigger is already off it (it uses
+   the `enquiry_trigger` key, held in the Vault as `notify_enquiry_key`). Do this as its own
+   job, with Ammar testing `/admin` straight after.
+2. **Saturday class venue name and booking link.** `SATURDAY_VENUE_NAME` and
+   `SATURDAY_BOOKING_URL` in `src/data/classes.js` are still `null`, so the page says
+   "Marylebone" and booking is through the WhatsApp group. Waiting for Ammar. The level
+   wording ("some yoga experience") is also unconfirmed.
+3. **A one-to-one teaching photo for `/private-sessions`.** The hero uses the studio photo
+   until Ammar supplies one.
+
+Smaller things also waiting on Ammar: delete `VITE_INTAKE_SECRET` in Vercel (unused); delete
+the long-lived `SUPABASE_ACCESS_TOKEN` from `.env` and supabase.com when Claude's database work
+is finished; a Yorigam logo for the footer; a bookings-opened date for each new event
+(`src/data/bookingsOpened.js`); seven old unused files in the `event-images` bucket were left
+in place on purpose.
+
 ## Site review and staged plan (21 Nov 2026)
 
 `docs/site-review.md` is the current plan: five stages, each with its own prompt.
