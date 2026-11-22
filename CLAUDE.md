@@ -42,6 +42,14 @@ React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all s
 - **Admin writes** to `events`, `vacations` and the `event-images` bucket go through the
   `admin-data` Edge Function (admin login required). The old "anyone can write" policies on
   those were removed on 21 Nov 2026; the public key can only read them.
+- **Event photos (22 Nov 2026)**: the admin event form sends `image_url` only when the photo
+  changes (a new upload, or `null` from the "Remove photo" control). `admin-data` also drops a
+  blank `image_url` on update, so only an explicit `null` takes a photo off. Deleting an event
+  does not delete its file from the `event-images` bucket.
+- **Admin login and guide gates** show their own messages under the form ("Wrong username or
+  password." / "Couldn't reach the server. Try again."); `login()` in `src/lib/adminAuth.js`
+  returns `'ok' | 'refused' | 'error'`. With no `admin_username` row the username is the
+  function's default.
 - Dev: `npm run dev` (no pre-rendering; pages build in the browser).
 
 ---

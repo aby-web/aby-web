@@ -71,7 +71,13 @@ Deno.serve(async (req) => {
       if (!WRITABLE.includes(table)) return json({ error: 'table not allowed' }, 400);
       if (!id || typeof values !== 'object' || values === null) return json({ error: 'bad request' }, 400);
 
-      const { error } = await supabase.from(table).update(clean(table, values)).eq('id', id);
+      const cleaned = clean(table, values) as Record<string, unknown>;
+      // A blank photo link never erases a stored photo. Taking a photo off needs
+      // an explicit null, which only the form's "Remove photo" control sends.
+      if (table === 'events' && cleaned.image_url === '') delete cleaned.image_url;
+      if (Object.keys(cleaned).length === 0) return json({ success: true });
+
+      const { error } = await supabase.from(table).update(cleaned).eq('id', id);
       if (error) throw error;
       return json({ success: true });
     }

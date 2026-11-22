@@ -61,6 +61,8 @@ export default function Admin() {
     status: 'upcoming',
   });
   const [imageFile, setImageFile] = useState(null);
+  // True only after "Remove photo" is pressed while editing; the one way a stored photo is taken off.
+  const [removePhoto, setRemovePhoto] = useState(false);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [uploading, setUploading] = useState(false);
 
@@ -135,8 +137,9 @@ export default function Admin() {
       return;
     }
 
-    if (newPassword && newPassword.length < 6) {
-      alert('Password must be at least 6 characters long');
+    // The server refuses anything shorter than 8.
+    if (newPassword && newPassword.length < 8) {
+      alert('Password must be at least 8 characters long');
       return;
     }
 
@@ -235,6 +238,7 @@ export default function Admin() {
       const previewUrl = URL.createObjectURL(croppedBlob);
       setImageFile(croppedFile);
       setImagePreviewUrl(previewUrl);
+      setRemovePhoto(false);
       setCropModalOpen(false);
       setImageToCrop(null);
     } catch (error) {
@@ -555,38 +559,36 @@ export default function Admin() {
     setUploading(true);
 
     try {
-      let image_url = eventForm.image_url;
+      // Only what the form shows is sent. The photo is sent only when it
+      // changes: a new one was chosen, or "Remove photo" was pressed. An edit
+      // that touches neither leaves the stored photo exactly as it is.
+      const values = {
+        title: eventForm.title,
+        date: eventForm.date,
+        location: eventForm.location,
+        description: eventForm.description,
+        booking_link: eventForm.booking_link,
+        button_label: eventForm.button_label,
+        status: eventForm.status,
+      };
 
-      // Upload image if file selected
       if (imageFile) {
-        image_url = await uploadImage(imageFile);
+        values.image_url = await uploadImage(imageFile);
+      } else if (!eventForm.id) {
+        values.image_url = '';
+      } else if (removePhoto) {
+        values.image_url = null;
       }
-
-      const eventData = { ...eventForm, image_url };
-      delete eventData.id;
 
       if (eventForm.id) {
         // Update existing event
-        await adminWrite({ action: 'update', table: 'events', id: eventForm.id, values: eventData });
+        await adminWrite({ action: 'update', table: 'events', id: eventForm.id, values });
       } else {
         // Insert new event (its page address, the slug, is set by the database)
-        await adminWrite({ action: 'insert', table: 'events', values: eventData });
+        await adminWrite({ action: 'insert', table: 'events', values });
       }
 
-      // Reset form
-      setEventForm({
-        id: null,
-        title: '',
-        date: '',
-        location: '',
-        description: '',
-        image_url: '',
-        booking_link: '',
-        button_label: '',
-        status: 'upcoming',
-      });
-      setImageFile(null);
-      setImagePreviewUrl(null);
+      resetEventForm();
       fetchEvents();
       showToast('Event saved.' + REBUILD_NOTE[await rebuildSite()]);
     } catch (error) {
@@ -597,8 +599,34 @@ export default function Admin() {
     }
   };
 
+  const clearChosenPhoto = () => {
+    setImageFile(null);
+    setImagePreviewUrl(null);
+    const input = document.getElementById('image-upload');
+    if (input) input.value = '';
+  };
+
+  const resetEventForm = () => {
+    setEventForm({
+      id: null,
+      title: '',
+      date: '',
+      location: '',
+      description: '',
+      image_url: '',
+      booking_link: '',
+      button_label: '',
+      status: 'upcoming',
+    });
+    setRemovePhoto(false);
+    clearChosenPhoto();
+  };
+
   const handleEditEvent = (event) => {
     setEventForm(event);
+    // A photo chosen for a different event must not follow into this one.
+    setRemovePhoto(false);
+    clearChosenPhoto();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -861,15 +889,51 @@ export default function Admin() {
                     onChange={handleImageSelect}
                     className="hidden"
                   />
-                  <label
-                    htmlFor="image-upload"
-                    className="inline-block px-6 py-3 bg-[#EAE0CF] text-[#1C1410] text-sm rounded-md hover:bg-[#C9B99A] transition-colors cursor-pointer"
-                  >
-                    Upload Image
-                  </label>
-                  <p className="text-xs text-[#6B5740] mt-2">
-                    {imageFile ? '✓ Image uploaded and cropped' : 'Upload an event image (optional)'}
-                  </p>
+                  {(() => {
+                    const storedPhoto = eventForm.id && eventForm.image_url ? eventForm.image_url : null;
+                    const quiet = 'px-4 py-2 bg-white text-[#1C1410] text-sm rounded-md border border-[#C9B99A] hover:bg-[#F4EFE6] transition-colors cursor-pointer';
+                    return (
+                      <div className="flex flex-wrap items-center gap-4">
+                        {(imagePreviewUrl || (storedPhoto && !removePhoto)) && (
+                          <img
+                            src={imagePreviewUrl || storedPhoto}
+                            alt={imagePreviewUrl ? 'The new photo' : 'The photo this event has now'}
+                            className="h-20 w-32 object-cover rounded-md border border-[#C9B99A]"
+                          />
+                        )}
+                        <div>
+                          <div className="flex flex-wrap gap-3">
+                            <label
+                              htmlFor="image-upload"
+                              className="inline-block px-4 py-2 bg-[#EAE0CF] text-[#1C1410] text-sm rounded-md hover:bg-[#C9B99A] transition-colors cursor-pointer"
+                            >
+                              {storedPhoto || imageFile ? 'Replace photo' : 'Upload photo'}
+                            </label>
+                            {imageFile && (
+                              <button type="button" onClick={clearChosenPhoto} className={quiet}>Discard new photo</button>
+                            )}
+                            {storedPhoto && !imageFile && !removePhoto && (
+                              <button type="button" onClick={() => setRemovePhoto(true)} className={quiet}>Remove photo</button>
+                            )}
+                            {storedPhoto && !imageFile && removePhoto && (
+                              <button type="button" onClick={() => setRemovePhoto(false)} className={quiet}>Keep photo</button>
+                            )}
+                          </div>
+                          <p className="text-xs text-[#6B5740] mt-2">
+                            {imageFile
+                              ? storedPhoto
+                                ? 'New photo chosen. It replaces the current photo when you save.'
+                                : 'Photo chosen. It is added when you save.'
+                              : storedPhoto
+                                ? removePhoto
+                                  ? 'The photo will be removed when you save.'
+                                  : 'Current photo. It stays unless you replace or remove it.'
+                                : 'Upload an event photo (optional)'}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })()}
                 </div>
                 <div className="md:col-span-2 flex gap-4">
                   <button
@@ -882,21 +946,7 @@ export default function Admin() {
                   {eventForm.id && (
                     <button
                       type="button"
-                      onClick={() => {
-                        setEventForm({
-                          id: null,
-                          title: '',
-                          date: '',
-                          location: '',
-                          description: '',
-                          image_url: '',
-                          booking_link: '',
-                          button_label: '',
-                          status: 'upcoming',
-                        });
-                        setImageFile(null);
-                        setImagePreviewUrl(null);
-                      }}
+                      onClick={resetEventForm}
                       className="bg-[#EAE0CF] text-[#1C1410] px-6 py-2 rounded-md hover:bg-[#C9B99A] transition-colors"
                     >
                       Cancel Edit
@@ -907,16 +957,18 @@ export default function Admin() {
             </div>
 
             {/* Preview Section */}
-            {(eventForm.title || eventForm.date || eventForm.location || imagePreviewUrl) && (
+            {(eventForm.title || eventForm.date || eventForm.location || imagePreviewUrl) && (() => {
+              const previewPhoto = imagePreviewUrl || (eventForm.id && !removePhoto ? eventForm.image_url : null);
+              return (
               <div className="bg-white p-6 rounded-lg mb-8 border border-[#C9B99A] shadow-sm">
                 <h2 className="text-xl font-light mb-4 text-[#1C1410]">Preview</h2>
                 <p className="text-xs text-[#6B5740] mb-4">This is how your event will appear on the Events page</p>
                 <div className="max-w-sm">
                   <div className="bg-[#F4EFE6] border border-[#C9B99A] rounded-md overflow-hidden">
                     {/* Image or Placeholder */}
-                    {imagePreviewUrl ? (
+                    {previewPhoto ? (
                       <img
-                        src={imagePreviewUrl}
+                        src={previewPhoto}
                         alt="Event preview"
                         className="h-56 w-full object-cover"
                       />
@@ -953,7 +1005,8 @@ export default function Admin() {
                   </div>
                 </div>
               </div>
-            )}
+              );
+            })()}
 
             {/* Events List */}
             <div className="bg-white p-6 rounded-lg border border-[#C9B99A] shadow-sm">
