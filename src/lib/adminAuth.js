@@ -39,7 +39,9 @@ export function clearSession() {
 }
 
 /**
- * @returns {Promise<boolean>} true when the credentials were accepted.
+ * @returns {Promise<'ok'|'refused'|'error'>} 'refused' when the username or
+ * password did not match; 'error' when the server could not be reached or
+ * failed. The check itself is done by the admin-login function.
  */
 export async function login(username, password) {
   try {
@@ -49,17 +51,18 @@ export async function login(username, password) {
       body: JSON.stringify({ username, password }),
     });
 
-    if (!res.ok) return false;
+    if (res.status === 401) return 'refused';
+    if (!res.ok) return 'error';
 
     const data = await res.json();
-    if (!data.valid || !data.token) return false;
+    if (!data.valid || !data.token) return 'refused';
 
     localStorage.setItem(TOKEN_KEY, data.token);
     localStorage.setItem(EXPIRY_KEY, String(Date.now() + data.expiresIn * 1000));
-    return true;
+    return 'ok';
   } catch (error) {
     console.error('Admin login error:', error);
-    return false;
+    return 'error';
   }
 }
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 const accent = 'oklch(56% 0.1 38)';
 
@@ -12,17 +12,21 @@ export default function PasswordGate({
   titleEm = 'Guide',
 }) {
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null); // null | 'wrong' | 'server'
   const [checking, setChecking] = useState(false);
+  const inFlight = useRef(false); // set at once, so a second submit in the same instant is ignored
 
   // The password is verified by an Edge Function rather than fetched and
   // compared here, so it is never exposed to the browser.
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (checking) return;
+    if (inFlight.current) return;
+    inFlight.current = true;
 
     setChecking(true);
+    setError(null);
     let valid = false;
+    let reached = false;
 
     try {
       const res = await fetch(`${SUPABASE_URL}/functions/v1/check-guide-password`, {
@@ -34,20 +38,28 @@ export default function PasswordGate({
         },
         body: JSON.stringify({ slug: guideSlug, password }),
       });
-      valid = res.ok && (await res.json()).valid === true;
+      // The function answers 200 with { valid } for a right or wrong password;
+      // anything else means it failed.
+      if (res.ok) {
+        valid = (await res.json()).valid === true;
+        reached = true;
+      }
     } catch (err) {
       console.error('Error verifying guide password:', err);
     }
 
+    inFlight.current = false;
     setChecking(false);
 
     if (valid) {
       sessionStorage.setItem('guide_access', 'granted');
       onSuccess();
-    } else {
-      setError(true);
+    } else if (reached) {
+      // Stays under the form until the next attempt.
+      setError('wrong');
       setPassword('');
-      setTimeout(() => setError(false), 3000);
+    } else {
+      setError('server');
     }
   };
 
@@ -118,6 +130,8 @@ export default function PasswordGate({
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter password"
+            aria-label="Guide password"
+            autoComplete="current-password"
             autoFocus
             style={{
               width: '100%',
@@ -139,22 +153,10 @@ export default function PasswordGate({
             }}
           />
 
-          {error && (
-            <p
-              style={{
-                fontFamily: 'DM Sans, sans-serif',
-                fontSize: 13,
-                color: 'oklch(55% 0.15 25)',
-                margin: '0 0 16px',
-              }}
-            >
-              Incorrect password. Please try again.
-            </p>
-          )}
-
           <button
             type="submit"
             disabled={checking}
+            className="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1C1410]"
             style={{
               width: '100%',
               padding: '14px 20px',
@@ -165,7 +167,7 @@ export default function PasswordGate({
               fontFamily: 'DM Sans, sans-serif',
               fontSize: 14,
               fontWeight: 500,
-              cursor: checking ? 'default' : 'pointer',
+              cursor: checking ? 'wait' : 'pointer',
               letterSpacing: '0.02em',
               transition: 'all 0.2s',
               opacity: checking ? 0.6 : 1,
@@ -174,11 +176,25 @@ export default function PasswordGate({
               if (!checking) e.target.style.background = 'oklch(50% 0.1 38)';
             }}
             onMouseLeave={(e) => {
-              if (!checking) e.target.style.background = accent;
+              e.target.style.background = accent;
             }}
           >
-            {checking ? 'Checking...' : 'Access Guide'}
+            {checking ? 'Checking…' : 'Access Guide'}
           </button>
+
+          {error && (
+            <p
+              role="alert"
+              style={{
+                fontFamily: 'DM Sans, sans-serif',
+                fontSize: 13,
+                color: 'oklch(55% 0.15 25)',
+                margin: '16px 0 0',
+              }}
+            >
+              {error === 'wrong' ? 'Wrong password.' : "Couldn't reach the server. Try again."}
+            </p>
+          )}
         </form>
 
         <p

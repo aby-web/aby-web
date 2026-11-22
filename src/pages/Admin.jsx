@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Cropper from 'react-easy-crop';
 import { supabase } from '../lib/supabase';
 import { adminFetch, clearSession, isLoggedIn, login } from '../lib/adminAuth';
@@ -7,6 +7,9 @@ export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => isLoggedIn());
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loggingIn, setLoggingIn] = useState(false);
+  const loginInFlight = useRef(false); // set at once, so a second submit in the same instant is ignored
+  const [loginError, setLoginError] = useState(null); // null | 'refused' | 'error'
   const [activeTab, setActiveTab] = useState('events');
   const [events, setEvents] = useState([]);
   const [subscribers, setSubscribers] = useState([]);
@@ -100,9 +103,16 @@ export default function Admin() {
 
     // Verified server-side against a bcrypt hash; on success we hold only a
     // signed, expiring session token.
-    const ok = await login(username, password);
+    // One attempt at a time: the button is disabled while this runs.
+    if (loginInFlight.current) return;
+    loginInFlight.current = true;
+    setLoggingIn(true);
+    setLoginError(null);
+    const result = await login(username, password);
+    loginInFlight.current = false;
+    setLoggingIn(false);
 
-    if (ok) {
+    if (result === 'ok') {
       setIsAuthenticated(true);
       setPassword('');
       fetchEvents();
@@ -112,7 +122,8 @@ export default function Admin() {
       fetchVacations();
       fetchGuides();
     } else {
-      showToast('Incorrect username or password', 'error');
+      // Shown under the form (the toast only exists once logged in).
+      setLoginError(result);
     }
   };
 
@@ -677,30 +688,41 @@ export default function Admin() {
       <div className="min-h-screen bg-[#F4EFE6] flex items-center justify-center px-4">
         <form onSubmit={handleLogin} className="bg-white p-8 rounded-lg max-w-md w-full border border-[#C9B99A] shadow-sm">
           <h1 className="text-2xl font-light text-[#1C1410] mb-6">Admin Login</h1>
+          <label htmlFor="admin-username" className="block text-sm text-[#5C4A36] mb-1.5">Username</label>
           <input
+            id="admin-username"
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            placeholder="Username"
-            className="w-full px-4 py-3 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A] mb-4"
+            className="w-full px-4 py-3 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] focus:ring-2 focus:ring-[#785E3D]/30 mb-4"
             required
             autoComplete="username"
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
           />
+          <label htmlFor="admin-password" className="block text-sm text-[#5C4A36] mb-1.5">Password</label>
           <input
+            id="admin-password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            className="w-full px-4 py-3 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A] mb-4"
+            className="w-full px-4 py-3 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] focus:ring-2 focus:ring-[#785E3D]/30 mb-5"
             required
             autoComplete="current-password"
           />
           <button
             type="submit"
-            className="w-full bg-[#785E3D] text-white py-3 rounded-md hover:bg-[#6B5030] transition-colors"
+            disabled={loggingIn}
+            className="w-full bg-[#785E3D] text-white py-3 rounded-md cursor-pointer transition-colors hover:bg-[#5C4A36] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1C1410] disabled:opacity-60 disabled:cursor-wait disabled:hover:bg-[#785E3D]"
           >
-            Login
+            {loggingIn ? 'Logging in…' : 'Login'}
           </button>
+          {/* Never says which of the two was wrong. */}
+          <p role="alert" aria-live="assertive" className={`text-sm text-[#B42318] ${loginError ? 'mt-4' : ''}`}>
+            {loginError === 'refused' && 'Wrong username or password.'}
+            {loginError === 'error' && "Couldn't reach the server. Try again."}
+          </p>
         </form>
       </div>
     );
