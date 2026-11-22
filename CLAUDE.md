@@ -61,8 +61,9 @@ React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all s
   WhatsApp buttons take a `position` prop; give every new one a position.
 - **Bookings-opened dates** (`offers.validFrom` in Event data) are in
   `src/data/bookingsOpened.js`, given by Ammar; an event without an entry has no `validFrom`.
-- **Private pages send no Google page view** (the `privatePaths` list in `index.html`; `/admin`
-  sends nothing at all). The build fails if a `prerender: false` page is missing from that list.
+- **Private pages send nothing to Google**: Analytics is not started on them (the
+  `privatePaths` list in `index.html`). The one exception is a saved `/onboard` form, which
+  starts it without a page view to send `new_client_form_submit`. The build fails if a `prerender: false` page is missing from that list.
 - **Keys (22 Nov 2026)**: no database function holds a key in its body. The enquiry trigger
   reads the Vault secret `notify_enquiry_key`; the nightly rebuild reads `rebuild_cron_secret`.
   The `ADMIN_PASSWORD` fallback is gone from `.env` and the function secrets (admin-login still

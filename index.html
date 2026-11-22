@@ -7,14 +7,19 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      // Private pages are not counted. /admin sends nothing at all; the others
-      // send no page view (the /onboard form still reports a saved form).
+      // Private pages are not counted: Analytics is not started on them, so
+      // they send nothing (no page view, no scroll or click events). The one
+      // exception is in src/lib/analytics.js: a saved /onboard form starts it,
+      // without a page view, to report that one event.
       // The build checks this list against src/data/pages.js.
       var privatePaths = ['/admin', '/onboard', '/cv', '/story', '/handstandguide', '/pinchaguide'];
       var here = location.pathname.replace(/\/+$/, '') || '/';
-      if (here !== '/admin') {
-        gtag('config', 'G-ZK90BWM6NN', privatePaths.indexOf(here) === -1 ? {} : { send_page_view: false });
-      }
+      window.gaStart = function (options) {
+        if (window.gaStarted) return;
+        window.gaStarted = true;
+        gtag('config', 'G-ZK90BWM6NN', options || {});
+      };
+      if (privatePaths.indexOf(here) === -1) window.gaStart();
     </script>
 
     <meta charset="UTF-8" />

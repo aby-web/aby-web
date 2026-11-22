@@ -4,6 +4,9 @@
 // and where on the page the control sits. Nothing about the visitor is sent.
 // Nothing is sent from /admin.
 //
+// Analytics is not started on private pages (see index.html). If an event
+// is sent from one (the /onboard form), it is started then, without a page view.
+//
 // Events (keep the names stable; Analytics reports are keyed on them):
 //   book_call_click         any "book a free call" button
 //   whatsapp_enquiry_click  "Message me on WhatsApp" for private sessions
@@ -16,6 +19,7 @@ export function track(eventName, position) {
   const path = window.location.pathname;
   if (path.startsWith('/admin')) return;
   try {
+    if (!window.gaStarted) window.gaStart?.({ send_page_view: false });
     window.gtag('event', eventName, { page_path: path, button_position: position });
   } catch {
     // Analytics must never break a button.
