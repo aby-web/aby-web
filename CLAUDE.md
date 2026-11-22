@@ -59,6 +59,16 @@ React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all s
   `new_client_form_submit` through gtag with two parameters only (`page_path`,
   `button_position`); never from `/admin`, never personal data. `BookCallButton` and the
   WhatsApp buttons take a `position` prop; give every new one a position.
+- **Bookings-opened dates** (`offers.validFrom` in Event data) are in
+  `src/data/bookingsOpened.js`, given by Ammar; an event without an entry has no `validFrom`.
+- **Private pages send no Google page view** (the `privatePaths` list in `index.html`; `/admin`
+  sends nothing at all). The build fails if a `prerender: false` page is missing from that list.
+- **Keys (22 Nov 2026)**: no database function holds a key in its body. The enquiry trigger
+  reads the Vault secret `notify_enquiry_key`; the nightly rebuild reads `rebuild_cron_secret`.
+  The `ADMIN_PASSWORD` fallback is gone from `.env` and the function secrets (admin-login still
+  reads the variable, which is now unset; the stored hash is the only password).
+  The project's `default` secret key is ALSO what every Edge Function receives as
+  `SUPABASE_SERVICE_ROLE_KEY`: deleting it would break all of them. Rotating it needs a plan.
 - Dev: `npm run dev` (no pre-rendering; pages build in the browser).
 
 ---

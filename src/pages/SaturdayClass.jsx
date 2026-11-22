@@ -18,6 +18,7 @@ import {
   longDate,
 } from '../data/classes';
 import useToday from '../lib/useToday';
+import { SATURDAY_BOOKINGS_OPENED } from '../data/bookingsOpened';
 
 /*
  * /saturday-class — Ammar's own Saturday class in Marylebone.
@@ -100,7 +101,8 @@ export default function SaturdayClass() {
               "price": String(SATURDAY_PRICE),
               "priceCurrency": "GBP",
               "url": SATURDAY_BOOKING_URL || PAGE_URL,
-              "availability": "https://schema.org/InStock"
+              "availability": "https://schema.org/InStock",
+              "validFrom": SATURDAY_BOOKINGS_OPENED
             }
           })}
         </script>

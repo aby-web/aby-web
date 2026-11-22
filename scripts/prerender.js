@@ -78,6 +78,13 @@ const fail = (msg) => {
 const template = readFileSync(join(DIST, 'index.html'), 'utf8');
 if (!template.includes('<div id="root"></div>')) fail('dist/index.html has no empty <div id="root">');
 
+// Private pages must be in the analytics snippet's "don't count" list (index.html).
+for (const p of pages.filter((page) => !page.prerender)) {
+  if (!template.includes(`'${p.path}'`) || !template.includes('var privatePaths')) {
+    fail(`${p.path} is private but is not in the privatePaths list in index.html, so Google Analytics would count it`);
+  }
+}
+
 // Template with its default <title> and description removed; each
 // pre-rendered page brings its own.
 const bare = template

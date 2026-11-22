@@ -3,6 +3,7 @@ import PageMeta from '../components/PageMeta';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import { personRef } from '../data/schema';
+import { NORFOLK_BOOKINGS_OPENED } from '../data/bookingsOpened';
 
 // Spring Yoga Immersion 2027, from the pre-launch brochure (Google Drive:
 // Yoga/Retreats/Norfolk 2027). ina-ammar.webp is from the original photo; the rest are cropped from the brochure pages,
@@ -119,6 +120,7 @@ export default function NorfolkRetreat() {
               "highPrice": "1195",
               "priceCurrency": "GBP",
               "availability": "https://schema.org/LimitedAvailability",
+              "validFrom": NORFOLK_BOOKINGS_OPENED,
               "url": "https://ammarbass.com/norfolk-retreat"
             }
           })}

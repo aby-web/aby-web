@@ -11,6 +11,7 @@ import { SITE } from '../data/pages';
 import { personRef } from '../data/schema';
 import { eventPath, useEvents } from '../lib/events';
 import useToday from '../lib/useToday';
+import { EVENT_BOOKINGS_OPENED } from '../data/bookingsOpened';
 
 // One event, at /events/<slug>.
 //
@@ -94,7 +95,15 @@ export default function EventPage() {
             "organizer": personRef,
             "performer": { "@type": "Person", "name": "Ammar Bass" },
             ...(event.booking_link && !isPast
-              ? { "offers": { "@type": "Offer", "url": event.booking_link, "availability": "https://schema.org/InStock" } }
+              ? {
+                  "offers": {
+                    "@type": "Offer",
+                    "url": event.booking_link,
+                    "availability": "https://schema.org/InStock",
+                    // Only where Ammar has given the day bookings opened.
+                    ...(EVENT_BOOKINGS_OPENED[event.slug] ? { "validFrom": EVENT_BOOKINGS_OPENED[event.slug] } : {})
+                  }
+                }
               : {})
           })}
         </script>

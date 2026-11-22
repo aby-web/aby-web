@@ -7,7 +7,14 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-ZK90BWM6NN');
+      // Private pages are not counted. /admin sends nothing at all; the others
+      // send no page view (the /onboard form still reports a saved form).
+      // The build checks this list against src/data/pages.js.
+      var privatePaths = ['/admin', '/onboard', '/cv', '/story', '/handstandguide', '/pinchaguide'];
+      var here = location.pathname.replace(/\/+$/, '') || '/';
+      if (here !== '/admin') {
+        gtag('config', 'G-ZK90BWM6NN', privatePaths.indexOf(here) === -1 ? {} : { send_page_view: false });
+      }
     </script>
 
     <meta charset="UTF-8" />
