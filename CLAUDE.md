@@ -80,8 +80,8 @@ React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all s
    22 Nov 2026, so it should be replaced. It cannot simply be deleted: every Edge Function
    receives it as `SUPABASE_SERVICE_ROLE_KEY`, so deleting it would break admin login, the
    admin tabs, newsletter sign-up, the guide gates and `/onboard`. The plan: Ammar creates a
-   second secret key for the functions; every function that uses the key (10 of the 12
-   deployed) is changed to read that key by name
+   second secret key for the functions; every function that uses the key (7 of the 12
+   deployed; search for `SUPABASE_SERVICE_ROLE_KEY`) is changed to read that key by name
    from `SUPABASE_SECRET_KEYS` and redeployed; the logs are checked until nothing presents
    `default`; only then does Ammar delete it. The enquiry trigger is already off it (it uses
    the `enquiry_trigger` key, held in the Vault as `notify_enquiry_key`). Do this as its own
