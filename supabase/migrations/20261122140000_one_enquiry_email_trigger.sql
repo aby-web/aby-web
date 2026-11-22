@@ -1,5 +1,6 @@
--- NOT APPLIED. Written 22 Nov 2026 for Ammar to review.
--- Do not move into supabase/migrations until it has been run.
+-- APPLIED 22 Nov 2026, after Ammar tested the enquiry form and said to apply it.
+-- After: one trigger (on_private_enquiry_insert) on private_enquiries; the
+-- function notify_private_enquiry() no longer exists.
 --
 -- WHAT THIS FIXES
 -- The private_enquiries table has two triggers that both call the

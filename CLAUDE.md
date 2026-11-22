@@ -60,11 +60,14 @@ Polish round, 22 Nov 2026: on phones the homepage hero keeps its headline, parag
 button on the first screen (the photo takes the height that is left); the homepage shows the
 next three days of classes (`nextClassDays` in `classes.js`), not the whole week; each photo is
 used once per page; the standalone newsletter block was removed from the homepage because the
-footer has the sign-up field; sections are `py-12 md:py-18`. Lengths at 390px: home about
-6,300px, About under 4,500px. Wording: 120 Power and the like are "events", never "workshops"
+footer has the sign-up field; the free video block was removed from the homepage too (the footer
+links to `/practice`); sections are `py-12 md:py-18`. Lengths at 390px: home about 5,700px
+(Ammar: stop trimming there), About about 4,600px. On phones the About portrait sits above the
+heading at 120px, so the heading runs the full width. Wording: 120 Power and the like are "events", never "workshops"
 (the Norfolk retreat's own afternoon workshops are the exception).
 Database, 22 Nov 2026: the "any signed-in user" policies and the old interest table are gone
-(migrations `20261122092000` and `20261122092500`). `supabase/pending/` holds changes that are
+(migrations `20261122092000` and `20261122092500`); the duplicate enquiry-email trigger was
+removed (`20261122140000`), leaving `on_private_enquiry_insert`. `supabase/pending/` holds changes that are
 written and dry-run but NOT applied; never apply one without Ammar saying so.
 Stage 2 superseded the paused Phase 1 plan further down, which is kept only for history.
 

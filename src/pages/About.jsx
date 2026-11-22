@@ -47,25 +47,23 @@ export default function About() {
       <VacationBanner />
 
       <main>
-        {/* Portrait and opening. Phones: the portrait sits beside the heading
-            and the opening runs underneath; tablet and up: portrait left, text right. */}
+        {/* Portrait and opening. Phones: a small portrait above the heading, so the
+            heading runs the full width; tablet and up: portrait left, text right. */}
         <section className="pt-24 md:pt-32 pb-12 md:pb-16 px-8 md:px-12">
-          <div className="max-w-6xl mx-auto grid grid-cols-[8.5rem_minmax(0,1fr)] md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-x-5 gap-y-6 md:gap-16 items-center">
+          <div className="max-w-6xl mx-auto grid md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] gap-5 md:gap-16 items-center">
             <img
               src="/images/about.webp"
               alt="Portrait of Ammar Bass, yoga teacher in London, smiling in a white T-shirt"
               width="1200"
               height="1200"
-              className="w-full md:max-w-md aspect-square object-cover rounded-lg"
+              className="w-[120px] md:w-full md:max-w-md aspect-square object-cover rounded-lg"
             />
-            <div className="contents md:block">
-              <div>
-                <p className={`${TEXT.eyebrow} mb-2 md:mb-5`}>About</p>
-                <h1 className="text-[26px] md:text-5xl font-light leading-tight text-[#1C1410] md:mb-6">
-                  I'm Ammar. I teach strong, precise yoga in London.
-                </h1>
-              </div>
-              <p className={`${TEXT.body} col-span-2 md:col-span-1`}>
+            <div>
+              <p className={`${TEXT.eyebrow} mb-2 md:mb-5`}>About</p>
+              <h1 className="text-[32px] md:text-5xl font-light leading-tight text-[#1C1410] mb-5 md:mb-6">
+                I'm Ammar. I teach strong, precise yoga in London.
+              </h1>
+              <p className={TEXT.body}>
                 I came to yoga as a competitive swimmer and powerlifter, so I teach the way an athlete trains: specific skills, clear progressions, steady effort. Two ten-day Vipassana courses changed what I think the effort is for. The work is physical; the point is a calm, attentive mind.
               </p>
             </div>

@@ -3,7 +3,6 @@ import PageMeta from '../components/PageMeta';
 import Nav from '../components/Nav';
 import VacationBanner from '../components/VacationBanner';
 import Hero from '../components/Hero';
-import PracticeVideos from '../components/PracticeVideos';
 import About from '../components/About';
 import Footer from '../components/Footer';
 import Testimonials from '../components/Testimonials';
@@ -181,7 +180,6 @@ export default function Home() {
         <About />
         <NextClassesSection />
         <NextEvents />
-        <PracticeVideos />
       </main>
       <Footer />
     </div>
