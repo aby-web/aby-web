@@ -74,7 +74,7 @@ export default function Events() {
     <div className="min-h-screen bg-[#F4EFE6]">
       <PageMeta path="/events" />
       <Helmet>
-        <meta name="keywords" content="yoga workshops London, yoga retreats UK, arm balance workshop, inversion workshop, yoga events London, vinyasa intensive, yoga teacher workshop" />
+        <meta name="keywords" content="yoga events London, yoga retreats UK, 120 Power, arm balances, inversions, vinyasa intensive, yoga retreat Norfolk" />
 
         {eventsSchema && (
           <script type="application/ld+json">
@@ -93,7 +93,7 @@ export default function Events() {
             Events
           </h1>
           <p className={`${TEXT.body} max-w-2xl`}>
-            Workshops, retreats, and specialty sessions to develop specific skills and deepen your practice.
+            Events and retreats to develop specific skills and deepen your practice.
           </p>
         </div>
       </section>
@@ -106,7 +106,7 @@ export default function Events() {
         <>
           {/* Upcoming Events */}
           {upcomingEvents.length > 0 && (
-            <section className="py-18 px-8 md:px-12 bg-[#EAE0CF]">
+            <section className="py-12 md:py-18 px-8 md:px-12 bg-[#EAE0CF]">
               <div className="max-w-6xl mx-auto">
                 <h2 className="text-3xl font-light text-[#1C1410] mb-8">
                   Upcoming Events
@@ -122,7 +122,7 @@ export default function Events() {
 
           {/* Past Events */}
           {pastEvents.length > 0 && (
-            <section className="py-18 px-8 md:px-12 bg-[#F4EFE6]">
+            <section className="py-12 md:py-18 px-8 md:px-12 bg-[#F4EFE6]">
               <div className="max-w-6xl mx-auto">
                 <h2 className="text-3xl font-light text-[#1C1410] mb-8">
                   Past Events
@@ -144,7 +144,7 @@ export default function Events() {
         </>
       )}
 
-      <section className="bg-[#1C1410] px-8 md:px-12 py-18">
+      <section className="bg-[#1C1410] px-8 md:px-12 py-12 md:py-18">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-light text-[#F4EFE6] mb-4">Hear about new dates first</h2>
           <p className={`${TEXT.bodyOnDark} mb-8`}>

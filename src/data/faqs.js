@@ -50,19 +50,19 @@ export const classFaqs = [
     ],
   },
   {
-    category: 'Workshops & Events',
+    category: 'Events & retreats',
     questions: [
       {
-        q: 'How are workshops different from regular classes?',
-        a: "Workshops are 2-3 hours focused on one specific skill (like arm balances or inversions). You get detailed breakdowns, individual feedback, and time to practise progressions you wouldn't cover in a regular class.",
+        q: 'How are events different from regular classes?',
+        a: 'Events are longer than a regular class, so there is time to go further. 120 Power is a strong two-hour practice taught by two teachers, with arm balances, inversions and deep binds. Retreats run over several days, with practice every day.',
       },
       {
-        q: 'What level do I need to be for workshops?',
-        a: "It depends on the workshop. Some are open to all levels with experience modifications. Others specify prerequisites (e.g., 'must be able to hold crow pose for 10 seconds'). Check the event description.",
+        q: 'What level do I need to be for an event?',
+        a: "It depends on the event, so check its page. 120 Power, for example, is for people with an established practice. If you're not sure whether an event is right for you, get in touch before you book.",
       },
       {
-        q: 'How do I stay updated on upcoming workshops?',
-        a: 'Join the mailing list at the bottom of the homepage. I send updates about new workshops, retreats, and special events about once a month.',
+        q: 'How do I hear about new events and retreats?',
+        a: 'Join the mailing list, using the sign-up field at the bottom of any page. I send one email a month with new events, retreats and classes. Everything coming up is also on the events page.',
       },
     ],
   },

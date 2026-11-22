@@ -23,9 +23,8 @@ React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all s
   `/bootcamp` and `/join` are live but noindex; Stage 3 turns `/bootcamp` into a past-event page.
 - **The app is called Yorigam (yorigam.com). Its old name must not appear in anything visible or
   crawlable.** The old product page was deleted; the one place the old spelling is allowed is the
-  permanent redirect in `vercel.json`. The only other trace is the empty sign-up table in the
-  database, whose removal is written in `supabase/pending/drop_old_interest_table.sql` (not
-  applied). The build fails if the old name appears in any generated page.
+  permanent redirect in `vercel.json`. The old sign-up table was dropped from the database on
+  22 Nov 2026. The build fails if the old name appears in any generated page.
 - Pre-rendered pages are **hydrated**, so the first browser render must match the built HTML.
   Anything that depends on today's date goes through `src/lib/useToday.js`; format dates with
   the helpers in `src/data/classes.js`, never `toLocaleDateString`. Don't read `window`,
@@ -57,6 +56,16 @@ Ammar. Design rules now in force: body text 16–17px at normal weight in `#5C4A
 under 12px; no centred paragraph longer than two lines; contrast at least 4.5:1; each page ends
 with a dark (`#1C1410`) call-to-action section; buttons only from `ui.js`.
 `docs/overnight-report.md` records what was decided that night and what is still missing.
+Polish round, 22 Nov 2026: on phones the homepage hero keeps its headline, paragraph and first
+button on the first screen (the photo takes the height that is left); the homepage shows the
+next three days of classes (`nextClassDays` in `classes.js`), not the whole week; each photo is
+used once per page; the standalone newsletter block was removed from the homepage because the
+footer has the sign-up field; sections are `py-12 md:py-18`. Lengths at 390px: home about
+6,300px, About under 4,500px. Wording: 120 Power and the like are "events", never "workshops"
+(the Norfolk retreat's own afternoon workshops are the exception).
+Database, 22 Nov 2026: the "any signed-in user" policies and the old interest table are gone
+(migrations `20261122092000` and `20261122092500`). `supabase/pending/` holds changes that are
+written and dry-run but NOT applied; never apply one without Ammar saying so.
 Stage 2 superseded the paused Phase 1 plan further down, which is kept only for history.
 
 Where things live after Stage 3:

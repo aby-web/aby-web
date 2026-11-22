@@ -5,7 +5,6 @@ import { BTN, TEXT } from './ui';
 // The homepage's one free video, with a link to the videos page.
 const VIDEO = {
   title: 'Dynamic Vinyasa Flow',
-  description: 'A powerful practice focusing on strength, alignment and breath. Build heat and challenge yourself through dynamic sequences.',
   duration: '75 min',
   level: 'All Levels',
   thumbnail: '/images/video1_thumb.webp',
@@ -17,15 +16,14 @@ export default function PracticeVideos() {
   const [playing, setPlaying] = useState(false);
 
   return (
-    <section id="practice" className="bg-[#EAE0CF] px-8 md:px-12 py-18">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+    <section id="practice" className="bg-[#EAE0CF] px-8 md:px-12 py-12 md:py-18">
+      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 md:gap-16 items-center">
         <div>
           <p className={`${TEXT.eyebrow} mb-4`}>Free video</p>
-          <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-6">Practise with me at home</h2>
-          <p className={`${TEXT.body} mb-3`}>
+          <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-5 md:mb-6">Practise with me at home</h2>
+          <p className={`${TEXT.body} mb-7 md:mb-8`}>
             A free full-length class to follow along with: {VIDEO.title}, {VIDEO.duration}, {VIDEO.level.toLowerCase()}.
           </p>
-          <p className={`${TEXT.body} mb-8`}>{VIDEO.description}</p>
           <Link to="/practice" className={BTN.secondary}>Watch the class</Link>
         </div>
 

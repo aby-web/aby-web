@@ -189,7 +189,7 @@ export default function PinchaGuide() {
         <EmailGate
         onContinue={() => setEmailCaptured(true)}
         source="pincha_guide"
-        blurb="Get notified when new guides are released, plus exclusive inversion tips and early access to workshops."
+        blurb="Get notified when new guides are released, plus exclusive inversion tips and early access to events."
       />
       </>
     );

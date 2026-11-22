@@ -171,5 +171,24 @@ export function weekByDay(today = londonToday()) {
   })).filter((d) => d.classes.length > 0);
 }
 
+// The next `count` days that have a class, starting today, for the homepage:
+// [{ date, label, classes }] with label "Mon 23 Nov" (always the date, never
+// "Today": the built page can be a day old before the browser refreshes it).
+// A class is listed on a date only if it is running by then.
+export function nextClassDays(today = londonToday(), count = 3) {
+  const days = [];
+  for (let i = 0; i < 21 && days.length < count; i++) {
+    const d = new Date(today + 'T12:00:00Z');
+    d.setUTCDate(d.getUTCDate() + i);
+    const date = d.toISOString().slice(0, 10);
+    const weekday = WEEK[(d.getUTCDay() + 6) % 7];
+    const classes = (weekByDay(date).find((w) => w.day === weekday)?.classes ?? []).filter(
+      (c) => !c.from || date >= c.from
+    );
+    if (classes.length > 0) days.push({ date, label: shortDate(date), classes });
+  }
+  return days;
+}
+
 // The studios, each with its one booking link.
 export const studios = (today = londonToday()) => currentSchedule(today).filter((b) => !b.own);

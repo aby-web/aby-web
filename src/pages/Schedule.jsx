@@ -35,14 +35,14 @@ export default function Schedule() {
           </div>
         </section>
 
-        <section className="bg-[#EAE0CF] px-8 md:px-12 py-18">
+        <section className="bg-[#EAE0CF] px-8 md:px-12 py-12 md:py-18">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-8">The week, day by day</h2>
             <WeekByDay />
           </div>
         </section>
 
-        <section className="px-8 md:px-12 py-18">
+        <section className="px-8 md:px-12 py-12 md:py-18">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-3">Book a studio class</h2>
             <p className={`${TEXT.body} mb-8`}>Each studio takes its own bookings. One link for each:</p>
@@ -50,7 +50,7 @@ export default function Schedule() {
           </div>
         </section>
 
-        <section className="bg-[#1C1410] px-8 md:px-12 py-18">
+        <section className="bg-[#1C1410] px-8 md:px-12 py-12 md:py-18">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-light text-[#F4EFE6] mb-4">New to yoga, or want one-to-one?</h2>
             <p className={`${TEXT.bodyOnDark} mb-8 max-w-2xl`}>

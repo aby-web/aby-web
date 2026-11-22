@@ -44,7 +44,7 @@ const PRIVATE = { prerender: false, index: false, sitemap: false };
 export const pages = [
   {
     path: '/',
-    updated: '2026-11-21',
+    updated: '2026-11-22',
     title: 'Ammar Bass | Yoga Teacher London | Vinyasa, Handstands & Arm Balances',
     description:
       'London yoga teacher specialising in strong vinyasa, handstands and arm balances. Classes at HOME Wellness, BXR, Yogarise, Flo and my own Saturday class in Marylebone. Events and retreats.',
@@ -54,7 +54,7 @@ export const pages = [
   },
   {
     path: '/about',
-    updated: '2026-11-21',
+    updated: '2026-11-22',
     title: 'About Ammar Bass | London Yoga Teacher | Strength & Alignment Focus',
     description:
       'Vipassana meditation practitioner with a competitive swimming and powerlifting background. Teaching alignment-focused vinyasa across London, specialising in arm balances, inversions and biomechanics.',
@@ -94,10 +94,10 @@ export const pages = [
   },
   {
     path: '/events',
-    updated: '2026-11-21',
-    title: 'Yoga Workshops & Retreats London | Ammar Bass Events',
+    updated: '2026-11-22',
+    title: 'Yoga Events & Retreats in London | Ammar Bass',
     description:
-      'Yoga workshops, arm balance intensives and retreats in London. Deepen your practice with events focused on alignment, inversions and strength.',
+      'Yoga events and retreats with Ammar Bass: 120 Power, a strong two-hour practice in London, and retreats away. Dates, places and booking.',
     image: OG_HOME,
     imageAlt: OG_HOME_ALT,
     ...PUBLIC,
@@ -114,10 +114,10 @@ export const pages = [
   },
   {
     path: '/faq',
-    updated: '2026-11-21',
+    updated: '2026-11-22',
     title: 'FAQ | Ammar Bass Yoga | Common Questions Answered',
     description:
-      'Questions about classes, private sessions, workshops and practice philosophy — everything worth knowing before training with Ammar Bass in London.',
+      'Questions about classes, events, retreats and practice philosophy — everything worth knowing before training with Ammar Bass in London.',
     image: OG_HOME,
     imageAlt: OG_HOME_ALT,
     ...PUBLIC,

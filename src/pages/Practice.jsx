@@ -113,7 +113,7 @@ export default function Practice() {
         </div>
 
         {/* Final call to action */}
-        <section className="bg-[#1C1410] px-8 md:px-12 py-18">
+        <section className="bg-[#1C1410] px-8 md:px-12 py-12 md:py-18">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-light text-[#F4EFE6] mb-4">Want more personalised guidance?</h2>
             <p className={`${TEXT.bodyOnDark} mb-8`}>

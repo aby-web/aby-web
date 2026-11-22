@@ -71,6 +71,7 @@ export function llmsText({ events, today }) {
     '## More',
     '',
     `- About Ammar: ${SITE}/about`,
+    '- Training: 200-hour teacher training at Sivananda Kutir (2022); Rocket with David Kyle; alignment and assists with Stewart Gilchrist.',
     `- Frequently asked questions: ${SITE}/faq`,
     `- Free full-length class videos: ${SITE}/practice`,
     '- Contact: ammar@ammarbass.com',

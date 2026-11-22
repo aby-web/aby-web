@@ -15,7 +15,7 @@ export default function FAQ() {
     <div className="min-h-screen">
       <PageMeta path="/faq" />
       <Helmet>
-        <meta name="keywords" content="yoga FAQ, yoga questions, beginner yoga London, yoga workshop questions, arm balance training, yoga class questions" />
+        <meta name="keywords" content="yoga FAQ, yoga questions, beginner yoga London, yoga event questions, arm balance training, yoga class questions" />
         <script type="application/ld+json">
           {JSON.stringify(faqPage(classFaqs))}
         </script>
@@ -37,13 +37,13 @@ export default function FAQ() {
         </div>
       </section>
 
-      <section className="bg-[#EAE0CF] px-8 md:px-12 py-18">
+      <section className="bg-[#EAE0CF] px-8 md:px-12 py-12 md:py-18">
         <div className="max-w-4xl mx-auto">
           <FaqList groups={classFaqs} />
         </div>
       </section>
 
-      <section className="bg-[#2A1E16] px-8 md:px-12 py-18">
+      <section className="bg-[#2A1E16] px-8 md:px-12 py-12 md:py-18">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-light text-[#F4EFE6] mb-4">Still have questions?</h2>
           <p className={`${TEXT.bodyOnDark} mb-8`}>Get in touch and I'll respond within 24 hours.</p>

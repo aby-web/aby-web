@@ -145,7 +145,7 @@ export default function PrivateSessions() {
         </section>
 
         {/* 2. Who it is for */}
-        <section className="bg-[#EAE0CF] px-8 md:px-12 py-18">
+        <section className="bg-[#EAE0CF] px-8 md:px-12 py-12 md:py-18">
           <div className="max-w-6xl mx-auto">
             <p className={`${TEXT.eyebrow} mb-4`}>Who it is for</p>
             <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-10">Wherever you are starting from</h2>
@@ -161,7 +161,7 @@ export default function PrivateSessions() {
         </section>
 
         {/* 3. How it works */}
-        <section id="how-it-works" className="px-8 md:px-12 py-18 scroll-mt-20">
+        <section id="how-it-works" className="px-8 md:px-12 py-12 md:py-18 scroll-mt-20">
           <div className="max-w-6xl mx-auto grid md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] gap-10 md:gap-16 items-start">
             <div>
               <p className={`${TEXT.eyebrow} mb-4`}>How it works</p>
@@ -193,7 +193,7 @@ export default function PrivateSessions() {
         </section>
 
         {/* 4. Where */}
-        <section className="bg-[#EAE0CF] px-8 md:px-12 py-18">
+        <section className="bg-[#EAE0CF] px-8 md:px-12 py-12 md:py-18">
           <div className="max-w-6xl mx-auto">
             <p className={`${TEXT.eyebrow} mb-4`}>Where</p>
             <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-4">The loft studio, online, or your home</h2>
@@ -212,7 +212,7 @@ export default function PrivateSessions() {
         </section>
 
         {/* 5. Prices, once */}
-        <section id="prices" className="px-8 md:px-12 py-18 scroll-mt-20">
+        <section id="prices" className="px-8 md:px-12 py-12 md:py-18 scroll-mt-20">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-8">Prices</h2>
             <dl className="border-t border-[#C9B99A]">
@@ -230,7 +230,7 @@ export default function PrivateSessions() {
         <Testimonials page="private-sessions" heading="What private clients say" />
 
         {/* 7. Questions (moved here from the FAQ page) */}
-        <section id="questions" className="bg-[#EAE0CF] px-8 md:px-12 py-18 scroll-mt-20">
+        <section id="questions" className="bg-[#EAE0CF] px-8 md:px-12 py-12 md:py-18 scroll-mt-20">
           <div className="max-w-4xl mx-auto">
             <p className={`${TEXT.eyebrow} mb-4`}>Questions</p>
             <h2 className="text-3xl md:text-4xl font-light text-[#1C1410] mb-8">Questions about private sessions</h2>
@@ -239,7 +239,7 @@ export default function PrivateSessions() {
         </section>
 
         {/* 8. Final booking button */}
-        <section id="contact" className="bg-[#1C1410] px-8 md:px-12 py-18 scroll-mt-20">
+        <section id="contact" className="bg-[#1C1410] px-8 md:px-12 py-12 md:py-18 scroll-mt-20">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-5xl font-light text-[#F4EFE6] mb-4">Let's talk about your goals</h2>
             <p className={`${TEXT.bodyOnDark} mb-8`}>

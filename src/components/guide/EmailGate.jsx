@@ -7,7 +7,7 @@ const accent = 'oklch(56% 0.1 38)';
 export default function EmailGate({
   onContinue,
   source = 'handstand_guide',
-  blurb = 'Get notified when new guides are released, plus exclusive handstand tips and early access to workshops.',
+  blurb = 'Get notified when new guides are released, plus exclusive handstand tips and early access to events.',
 }) {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle'); // idle, loading, success, error, exists

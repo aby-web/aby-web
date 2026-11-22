@@ -13,9 +13,9 @@ export default function Testimonials({ page, heading = 'What people say', dark =
   const columns = items.length >= 4 ? 'md:grid-cols-2' : items.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2';
 
   return (
-    <section className={`${dark ? 'bg-[#2A1E16]' : 'bg-[#F4EFE6]'} py-18`}>
+    <section className={`${dark ? 'bg-[#2A1E16]' : 'bg-[#F4EFE6]'} py-12 md:py-18`}>
       <div className="max-w-6xl mx-auto">
-        <div className="px-8 md:px-12 mb-10">
+        <div className="px-8 md:px-12 mb-8 md:mb-10">
           <p className={`${dark ? TEXT.eyebrowOnDark : TEXT.eyebrow} mb-4`}>From students</p>
           <h2 className={`text-3xl md:text-4xl font-light ${dark ? 'text-[#F4EFE6]' : 'text-[#1C1410]'}`}>{heading}</h2>
         </div>

@@ -47,7 +47,7 @@ export default function Join() {
             You're on the list
           </h1>
           <p className="text-[#5C4A36]">
-            I'll be in touch with classes, workshops, and retreats.
+            I'll be in touch with classes, events and retreats.
           </p>
         </div>
       ) : status === 'exists' ? (
@@ -65,7 +65,7 @@ export default function Join() {
             Join my mailing list
           </h1>
           <p className="text-[#5C4A36] mb-10">
-            First access to classes, workshops, and retreats.
+            First access to classes, events and retreats.
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">

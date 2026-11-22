@@ -71,11 +71,12 @@ function FooterSignup() {
 
 export default function Footer() {
   return (
-    <footer className="bg-[#2A1E16] px-8 md:px-12 pt-16 pb-10">
+    <footer className="bg-[#2A1E16] px-8 md:px-12 pt-12 md:pt-16 pb-10">
       <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1.3fr] gap-x-10 gap-y-12 mb-12">
+        {/* Phones: the two link lists sit side by side to keep the footer short. */}
+        <div className="grid grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1.3fr] gap-x-8 sm:gap-x-10 gap-y-10 sm:gap-y-12 mb-10 sm:mb-12">
           {/* Brand and where */}
-          <div>
+          <div className="col-span-2 lg:col-span-1">
             <img
               loading="lazy"
               src="/images/logo.png"
@@ -116,7 +117,7 @@ export default function Footer() {
           </nav>
 
           {/* Connect */}
-          <div>
+          <div className="col-span-2 sm:col-span-1">
             <h2 className={headingClass}>Connect</h2>
             <ul className="mb-4">
               <li>
@@ -154,7 +155,7 @@ export default function Footer() {
           </p>
         </div>
 
-        <div className="border-t border-[#4A3828] pt-6 flex flex-col sm:flex-row justify-between gap-2">
+        <div className="border-t border-[#4A3828] pt-6 flex justify-between gap-2">
           <p className="text-xs text-[#B8A584]">© 2026 Ammar Bass</p>
           <p className="text-xs text-[#B8A584]">London, UK</p>
         </div>

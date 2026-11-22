@@ -27,18 +27,28 @@ const STUDIOS = [
 
 const SIVANANDA = { '@type': 'Organization', name: 'Sivananda Kutir' };
 
+// Ammar's training, as approved for the About page (21 Nov 2026). Only the
+// Sivananda course is listed below as a credential; the other two are named
+// here and in `knowsAbout` as training, not as certificates.
+export const TRAINING_SUMMARY =
+  'Trained at Sivananda Kutir (200-hour teacher training, 2022), in Rocket with David Kyle, and in alignment and assists with Stewart Gilchrist.';
+
 export const person = {
   '@type': 'Person',
   '@id': PERSON_ID,
   name: 'Ammar Bass',
   jobTitle: 'Yoga teacher',
   description:
-    'Yoga teacher in London. Private one-to-one sessions in West Hampstead, a Saturday class in Marylebone, and weekly classes at HOME Wellness, BXR, Flo and Yogarise. Strong, alignment-focused vinyasa, arm balances and inversions.',
+    'Yoga teacher in London. Private one-to-one sessions in West Hampstead, a Saturday class in Marylebone, and weekly classes at HOME Wellness, BXR, Flo and Yogarise. Strong, alignment-focused vinyasa, arm balances and inversions. ' +
+    TRAINING_SUMMARY,
   url: SITE,
   image: `${SITE}/images/about.webp`,
   address: { '@type': 'PostalAddress', addressLocality: 'London', addressCountry: 'GB' },
   knowsAbout: [
     'Vinyasa Yoga',
+    'Rocket Yoga',
+    'Yoga Alignment',
+    'Hands-on Assists',
     'Arm Balances',
     'Inversions',
     'Handstands',
