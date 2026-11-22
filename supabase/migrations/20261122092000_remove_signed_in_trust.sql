@@ -1,5 +1,4 @@
--- NOT APPLIED. Written on the night of 21 Nov 2026 for Ammar to review.
--- Do not move into supabase/migrations until it has been run.
+-- APPLIED 22 Nov 2026, after Ammar ran the /admin checks. Written 21 Nov 2026.
 --
 -- WHAT THIS FIXES
 -- Several tables and the event-images bucket grant access to "any signed-in

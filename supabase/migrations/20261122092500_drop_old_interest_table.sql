@@ -1,4 +1,4 @@
--- NOT APPLIED. Written on the night of 21 Nov 2026 for Ammar to review.
+-- APPLIED 22 Nov 2026, after Ammar ran the /admin checks. Written 21 Nov 2026.
 --
 -- Drops the sign-up table behind the old product page (the app is now called
 -- Yorigam and lives at yorigam.com). The page and its form were removed from
