@@ -606,7 +606,7 @@ export default function Admin() {
       return;
     }
     if (priceHigh !== null && (price === null || priceHigh <= price)) {
-      showToast('The highest price needs a lower price before it. For a single price, leave "Highest price" empty.', 'error');
+      showToast('The highest price must be more than the price. For a single price, leave "Highest price" empty.', 'error');
       return;
     }
 
