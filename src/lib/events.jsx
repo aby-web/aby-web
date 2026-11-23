@@ -11,7 +11,7 @@ import { supabase } from './supabase';
 
 // Only the columns the site displays.
 export const EVENT_COLUMNS =
-  'id, slug, title, date, location, description, image_url, booking_link, button_label';
+  'id, slug, title, date, location, description, image_url, booking_link, button_label, price, price_high';
 
 export async function fetchEvents() {
   const { data, error } = await supabase
@@ -23,6 +23,41 @@ export async function fetchEvents() {
 }
 
 export const eventPath = (event) => `/events/${event.slug}`;
+
+// Prices are optional and in pounds. `price` is the price, or the lowest one
+// when `price_high` is also set (a range, e.g. a retreat with several rooms).
+const hasPrice = (value) => value !== null && value !== undefined && value !== '';
+const pounds = (value) => {
+  const n = Number(value);
+  const [whole, pence] = (Number.isInteger(n) ? String(n) : n.toFixed(2)).split('.');
+  return '£' + whole.replace(/\B(?=(\d{3})+$)/g, ',') + (pence ? `.${pence}` : '');
+};
+
+// "£30", "£625 to £1,195", or null when the event has no price.
+export function eventPriceText(event) {
+  if (!hasPrice(event?.price)) return null;
+  return hasPrice(event.price_high) ? `${pounds(event.price)} to ${pounds(event.price_high)}` : pounds(event.price);
+}
+
+// The "offers" part of an event's search data, for an event that has not yet
+// happened: price (or lowest and highest price), currency, the day bookings
+// opened (when Ammar has given it), availability and where to book.
+// `pageUrl` is used when the event has no booking link.
+export function eventOffers(event, { pageUrl, validFrom }) {
+  if (!event.booking_link && !hasPrice(event.price)) return null;
+  const range = hasPrice(event.price) && hasPrice(event.price_high);
+  return {
+    '@type': range ? 'AggregateOffer' : 'Offer',
+    ...(range
+      ? { lowPrice: String(event.price), highPrice: String(event.price_high), priceCurrency: 'GBP' }
+      : hasPrice(event.price)
+        ? { price: String(event.price), priceCurrency: 'GBP' }
+        : {}),
+    ...(validFrom ? { validFrom } : {}),
+    availability: 'https://schema.org/InStock',
+    url: event.booking_link || pageUrl,
+  };
+}
 
 const EventsContext = createContext(null);
 

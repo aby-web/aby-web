@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import Cropper from 'react-easy-crop';
 import { supabase } from '../lib/supabase';
 import { adminFetch, clearSession, isLoggedIn, login } from '../lib/adminAuth';
+import { eventPriceText } from '../lib/events';
 
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => isLoggedIn());
@@ -82,6 +83,8 @@ export default function Admin() {
     image_url: '',
     booking_link: '',
     button_label: '',
+    price: '',
+    price_high: '',
     status: 'upcoming',
   });
   const [imageFile, setImageFile] = useState(null);
@@ -593,6 +596,20 @@ export default function Admin() {
 
   const handleSubmitEvent = async (e) => {
     e.preventDefault();
+
+    // Prices are optional: one price, or a lowest and a highest. Empty = none.
+    const amount = (value) => (value === '' || value === null || value === undefined ? null : Number(value));
+    const price = amount(eventForm.price);
+    const priceHigh = amount(eventForm.price_high);
+    if ([price, priceHigh].some((n) => n !== null && (!Number.isFinite(n) || n < 0))) {
+      showToast('A price must be a number, in pounds, without the £ sign.', 'error');
+      return;
+    }
+    if (priceHigh !== null && (price === null || priceHigh <= price)) {
+      showToast('The highest price needs a lower price before it. For a single price, leave "Highest price" empty.', 'error');
+      return;
+    }
+
     setUploading(true);
 
     try {
@@ -606,6 +623,8 @@ export default function Admin() {
         description: eventForm.description,
         booking_link: eventForm.booking_link,
         button_label: eventForm.button_label,
+        price,
+        price_high: priceHigh,
         status: eventForm.status,
       };
 
@@ -656,6 +675,8 @@ export default function Admin() {
       image_url: '',
       booking_link: '',
       button_label: '',
+      price: '',
+      price_high: '',
       status: 'upcoming',
     });
     setRemovePhoto(false);
@@ -663,7 +684,7 @@ export default function Admin() {
   };
 
   const handleEditEvent = (event) => {
-    setEventForm(event);
+    setEventForm({ ...event, price: event.price ?? '', price_high: event.price_high ?? '' });
     // A photo chosen for a different event must not follow into this one.
     setRemovePhoto(false);
     clearChosenPhoto();
@@ -915,6 +936,28 @@ export default function Admin() {
                   onChange={(e) => setEventForm({ ...eventForm, button_label: e.target.value })}
                   className="px-4 py-2 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A]"
                 />
+                <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  inputMode="decimal"
+                  placeholder="Price in £ (optional), e.g. 30"
+                  aria-label="Price in pounds, or the lowest price"
+                  value={eventForm.price ?? ''}
+                  onChange={(e) => setEventForm({ ...eventForm, price: e.target.value })}
+                  className="px-4 py-2 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A]"
+                />
+                <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  inputMode="decimal"
+                  placeholder="Highest price in £ (only for a price range)"
+                  aria-label="Highest price in pounds, only for a price range"
+                  value={eventForm.price_high ?? ''}
+                  onChange={(e) => setEventForm({ ...eventForm, price_high: e.target.value })}
+                  className="px-4 py-2 bg-white text-[#1C1410] border border-[#C9B99A] rounded-md outline-none focus:border-[#785E3D] placeholder-[#C9B99A]"
+                />
                 <textarea
                   placeholder="Description"
                   value={eventForm.description}
@@ -1082,7 +1125,10 @@ export default function Admin() {
                         <div className="flex justify-between items-start">
                           <div className="flex-1">
                             <h3 className="text-lg font-medium mb-1 text-[#1C1410]">{event.title}</h3>
-                            <p className="text-sm text-[#785E3D] mb-2">{event.date} • {event.location}</p>
+                            <p className="text-sm text-[#785E3D] mb-2">
+                              {event.date} • {event.location}
+                              {eventPriceText(event) ? ` • ${eventPriceText(event)}` : ''}
+                            </p>
                             {event.slug && (
                               <p className="text-xs mb-2">
                                 <a href={`/events/${event.slug}`} target="_blank" rel="noopener noreferrer" className="text-[#785E3D] underline underline-offset-2 hover:text-[#1C1410]">

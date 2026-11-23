@@ -9,7 +9,7 @@ import { longDate, venueFor } from '../data/classes';
 import { BTN, TEXT } from '../components/ui';
 import { SITE } from '../data/pages';
 import { personRef } from '../data/schema';
-import { eventPath, useEvents } from '../lib/events';
+import { eventOffers, eventPath, eventPriceText, useEvents } from '../lib/events';
 import useToday from '../lib/useToday';
 import { EVENT_BOOKINGS_OPENED } from '../data/bookingsOpened';
 
@@ -57,6 +57,12 @@ export default function EventPage() {
   const url = `${SITE}${eventPath(event)}`;
   const date = longDate(event.date);
   const description = summary(event);
+  // Shown on the page and given to search engines, for events still to come.
+  const price = isPast ? null : eventPriceText(event);
+  // Only where Ammar has given the day bookings opened (src/data/bookingsOpened.js).
+  const offers = isPast
+    ? null
+    : eventOffers(event, { pageUrl: url, validFrom: EVENT_BOOKINGS_OPENED[event.slug] });
 
   return (
     <div className="min-h-screen bg-[#F4EFE6]">
@@ -94,17 +100,7 @@ export default function EventPage() {
             "image": event.image_url || `${SITE}/images/og-home.jpg`,
             "organizer": personRef,
             "performer": { "@type": "Person", "name": "Ammar Bass" },
-            ...(event.booking_link && !isPast
-              ? {
-                  "offers": {
-                    "@type": "Offer",
-                    "url": event.booking_link,
-                    "availability": "https://schema.org/InStock",
-                    // Only where Ammar has given the day bookings opened.
-                    ...(EVENT_BOOKINGS_OPENED[event.slug] ? { "validFrom": EVENT_BOOKINGS_OPENED[event.slug] } : {})
-                  }
-                }
-              : {})
+            ...(offers ? { "offers": offers } : {})
           })}
         </script>
       </Helmet>
@@ -139,6 +135,7 @@ export default function EventPage() {
           <p className="text-lg text-[#1C1410] mb-8">
             {event.location}
             {venue && <span className="block text-[16px] text-[#5C4A36]">{venue.line}</span>}
+            {price && <span className="block text-[16px] text-[#5C4A36]">{price}</span>}
           </p>
 
           {event.description && (

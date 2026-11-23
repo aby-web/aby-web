@@ -14,6 +14,7 @@ export { londonToday } from './data/classes.js'
 export { llmsText } from './data/llms.js'
 // The same fetch the browser uses: public key, public columns only.
 export { fetchEvents, eventPath } from './lib/events.jsx'
+export { EVENT_BOOKINGS_OPENED } from './data/bookingsOpened.js'
 
 // Load every page's code before anything is rendered.
 export const prepare = preloadAllRoutes

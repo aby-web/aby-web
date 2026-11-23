@@ -38,7 +38,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const DIST = join(ROOT, 'dist');
 
-const { render, prepare, pageFileFor, pages, SITE, londonToday, fetchEvents, eventPath, llmsText } =
+const { render, prepare, pageFileFor, pages, SITE, londonToday, fetchEvents, eventPath, llmsText, EVENT_BOOKINGS_OPENED } =
   await import(pathToFileURL(join(ROOT, 'dist-ssr', 'entry-server.js')).href);
 
 // Each page's code is its own chunk; load them all before rendering.
@@ -246,6 +246,16 @@ for (const r of report) {
   console.log(
     `  prerendered ${r.path.padEnd(20)} ${String(r.words).padStart(5)} words  ${r.jsonLd} JSON-LD${r.index ? '' : '  (noindex)'}`
   );
+}
+// Search Console asks for a price and a bookings-opened date on every event
+// that can still be booked. Neither stops the build; both are for Ammar to add.
+for (const e of events.filter((e) => e.date >= buildDate && e.booking_link)) {
+  if (e.price === null || e.price === undefined) {
+    console.warn(`  ⚠ warning     ${eventPath(e)} has a booking link but no price (add one in /admin > Events)`);
+  }
+  if (!EVENT_BOOKINGS_OPENED[e.slug]) {
+    console.warn(`  ⚠ warning     ${eventPath(e)} has no bookings-opened date (src/data/bookingsOpened.js)`);
+  }
 }
 const skipped = pages.filter((p) => !p.prerender).map((p) => p.path);
 console.log(`  shell only  ${skipped.join(' ')}`);

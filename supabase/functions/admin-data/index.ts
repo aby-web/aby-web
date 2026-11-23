@@ -23,13 +23,20 @@ const WRITABLE = ['private_enquiries', 'client_intakes', 'events', 'vacations'];
 // else in `values` (id, created_at, slug, ...) is dropped. These tables may
 // also be inserted into.
 const COLUMNS: Record<string, string[]> = {
-  events: ['title', 'date', 'location', 'description', 'image_url', 'booking_link', 'button_label', 'status'],
+  events: ['title', 'date', 'location', 'description', 'image_url', 'booking_link', 'button_label', 'status', 'price', 'price_high'],
   vacations: ['start_date', 'end_date', 'reason', 'updated_at'],
 };
 
+// Event prices are numbers in pounds, or empty. A blank field is stored as "no price".
+const PRICES = ['price', 'price_high'];
+
 const clean = (table: string, values: Record<string, unknown>) =>
   COLUMNS[table]
-    ? Object.fromEntries(Object.entries(values).filter(([key]) => COLUMNS[table].includes(key)))
+    ? Object.fromEntries(
+        Object.entries(values)
+          .filter(([key]) => COLUMNS[table].includes(key))
+          .map(([key, value]) => [key, table === 'events' && PRICES.includes(key) && value === '' ? null : value]),
+      )
     : values;
 
 const IMAGE_BUCKET = 'event-images';

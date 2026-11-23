@@ -93,7 +93,7 @@ React 19 + Vite 8 SPA. Supabase backend, deployed on Vercel. UK English in all s
 3. **A one-to-one teaching photo for `/private-sessions`.** The hero uses the studio photo
    until Ammar supplies one.
 
-Smaller things also waiting on Ammar: delete `VITE_INTAKE_SECRET` in Vercel (unused); delete
+Smaller things also waiting on Ammar: delete
 the long-lived `SUPABASE_ACCESS_TOKEN` from `.env` and supabase.com when Claude's database work
 is finished; a Yorigam logo for the footer; a bookings-opened date for each new event
 (`src/data/bookingsOpened.js`); seven old unused files in the `event-images` bucket were left
